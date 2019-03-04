@@ -1,6 +1,7 @@
 Git 安装和使用
 1. 目的
-	通过Git管理Github托管项目代码
+	1.1 通过Git管理Github托管项目代码
+
 2. 下载安装
 	2.1 git官网下载安装
 	2.2 安装完成后在桌面单击右键看是否安装成功
@@ -13,7 +14,7 @@ Git 安装和使用
 	3.3 查看设置
 		git config --list
 
-4. Git工作区域
+4. Git工作区域(4.3--->4.2--->4.1)
 	4.1 Git Repository(Git 仓库)
 		----->最终确定的文件保存到仓库，成为一个新的版本，并且对他人可见
 	
@@ -23,10 +24,10 @@ Git 安装和使用
 	4.3 工作区（Working Directory）
 		----->添加、编辑、修改文件等动作
 
-5. 向仓库中添加文件流程（最好学习命令形式提交文件）
+5. 向仓库中添加文件流程（最好学习命令形式提交文件---Git Bush Here）
 	5.1 Git命令
 		5.1.1 git status					查看当前文件状况（在工作区域还是在暂存区）
-		5.1.2 git add (files name)		将(files name)从工作去提交到暂存区
+		5.1.2 git add (files name)			将(files name)从工作去提交到暂存区
 		5.1.3 git commit -m "提交描述"		将(files name)从暂存区提交到Git仓库
 
 6. Git 初始化及仓库的建立和操作
@@ -37,20 +38,20 @@ Git 安装和使用
 		git config --global user.name 'XXXXXX@outlook.com'
 
 	6.2 初始化一个新的 Git 仓库
-		6.2.1 创建文件夹 	$:mkdir my-study
+		6.2.1 创建文件夹 	$:mkdir (file name)	--->例如：my-study
 		6.2.2 在文件内初始化 Git （创建 Git 仓库）
 			cd my-study
 			git init 	(这条命令生成一个隐藏的 .git 文件夹，用来存储仓库所有信息)
 
 	6.3 向仓库中添加文件
-		6.3.1 用 $:touch 或者 vim 命令创建文件
-		6.3.2 用 $:git add (files name) 将文件添加到暂存区
-		6.3.3 用 $:git commit -m 'add test.py'
+		6.3.1 用 $:touch 或者 vim 命令创建文件（需要添加的程序代码文件、或者.txt文件，等等）
+		6.3.2 用 $:git add (files name) 将文件从 工作区 添加到 暂存区
+		6.3.3 用 $:git commit -m 'add test.py' 将文件提交到Git本地仓库
 
 	6.4 修改文件
-		6.4.1 修改文件 利用 vi 修改文件
-		6.4.2 用 $:git add (files name) 将文件添加到暂存区
-		6.4.3 用 $:git commit -m '这里是添加说明的'
+		6.4.1 修改文件 利用 vi\vim 等编辑器修改文件
+		6.4.2 用 $:git add (files name) 将文件从 工作区 添加到 暂存区
+		6.4.3 用 $:git commit -m '这里是添加说明的'	将文件提交到Git本地仓库
 
 	6.5 删除文件
 		（#这是删除文件夹中的文件） $:rm -rf test.py  通过Linux强制删除命令，直接删除文件）
