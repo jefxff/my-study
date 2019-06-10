@@ -181,7 +181,11 @@
     select name from students where name like "__%";
 ``` 
 
+<<<<<<< HEAD
 - **rlike**正则
+=======
+- **rlike** 正则
+>>>>>>> 66143a20739991dcbcf2cd51afae34e231c1d38f
 ```sql
     -- 查询以 周开始的名字
     select name from students where name rlike "^周.*";

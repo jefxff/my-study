@@ -126,14 +126,15 @@
 	
 <br />
 
+<<<<<<< HEAD
 ###### 数据表相关操作
 
+=======
+###### 数据表相关操作     
+>>>>>>> 66143a20739991dcbcf2cd51afae34e231c1d38f
 - 创建数据表
 
 ```sql
-	-- CREATE TABLE 表名(列名1 约束, 列2 约束);	
-
-	-- demo
 	CREATE TABLE president
 		(last_name VARCHAR(15) NOT NULL,
 		 first_name VARCHAR(15) NOT NULL,
@@ -210,6 +211,7 @@
 
 
 ##### 增删改查（CURD）
+<<<<<<< HEAD
 - **CURD**：**C**reate(创建) **U**pdate(更新) **R**etrieve(读取)**D**elete(删除)
 <br />
 
@@ -219,20 +221,32 @@
     - 主键字段 可以用-0 null default 来占位、代替        
 ```sql
 	-- 向students表插入 一个学生信息
+=======
+**CURD**：**C**reate(创建) **U**pdate(更新) **R**etrieve(读取)**D**elete(删除)
+
+
+###### 增加 
+
+- 全列插入
+```sql
+>>>>>>> 66143a20739991dcbcf2cd51afae34e231c1d38f
 	insert into students values(0, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(null, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(default, "东哥", 28, 170.33, 3, 1, "1988-9-25");
-
-    -- 失败 有枚举的时候，必须符合创建表时枚举所列举出的选项，不符合就会报错
+        -- 失败 有枚举的时候，必须符合创建表时枚举所列举出的选项，不符合就会报错
 	insert into students values(0, "东哥", 28, 170.33, "第四性别", 1, "1988-9-25");
-
 	-- 枚举中的下标从1开始 1---> "男" 2--->"女"......
 	insert into students values(0, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 ```	
 
+<<<<<<< HEAD
 - 部分插入           
     - `insert into 表名(列1,...) values(值1,...);`            
+=======
+- 部分插入
+>>>>>>> 66143a20739991dcbcf2cd51afae34e231c1d38f
 ```sql
+   	insert into 表名(列1,...) values(值1,...);
 	insert into students (name, gerder) values("小乔","女");
 ```
 

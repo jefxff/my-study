@@ -90,6 +90,6 @@
 ###### vim 里执行 shell 下的命令：
 - 末行模式里输入 ！，后面跟命令(如 ls pwd touch mkdir rm mv cp ...)
 
-######附图vi命令树
+###### 附图vi命令树
 <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559809667564&di=3dfe1e3cbbc330c0540083f917d4635f&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D406702772%2C3851416019%26fm%3D214%26gp%3D0.jpg " width="800" height="500" />
 
