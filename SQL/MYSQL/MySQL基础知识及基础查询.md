@@ -125,8 +125,11 @@
 	- 答案：在逻辑层进行控制	
 	
 <br />
+
 ###### 数据表相关操作
+
 - 创建数据表
+
 ```sql
 	-- CREATE TABLE 表名(列名1 约束, 列2 约束);	
 
@@ -143,6 +146,7 @@
 ```
 
 - 也可以将表导入数据库
+
 ```sql
 	mysql> LOAD DATA LOCAL INFILE "member.txt" INTO TABLE member;	
 	-- 该语句读取位于客户机上当前目录中数据文件member.txt 的内容，并将其发送到服务器装入 member 表。
@@ -209,12 +213,12 @@
 - **CURD**：**C**reate(创建) **U**pdate(更新) **R**etrieve(读取)**D**elete(删除)
 <br />
 <br />
-###### 增加 
-- 全列插入
-- `insert into 表名 values(...);`
-- 主键字段 可以用-0 null default 来占位、代替
+###### 增加         
+- 全列插入        
+- `insert into 表名 values(...);`        
+- 主键字段 可以用-0 null default 来占位、代替        
 ```sql
-	--  向students表插入 一个学生信息
+	-- 向students表插入 一个学生信息
 	insert into students values(0, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(null, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(default, "东哥", 28, 170.33, 3, 1, "1988-9-25");
@@ -226,8 +230,8 @@
 	insert into students values(0, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 ```	
 
-- 部分插入
-- `insert into 表名(列1,...) values(值1,...);`
+- 部分插入           
+- `insert into 表名(列1,...) values(值1,...);`            
 ```sql
 	insert into students (name, gerder) values("小乔","女");
 ```
