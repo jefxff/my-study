@@ -203,8 +203,9 @@
 
 
 ##### 增删改查（CURD）
-- **CURD**：**C**reate(创建) **U**pdate(更新) **R**etrieve(读取)**D**elete(删除)
-<br />
+**CURD**：**C**reate(创建) **U**pdate(更新) **R**etrieve(读取)**D**elete(删除)
+
+
 ###### 增加 
 
 - 全列插入
