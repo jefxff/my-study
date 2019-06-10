@@ -211,15 +211,15 @@
 <br />
 ###### 增加 
 - 全列插入
-- `insert into 表名 values(...);`
-- 主键字段 可以用-0 null default 来占位、代替
+    - `insert into 表名 values(...);`
+    - 主键字段 可以用-0 null default 来占位、代替
 ```sql
 	--  向students表插入 一个学生信息
 	insert into students values(0, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(null, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(default, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 
-    -- 失败 有枚举的时候，必须符合创建表时枚举所列举出的选项，不符合就会报错
+        -- 失败 有枚举的时候，必须符合创建表时枚举所列举出的选项，不符合就会报错
 	insert into students values(0, "东哥", 28, 170.33, "第四性别", 1, "1988-9-25");
 
 	-- 枚举中的下标从1开始 1---> "男" 2--->"女"......
@@ -227,7 +227,7 @@
 ```	
 
 - 部分插入
-- `insert into 表名(列1,...) values(值1,...);`
+    - `insert into 表名(列1,...) values(值1,...);`
 ```sql
 	insert into students (name, gerder) values("小乔","女");
 ```
