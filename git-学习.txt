@@ -109,7 +109,15 @@ Git 安装和使用
 	9.2 根据版本commit值可以进行回滚 命令：$ git reset --hard 版本号
 	9.3 如果要再回到最新版本 命令：$ git reflog
 
-
+10. 忽略文件
+	10.1 我们无需让Git跟踪的目录，在Git目录下创建 .gitignore 的特殊文件（这个文件以英文
+		的句点打头，并没有扩展名）并在文件中添加不需要Git跟踪的文件的文件名，
+		例如：（__pycache__ 文件不需要Git跟踪）就在 .gitignore 文件中添加如下内容：
+			__pycache__/ 
+	10.2 如果你使用的是Python 2.7， 请将这行内容改为*.pyc 。Python 2.7不会创建目录
+		__pycache__，它将每个.pyc文件都存储在相应.py文件所在的目录中。其中的星号让Git
+		忽略所有扩展名为.pyc的文件。	
+			
 Git branch
 1.分支学习：branch称之为分支，默认只有一个分支名为master的分支。一般开发新功能时
 	会在分支dev上进行，开发完毕之后再合并到master分支。		
@@ -153,7 +161,7 @@ Github
 		$ git pull origin dev  #从远程Github仓库获取dev分支的最新内容，并合并到本地
 		$ vim files / $ git add . / $ git commit -m "开发功能"（再家进行开发并提交）
 
-	1.4 实际情形：再加更新了部分功能，在公司需要将最新功能从GitHub中拉取，并继续开发
+	1.4 实际情形：再家更新了部分功能，在公司需要将最新功能从GitHub中拉取，并继续开发
 		$ git checkout dev #切换分支
 		$ git fetch origin dev 	 #从GitHub中获取dev分支最新内容到版本库的分支
 		$ git merge oirgin/dev   #将版本库的分支内容合并到工作区
@@ -162,8 +170,10 @@ Github
 	1.5将Git和GitHub结合使用做到避免电脑损坏造成数据丢失以及多地开发的问题，上文执行过程中执行 
 		【git pull origin 分支】命令等同于【git fetch origin 分支】+ 【git merge origin/分支】，
 		并且在执行过程中可能会出现冲突，原因是由于本地代码和获取的最新代码有重合部分，那么就需要自己
-		手动解决冲突然后再继续开发。	
+		手动解决冲突然后再继续开发。
 
+	1.6详细查看 http://www.cnblogs.com/wupeiqi/p/7295372.html 武沛齐的博客	
+	
 Github协同开发
 	创建程序
 		用户A创建程序，提交到GitHub
