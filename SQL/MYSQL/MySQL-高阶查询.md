@@ -181,11 +181,8 @@
     select name from students where name like "__%";
 ``` 
 
-<<<<<<< HEAD
-- **rlike**正则
-=======
+
 - **rlike** 正则
->>>>>>> 66143a20739991dcbcf2cd51afae34e231c1d38f
 ```sql
     -- 查询以 周开始的名字
     select name from students where name rlike "^周.*";
@@ -198,26 +195,26 @@
 ----
 
 ###### 范围查询
-- **in(1, 3, 8)**表示在一个非联系的范围内(记住用法)
+- in(1, 3, 8)表示在一个非联系的范围内(记住用法)
 ```sql
     -- 查询 年龄为18、34的姓名
     select name, age from students where age=18 or age=34;
     select name, age from students where age in (18,12,34);
 ```
 
-- **not in** 不在非连续的范围内
+- not in 不在非连续的范围内
 ```sql
     -- 年龄不是 18、34岁之间的信息
     select name, age from students where age not in (18,12,34);
 ```
 
-- **between...and...**表示在一个连续的范围内
+- between ... and ...表示在一个连续的范围内
 ```sql
     -- 查询 年龄在18到34之间的信息
     select name, age from students where age between 18 and 34;
 ``` 
 
-- **not between...and...**表示不在一个连续的范围内
+- not between ... and ...表示不在一个连续的范围内
 ```sql
     -- 查询 年龄不在18到34岁之间的信息
     select * from students where age not between 18 and 34;
