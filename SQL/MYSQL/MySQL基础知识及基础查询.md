@@ -128,9 +128,8 @@
 ###### 数据表相关操作
 - 创建数据表
 ```sql
-	-- CREATE TABLE 表名(列名1 约束, 列2 约束);	
-
-	-- demo
+	CREATE TABLE 表名(列名1 约束, 列2 约束);	
+	
 	CREATE TABLE president
 		(last_name VARCHAR(15) NOT NULL,
 		 first_name VARCHAR(15) NOT NULL,
@@ -211,9 +210,7 @@
 ###### 增加 
 - 全列插入
 ```sql
-    	-- insert into 表名 values(...);
-    	-- 主键字段 可以用0 null default 来占位、代替
-	--  向students表插入 一个学生信息
+    	主键字段 可以用0 null default 来占位、代替
 	insert into students values(0, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(null, "东哥", 28, 170.33, 3, 1, "1988-9-25");
 	insert into students values(default, "东哥", 28, 170.33, 3, 1, "1988-9-25");
