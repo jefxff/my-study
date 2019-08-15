@@ -1,0 +1,114 @@
+
+1.3 Java 程序的运行机制
+
+	1.3.1 Java语言既具有解释型语言的特征，又具有编译型语言的特征；
+		Java程序----->编译----->解释；
+
+		编译：一次性编译成特定程序的机器码，可以独立运行。
+		编译型语言：C、C++、Objective-C、Pascal
+
+		解释：使用专门的解释器对源程序逐行解释成特定平台的机器码并立即执行的语言。不可
+				脱离解释器独立运行。
+		解释型语言：Ruby、Python
+
+	1.3.2 Java 程序的运行机制和 JVM
+		Java源文件 *.java ---(使用Javac编译)--->编译生成 *.class 文件	---(使用Java
+		解释执行)--->特定平台的机器码
+
+		JVM (Java Virtual Machine) Java 虚拟机，可以运行java字节码文件的虚拟计算机。
+			不同平台上的JVM都是不同的，但是他们提供相同的接口。
+		Java程序跨平台的关键：只要是在不同平台实现了相应的虚拟机(JVM),编译后的Java字节
+			码就可以在该平台上运行。	
+
+1.4 安装配置 JDK
+	JDK (Java SE Development Kit) Java标准版开发包。
+	http://www.oracle.com/technetwork/java/javase/downloads/index.html
+	下载 版本11  选择8代的环境
+
+	安装好之后，设置环境（WINDOWS):
+		控制面板--所有控制面板---系统---高级系统设置---高级(环境变量)---用户的变量里面
+		添加： 
+		path(变量)：D:Java\jdk-11.0.3\bin(值)
+
+	>>> HelloWorld.java
+	public class HelloWorld
+	{
+		//Java程序的入口方法，程序将从这里开始执行
+		public static void main(String[] args)
+		{
+			//向控制台打印一条语句
+			System.out.println("Hello World!");
+		}
+	}
+	
+	>>> 编译java程序
+	javac 命令
+		javac -d destdir srcFile
+		java java类名 // 注意java后面的参数是java类名，而不是字节码文件的文件名，也不是java
+						源文件名
+
+	上面HelloWorld.java 程序执行命令如下：
+		第一步： javac -d . HelloWorld.java  //此命令在该路径下生成 HelloWorld.class 文件	
+		第二步： java HelloWorld  //此命令执行 HelloWorld.class 文件，完成代码的执行		
+
+1.5 理解 CLASSPATH 环境变量的配置（1.5以前版本的JDK）1.5以上的版本不用设置		
+
+1.6 Java 程序的基本规则
+	1.6.1 >>> Java 程序是一种纯粹的面向对象的程序设计语言，因此Java程序必须以类(class
+			) 的形式存在，类(class) 是Java程序的最小程序单位。java程序不允许可执行性语句、方法等成分独立存在，所有的程序部分都必须放在类定义里。
+	1.6.2 最简单的Java程序:
+			class Test
+			{
+			}		
+		说明：上面最简单程序的类不能被Java命令解释执行，
+		原因： Java解释器规定：如需某个类能被解释器直接解释执行，则这个类里必须包含 main 方法，
+			  而且 main 方法必须使用 public static void 来修饰，且 main 方法的形参必须是字
+			  符串数组类型（String[] args 是字符串数组的形式）。 也就是说 main 方法的写法几乎
+			  是固定的。Java 虚拟机就从这个 main 方法开始解释执行，因此，main 方法是Java 程序
+			  的入口。
+		注意： 对于那些不包含 main 方法的类，也是有用的类。对于一个大型的 Java 程序而言，往往只
+			   需要一个入口，也就是只有一个类包含 main 方法，而其他的类都是用于被 main 方法直接
+			   或者间接调用的。		  		
+	1.6.3 Java程序的命名规则
+		1. 源文件的后缀必须是 .java；
+		2. 推荐Java源文件的主文件名与类名相同，如果源文件里面定义了一个Public类，则该
+		   源文件的主文件名必须与该 public类的类名相同；
+		3. 一个 Java 源文件只定义一个类，不同的类使用不同的源文件定义；
+		4. Java的源文件的主文件名与该源文件中定义的public类同名。	
+
+	1.7 注意问题
+		1. System.out.print(需要输出的内容) 和 System.out.println(需要输出的内容)	区别：
+		前者输出结束后不会换行，后者输出结束后会换行。
+		2. Java语言不需要程序员直接控制内存回收, Java程序的内存分配和回收都是由JRE在后台自动进行的.
+		3. 对于不再需要的对象, 不要在引用它.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

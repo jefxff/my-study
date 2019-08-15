@@ -1,0 +1,782 @@
+0. 概述
+    0.1 流程控制结构
+        分支结构: Java有 if 和 switch 两分支语句,
+        循环结构: Java有 while, do while 和 for 三种循环结构
+                  JDK5还提供了 foreach 循环
+    0.2 数组
+        Java的数组类型是一种引用类的变量, Java程序通过数组引用变量来操作数组, 包括获得数组的长度, 访问元素的
+        值等.
+        
+        
+1. 顺序结构
+    1.1 含义: 1. Java的顺序结构就是程序从上到下逐行地执行, 中间没有任何判断和跳转;
+          2. 如果main方法的多行代码之间没有任何流控制, 则程序总是从上到下依次执行, 排在前面你的代码先执行,
+            排在后面的代码后执行, 这意味着: 如果没有流程控制, Java方法里面的语句是一个顺序执行流, 从上到下 
+            依次执行每条语句.
+          
+          
+2. 分支结构
+    2.1 if 条件语句
+        含义: if语句使用布尔表达式或布尔值作为分支条件来进行分支控制, 有以下三种情形:
+            第一种形式:
+                if(logic expression)
+                {
+                    statement...
+                }
+            
+            第二种形式:
+                if(logic expression)
+                {
+                    statement...
+                }
+                else
+                {
+                    statement...
+                }
+                
+            第三种形式:
+                if(logic expression)
+                {
+                    statement...
+                }
+                else if(logic expression)
+                {
+                    statement...
+                }
+                ...//可以有0个或者多个 else if 语句
+                else // 最后else语句也可以省略
+                {
+                    statement...
+                }
+        说明:1. 上述条件语句中, if(logic expression), else if(logic expression), else 后花括号括起来的多行代
+            码被称之为代码块, 一个代码块通常被当做一个整体来执行(除非运行过程中遇到 retuen, break, continue
+            等关键字,或者遇到了异常), 因此这个代码快也被称为条件执行体.
+            例子:
+                public class ifTest
+                {
+                    public static void main(String[] args)
+                    {
+                        int age = 18;
+                        if (age > 20)
+                        {
+                            System.out.println("年龄已经大于20岁了");
+                            System.out.println("大于20岁的人应该学会自律, 承担更多的责任...");
+                        }
+                    }
+                }
+                
+            2. 如果 if(logic expression), else if(logic expression), else 后的代码只有一行语句时, 可以省略
+                花括号, 因为单行语句本身就是一个整体, 无需用花括号来把他们定义成一个整体, 但是, 但是 不推荐!
+             
+            3. if 语句容易出现逻辑错误的问题, 不是语法错误, 代码如下:
+            例子:
+                public class ifErrorTest
+                {
+                    public static void main(String[] args)
+                    {
+                        int age = 45;
+                        if (age > 20)
+                        {
+                            System.out.println("青年人");
+                        }
+                        else if (age > 40)
+                        {
+                            System.out.println("中年人");
+                        }
+                        else if (age > 60)
+                        {
+                            System.out.println("老年人");
+                        }
+                    }
+                }    
+            说明: 1. else 的隐含条件是对前面条件取反, 当第一个条件始终满足的情况下, else 的语句判断的结果就始终为
+                    false
+                  2. 这个问题在学python和JavaScript的时候都遇到过, 想想当时是怎么解决的! 其实我觉得原理是一样的.
+                  3. 记住: 总是优先把包含范围小的条件放在前面处理, 例如: age>60 和 age>20 两个条件, 明显age>60的
+                    范围更小, 所以应该先处理 age>60 的情况.
+            改写上面的例子, 解决错误:
+                public class ifErrorTest
+                {
+                    public static void main(String[] args)
+                    {
+                        int age = 45;
+                        if (age <= 20)
+                        {
+                           ystem.out.println("小朋友!"); 
+                        }
+                        else if (age > 20 && age<=40)
+                        {
+                            System.out.println("青年人");
+                        }
+                        else if (age > 40 && age <= 60)
+                        {
+                            System.out.println("中年人");
+                        }
+                        else if (age > 60)
+                        {
+                            System.out.println("老年人");
+                        }
+                    }
+                }    
+               
+    2.2 Java 7 增强后的 switch 分支语句
+        说明: switch 语句由一个控制表达式和多个 case 标签组成, 和 if 语句不同的是, switch 语句后面的控制表达式的数
+            据类型只能是byte, short, char, int四种整数类型, 枚举类型和java.lang.String类型(从java7才允许), 不可以
+            是boolean类型.
+            
+        运行流程:
+            switch 语句会先求出expression表达式的值, 然后拿这个表达式和case标签的值比较, 一旦遇到相等的值, 程序就
+            开始执行这个 case 标签后的代码, 不再判断与后面 case, default标签的条件是否匹配, 除非遇到break, 才会
+            结束.
+            
+        语法格式:
+            switch (expression)
+            {
+                case condition1:
+                {
+                    statement(s)
+                    break;
+                }
+                case condition2:
+                {
+                    statement(s)
+                    break;
+                }
+                ...
+                case conditionN:
+                {
+                    statement(s)
+                    break;
+                }
+                default:
+                {
+                    statement(s)
+                }
+            }
+            
+        程序执行及说明:
+            1. 上述这种分支语句的执行是先对 expression 求值, 然后依次匹配condition1, condition2, ..., confitionN等
+                值, 遇到匹配的值即执行对应的执行体;
+            2. 如果所有的case 标签后的值都不与 expression 表达式的值相等, 则执行 default标签后的代码块.
+            3. 和if语句不同的是, switch语句中各case标签后的代码快的开始点和结束点都非常清晰, 因此完全可以省略case
+                后代码块的花括号.
+            4. switch 语句中的 default 标签看似没有条件, 其实是有条件的, 条件是 expression 表达式的值不能和前面
+                任何一个 case 标签后的值相等
+            5. Java7 增强了switch语句的功能, 允许switch语句的控制表达式是java.lang.String类型的变量或表达式---只
+                能是java.lang.String类型, 不能是StringBuffer 或 StringBuilder 这两种字符串类型.
+        例子:
+            public class SwitchTest
+            {
+                public static void main(String[] args)
+                {
+                    /*
+                     * 下面的代码示例了基本的switch语句的基本语法
+                     * 
+                     * 再记一遍, switch语句后expression表达式的数据类型只能是 byte, char, short, int四种整数类型
+                     *  支持 String(Java7才支持), 枚举类型
+                     * 
+                     */
+                     
+                    // 声明变量score, 并为其赋值为'C'
+                    char score = 'C';
+                    switch (score)
+                    {
+                    case 'A':
+                        System.out.println("优秀");
+                        break;
+                    case 'B':
+                        System.out.println("良好");
+                        break;
+                    case 'C':
+                        System.out.println("中");
+                        break;
+                    case 'D':
+                        System.out.println("及格");
+                        break;
+                    case 'E':
+                        System.out.println("不及格");
+                        break;
+                    default:
+                        System.out.println("成绩输入有误");
+                        break;    
+                    }
+                    
+                    /*
+                     * 下面的代码示例了java.lang.String类型语法
+                     * 
+                     * 再记一遍, switch语句后expression表达式的数据类型只能是 byte, char, short, int四种整数类型
+                     *  支持 String(Java7才支持), 枚举类型
+                     * 
+                     */
+                    String season = "夏天";
+                    switch (season)
+                    {
+                        case "春天":
+                            System.out.println("春暖花开!");
+                            break;
+                        case "夏天":
+                            System.out.println("夏日炎炎!");
+                            break;
+                        case "秋天":
+                            System.out.println("秋高气爽!");
+                            break;
+                        case "冬天":
+                            System.out.println("冬雪皑皑!");
+                            break;
+                        default:
+                            System.out.println("季节输入有误! ");
+                    }
+                }
+            }
+
+
+3. 循环结构
+    3.1 含义: 循环语句可以在满足循环条件的情况下, 反复执行一段代码, 这段被重复执行的代码被称为循环体. 当反复执行
+        这个循环体的时候, 需要在合适的时候把循环条件改为假, 从而结束循环, 否则循环将一只执行下去, 形成死循环.
+        
+    3.2 循环语句组成:
+        1. 初始化语句(init_statement):一条或多条语句, 这些语句用于完成一些初始化工作, 初始化语句在循环执行前执行.
+        2. 循环条件(test_expression): 这是一个boolean表达式, 这个表达式能决定是否执行循环体.
+        3. 循环体(body_statement): 这个部分是循环的主体, 如果循环条件允许, 这个代码块将被重复执行.
+        4. 迭代语句(iteration_statement): 这个部分在一次循环体执行结束后, 对循环条件求值之前执行, 通常用于控制循
+            条件中的变量, 使得循环在合适的时候结束.
+    
+    
+    3.3 while 循环语句
+        语法格式:
+            [init_satement]
+            while(test_expression)
+            {
+                statement;
+                [iteration_statement]
+            }
+            
+        语法格式说明:
+            1. while循环每次执行循环体之前, 先对 test_expression 循环条件求值,如果循环条件为 true,则运行循环体部分
+            2. 迭代语句 iteration_statement 总是位于循环体的最后, 因此只有当循环体能成功执行完成时, while循环才会
+                执行 iteration_statement 迭代语句.
+            3. 所以, while 循环也可被当成条件语句, 如果 test_expression 条件表达式一开始就为 fasle, 则循环体部分
+                将永远不会获得执行.
+                
+        例子:
+            public class WhileTest
+            {
+                public static void main(String[] args)
+                {
+                    // 一个简单的while循环程序
+                    int count = 0;
+                    while (count < 10)
+                    {
+                        System.out.println("这是第 " + count + " 次循环!");
+                        count++;
+                    }
+                    System.out.println("while循环示例结束!");
+                }
+            }
+
+        注意问题:
+            1. 使用while循环的时候, 一定要保证循环条件有变成false的时候, 否则这个循环就是一个死循环.
+            2. 记清楚上面的语法格式, while(test_expression) 循环条件后面是没有分号(;)的, 如果加了分号, 就表明循
+                环体是一个空语句(也就是这个多余的分号), 空语句作为循环体的时候, 循环条件的返回值没有任何改变, 这
+                就成了一个死循环. 也导致分号后面的代码个循环没有任何关系.
+                
+    3.4 do while 循环语句
+        语法格式:
+            [init_statement]
+            do 
+            {
+                statement;
+                    [iteration_statement]
+            }while (test_expression);
+
+        do while 和 while 的区别:
+            1. while循环是先判断循环条件, 如果条件为真则执行循环体;
+            2. do while 循环则先执行循环体,(即使循环条件为false, 循环体也会执行一次,) 然后才判断循环条件,如果循 
+                环条件为真, 则执行下一次循环, 否则中止循环.
+            3. 由于 do while 最后判断循环条件, 所以 do while 循环条件后面要加一个分号(;).
+        
+        例子:
+            public class DoWhileTest
+            {
+                public static void main(String[] args)
+                {
+                    // 一个简单的 do while循环程序
+                    int count = 1;
+                    do 
+                    {
+                        System.out.println("这是第 " + count + " 次循环!");
+                        count++;
+                    }while (count < 10);
+                    System.out.println("Do while循环示例结束!");
+                }
+            }
+
+    3.5 for 循环
+        语法格式:
+            for ([init_statement]; [test_expression]; [iteration_statement])
+            {
+                statement
+            }
+
+        语法格式说明:
+            1. 程序执行for循环时, 先执行循环的初始化语句 init_statement, 初始化语句只在循环开始前执行一次; 每次
+                执行循环体之前, 先计算 test_expression 循环条件的值, 如果循环条件返回true, 则执行循环体, 循环体
+                执行结束后执行循环迭代语句,
+            2. for循环, 循环条件总是比循环体要多执行一次, 是因为最后一次执行循环条件返回false, 将不再执行循环体.
+        
+        例子: 1 
+            public class ForTest1
+            {
+                public static void main(String[] args)
+                {
+                    // 一个简单的 for 循环, 初始化语句只有一个, 循环条件也只是一个boolean表达式
+                    // 循环的初始条件, 循环条件, 循环迭代语句都在下面一行
+                    for (int count = 0; count < 10; count++)
+                    {
+                       System.out.println("这是第 " + count + " 次循环!"); 
+                    }
+                    System.out.println("for 循环示例结束!");
+                }
+            }
+        
+        例子: 2
+            public class ForTest2
+            {
+                public static void main(String[] args)
+                {
+                    // 复杂点的for循环, 初始化3个变量, 
+                    for (int b = 0, s = 0, p = 0; b<10 && s<4 && p<10; p++)
+                    {
+                       System.out.println("b: " + b++); 
+                       System.out.println( "s: " + ++s + "  p: " + p);
+                    }
+                    System.out.println(" for 循环示例2 结束!");
+                }
+            }
+            out: b: 0
+                 s: 1  p: 0
+                 b: 1
+                 s: 2  p: 1
+                 b: 2
+                 s: 3  p: 2
+                 b: 3
+                 s: 4  p: 3
+                 for 循环示例2 结束!
+
+            代码说明及注意问题:
+                1. 上面的代码中初始化变量有三个, 但是只能有一个声明语句, 因此如果需要在初始化表达式中声明多个变 
+                    量, 那么这些变量应该具有相同的数据类型.
+                2. 不要在循环体内修改循环变量(也叫循环计数器)的值, 否则会增加程序出错的可能性, 万一程序真的需要
+                    访问, 修改循环变量的值, 那就重新定义一个临时变量, 现将循环变量的值赋给临时变量, 然后对临时
+                    变量的值进行修改
+                3. for循环圆括号中的两个分号(;)是必需的, 初始化语句, 循环变量, 迭代语句部分都可以省略, 如果省
+                    略了循环条件, 则这个循环条件默认为true, 将会产生一个死循环.
+                    例如: 
+                        // 程序是一个死循环, 将一直输出 "-----"
+                        for( ; ; )
+                        {
+                            System.out.println("-----");
+                        }
+                4. 还可以把for循环的初始化条件定义在循环体之外, 把循环迭代语句放在循环体内, 这样的for循环非常类
+                    似与while循环. 但是循环体部分使用 continue 语句来结束本次循环的话, 将会导致循环迭代语句得不
+                    到执行.
+                    例如:
+                        // 把for循环的初始化条件提出来单独定义
+                        int count = 0;
+                        // for 循环只放循环条件
+                        for (; count < 10;  )
+                        {
+                            System.out.println("这是第 " + count + " 次循环!");
+                            // 把循环迭代语句放在循环体之后定义
+                            count++;  
+                        }
+                5. 将for循环的初始化语句放在循环之前定义还有一个作用, 就是可以扩大初始话语句中定义变量的作用域,
+                    在for循环里面定义的变量, 其作用域仅在该循环内有效, for循环终止之后, 这些变量就不可以访问了,
+                    如果想要在for循环之外的地方使用这些变量, 那就将初始化语句在循环体之前定义; 或者额外定义一个
+                    变量来保存这个循环变量的值.
+                    例如:
+                        int tmp = 0;
+                        for (int i=0; i<10; i++)
+                        {
+                            System.out.println("这是第 " + count + " 次循环!");
+                            tmp = i;
+                        }
+                        // 可以通过 tmp 来访问 i 变量的值 
+                        System.out.println(tmp);
+                    说明: 使用这种方法, 使得变量 i 和变量 tmp 的责任更加清晰, 反之, 使用前一种方法, 则变量 i 的 
+                        作用域被扩大了, 功能也被扩大了; 扩大的后果就是: 如果该方法还有另外一个循环也需要定义循
+                        环变量, 则不能再次使用 i 变量作为循环变量.
+                        
+    3.6 循环嵌套
+        含义: 1. 自我理解就是, 循环中套着循环, 可以是for中套着while, 也可以是for中套着while, 也可以是for中套着for
+            或者while中套着for或者while等等
+              2. 嵌套循环执行的次数, 是各层循环体执行次数的乘积
+              3. 无论嵌套多少层, 都可以把内层循环当成外层循环的循环体来对待
+        例子:
+            // Java代码写九九乘法表
+            public class NestedLoopTest
+            {
+                public static void main(String[] args)
+                {
+                    // for 循环
+                    for (int i = 1; i < 10; i++)
+                    {
+                        for (int j = 1; j <= i; j++)
+                        {
+                            // print 不换行输出; println 换行输出
+                            System.out.print(j + " * " + i + " = " + j*i + "    ");
+                        }
+                        System.out.print("\n");
+                    }
+                }
+            }
+
+
+    3.7 控制循环语句 
+        3.7.1 break
+            含义: break 用于完全跳出一个循环, 跳出循环体. 不管是那种循环, 一旦在循环中遇到break, 系统将完全结束
+                该循环, 开始执行循环之后的代码.
+                
+            注意: 1. break 语句不仅可以结束其所在的循环, 还可以直接结束外层循环. 此时需要在 break 后紧跟一个标
+                    签, 这个标签用于表示一个外层循环;
+                  2. Java标签: Java中的标签就是一个紧跟着英文冒号(:)的标识符, Java中标签只有放在循环语句之前才 
+                    起作用
+                  3. break 后的标签必须是一个有效标签, 即这个标签必须在 break 语句所在的循环之前定义, 或者在其
+                    所在循环的外层循环之前定义
+            
+            例子:
+                public class BreakTest
+                {
+                    public static void main(String[] args)
+                    {
+                        // 外层循环, outer作为标识符
+                        outer:
+                        for(int i = 0; i < 5; i++)
+                        {
+                            for (int j = 0; j < 3; j++)
+                            {
+                                System.out.println("i的值为: " + i + "  j的值为: " + j);
+                                if (j == 2)
+                                {
+                                    // 跳出 outer的标签所标识的循环
+                                    break outer;
+                                }
+                            }
+                        }
+                    }
+                }
+        3.7.2 continue (忽略本次循环剩下的语句)
+            含义: continue 的功能和break有点类似, 区别是continue只是忽略本次循环剩下的语句, 接着开始下一次循环,
+                并不会终止循环; 而break则完全终止循环本身.
+                
+            注意: 1. 与 break 类似, continue 后面也可以紧跟一个标签, 用于直接跳过标签所标识循环的当次循环的剩下
+                    语句, 重新开始下一次循环
+                  2. continue后面的标签也可以有一个必须是有效的标签, 即这个标签通常应该放在continue所在循环的外
+                    层循环之前定义
+                
+            例子:
+                public class ContinueTest
+                {
+                    public static void main(String[] args)
+                    {
+                        for (int  i < 0; i < 3; i++)
+                        {
+                            System.out.println("i的值是: " + i);
+                            if (i == 1)
+                            {
+                                // 忽略本次循环剩下的语句
+                                continue;
+                            }
+                            System.out.println("continue后的输出语句");
+                        }
+                    }
+                }
+
+        3.7.3 使用ruturn 结束方法
+            含义:1. return关键字的功能是结束一个方法, 当一个方法执行到一个return语句时(return关键后面还可以跟变量,
+                    常量和表达式), 这个方法将被结束
+                 2. Java程序中大部分循环都放在方法中执行, 一旦在循环体内执行到一个return语句, return语句就会结束
+                    该方法(整个方法, 不管return处于多少层循环中), 循环也就结束了.
+            例子:
+                public class ReturnTest
+                {
+                    public static void main(String[] args)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            System.out.println("i的值是 " + i);
+                            if ( i == 1)
+                            {
+                                return;
+                            }
+                            System.out.println("return 后面输出的语句!");
+                        }
+                    }
+                }
+                
+
+
+4. 数组类型
+    4.0 含义: 数组是一种数据类型,可用于存储多个数据,每个数组元素存放一个数据,通常可通过数组元素的索引来访问数组元
+        素, 包括为数组元素赋值和取出数组元素的值.
+        
+    4.1 Java数组的含义:
+        1. Java数组要求所有的数组元素具有相同的数据类型, 即一个数组里只能存储一种数据类型的数据, 而不能存储多种类
+            型的数据.
+        2. 一但数组的初始化完成, 数组在内存中所占的空间将被固定下来, 因此数组的长度将不可改变. 即使把某个数组元
+            素的数据清空, 但它所占的空间依然被保留, 依然数据该数组, 数组的长度依然不变.
+        3. Java的数组即可以存储基本类型的数据, 也可以存储引用类型的数据, 只要存储该数据元素具有相同类型即可.
+     
+    4.2 定义数组
+        格式:
+            type[] arrayName;
+            type arrayName[];
+        
+        说明:
+            1. 记住第一种方式, 即 type[] arrayName 这种形式, 因为语意及可读性更好, 
+            2. type 和 type[] 是两类型, 第一个可能是基本类型, 第二个是引用类型, 
+            3. 数组是一种引用的类型变量, 因此使用它定义一个变量时, 仅仅表示定义了一个引用变量(也就是定义了一个指
+                针), 这个引用变量还未指向任何有效内存, 因此定义数组时不能指定数组的长度.　
+            4. 由于定义数组的时候只是定义了一个引用变量, 并未指向任何有效内存空间, 所以还没有内存空间来存储元素
+                数组, 因此这个数组还不能使用, 需要对数组初始化后才可以使用.
+                
+    4.3 初始化数组
+        含义: 初始化, 就是为数组的数组元素分配内存空间, 并为每个数组元素赋值, 分为静态初始化,动态初始化两种
+
+        数组初始化两方式:
+        静态初始化: 初始化时由程序员显示指定每个数组元素的值, 由系统决定数组长度
+            语法格式:
+                arrayName = new type[]{element1, element2, element3, element4 ...}
+                也可以简化为: 
+                type[] arrayName = {element1, element2, element3, element4 ...}
+                
+            格式说明:
+                上面的格式语法中, 前面的type就是数组元素的数据类型, 此处的type必须与定义数组变量时所使用的type
+                相同, 也可以是定义数组时所指定的type的子类, 并使用花括把所有的数组元素括起来多个数据元素使用
+                逗号(,)隔开, 定义初始化值的花括号紧跟[]之后.
+                
+            例子:
+                // 定义一个 int 数组类型的变量, 变量名为intArr
+                int[] intAr;
+                // 使用静态初始化, 初始化数组时只指定数组元素的初始值, 不指定数组的长度
+                intArr = new int[]{5, 6, 8, 20};
+                
+                // 定义一个object数组类型的变量, 变量objArr
+                Object[] objArr;
+                // 使用静态初始化, 初始化数组时数组元素的类型是定义数组时所指定的数组元素类型的子类
+                // String 类型是 Object 类型的子类, 即字符串是一种特殊的 Object 实例
+                objArr = new String[]{"Java", "python"};
+                Object[] objArr2;
+                // 使用静态初始化,
+                objArr2 = new Object[]{"Java", "python"};
+                
+                // 使用简化初始化格式:
+                // 数组的定义和初始化同时完成, 使用简化的静态初始化写法
+                int[] a = {5, 6, 7, 9};
+                    
+                    
+                    
+        动态初始化: 初始化时程序员只指定数组的长度, 由系统为数组元素分配初始值
+            语法格式:
+                arrayName = new type[length];
+                
+            格式说明:
+                1. 上面的语法格式需要指定一个int类型的length参数, 这个参数指定了数组的长度, 也就是可以容纳数组
+                    元素的个数.此处的type必须与定义数组变量时所使用的type相同, 是定义数组时所指定的type的子类.
+                2. 动态初始化时, 程序只需要指定数组的长度, 即为每个数组元素指定所需的内存空间, 系统将负责为这
+                    些数组元素分配初始值
+                    数组元素的类型是基本类型中的整数类型(byte, short, int, long), 则数组元素的值是0
+                    数组元素的类型是基本类型中的浮点类型(float, double), 则数组元素的值是0.0 
+                    数组元素的类型是基本类型中的字符类型(char), 则数组元素的值是'\u0000'
+                    数组元素的类型是基本类型中的布尔类型(boolean), 则数组元素的值是false
+                    数组元素的类型是引用类型(类, 接口, 数组), 则元素的值是null
+            例子:
+                // 数组的定义个初始化同时完成, 使用动态初始化语法
+                int [] prices = new int[5];
+                // 数组的定义个初始化同时完成, //初始化数组时数组元素的类型是定义数组时所指定的数组元素类型的子类
+                Object[] books = new String[4];
+                
+    4.4 使用数组
+        含义:1. 使用数组包括对数组进行赋值和取出数组元素的值
+             2. 使用 "数组引用变量[索引]" 这种方式来访问数组元素
+             3. 访问到数组元素后, 就可以把这个数组元素当成普通变量来了
+             
+        注意:1. 如果访问数组元素时指定的索引值小于0, 或者大于等于数组的长度, **编译**的时候不会报错, 但是运行的时
+                候会出现异常: java.lang.ArrayIndexOutOfBoundsException:N(数组索引越界异常), 异常后面的" N "就是试
+                图访问的数组的索引.
+             2. 所有的数组都有 length 属性, 通过这个属性可以获取数组的长度
+             3. 初始化一个数组的时候, 就相当于同时初始化了多个相同类型的变量, 通过数组元素的索引就可以自由的访问
+                这些变量(实际上都是数组元素).
+              
+        例子: 
+            // 1. 静态定义及初始化一个数组
+            Object[] objArr = {"java", "python", "html", "CSS", "JS"};
+            // 访问 objArr 数组的第一个元素的值
+            System.out.println(objArr[0]);  // out: java
+            // 修改 objArr 数组的第一个元素的值
+            objArr[0] = "JAVA";
+            System.out.println(objArr[0]);  // out: JAVA
+
+            // 2. 动态定义及初始化一个数组
+            int[] objArr = new int[5];
+            System.out.println(objArr[2]);  // out: 0
+            objArr[0] = 9527;
+            objArr[1] = 9070;
+            System.out.println(objArr[0]);  // out: 9527
+            System.out.println(objArr[1]);  // out: 9070
+            System.out.println(objArr[2]);  // out: 0
+
+            // 3. for循环遍历输出每个数组元素, 调用数组的length属性
+            // 3.1 使用静态方法定义及初始话一个 int 数组
+            int[] intArr = {1, 19, 36, 100, 9070, 1991887, 2019, 88, 2};
+            // 3.2 for循环遍历
+            for(int i = 0; i < intArr.length; i++)
+            {
+                System.out.print(intArr[i] + " ");  // out: 1 19 36 100 9070 1991887 2019 88 2
+            }
+            // 使用数组的length属性获取数组的长度
+            System.out.println(intArr.length);      // out: 9
+
+    4.5 foreach循环
+        含义: foreach 循环遍历数组和集合比上面使用for循环和length属性更加简洁. 使用foreach 循环遍历数组和集合的
+              时, 无需获取数组和集合的长度, (无需循环条件, 无需循环迭代语句, 这部分由系统来完成) 无需根据索引来
+              访问数组元素和集合元素, foreach循环自动遍历数组和集合的每个元素.
+
+        语法格式:
+            for (type variableName : array | collection)
+            {
+                // variableName 自动迭代访问每个元素
+            }
+        
+        例子
+            // 静态定义及初始化一个数组
+            String[] strArrs = {"java", "python", "html", "CSS", "JS", "mysql"};
+            // 使用foreach循环来遍历数组元素
+            // 其中 strArr 将会自动迭代每个数组元素
+            for(String strArr : strArrs)
+            {
+                System.out.print(strArr + " ");     // out: java python html CSS JS mysql
+            }
+            
+
+5. 深入理解数组
+    理解: 数组是一种引用数据类型, 数组引用变量只是一个引用, 数组元素和数组变量在内存中是分开存放的.
+    
+    5.1 内存中的数组
+        说明:1. 数组引用变量只是一个引用, 只有当改引用指向有效内存之后, 才可以通过该数组变量来访问数组元素, 也就
+                是说如果在程序中访问数组对象本身, 则只能通过这个数组的引用变量来访问它
+             2. 实际数组对象被存储在堆(heap)内存中, 如果引用该数组对象的数组引用变量时一个局部变量, 那么他被存储
+                在栈(stack)内存中.
+             3. 所有在方法中定义的局部变量都是放在栈内存中, 
+             4. 如果对内存中的数组不再有任何引用变量指向自己, 则这个数组将成为垃圾, 该数组所占的内存将会被系统的
+                垃圾回收机制回收, 所以可以将该数组的变量赋给null来使系统回收该数组所占的堆内存,
+             5. 只要类型相互兼容, 就可以让一个数组变量指向另外一个实际的数组, 这种操作会误让人感觉数组长度可变.
+
+        例子:
+            // 使用静态方法定义并初始化一个数组 a
+            int[] a = {1, 2, 3, 4};
+            // 使用动态方法定义并初始化一个数组 b
+            int[] b = new int[5];
+            
+            // 输出 a 和 b 的length属性值
+            System.out.println("a数组的长度为: " + a.length);   // out: a数组的长度为: 4
+            System.out.println("b数组的长度为: " + b.length);   // out: b数组的长度为: 5
+            
+            // 因为 a 和 b 都是int类型, 所以可以将 a 赋值给 b
+            // 实际上, 也就是让 b 的指针指向 a 引用指向的数组
+            b = a;
+            // 再次输出 a 和 b 的length属性值
+            System.out.println("a数组的长度为: " + a.length);   // out: a数组的长度为: 4
+            System.out.println("b数组的长度为: " + b.length);   // out: b数组的长度为: 4
+
+        程序说明:
+            1. 上面的代码两次输出b的长度不一样, 并不是长度可变; 而是引用变量改变了而已;
+            2. 牢记: 定义并初始化一个数组后, 在内存中分配了两个空间, 一个用于存放数组的引用变量, 另一个用于存放
+               数组本身.
+            3. 程序定义并初始化一个数组的时, 系统内存中实际上产生了2个内存区, 其中栈内存有一个引用变量a, 堆内存
+               中有一块内存区, 存储a变量引用所指向的数组本身.
+    
+    5.2 基本类型数组的初始化
+        说明:
+            基本数据类型数组元素的值直接存储在对应的数组元素中, 初始化数组时, 先为该数组分配内存空间, 然后直接
+            将数组元素的值存入对应数组元素中.
+        例子:
+            // 定义一个 int 类型的数组变量
+            int[] intArrs;
+            // 动态初始化数组, 数组长度为 5
+            intArrs = new int[5];
+            // 使用for循环为每个数组元素赋值
+            for(int i = 0; i < intArrs.length; i++)
+            {
+                intArrs[i] = i + 10;
+            }
+            // 使用 foreach 方式来访问数组元素
+            for(int intArr : intArrs)
+            {
+                System.out.print(intArr + " " );   //out: 10 11 12 13 14
+            }
+        
+    5.3 引用类型数组的初始化
+        说明:
+            引用类型数组的数组元素是引用, 每个数组元素里存储的还是引用, 它指向另一块内存, 这块内存里存储了有效
+            数据.
+
+        例子:
+            // 定义一个person类
+            class Person
+            {
+                public int age;
+                public double height;
+                public void info()
+                {
+                    System.out.println("我的年龄是: "+ age + ", 我的身高是: " + height);
+                    
+                }
+            }
+
+            // 定义一个Person[] 数组,并动态初始化数组, 为数组指定值
+            public class ReferenceArrayTest
+            {
+               public static void main(String[] args)
+               {
+                    // 定义一个students数组变量, 其类型是 Person[]
+                    Person[] students;
+                    // 执行动态初始化, 为数组指定长度
+                    students = new Person[2];
+                    // 创建一个Person实例, 并将这个Person实例赋值给 zhang 变量
+                    Person zhang = new Person();
+                    // 为zhang所引用的Person对象的 age, height 赋值
+                    zhang.age = 18;
+                    zhang.height = 170;
+                    // 创建一个Person实例, 并将这个Person实例赋值给 lee 变量
+                    Person lee = new Person();
+                    // 为lee所引用的Person对象的 age, height 赋值
+                    lee.age = 16;
+                    lee.height = 168;
+                    // 将zhang变量的赋值给第一个数组元素
+                    students[0] = zhang;
+                    // 将lee变量的赋值给第二个数组元素
+                    students[1] = lee;
+                    // 下面两行代码的结果完全一样, 因为lee和students[1]指向的是同一个Person实例
+                    lee.info();
+                    students[1].info();
+                    
+               }
+            }
+        说明: 刚才运行出错了, 原因是我的错误, 第一: 文件名必须要是公共类名; 第二: 就是大小写出错了 ~!~ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
