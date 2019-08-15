@@ -3,8 +3,11 @@
 
 ##### 希望这个目录能不断的更新延续下去，学习之路希望不要停下来！！
 **目录**：
-- python
-- git
-- sql 
-- front_end
-
+- python 30%
+- git 40%
+- sql 20%
+- front
+    - html 20%
+    - css 20%
+    - javascript 10%
+- java 5%
