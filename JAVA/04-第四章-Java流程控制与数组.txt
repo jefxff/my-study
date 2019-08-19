@@ -845,16 +845,16 @@
                 // 把a当成一维数组, 遍历 a 数组的每个数组元素
                 for(int i = 0, len = a.length; i < len; i++)
                 {
-                    System.out.println(a[i]);
+                    System.out.println(a[i]);   // out: 4个 null (因为引用类型, 默认值是null)
                 }
                 // 初始化 a 数组的第一个元素
-                a[0] = new int[2];
-                // 访问a 数组的第一个元素所指数组的第二个元素
+                a[0] = new int[2]; 
+                // 指定 a 数组的第一个元素所指数组的第二个元素的元素值为6
                 a[0][1] = 6;
                 // a 数组的第一个元素时一个一维数组, 遍历这个数组
                 for (int i = 0, len = a[0].length; i < len; i++)
                 {
-                    System.out.println(a[0][i]);
+                    System.out.println(a[0][i]);   // out: 0, 6 
                 }
                 
                 // 2. 动态方法同时定义并初始化二维数组的两个维数
@@ -865,7 +865,9 @@
                 // 使用简化的静态方法初始化二维数组
                 String[][] str2 = {new string[3], new String[]{"hello"}};
 
-    5.5 Java8 增强的工具类: Arrays
+    5.5 Java8 增强的工具类: Arrays(结合下面的例子理解)
+    
+        Arrays类包含的static修饰方法:
         1. int binarySearch(type[] a, type key)
             说明:
                 使用二分法查询key元素值在a数组中出现的索引; 如果a数组不包含key元素值, 则返回负数. 调
@@ -946,6 +948,270 @@
                     
                 }
             }
+        Java8为Arrarys类增加的工具方法:
+        1. void parallelPrefix(xxx[] array, XxxBinaryOperator op)
+            说明:
+                该方法使用op参数指定的计算公式计算的都到的结果作为新元素, op计算公式包含 left, right
+                两个形参, 其中left代表数组中前一个索引处的元素, right 代表数组中当前索引处的元素, 当 
+                计算第一个欣数组元素时, left的值默认为1
+        
+        2. void parallePrefix(xxx[] array, int fromIndex, int toIndex, XxxBinaryOperator op)
+            说明:
+                该方法和上面的方法相似, 区别在于该方法仅重新计算 formIndex  到 toIndex索引的元素 
+                
+        3. void setAll(xxx[] array, IntToXxxFunction generator)
+            说明:
+                该方法使用指定的生成器(generator)为所有的数组元素设置值,该生成器控制数组元素的值生成算法
+        
+        4. void parallelSetAll(xxx[] array, IntToXxxFunction generator)
+            说明:
+                该方法和上面的方法相似, 只是该方法增加了并行功能, 可以利用多CPU并行来提高性能
+        
+        5. void parallelSort(xxx[] a)
+            说明:
+                该方法的功能与Arrays类以前就有的sort()防范相似, 只是增加了并行功能, 可以利用多CPU并
+                行来提高性能
+        
+        6.  void parallelSort(xxx[] a, int fromIndex, int toIndex)
+            说明:
+                该方法与前一个方法作用类似, 区别是该方法仅对fromIndex 到 toIndex索引的元素进行排序 
+        
+        7. Spliterator.OfXxx spliterator(xxx[] array)
+            说明:
+                该方法将数组的所有元素转换成对应的 Spliterator 对象
+        
+        8. Spliterator.OfXxx spliterator(xxx[] array, int startInclusive, int endExclusive)
+            说明:
+                该方法与前一个方法类似, 区别是该方法仅对fromIndex 到 toIndex 索引的元素进行排序
+                
+        9. XxxStream stream(xxx[] array)
+            说明:
+                该方法将数组转换成Stream, Stream 是Java8新增的流式变成的API
+        
+        10. XxxStream stream(xxx[] array,  int startInclusive, int endExclusive)
+            说明:
+                该方法与上一个方法相似, 区别是该方法仅将fromIndex 到 toIndex 索引的元素转换成Stream
+        
+        说明:
+            1. 上述方法中所有以parallel开头的方法都表示该方法可利用CPU并行的能力来提高性能, 
+            2. xxx代表不同的数据类型, 比如处理int[]型数组对应将xxx换成int, 处理long[]型数组时应将xxx
+                换成 long
+                
+        例子:(先了解, 往后学完基础再来看)
+            public class ArraysTest2
+            {
+                public static void main(String[] args)
+                {
+                    int[] arr1 = new int[]{3, -4, 25, 16, 30, 18};
+                    //对数组arr1进行排序
+                    Arrays.parallelSort(arr1);
+                    System.out.println(Arrays.toString(arr1));
+                    int[] arr2 = new int[]{3, -4, 25, 16, 30, 18};
+                    Arrays.parallePrefix(arr2, new IntBinaryOperator()
+                    {
+                        // left代表数组中前一个索引处的元素, 计算第一个元素时, left 为1
+                        // right代表数值中当前索引处的元素
+                        public int applyAsInt(int left, int right)
+                        {
+                            reutrn left * right ;
+                        }
+                    });
+                    System.out.println(Ayyars.toString(Arr2));
+                    int[] arr3 = new int[5];
+                    Arrays.parallelSetAll(arr3, new IntUnaryOperator()
+                    {
+                        // operand 代表正在计算的元素索引
+                        public int applyAsInt(int operand)
+                        {
+                            return operand * 5;
+                            
+                        }
+                    });
+                    System.out.println(Arrays.toString(arr3));
+                }
+            }
+            
+        
+    5.6 数组的应用举例
+        例子1: 将一个四位数字转换成人名币读法
+        public class Num2Rmb
+        {
+            private String[] hanArr = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
+            private String[] unitArr = {"十", "百", "千"};
+            /**
+             * 把一个浮点数分解成整数部分和小数部分
+             * @param num 需要被分解的浮点数
+             * @return 分解出来的整数部分和小数部分, 第一数组元素时整数部分, 第二个数组元素是小数部分
+             */
+             private String[] divide(double num)
+             {
+                // 将一个浮点数强制类型转换为long类型, 即得到它的整数部分
+                long zheng = (long)num;
+                // 浮点数减去整数部分就是得到小数部分, 小数部分乘以100后再取整得到2位小数
+                long xiao = Math.round((num - zheng) * 100);
+                // 下面用了2中方法把整数转换成字符串
+                return new String[] {zheng + "", String.valueOf(xiao)};
+             }
+            /**
+             * 把一个四位数的数字字符串变成汉字字符串
+             * @param numStr 需要被转换的四位的数字字符串
+             * @return 四位数字字符串被转换成汉字字符串
+             */
+            private String toHanStr(String numStr)
+            {
+                String result = "";
+                int numLen = numStr.length();
+                // 一次遍历数字字符串的每一位数字
+                for (int i = 0; i < numLen; i++)
+                {
+                    // 把char型数组转换成int型数字, 因为他们的ASCII码值恰好相差48
+                    // 因此把char型数字减去48得到int 型数字, 例如: '4' 被转换成 4
+                    int num = numStr.charAt(i) - 48;
+                    // 如果不是最后一位数字, 而且数字不是零, 则需要添加单位(千, 百, 十
+                    if (i != numLen - 1 && num != 0)
+                    {
+                        result += hanArr[num] + unitArr[numLen - 2 - i];
+                    }
+                    // 否则不需要添加单位
+                    else
+                    {
+                        result += hanArr[num]; 
+                    }
+                }
+                return result;
+                
+            }
+            public static void main(String[] args)
+            {
+                Num2Rmb nr = new Num2Rmb();
+                // 把一个浮点数分解成整数部分和小数部分
+                // System.out.println(Arrays.toString(nr.divide(236711125.123)));
+                // 把一个四位数的数字字符串变成汉字字符串
+                System.out.println(nr.toHanStr("7015"));
+            }
+        }
+        例子2: 初步五子棋功能
+        import java.io.*;
+
+        public class WuZiQi
+        {
+            // 定义棋盘的大小
+            private static int BOARD_SIZE = 15;
+            // 定义二维数组来充当棋盘
+            private String[][] board;
+            public void initBoard()
+            {
+                // 初始化棋盘数组
+                board = new String[BOARD_SIZE][BOARD_SIZE];
+                // 双层for循环为元素赋值为"╋", 用于在控制台画出棋盘
+                for (int i = 0; i < BOARD_SIZE; i++)
+                {
+                    for (int  j = 0; j < BOARD_SIZE; j++)
+                    {
+                        board[i][j] = "╋";
+                     
+                    }
+                }
+            }
+            //在控制台输出棋盘方法
+            public void printBpard()
+            {
+                // 打印每个数组元素
+                for (int i = 0; i < BOARD_SIZE; i++)
+                {
+                    for (int j = 0; j < BOARD_SIZE; j++)
+                    {
+                        System.out.print(board[i][j]);
+                    }
+                    // 每次打印完一行数组元素后输出一个换行符
+                    System.out.print("\n");
+                }
+            }
+            public static void main(String[] args) throws Exception
+            {
+                WuZiQi wzq = new WuZiQi();
+                wzq.initBoard();
+                wzq.printBpard();
+                // 这是用于获取键盘输入的方法
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String inputStr = null;
+                // br.readLine(); // 每当在键盘上输入一行内容后按回车键, 刚输入的内容将被wzq读取到
+                while((inputStr = br.readLine()) != null)
+                {
+                    // 将用户输入的字符串以逗号(,)作为分隔符, 分割为2个字符串
+                    String[] posStrArr = inputStr.split(",");
+                    // 将2个字符串转换成用户下棋的坐标
+                    int xPos = Integer.parseInt(posStrArr[0]);
+                    int yPos = Integer.parseInt(posStrArr[1]);
+                    // 把对应的数组元素赋给"●"
+                    wzq.board[yPos - 1][xPos - 1] = "●";
+                    /*
+                     * 电脑随机生成2个整数, 作为电脑的坐标, 赋给 board 数组  
+                     * 1. 坐标的有效性, 只能是数字, 不能超出棋盘的范围
+                     * 2. 下棋的点, 不能重复下棋
+                     * 3. 每次下棋后, 需要扫描谁赢了
+                     */
+                     wzq.printBpard();
+                     System.out.println("输入下棋的坐标, 应为x, y的格式:");
+                }
+                
+            }
+        }
+
+
+本章要点:
+
+1. 顺序结构
+
+2. 流程控制:
+    if分支语句
+    switch 分支语句
+    while 循环语句
+    do while 循环语句
+    for 循环
+    嵌套循环
+    控制循环结构
+    
+3. 数组:
+    数组的理解
+    数组的定义及初始化
+    使用数组元素
+    数组作为引用类型的运行机制
+    多维数组及其本质
+    操作数组的工具类
+    数组的实际应用场景
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
