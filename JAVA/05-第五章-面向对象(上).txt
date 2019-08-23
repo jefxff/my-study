@@ -718,7 +718,7 @@
     3.4 变量的使用规则
         原则：
             1. 能用局部变量就不用成员变量
-            2. 使用局部变量也应该缩小局部变量的使用范围
+            2. 使用局部变量也应该尽可能缩小局部变量的使用范围
 
         使用成员变量的场景：
             1. 若需要定义的变量是用于描述某个类或某个对象的固有信息
@@ -731,37 +731,349 @@
         扩大变量的作用域的缺点：
             1. 增大了变量的生存时间，导致更大的内存开销
             2. 扩大了变量的作用域，不利于提高程序的内聚性
-
+        
+        例子:
+            public class ScopeTest1{
+                //定义一个类成员变量作为循环变量
+                static int i;
+                public static void main(String[] args){
+                    for (i<0; i < 10; i++){
+                        System.out.println("hello!");
+                    }
+                }
+            }
+            
+            public class ScopeTest2
+            {
+                public static void main(String[] args)
+                {
+                    //定义一个方法局部变量作为循环条件
+                    int i;
+                    for (i < 0; i < 10; i++)
+                    {
+                        System.out.println("hello!");
+                    }
+                }
+            }
+            
+            public class ScopeTest3
+            {
+                public static void main(String[] args)
+                {
+                    // 定义一个代码块局部变量作为循环变量
+                    for(int i < 0; i < 10; i++)
+                    {
+                        System.out.println("hello!");
+                    }
+                }
+            }
+        
+            说明: 上面三个程序的执行结果完全一样, 但是程序的效果则大有差异. 第三个程序最符合软件的
+                开发规范;
         
 
 
+4. 隐藏和封装
+    4.1 理解封装
+        含义:
+            封装(Encapsulation)是面向对象的三大特征之一(还有继承和多态), 它指的是将对对象的状态信息
+            隐藏在对象内部, 不允许外部程序直接访问对象内部信息, 而是通过该类所提供的方法来实现对内
+            部信息的操作和访问
+            
+        封装的目的:
+            1. 隐藏类的实现细节
+            2. 让使用者只能通过事先预定的方法来访问数据, 从而可以在该方法里加入控制逻辑, 限制对成员
+                变量的不合理访问
+            3. 可进行数据检查, 从而有利于保证对象信息的完整性
+            4. 便于修改, 提高代码的可维护性
+        
+        封装的规则:
+            1. 将对象的成员变量和实现细节隐藏起来, 不允许外部访问
+            2. 把方法曝露出来, 方法来控制对这些成员变量进行安全访问和操作
+
+    4.2 使用访问控制符
+        说明:
+            1. 控制级别:从左至右, 控制级别从小到大
+                private ----------> default ----------> protected ----------> public 
+            2. 访问控制符用于控制一个类的成员是否可以被其他类访问, 对于局部变量而言, 其作用域就是它
+                所在的方法, 不可能被其他类访问, 因此不能使用访问控制符来修饰.
+            3. 外部类只能有两种访问控制级别: public 和默认default(可省略不写), 外部类不能使用private
+                和 protected 修饰. 原因是: 外部类没有处于任何类的内部, 也就没有其所在类的内部, 所在 
+                类的子类两个范围, 因此 private 和 protected 访问控制符对外部类没有意义
+            4. 外部类可以使用public 和 包 访问控制权限, 使用 public 修饰的外部类尅被所有类使用,
+            5. 不使用任何访问控制符修饰的外部类只能被同一个包中的其他类使用
+            
+        控制级别:
+            1. private (当前类访问权限):
+                如果类里面的一个成员(包括成员变量, 方法和构造器等)使用 private 访问控制符来修饰, 则 
+                这个成员只能在当前类的内部被访问. 适用于修饰成员变量, private修饰成员变量可以把成员
+                变量隐藏在该类的内部
+            2. default (包访问权限):
+                如果类里面的一个成员(包括成员变量, 方法和构造器等)或者一个外部类不使用任何访问控制
+                符修饰, 就称它是包访问权限, default 访问控制的成员或者外部类可以被相同报下的其他类
+                访问
+            3. protected (子类访问权限):
+                如果一个成员(包括成员变量, 方法和构造器等)使用 protected 访问控制符修饰, 那么这个成
+                员既可以被同一个包中的其他类访问, 也可以被不同包中的子类访问. 在通常情况下, 如果使
+                用protected 来修饰一个方法, 通常是希望其子类来重写这个方法
+            4. public (公共访问权限):
+                这是一个最宽松的访问控制级别, 如果一个成员(包括成员变量, 方法和构造器等) 或者一个外 
+                部类使用 public 访问控制符修饰, 那么这个成员或外部类就可以被所有类访问, 不管访问类
+                和被访问类是否处于同一个包中, 是否具有父子集成关系
+        
+        访问控制符的使用原则:
+            1. 类里面的绝大部分成员变量都应该使用 private 修饰, 只有一些 static 修饰的, 类似全局变量
+                的成员变量, 才考虑使用 public 修饰, 另外: 有些方法只用于辅助实现该类的其他方法, 这些
+                方法被称之为工具方法, 工具方法也应该使用 private 修饰
+            2. 如果某个类主要用做其他类的父类, 该类里包含的发部分方法可能仅希望被其子类重写, 而不想
+                被外界直接调用, 应该用 protected 修饰这些方法
+            3. 希望暴露出来给其他类来调用的方法应该使用 public 修饰, 例如构造器
+            
+        例子:
+            // 一个实现了合理封装的 Person 类 
+            public class Person
+            {
+                // 使用private修饰成员变量, 将这些成员变量隐藏起来
+                private String name;
+                private int age;
+                //提供方法来操作 name 成员变量
+                public void setName(String name)
+                {
+                    // 执行合理性校验, 要求用户名必须在2~6位之间
+                    if (name.length() > 6 || name.length() < 2)
+                    {
+                        System.out.println("设置的人名不符合要求!");
+                        return;
+                    }
+                    else
+                    {
+                        this.name = name;
+                    }
+                }
+                public String getName()
+                {
+                    return this.name;
+                }
+                // 提供方法来操作age成员变量
+                public void setAge(int age)
+                {
+                    // 执行合理型校验, 要求输入的年龄必须在 0~100 之间
+                    if (age > 100 || age < 0)
+                    {
+                        System.out.println("输入的年龄不合法!");
+                        return;
+                    }
+                    else
+                    {
+                        this.age = age;
+                    }
+                }
+                public int getAge()
+                {
+                    return this.age;
+                }
+                
+            } 
+                说明:
+                    1. setter 和 getter 方法
+                        类里面定义了一个 abc 的实例变量, 则其对应的 settrt 和 getter 方法名应该为
+                        setAbc() 和 getAbc() (即将原来实例变量名首字母大写, 并在前面分别增加 set 
+                        和 get 动词)
+                    2. 如果一个Java类的每个实例变量都被使用 private 修饰, 并未每个实例变量都提供了
+                        public修饰的 setter 和 getter 方法, 那么这个类就是符合JavaBean规范的类
+                    3. 进行程序设计的时, 应尽量避免一个模块直接操作和访问另外一个模块的数据, 模块
+                        的设计追求好内聚(尽可能把模块的内部数据, 功能实现细节隐藏在模块内部独立完
+                        成,不允许外部直接干预), 低耦合(仅暴露少量的方法给外部使用)
+            
+            // 测试上面的Person类
+            public class PersonTest
+            {
+                public static void main(String[] args)
+                {
+                    Person p = new Person();
+                    // 因为age成员变量以被隐藏, 所以下面的语句出现编译错误
+                    // p.age = 1000;  // out: 错误: age 在 Person 中是 private 访问控制
+                    // 下面语句编译不会出现错误, 但是运行时提示"输入的年龄不合法"
+                    // 程序不是修改 p 的 age 成员变量
+                    p.setAge(1000);
+                    // 访问 p 的 age 成员变量也必须通过其对应的 getter 方法
+                    // 因为上面从未成功设置 p 的 age 成员变量, 故此处输出0
+                    System.out.println("未设置 age 的成员变量时: " + p.getAge());
+                    // 成功修改 p 的 age 成员变量 
+                    p.setAge(30);
+                    // 因为上面成功设置了 p 的 age 成员变量, 故此处输出30
+                    System.out.println("成功设置 age 的成员变量后: " + p.getAge());
+                    
+                    // 不能直接操作 p 的 name  成员变量, 只能通过其对应的 setter 方法 
+                    // 因为 "李刚" 字符串的长度满足2~6, 所以可以成功设置
+                    p.setName("李刚");
+                    System.out.println("成功设置 name 的成员变量后: " + p.getName());
+                }
+            }
+
+    4.3 package, import 和 import static 
+        包(package)机制:
+            1. 包机制提供了类的多层命名空间, 用于解决类的命名冲突, 类文件管理等问题.
+            2. Java允许将一组功能相关的类放在同一个 package 下, 从而组成逻辑上的类库单元
+            3. 位于包中的类, 在文件系统中也必须有与包名层次相同的目录结构
+            4. Java源文件中使用了package语句, 那么源文件里定义的所有类都属于这个包, 位于包中的每个
+                类的完整类名都应该是 包名和类名 的组合, 如果其他人需要使用该包下的类, 也应该使用
+                包名加类名的组合
+            5. 一个Java源文件只能指定一个包, package 语句必须是第一条非注释型语句
+            6. 同一个包下的类可以自由访问, 无须添加包前缀
+            
+        包的引入语法:
+            package packageName;
+            
+            例子1: 简单的引入包例子
+                package lee;
+                public class Hello
+                {
+                    public static void main(String[] args)
+                    {
+                        System.out.println("Hello, world!");
+                    }
+                }
+            
+            说明:
+                1. 执行 " javac -d . hello.java " 命令, 会在当前的目录下生成一个lee文件夹, 编译后的
+                    hello.class 文件就在 lee 的这个目录中, 而且 也必须在这个 lee 目录下才有效
+                2. 在 lee 文件夹所在目录执行: " java lee.hello " 命令执行程序
+                3. 同一个包中的类不必位于相同的目录下, 只要将路径添加到 CLASSPATH 环境变量里就行
+                4. java 的源文件应放在与包名一致的目录结构下
+                5. 在同一个包的子包中的类, (就是不再当前目录时), 引入类需要添加类前缀: 父包.子包.类 
+            
+            例子2: 
+                // 在lee包下面再定义一个sub子包, 定义一个Apple类, 
+                package lee.sub;
+                public class Apple{
+                    public static void main(String[] args)
+                    {
+                        System.out.print("Hello Apple!");
+                    }
+                }
+
+            例子3:
+                // 定义HelloTest 测试Hello 类
+                package lee;
+                public class HelloTest{
+                    public static void main(String[] args){
+                        // 直接访问相同包下面的另一个类, 无需使用包前缀(lee.Hello())
+                        Hello h = new Hello();
+                        
+                        // 调用包中包下面的类时, 就需要添加包前缀
+                        lee.sub.Apple a = new lee.sub.Apple();
+                        
+                    }
+                }
 
 
+        import 关键字
+            说明: 
+                1. import可以向某个Java文件导入指定包层次下某个类或全部类
+                2. import 语句应该放在 package 语句之后, 类定义之前
+                3. 作用: 使用 import 可以省略写包名
+            
+            import 用法:
+                1. 导入单个类
+                    import package.subpackage...className;
+                    如: import lee.sub.Apple;
+                2. 导入包下的全部类
+                    import package.subpackage...*;
+                    
+            例子: 
+                // 改写上面的例子3; 使用import 语句可以简化编程
+                package lee;
+                // 使用 import 导入 lee.sub.Apple 类 
+                import lee.sub.Apple;
+                public class Hellotest
+                {
+                    pubic static void main(String[] args)
+                    {
+                        // 使用类全面写法
+                        lee.sub.Apple a = new lee.sub.Apple();
+                        
+                        // 如果使用 import 语句来导入 Apple 类, 就可以不再使用类全名了
+                        Apple a = new Apple();
+                    }
+                }
 
+        import static 静态导入:
+            说明:
+                1. 用于导入指定类的某个静态成员变量, 方法或全部静态成员变量及方法
+                2. import static 语句应该放在 package 语句之后, 类定义之前, 和 import 语句相同位置
+                3. 静态成员变量就是前面学过的类变量, 类方法, 他们都使用 static 修饰 
+                4. 使用 import static 则可以连类名都省略
+                
+            导入语法:
+                1. 导入指定类的单个成员变量, 方法
+                    import static package.subpackage...ClassName.fieldName|methodname
+                    例如: import static java.lang.System.out;
+                2. 导入指定类的全部成员变量, 方法
+                    import static package.subpackage...ClassName.*;
+            例子:
+                import static java.lang.System.*;
+                import static java.lang.Math.*;
+                
+                public class StaticImportTest
+                {
+                    public static void main(String[] args)
+                    {
+                        // out 是 java.lang.System 类的静态成员变量, 代表标准输出
+                        // PI 是 java.lang.Math 类的静态成员变量, 代表π常量
+                        out.println(PI);
+                        // 直接调用 Math 类的 aqrt 静态方法
+                        out.println(sqrt(356));
+                    }
+                }
 
+            Java 源文件结构:
+                // 0 个或 1个, 必须放在文件开始
+                package 语句 
+                
+                // 0 个或多个, 必须放在类定义之前
+                import | import static 语句 
+                
+                // 0 个或1个public类, 借口或枚举定义
+                public ClassDefinition | interfaceDefinition | enumDefinotion
+                
+                // 0 个或多个普通类, 借口或枚举定义 
+                classDefinition | interfaceDefinition | enumDefinotion
 
+    4.4 Java 的常用包
+        位置:
+            1. Java的核心类都放在Java包以及其子包下, Java扩展的许多类放在Javax 包以及其子包下, 这些
+                使用类也就是API(应用程序借口)
+        
+        常用包:
+            1. java.lang 
+                这个包下包含了Java语言的核心类, 如 String, Math, System 和 Thread类等, 这个包下的类
+                无须使用import语句导入, 系统会主动导入这个包下的所有类
+            
+            2. java.util
+                这个包下包含了Java的大量工具类/接口和集合框架类/接口, 例如: Arrays, List, Set等
+            
+            3. java.net
+                包含一些Java网络编程相关的类/接口
+               
+            4. java.io
+                包含了一些Java输入/输出编程相关的类/接口 
+            
+            5. java.text
+                包含了Java格式化的相关的类
+                
+            6. java.sql
+                包含了Java进行JDBC数据库编程相关类/接口 
+            
+            7. java.awt
+                包含了抽象窗口工具集(Abstract Window toolkits) 的相关类/接口, 这个类主要用于构建图形
+                用户界面(GUI)程序 
+            
+            8. java.swing 
+                这个包含了Swing 图形用户界面编程的相关类/接口. 这些类可用于构建平台无关的GUI程序
+                
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+5. 深入理解构造器()
 
 
 
