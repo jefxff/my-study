@@ -666,7 +666,7 @@
             System.out.println(objArr[2]);  // out: 0
 
             // 3. for循环遍历输出每个数组元素, 调用数组的length属性
-            // 3.1 使用静态方法定义及初始话一个 int 数组
+            // 3.1 使用静态方法定义及初始化一个 int 数组
             int[] intArr = {1, 19, 36, 100, 9070, 1991887, 2019, 88, 2};
             // 3.2 for循环遍历
             for(int i = 0; i < intArr.length; i++)
