@@ -1078,12 +1078,106 @@
                 这个包含了Swing 图形用户界面编程的相关类/接口. 这些类可用于构建平台无关的GUI程序
                 
 
-5. 深入理解构造器()
-
-
-
-
-
+5. 深入理解构造器
+    5.1 使用构造器执行初始化
+        说明:
+            1. 构造器让系统创建对象时就为该对象的实例变量显式的指定初始值
+            2. 通过 new 关键字调用构造器时, 构造器也确实返回了该类的对象, 但是这个对象并不是完全由
+               构造器负责创建的; 调用构造器时, 系统会先为该对象分配内存空间, 并为这个对象执行默认
+               初始化(动态数组默认赋值一样), 这个对象已经产生了---这些操作在构造器执行之前就已经完
+               成了; 
+            3. 当系统开始执行构造器的执行体之前, 系统已经创建了一个对象, 只是这个对象还不能被外部访
+               问, 只能在该构造器中通过 this 来引用. 当构造器的执行体执行结束后, 这个对象作为构造器
+               的返回值被返回, 通常还会赋给另一个引用类型的变量, 从而让外部程序可以访问该对象
+            4. 一旦程序员自定义了构造器, 系统就不再提供默认的构造器
+            5. 通常构造器使用 public 修饰, 允许系统中任何位置的类来创建该类的对象; protected 修饰主
+                要用于被其子类调用; private 修饰用于阻止其他类创建该类的实例
+        例子:
+            public class ConstructorTest
+            {
+                public String name;
+                public int count;
+                //提供自定义的构造器, 包含两个参数
+                Public ConstructorTest(String name, int count)
+                {
+                    // 构造器里的 this 代表它进行初始化的对象
+                    // 下面两行代码将传入的2个参数赋给 this 代表对象的 name 和 count 实例变量 
+                    this.name = name;
+                    this.count = count;
+                }
+                public static void main(String[] args)
+                {
+                    // 使用系统自定义的构造器来创建对象
+                    // 系统将会对该对象执行自定义的初始化
+                    ConstructorTest tc = new ConstructorTest("jefxff", 29);
+                    // 输出 ConstructorTest 对象的 name 和 count 两个实例变量
+                    System.out.println(tc.name);
+                    System.out.println(tc.count);
+                }
+            }
+                
+    5.2 构造器的重载
+        说明:
+            1. 同一个类里具有多个构造器, 多个构造器的形参列表不同, 即被称之为构造器的重载.
+            2. 构造器重载允许Java类里包含多个初始化逻辑, 从而允许使用不同的构造器来初始化Java对象
+            3. 使用 this 调用另外一个重载的构造器只能在构造器中使用,而且必须作为构造器执行体的第一
+               条语句. 使用 this 调用重载的构造器时, 系统会根据 this 后括号里面的实参来调用形参列
+               表与之对应的构造器
+            
+        例子1: 构造器的重载 
+            public class ConstructorOverlaod
+            {
+                public String name;
+                public int count;
+                // 提供无参数的构造器
+                public ConstructorOverlaod(){}
+                // 提供两个参数的构造器
+                // 对该构造器返回的对象执行初始化
+                public ConstructorOverlaod(String name, int count)
+                {
+                    this.name = name;
+                    this.count = count;
+                }
+                public static void main(String[] args)
+                {
+                    // 通过无参数构造器创建ConstructorOverlaod对象
+                    ConstructorOverlaod oc1 = new ConstructorOverlaod();
+                    // 通过有参数构造器创建ConstructorOverlaod对象
+                    ConstructorOverlaod oc2 = new ConstructorOverlaod("jefxff", 29);
+                    
+                    System.out.println(oc1.name + "  " + oc1.count);
+                    System.out.println(oc2.name + "  " + oc2.count);
+                }
+            }
+        
+        例子2: 使用 this 调用另外一个重载的构造器
+            public class Apple
+            {
+                public String name;
+                public String color;
+                public double weight;
+                
+                // 无参数的构造器
+                public Apple(){}
+                // 两参数的构造器
+                public Apple(String name, String color)
+                {
+                    this.name = name;
+                    this.color = color;
+                }
+                // 三个参数的构造器
+                public Apple(String name, String color, double weight)
+                {
+                    // 通过 this 调用另一个重载的构造器的初始化代码
+                    this(name, color);
+                    // 下面 this 引用该构造器正在初始化的 Java 对象
+                    this.weight = weight;
+                }
+            }
+            说明:
+                1. 上面的Apple类里包含了三个构造器, 其中第三个构造器通过 this 来调用另一个重载构造
+                    器的初始化代码.程序中 this(name,color);调用表明用该类另外一个带两字符串参数的
+                    构造器.
 
 
 
