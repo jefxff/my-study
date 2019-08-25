@@ -1180,24 +1180,200 @@
                     构造器.
 
 
+6. 类的继承
+    6.1 继承的特点
+        特点：
+            1. Java的继承通过 extends 实现，实现继承的类被称之为子类，被继承的类被称之为父类
+            2. Java的继承具有单继承的特点，每个子类只有一个直接父类，间接父类可以有无限多个
+            3. 父类和子类的关系是一种一般和特殊的关系，子类是对父类的扩展；如: 水果和苹果
+            4. 因为子类是一种特殊的父类，因此父类包含的范围总比子类包含的范围要大
+            5. Java的子类不能获得父类的构造器
+            6. 定义Java类的时候，无显式指定Java直接父类的，这个类的默认父类是 java.lang.Object 类，
+                因此 java.lang.Object 是所有类的父类，要么直接父类，要么间接父类; 所有的 Java 对象
+                都可以调用 java.lang.Object 类所定义的实例方法
+            7. 子类角度将: 子类扩展(或继承)了父类； 父类角度讲: 父类派生了子类，描述的是同一件事，只
+                是观察的角度不同
 
+        语法格式：
+            修饰符 class SubSlass extends SuperClass
+            {
+                // 类定义部分
+            }
+        例子： 
+            // 定义一个水果类
+            public class Fruit
+            {
+                public double weight;
+                public void info()
+                {
+                    System.out.println("我是一个水果！重 " + weight + " g!");
+                }
+            }
 
+            // 定义一个苹果类继承水果类
+            public class Apple extends Fruit
+            {
+                public static void main(String[] args)
+                {
+                    // 创建一个 Apple 对象
+                    Apple a = new Apple();
+                    // 因为 Apple 对象本身没有 weight 成员变量
+                    // 因为 Apple 的父类是有 weight 成员变量的，也可以访问 Apple 对象的 weight 成员变量
+                    a.weight = 65;
+                    // 调用 Apple 对象的 info() 方法
+                    a.info(); 
+                }
+            }
 
+            // 间接继承的例子
+            public class Fruit extends Plant{...}
+            public class Apple extends Fruit{...}
+            // 例子中Fruit类是Apple类的直接父类，Plant类是Fruit类的直接父类， 所以Plant类是Apple类的
+            // 间接父类
 
+    6.2 重写父类的方法
+        说明：
+            1. 子类包含与父类同名方法的现象叫做方法的重写(Override)，也叫做方法覆盖。 
+            2. 覆盖方法和被覆盖方法要么都是类方法，要么都是实例方法，不能一个是类方法，一个是实例方法
+            3. 子类覆盖了父类的方法后，子类的对象将无法访问父类中被覆盖的方法，但是可以在子类方法中调
+                用父类中被覆盖的方法。
+            4. 子类调用父类被覆盖的方法，则可以使用 super (被覆盖的是实例方法)或者使用父类名(被覆盖的
+                是类方法)作为调用者调用父类中被覆盖的方法
+            5. 父类中 private 修饰的方法，子类无法重写；即使子类按照重写格式重写了父类中 private 修饰
+                的方法，依然不是重写，是子类重新定义的一个新方法
 
+        遵循的规则：(两同两小一大)
+            1. "两同"： 方法名相同，形参列表相同
+            2. "两小"： 第一是子类方法返回值类型应比父类方法返回值类型更小或相等； 第二是子类方法声明抛
+                出的异常类应比父类方法声明抛出的异常类更小或相等
+            3. "一大"： 指的是子类方法的访问权限应比父类方法的访问权限更大或者相等 
 
+        重写(override)和重载(overload)的区别：
+            1. 重载主要发生在同一个类的方法名不同之间，重写发生在子类和父类的同名方法之间
+            2. 都发生在方法之间，都要求方法名相同
+            3. 父类方法和子类方法之间的重载：子类获得了父类方法，如果子类定义了一个与父类方法有相同的方法
+                名，但形参列表不同的方法，就会形成父类方法和子类方法的重载
+        例子：
+            // 重写父类方法的例子
+            public class Bird
+            {
+                // Bird类的fly()方法
+                pubilc void fly()
+                {
+                    System.out.println("我在天空自由的飞翔...");
+                }
+            }
+            // 再定义一个 Ostrich 类
+            public class Ostrish extends Bird
+            {
+                // 重写父类的方法
+                public void fly()
+                {
+                    System.out.println("我只能奔跑...");
+                }
+                public static void main(String[] args)
+                {
+                    // 创建一个 Ostrish 对象
+                    Ostrish os = new Ostrish();
+                    // 执行 Ostrish 对象的 fly() 方法， 输出： "我只能奔跑..."
+                    os.fly();
+                    // 在子类方法中通过 super 显式的调用父类被覆盖的实例方法
+                    super.fly();
+                }
+            }
 
+    6.3 super 限定
+        说明：
+            1. 用于需要在子类中调用父类被覆盖的实例方法，则可使用 super 限定来调用父类被覆盖的实例方法
+            2. 如果被覆盖的是类变量，在子类的方法中则可以通过父类名作为调用者来访问被覆盖的类变量
+            3. super 不能出现在 static 修饰的方法中，static 修饰的方法属于类，该方法的调用者可能是一
+                个类，而不是一个对象，因而 super 限定也就失去了意义
+            4. 如果在构造器中使用 super， 则 super 用于限定该构造器初始化的是该对象从父类继承得到的实
+                例变量，而不是该类自己定义的实例变量
+            5. 如果子类定义了和父类同名的是变量，则会发生子类实例变量隐藏父类是变量的情形，正常情况下
+                子类里定义的方法直接访问该实例变量默认会访问到子类中定义的实例变量，无法访问父类中被
+                隐藏的实例变量。 在子类定义的实例方法中可以通过 super 来访问父类的实例变量
+            6. 如果子类里没有包含和父类同名的实例变量，那么在子类实例方法中访问成员变量时，无需显式的使
+                用 super 或父类名作为调用者
+            7. 如果在子类里定义了与父类中已有变量同名的变量，那么子类中定义的变量会隐藏父类中定义的变量，
+                不是完全覆盖，因此在系统创建子类对象时，依然会为父类中定义的，被隐藏的变量分配内存空间
 
+        无显式指定调用者，某方法中访问成员变量 a 时查找的顺序:
+            1. 查找该方法中是否有名 a 的局部变量
+            2. 查找当前类中是否包含名为 a 的成员变量
+            3. 查找 a 的直接父类中是否包含名为 a 的成员变量，依次上溯 a 的所有父类，直到 java.lang.Object
+                类，如果最终不能找到名为 a 的成员变量，则系统报编译出错误
 
+        例子1：
+            // 子类定义的实例方法通过 super 来访问父类中被隐藏的实例变量
+            public BaseClass
+            {
+                public int a = 5;
+            }
 
+            public class SubClass extends BaseClass
+            {
+                public int a = 7;
+                public void accessOwner()
+                {
+                    System.out.println(a);
+                }
+                public void accessBase()
+                {
+                    // 通过 super 来限定访问从父类继承得到的 a 实例变量
+                    System.out.println(super.a);
+                }
+                public static void main(String[] args)
+                {
+                    SubClass sc = new SubClass();
+                    sc.accessOwner();  // out: 7
+                    sc.accessBase();    // out: 5
+                }
+            }
+            程序说明：
+                1. 上面程序的 BaseClass 和 SubClass 中都定义了名为 a 的实例变量，则 SubClass 的
+                    a 实例变量将会隐藏 BaseClass 的 a 实例变量。
+                2. 当系统创建了 SubClass 对象的时候，实际上会为 SubCalss 对象分配两块内存，一块用
+                    于存储在 SubClass 勒种定义的 a 实例变量， 一块用于存储从 BaseClass 类中继承
+                    得到的 a 实例变量。
+                3. System.out.println(super.a); 这句代码中当访问 super.a 时，此时使用 super 限
+                    定该实例从父类继承得到的 a 实例变量， 而不是在当前类中定义的 a 变量
+        例子2：
+            // 子类中定义父类同名的实例变量并不会完全覆盖父类中定义的实例变量，而只是简单隐藏
+            class Parent
+            {
+                public String tag = "java";             // ①
+            }
+            class Dericed extends Perent
+            {
+                // 定义一个私有的 tag 实例变量来隐藏父类的 tag 实例变量
+                private String tag = "I Love Java";                      // ②
+            }
+            public clsss HideTest
+            {
+                public static void main(String[] args)
+                {
+                    Dericed d = new Dericed();
+                    // 程序不可访问 d 的私有变量 tag (因为 private 修饰的变量或者方法，只能在当前
+                    // 类中使用) 所以下面的这句代码将引起编译错误
+                    // System.out.println(d.tag);                        // ③
+                    // 将 d 变量显式地向上转型为 Parent 后，即可访问 tag 实例变量
+                    System.out.println(((Partent)p).tag);                // ④
 
+                }
+            }
 
-
-
-
-
-
-
+            程序说明：
+                1. 上面程序的①处代码为父类Patent定义了一个 tag 的实例变量，②处的代码为其子类定义了一个 
+                    private 的 tag 实例变量，子类中定义的这个实例变量将会隐藏父类中定义的 tag 实例变量 
+                2. 程序的入口 main() 类中先创建了一个 Dericed 对象， 这个 Dericed 对象将会保存两个 tag 
+                    实例变量， 一个是在 Parent 中定义的 tag 实例变量， 一个是在 Dericed 中定义的 tag 
+                    实例变量，此时程序中还包含一个 d 变量，它引用一个 Dericed 对象
+                3. 程序将 Dericed 对象赋给 d 变量，当在③出的代码试图通过d来访问tag 实例变量时，程序将
+                    提示访问权限不允许，这是因为访问哪个实例变量有声明该变量的类型决定，所以系统将会试图
+                    访问在②处定义的 tag 实例变量；程序在④除恶的代码先将d变量强制向上转型为Parent类型，
+                    再通过它来访问 tag 实例变量是允许的，因为此时熊系统将会访问再①处定义的 tag 实例变量
+                    也就会输出 “java”
 
 
 

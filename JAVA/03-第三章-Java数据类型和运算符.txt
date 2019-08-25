@@ -98,7 +98,7 @@ Chapter 3
                 @exception: 抛出异常的类型
                 @throws: 抛出的异常, 和@exception同义
                 
-                可以出现在类或者借口文档注释的有: @see, @deprecated, @author, @version
+                可以出现在类或者接口文档注释的有: @see, @deprecated, @author, @version
                 可以出现在方法或构造器文档注释中的有: @see, @deprecated, @param, @return, @throws,
                                                    @exception
                 可以出现在成员变量的文档注释的有: @see, @deprecated
