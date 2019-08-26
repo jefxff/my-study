@@ -1375,15 +1375,169 @@
                     再通过它来访问 tag 实例变量是允许的，因为此时熊系统将会访问再①处定义的 tag 实例变量
                     也就会输出 “java”
 
+    6.4 调用父类的构造器
+        说明:
+            1. 子类不会获得父类的构造器,但是子类构造器里可以调用父类构造器的初始化代码, 类似于前面学
+                的一个构造器调用另一个重载的构造器
+            2. 在一个构造器中调用另一个重载的构造器使用 this 调用来完成, 在子类构造器中调用父类的构
+                造器使用 suoer 调用来完成 
+            3. 使用 super 调用父类构造器也必须出现在子类构造器执行体的第一行, 所以 this 调用和 super 
+                调用不可以同时出现
+            4. 不管是否使用 super 调用来执行父类构造器的初始化代码, 子类构造器总是调用父类构造器一次
+            5. 创建任何对象总是从该类所在几成熟最顶层类的构造器开始执行,然后依次向下执行, 最后才执行
+                本类的构造器; 如果某个类通过 this 调用了同类中重载的构造器, 就会依次执行此父类的多个
+                构造器 
+                
+        
+        子类构造器调用父类构造器情形:
+            1. 子类构造器执行体的第一行使用 super 显式的调用父类构造器, 系统将根据 super 调用里传入
+                的实参列表调用父类对应的构造器
+            2. 子类构造器执行体的第一行代码使用 this 显式调用本类中重载的构造器, 系统将根据 this 调用
+                里传入的实参列表调用本类中的另一个构造器, 执行本类中另外一个构造器时即会调用父类的
+                构造器
+            3. 子类构造器执行体中既没有 super 调用, 也没有 this 调用,系统将会在直性子类构造器之前,
+                隐式调用父类无参数的构造器
+            
+        例子1:
+            // 子类通过 super 调用父类的构造器 
+            class base
+            {
+                public double size;
+                public String name;
+                public Base(double size, String name)
+                {
+                    this.size = size;
+                    this.name = name;
+                }
+            }
+            public class Sub extends Base
+            {
+                public String color;
+                // 自定义构造器
+                public Sub(double size, String name, String color)
+                {
+                    // 通过 super 调用来调用父类构造器初始化过程
+                    super(size, name);
+                    this.color = color;
+                }
+                piblic static void main(String[] args)
+                {
+                    Sub a = new Sub(5.6, "测试对象", "红色");
+                    // 输出 Sub 对象的三个实例变量
+                    System.out.println(a.size + " --- " + s.name + " --- " + s.color);
+                }
+            }
 
-
-
-
-
-
-
-
-
+        例子2:
+            // 定义三个类,他们之间有严格的集成关系,了解构造器之间的调用关系
+            public Creature
+            {
+                public Creature()
+                {
+                    System.out.println("Creature无参数的构造器");
+                }
+            }
+            class Animal extends Creature
+            {
+                public Animal(String name)
+                {
+                    System.out.println("Animal 带一个参数的构造器, " + "该动物的name为 " + name);
+                }
+                public Animal(String name, int age)
+                {
+                    // 使用 this 调用同一个重载的构造器
+                    this(name);
+                    System.out.println("Animal带有两个参数的构造器, " + " 其 age 为 " + age);
+                }
+            }
+            public class Wolf extends Animal
+            {
+                public Wolf()
+                {
+                    // 显式调用父类有两个参数的构造器
+                    super("灰太狼", 3);
+                    System.out.println("Wolf无参数的构造器");
+                }
+                public static void main(Srting[] args)
+                {
+                    new Wolf();
+                }
+            }
+            程序说明:
+                1. 程序输出: 
+                    creature 无参数的构造器 
+                    Animal 带有一个参数的构造器, 该动物的 name 为灰太狼
+                    Animal 带有两个参数的构造器, 其 age 为 3 
+                    Wolf 无参数构造器
+                       
+                
+7. 多态
+    7.1 多态性
+        说明:
+            1. Java引用变量有两个类型:一个是编译时类型, 一个是运行是类型. 编译时类型有声明该变量时
+                使用的类型决定, 运行是类型有实际赋给改变了的对象决定. 如果编译时类型和运行时类型不
+                一致, 就可能出现所谓的多态(Polymorphism)
+            2. 因为子列是一种特殊的父类, 因此Java允许把一个子类对象直接赋给一个父类引用变量, 无须
+                任何类型的转换, 或者被称之为向上转型(upcasting), 向上转型由系统自动完成.
+            3. 相同类型的变量, 调用同一个方法时呈现出多种不同的行为特征,这是多态
+            
+        例子:
+            class BaseClass
+            {
+                public int book = 6;
+                public void base()
+                {
+                    System.out.println("父类的普通方法!");
+                }
+                public void test()
+                {
+                    System.out.println("父类的被覆盖的方法!");
+                }
+            }
+            public class SubClass extends BaseClass 
+            {
+                // 重新定义一个 book 实例变量隐藏父类的book实例变量
+                public String book = "轻量级 Java EE 企业应用实战";
+                public void test()
+                {
+                    System.out.println("子类的覆盖父类的方法");
+                }
+                public void sub()
+                {
+                    System.out.println("子类的普通方法");
+                }
+                public static void main(String[] args)
+                {
+                    // 下面编译时类型和运行是类型完全一致, 因此不存在多态
+                    BaseClass bc = new BaseClass();
+                    // 输出 6
+                    System.out.println(bc.book);
+                    // 下面两次调用将执行 BaseClass 的方法 
+                    bc.base();
+                    bc.test();
+                    
+                    // 下面编译时类型和运行时类型完全一致, 不存在多态
+                    SubClass sc = new SubClass();
+                    // 输出 "轻量级 Java EE 企业应用实战"
+                    System.out.println(sc.book);
+                    // 下面调用将执行从父类继承得到的 base() 方法 
+                    sc.base();
+                    // 下面调用将执行当前类的 test() 方法 
+                    sc.test();
+                    
+                    // 下面编译时类型和运行是类型不一样, 多态发生
+                    BaseClass ploymophicBc = new BaseClass();
+                    // 输出 6 ---- 表明访问的是父类对象的实例变量
+                    System.out.println(ploymophicBc.book);
+                    //下面调用将执行从父类集成的都啊的 base() 方法 
+                    ploymophicBc.base();
+                    // 下面调用将执行当前类的 test() 方法 
+                    ploymophicBc.test();
+                    // 因为 ploymophicBc 的编译时类型是 BaseClass
+                    // BaseClass 类没有提供 sub() 方法, 所以下面的代码编译时会出现错误
+                    //ploymophicBc.sub();
+                }
+            }
 
 
 
