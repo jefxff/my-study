@@ -1470,7 +1470,7 @@
 7. 多态
     7.1 多态性
         说明:
-            1. Java引用变量有两个类型:一个是编译时类型, 一个是运行是类型. 编译时类型由声明该变量时
+            1. Java引用变量有两个类型:一个是编译时类型, 一个是运行时类型. 编译时类型由声明该变量时
                 使用的类型决定, 运行时类型由实际赋给该变量的对象决定. 如果编译时类型和运行时类型不
                 一致, 就可能出现所谓的多态(Polymorphism)
             2. 因为子类是一种特殊的父类, 因此Java允许把一个子类对象直接赋给一个父类引用变量, 无须
@@ -1478,8 +1478,8 @@
             3. 相同类型的变量, 调用同一个方法时呈现出多种不同的行为特征,就是多态
             4. 引用变量在编译阶段只能调用其编译时类型所具有的方法，但运行时则执行它运行时类型所具有
                 的方法，所以编写 Java 代码时，引用变量只能调用声明变量时所用类里包含的方法。
-                例如: 通过 Object p = new Person(); 代码定义了一个变量 p, 则这个 p 只能调用 
-                Object 类的方法，而不能调用 Person 类里定义的方法
+                例如: 通过 Object p = new Person(); 代码定义了一个变量 p, 则这个 p 只能调用 Object  
+                类的方法，而不能调用 Person 类里定义的方法
             5. 通过引用变量来访问其包含的实例变量时，系统总是试图访问它编译时类型所定义的成员变量，
                 而不是它运行时类型所定义的成员变量
             
@@ -1531,11 +1531,11 @@
                     BaseClass ploymophicBc = new SubClass();
                     // 输出 6 ---- 表明访问的是父类对象的实例变量
                     System.out.println(ploymophicBc.book);
-                    //下面调用将执行从父类集成的都啊的 base() 方法 
+                    //下面调用将执行从父类继承得到的 base() 方法 
                     ploymophicBc.base();
                     // 下面调用将执行当前类的 test() 方法 
                     ploymophicBc.test();
-                    // 因为 ploymophicBc 的编译时类型是 BaseClass
+                    // 因为 ploymophicBc 的编译时类型(也就是声明的类型)是 BaseClass
                     // BaseClass 类没有提供 sub() 方法, 所以下面的代码编译时会出现错误
                     //ploymophicBc.sub();
                 }
@@ -1543,24 +1543,25 @@
 
     7.2 引用变量的强制类型转换
         说明：
-            1. 引用变量只能调用它编译时类型的方法，而不能调用它运行时类型的方法，即使它实际所引用的对象确实
-                包含该方法
+            1. 引用变量只能调用它编译时类型的方法，而不能调用它运行时类型的方法，即使它实际所引用的
+                对象确实包含该方法
             2. 如果需要让引用变量调用它运行时类型的方法，则必须把它强制类型转换成运行时的类型，
         用法:
             (type)variable      
             说明： 这种用法可以将 variable 变量转换成一个 type 类型的变量
 
         注意点：
-            1. 基本类型之间转换只能在数值类型之间进行，包括(整数类型，字符型，浮点型)，但是数值类型和布尔
-                类型之间不能进行类型转换
-            2. 引用类型之间的转换只能在具有继承关系的两个类型之间进行，如果是两个没有任何继承关系的类型，则
-                无法进行类型转换，如：试图将一个父类实例转换成子类类型，则这个对象必须实际上是子类实例才
-                行(即编译时类型为父类类型，而运行时类型为子类类型)，否则报 ClasscaCastException 异常
+            1. 基本类型之间转换只能在数值类型之间进行，包括(整数类型，字符型，浮点型)，但是数值类型
+                和布尔类型之间不能进行类型转换
+            2. 引用类型之间的转换只能在具有继承关系的两个类型之间进行，如果是两个没有任何继承关系的
+                类型，则无法进行类型转换，如：试图将一个父类实例转换成子类类型，则这个对象必须实际
+                上是子类实例才行(即编译时类型为父类类型，而运行时类型为子类类型), 否则报 ClasscaCas-
+                tException 异常
             3. 在进行强制转换之前，应先通过 instanceof 运算符来判断是否可以成功转换，如下面例子2
-            4. 当把一个子类对象赋给父类引用变量时，被称为 向上转型(upcasting), 这种转型总是可以成功，这种
-                转型表明这个引用变量的编译时类型时父类，但实际执行他的方法时，依然表现出子类对象的行为方式；
-                但是把一个父类对象赋给子类引用变量时，就需要进行强制类型转换，而且还可能在运行时产生
-                ClasscaCastException异常
+            4. 当把一个子类对象赋给父类引用变量时，被称为向上转型(upcasting), 这种转型总是可以成功，
+                这种转型表明这个引用变量的编译时类型时父类，但实际执行他的方法时，依然表现出子类对象
+                的行为方式；但是把一个父类对象赋给子类引用变量时，就需要进行强制类型转换，而且还可能
+                在运行时产生ClasscaCastException异常
         例子1：
             // 强制类型转换的例子
             pbulic class ConversionTest
@@ -1574,7 +1575,7 @@
                     // 试图把一个数值型的变量转换成一个Boolean类型，编译时将报错：不可转换类型
                     // boolean b = (boolean)in;
                     Object obj = "Hello";
-                    // obj 变量的编译时类型为 Object, Object 与 String 存在继承关系，可以强制类型转换
+                    // obj 变量的编译时类型为 Object, Object 与 String 存在继承关系,可以强制类型转换
                     // 而且 obj 变量的实际类型是 String，所以运行时也可以通过
                     String objStr = (String)obj;
                     System.out.println(objStr);
@@ -1593,46 +1594,409 @@
             {
                 String str = (String)objPri;
             }
+            
     7.3 instanceof 运算符
         说明：
-            1. instanceof 运算符的前一个操作数通常是一个引用类型变量，后一个操作数通常是一个类(也可以是接
-                口)，用于判断前面的对象是否是后面的类，或者其子类，实现类的实例，如果是，返回true，否则返回
-                false
-            2. instanceof 运算符前面操作数的编译时类型要么与后面的类相同，要么是后面的类具有父子继承关系，
-                否则会引发编译错误
-            3. instanceof 的作用是：在进行强制类型转换之前，首先判断前一个对象是否是后一个类的实例，是否可
-                成功转换，先通过 instanceof 判断是否可以转换， 再使用 type 运算符进行强转
+            1. instanceof 运算符的前一个操作数通常是一个引用类型变量，后一个操作数通常是一个类(也可
+                以是接口)，用于判断前面的对象是否是后面的类，或者其子类，实现类的实例，如果是，返回
+                true，否则返回false
+            2. instanceof 运算符前面操作数的编译时类型要么与后面的类相同，要么是后面的类具有父子继
+                承关系，否则会引发编译错误
+            3. instanceof 的作用是：在进行强制类型转换之前，首先判断前一个对象是否是后一个类的实例，
+                是否可成功转换，先通过 instanceof 判断是否可以转换， 再使用 type 运算符进行强转
 
         例子：
+            public class InstanceofTest
+            {
+                public static void main(String[] args)
+                {
+                    // 声明 hello 是使用 Object 类,则 hello 的编译时类型是 Object 
+                    // Object 是所有类的父类, 但 hello 变量的实际类型是 String 
+                    Object hello = "Hello";
+                    // String 与 Object 类存在集成关系, 可以进行 instanceof 运算, 返回 true
+                    System.out.println("字符串是否是 Object 类的实例:" 
+                        + (hello instanceof Object));
+                    System.out.println("字符串是否是 String 类的实例:" 
+                        + (hello instanceof String));   // 返回 ture
+                    // Math 与 Object 类存在继承关系,可以进行 instanceof 运算, 返回 false
+                    System.out.println("字符串是否是 Math 类的实例:" 
+                        + (hello instanceof Math));   // 返回 false
+                    // String 实现了 Comparable 接口, 所以返回 true
+                    System.out.println("字符串是否是 Comparable 接口的实例:" 
+                        + (hello instanceof Comparable));   // 返回 ture
+                    String a = "hello";
+                    // String 类和 Math 类没有继承关系, 所以下面的代码编译无法通过
+                    System.out.println("字符串是否是 Math 类的实例:" 
+                        + (hello instanceof Math ));  // 编译报错
+                }
+            }
 
 
+8. 继承与组合
+    8.1 使用继承的注意点
+        说明:
+            1. 子类扩展父类以后,如果访问权限允许,子类可以直接访问父类的成员变量和方法, 相当于子类可
+                以直接服用父类成员变量和方法
+            2. 继承严重破坏了父类的封装性
+
+        设计父类的原则:
+            1. 尽量隐藏父类的内部数据,尽量把父类的所有成员变量设置成 private 访问类型, 不要让子类直
+                接访问父类的成员变量
+            2. 不要让子类可以随意访问, 修改父类的方法. 如果父类中的方法需要被外部类调用,则必须使用
+                public 修饰, 但又不希望子类重写该方法, 可以使用 final 修饰符来修饰; 如果希望父类的
+                某个方法被子类重写, 但不希望被其他类自由访问, 则使用 protected 来修饰该方法 
+            3. 尽量不要在父类构造器中带哦用将要被子类重写的方法; 使用 private 修饰的父类的构造器,
+                子类无法调用父类的构造器,也就无法继承该类
+        
+        派生子类的条件
+            1. 子类需要额外增加属性, 而不仅仅是属性值的改变
+                例如: 
+            2. 子类需要增加自己独有的行文方式(包括增加新的方法或重写父类的方法)
+            
+        例子:
+            class Base 
+            {
+                public Base()
+                {
+                    test();
+                }
+                public void test()        // ① 号 test() 方法
+                {
+                    System.out.println("将被子类重写的方法");
+                }
+            }
+            public class Sub extends Base
+            {
+                private String name;
+                public void test()         // ② 号 test() 方法
+                {
+                    System.out.println("子类重写父类的方法," 
+                        + "其name字符串长度为" + name.length());
+                }
+                public static void main(String[] args)
+                {
+                    // 下面代码将会引发空指针异常
+                    Sub s = new Sub();
+                }
+            }
+                程序说明: 
+                    1. 当系统试图创建 Sub 对象时,同样会先执行其父类构造器, 如果父类构造器调用了被
+                        其子列重写的方法, 则变成调用被子类重写后的方法. 
+                    2. 当创建 Sub 对象时, 会先执行 Base 类中的 Base 构造器, 而 Base 构造器中调用了
+                        test() 方法----并不是调用①号 test() 方法, 而是调用②号 test() 方法, 此时 
+                        Sub 对象的 name 实例变量时 null, 因此将引发空指针异常
+                     
+    8.2 利用组合实现复用
+        说明:
+            1. 如果需要复用一个类, 除了把这个类当作基类来继承之外,还可以把该类当成另一个类的组合
+                成分, 从而允许新类直接复用该类的 public 方法. 不管是继承还是组合, 都允许在新类(
+                对于继承就是子类)中直接复用旧类的方法
+            2. 组合是把旧类对象作为新类的成员变量组合进来, 用以实现新类的功能,用户看到的是新类的
+                方法, 而不能看到被组合对象的方法
+            3. 子类和组合关系里的整体类, 都可以复用原有类的方法, 用于实现自身的功能
+            4. 继承要表达的是一种"是(is-a)"的关系, 而组合表达的是"有(has-a)"的关系 
+            
+        例子1:
+            // 继承关系的三个类
+            class Animal 
+            {   
+                // private 修饰的方法子类无法继承
+                private void beat()
+                {
+                    System.out.println("嗯! 心脏还在跳动....");
+                }
+                public void breath()
+                {
+                    beat();
+                    System.out.println("吸一口气, 呼一口气, 呼吸中.....");
+                }
+            }
+            // 继承Animal,直接复用父类的 breath()方法
+            class Bird extends Animal
+            {
+                public void fly()
+                {
+                    System.out.println("我是可以在天空中飞翔的....");    
+                }
+            }
+            // 继承Animal,直接复用父类的 breath()方法
+            class Wolf extends Animal 
+            {
+                public void run()
+                {
+                    System.out.println("我是在陆地上跑的那个狼....");   
+                }
+            }
+            public class InheriTest
+            {
+                public static void main(String[] args)
+                {
+                    Bird b = new Bird();
+                    b.breath();
+                    b.fly();
+                    Wolf w = new Wolf();
+                    w.breath();
+                    w.run();
+                }
+            }
+
+         例子2:
+            // 组合关系的三个类
+            class Animal
+            {
+                // private 修饰的方法子类无法继承
+                private void beat()
+                {
+                    System.out.println("嗯! 心脏还在跳动....");
+                }
+                public void breath()
+                {
+                    beat();
+                    System.out.println("吸一口气, 呼一口气, 呼吸中.....");
+                }
+            }
+            class Brid 
+            {
+                // 将原来的父类组合到原来的子类, 作为子类的一个组合成分
+                private Animal a;
+                public Bird(Animal a)
+                {
+                    this.a = a;
+                }
+                // 重新定义一个自己的breath()方法
+                public void breath()
+                {
+                    // 直接服用Animal提供的breath()方法来实现Bird的breath()方法 
+                    a.breath();
+                }
+                public void fly()
+                {
+                    System.out.println("我是可以在天空中飞翔的....");    
+                }
+            }
+            class Wolf 
+            {
+                // 将原来的父类组合到原来的子类,作为子类的一个组合成分 
+                private Animal a;
+                public Wolf(Animal a)
+                {
+                    this.a = a;
+                }
+                // 重新定义一个自己的breath()方法
+                public void breath()
+                {
+                    // 直接服用Animal提供的breath()方法来实现Wolf的breath()方法 
+                    a.breath();
+                }
+                public void run()
+                {
+                    System.out.println("我是在陆地上跑的那个狼....");   
+                }
+            }
+            public class CompositeTest
+            {
+                public static void main(String[] args)
+                {
+                   // 此时需要显式创建被组合对象
+                   Animal a1 = new Animal();
+                   Bird b = new Bird(a1);
+                   b.breath();
+                   b.fly();
+                   // 此时需要显式创建被组合对象
+                   Animal a2 = new Animal();
+                   Wolf w new Wolf(a2);
+                   w.breath();
+                   w.run();
+                }
+            }
 
 
+9. 初始化块
+    9.1 使用初始化块
+        说明:
+            1. 初始化块是Java类里可能出现的第4种成员(前面学的成员变量,方法和构造器), 一个类里可以有
+                多个初始化块,相同类型的初始化块之间偶遇顺序: 前面定义的初始化块先执行,后面定义的初
+                始化块后执行
+            2. 初始化块的修饰符只能是 staitc , 使用 static 修饰的初始化块被称之为静态初始化块. 
+            3. 初始化块里的代码可以包含认可可执行性语句, 包括定义局部变量, 调用其他对象的方法, 以及
+                使用分支语句, 循环语句
+            4. 初始化块和构造器的作用非常相似, 他们都用于对Java对象执行指定的初始话操作; 但是二者之
+                间还是有一定的差异: 普通初始化块,声明实例变量指定的默认值都可认为是对象的初始化代码
+                他们的执行顺序与源码中排列的顺序相同
+                
+        初始化块语法:
+            [修饰符]{
+                // 初始化块的可执行性代码
+                ...
+            }
+    
+        例子1:
+            // Person.java
+            public class Person
+            {
+                // 定义一个初始化块
+                {
+                    int a = 6;
+                    if (a > 4)
+                    {
+                        System.out.println("Person初始化块: a = " + a + " 局部变量a的值大于4");
+                    }
+                    System.out.println("Person 的第一个初始化块");
+                }
+                // 定义第二个初始化块
+                {
+                    System.out.println("Person的第二个初始化块");
+                }
+                // 定义一个无参数的构造器
+                public Person()
+                {
+                    System.out.println("Person 类的无参数构造器 ");
+                }
+                public static void main(String[] args)
+                {
+                    new Person();
+                }
+            }
+            程序说明:
+                1. 当创建 Java 对象时, 系统总是先调用该类里定义的初始化块, 如果一个类里定义了2个普通
+                    初始化块, 则前面定义的初始化块先执行, 后面定义的初始化块后执行
+                2. 初始化块虽然是 Java 类的一种成员, 但它没有名字, 也就没有标识, 因此无法同类, 对象
+                    来调用初始化块. 
+                3. 初始化块只在创建 Java 对象时隐式执行,总是全部执行(所以可以把多个初始化块合并成一
+                    个初始化块, 让代码更简洁), 而且在执行构造器之前执行
+                
+        例子2:
+            // InstanceInitTest.java
+            public class InstanceInitTest
+            {
+                // 先执行初始化块将变量 a 实例变量赋值为6
+                {
+                    int a = 6;
+                }
+                // 再执行将 a 谁变量赋值为 9
+                int a = 9;
+                pbulic static void main(String[] args)
+                {
+                    // 下面的代码将输出9
+                    System.out.println(new InstanceInitTest().a);
+                }
+            }
+            程序说明:
+                1. 当Java创建一个对象时, 系统先为该对象的所有实例变量分配内存(前提是该类已经加载过了)
+                    接着程序开始对这些实例变量执行初始化
+                2. 初始化的顺序是: 先执行初始化块或声明实例变量时指定的初始值(这两个地方指定的执行允
+                    许与他们在源代码中排序相同的顺序), 在执行构造器里指定的初始值
+                    
+                    
+    9.2 初始化块和构造器
+        说明:
+            1. 也可以讲, 初始化块是构造器的补充,初始化块总是在构造器执行之前执行
+            2. 初始化块不接受参数, 所以初始化块对同一个类的所有对象所进行的初始化处理完全相同
+            3. 基于上面两点,就可以把不接受任何参数,初始化处理对所有对象完全相同的代码提取为初始化块
+            4. 假象: 实际上初始化块是一个假象, 使用 javac 命名编译 java 类后, 该 Java类中的初始化块
+                会消失 --- 初始化块中代码会被"还原"到每个构造器中, 且位于构造器所有代码的前面
 
+    9.3 静态初始化块
+        说明:
+            1. 使用static修饰初始化块, 被称之为静态初始化块, 也被称之为类初始化块(普通初始化块负责
+                对对象执行初始化, 类初始化块负责对类进行初始化)
+            2. 系统将在类初始化阶段执行初始化块,而不是在创建对象时才执行
+            3. 静态初始化块总是比普通初始化块先执行
+            4. 静态初始化块通常用于对类变量执行初始化, 静态初始化块不能对实例变量进行初始化处理(静态
+                初始化块不能访问非静态成员,包括不能访问实例变量和实例方法)
+            5. Java系统加载并初始化某个类时, 总是保证该类的所有父类(包括直接父类和间接父类)全部加载
+                并初始化
+        
+        例子:
+            // 创建三个类(都提供静态初始化块和普通初始化块)
+            class Root
+            {
+                static{
+                    System.out.println("Root的 静态 初始化块");
+                }
+                {
+                    System.out.println("Root的 普通 初始化块");
+                }
+                public Root()
+                {
+                    System.out.println("Root的无参数的构造器");
+                }
+            }
+            class Mid extends Root 
+            {
+                static{
+                    System.out.println("Mid 的 静态 初始化块");
+                }
+                {
+                    System.out.println("Mid 的 普通 初始化块");
+                }
+                public Mid()
+                {
+                    System.out.println("Mid 的无参数的构造器");
+                }
+                public Mid(String msg)
+                {
+                    // 通过 this 调用同一类中重载的构造器
+                    this();
+                    System.out.println("Mid 的带参数的构造器, 其参数值: "
+                        + msg);
+                }
+            }
+            class Leaf extends Mid
+            {
+                static{
+                    System.out.println("Leaf 的静态初始化块");
+                }
+                {
+                    System.out.println("Leaf 的普通初始化块");
+                }
+                public Leaf()
+                {
+                    // 通过 super 调用父类中有一个字符串参数的构造器
+                    super("疯狂JAVA讲义");
+                    System.out.println("执行 Leaf 的构造器");
+                }
+            }
+            public class Test
+            {
+                public static void main(String[] args)
+                {
+                    new Leaf();
+                    new Leaf();
+                }
+            }
+            程序说明:
+                1. 第一次创建一个 Leaf 对象时, 因为系统中还不存在 Leaf 类, 因此需要先加载并初始化 
+                    Leaf 类, 初始化 Leaf 类时会先执行其顶层父类的静态初始化块, 再执行其直接父类的
+                    静态初始化块, 最后才执行 Leaf 本身的静态初始化块
+                2. 一旦 Leaf 类初始化成功后, Leaf 类在该虚拟机里将一直存在, 因此当第二次创建 Leaf 
+                    实例时无须再次对 Leaf 类进行初始化 
+                3. 每一次创建一个 Leaf 对象时, 都需要先执行最顶层父类的初始化块, 构造器, 然后执行其
+                    父类的初始化块, 构造器.....最后才执行Leaf类的初始化块和构造器
+                4. 静态初始化块和声明静态成员变量时所指定的初始值都是该类的初始化代码, 他们的执行
+                    顺序与源码中排列顺序相同. 如下面例子2
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        例子2:
+            // StaticInitTest.java
+            public class StaticInitTest{
+                // 先执行静态初始化块将 a 静态成员变量赋值为 6 
+                static{
+                    a = 6;
+                }
+                // 再将 a 静态成员变量赋值为 9 
+                static int a = 9;
+                public static void main(String[] args){
+                    // 下面的代码输出 9 
+                    System.out.println(StaticInitTest.a);
+                }
+                
+            }
+            程序说明:
+                1. 上面程序两次对 a 静态成员变量进行赋值, 执行结果是 a 值是9,这表明 static int a = 9;
+                    这行代码位于静态初始化块之后执行. 
+                2. 当 JVM 第一次主动使用某个类时, 系统会在类准备阶段为该类的所有静态成员变量分类内存,
+                    在初始化揭短则负责初始化这些静态成员变量, 初始化静态成员变量就是执行类初始化代码
+                    或者声明类成员变量时指定的初始值, 他们的执行顺序与源码中排列的顺序相同
 
 
 
