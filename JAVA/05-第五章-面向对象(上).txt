@@ -1,370 +1,370 @@
-0. ¸ÅÊö
-    1. JavaÀà¿É±»ÈÏÎªÊÇÒ»ÖÖ×Ô¶¨ÒåµÄÊý¾ÝÀàÐÍ, ¿ÉÒÔÊ¹ÓÃÀà¶¨Òå±äÁ¿, ËùÓÐÊ¹ÓÃÀà¶¨ÒåµÄ±äÁ¿¶¼ÊÇÒýÓÃ±äÁ¿,Ëü
-        ÃÇ½«»áÒýÓÃµ½ÀàµÄ¶ÔÏó;
-    2. ÃæÏò¶ÔÏóÈý´óÌØÕ÷: ·â×°, ¼Ì³Ð, ¶àÌ¬
+0. æ¦‚è¿°
+    1. Javaç±»å¯è¢«è®¤ä¸ºæ˜¯ä¸€ç§è‡ªå®šä¹‰çš„æ•°æ®ç±»åž‹, å¯ä»¥ä½¿ç”¨ç±»å®šä¹‰å˜é‡, æ‰€æœ‰ä½¿ç”¨ç±»å®šä¹‰çš„å˜é‡éƒ½æ˜¯å¼•ç”¨å˜é‡,å®ƒ
+        ä»¬å°†ä¼šå¼•ç”¨åˆ°ç±»çš„å¯¹è±¡;
+    2. é¢å‘å¯¹è±¡ä¸‰å¤§ç‰¹å¾: å°è£…, ç»§æ‰¿, å¤šæ€
 
-1. ÀàºÍ¶ÔÏó
-    1.1 ¶¨ÒåÀà
-        ËµÃ÷:
-            ÃæÏò¶ÔÏó³ÌÐòÉè¼Æ¹ý³ÌÖÐÓÐÁ½ÖØÒª¸ÅÄî: Àà(class)ºÍ¶ÔÏó(object, Ò²±»³ÆÎªÊµÀý, instance), ÆäÖÐ
-            ÀàÊÇÄ³Ò»Åú¶ÔÏóµÄ³éÏó, Ò²¿ÉÒÔ½«ÀàÀí½âÎªÄ³Ò»ÖÖ¸ÅÄî; ¶ÔÏó²ÅÊÇÒ»¸ö¾ßÌå´æÔÚµÄÊµÌå.
+1. ç±»å’Œå¯¹è±¡
+    1.1 å®šä¹‰ç±»
+        è¯´æ˜Ž:
+            é¢å‘å¯¹è±¡ç¨‹åºè®¾è®¡è¿‡ç¨‹ä¸­æœ‰ä¸¤é‡è¦æ¦‚å¿µ: ç±»(class)å’Œå¯¹è±¡(object, ä¹Ÿè¢«ç§°ä¸ºå®žä¾‹, instance), å…¶ä¸­
+            ç±»æ˜¯æŸä¸€æ‰¹å¯¹è±¡çš„æŠ½è±¡, ä¹Ÿå¯ä»¥å°†ç±»ç†è§£ä¸ºæŸä¸€ç§æ¦‚å¿µ; å¯¹è±¡æ‰æ˜¯ä¸€ä¸ªå…·ä½“å­˜åœ¨çš„å®žä½“.
         
-        ÀàµÄ×÷ÓÃ:
-            1. ¶¨Òå±äÁ¿ 
-            2. ´´½¨¶ÔÏó
-            3. µ÷ÓÃÀàµÄÀà·½·¨»ò·ÃÎÊÀàµÄÀà±äÁ¿
-            4. ÅÉÉú×ÓÀà
+        ç±»çš„ä½œç”¨:
+            1. å®šä¹‰å˜é‡ 
+            2. åˆ›å»ºå¯¹è±¡
+            3. è°ƒç”¨ç±»çš„ç±»æ–¹æ³•æˆ–è®¿é—®ç±»çš„ç±»å˜é‡
+            4. æ´¾ç”Ÿå­ç±»
             
-        ¶¨ÒåÀàµÄÓï·¨:
-            [ÐÞÊÎ·û] class ÀàÃû
+        å®šä¹‰ç±»çš„è¯­æ³•:
+            [ä¿®é¥°ç¬¦] class ç±»å
             {
-                ³ÉÔ±±äÁ¿ (field)
-                ·½·¨(method)
-                ¹¹ÔìÆ÷(constructor)
-                ÄÚ²¿Àà(nested class)
-                ³õÊ¼»¯Ä£¿é
+                æˆå‘˜å˜é‡ (field)
+                æ–¹æ³•(method)
+                æž„é€ å™¨(constructor)
+                å†…éƒ¨ç±»(nested class)
+                åˆå§‹åŒ–æ¨¡å—
             }
             
-            Óï·¨ËµÃ÷:
-                1. ÐÞÊÎ·û: ¿ÉÒÔÊÇ public, final | abstract("|"±íÊ¾»¥³â), »òÕßÍêÈ«¿ÉÒÔÊ¡ÂÔ, 
-                2. ÀàÃû: Ò»¸öºÏ·¨µÄ±êÊ¶·û(×ÖÄ¸,Êý×Ö,ÏÂ»®Ïß,$, ×é³É, µ«ÊÇÊý×Ö²»ÄÜ¿ªÍ·, Ò²²»ÒªÓÃ($)¿ªÍ·),
-                        ÓÉÓÐÒâÒåµÄµ¥´Ê×é³É, Ã¿¸öµ¥´ÊÊ××ÖÄ¸´óÐ´, ÆäËû×ÖÄ¸Ð¡Ð´, µ¥´ÊÖ®¼ä²»ÒªÓÐ·Ö¸ô·û
-                3. Ò»¸öÀà×î³£¼ûµÄ³ÉÔ±: ¹¹ÔìÆ÷,³ÉÔ±±äÁ¿,·½·¨. ÕâÈýÖÖ¶¼¿ÉÒÔÊÇÁã¸ö»ò¶à¸ö,Èç¹ûÁã¸ö,±íÊ¾¿ÕÀà.
-                4. static ÐÞÊÎµÄ³ÉÔ±²»ÄÜ·ÃÎÊÃ»ÓÐ static ÐÞÊÎµÄ³ÉÔ±
-                5. »¨À¨ºÅ"{", "}" Ö®¼äµÄ²¿·Ö½Ð×ö" ÀàÌå "
+            è¯­æ³•è¯´æ˜Ž:
+                1. ä¿®é¥°ç¬¦: å¯ä»¥æ˜¯ public, final | abstract("|"è¡¨ç¤ºäº’æ–¥), æˆ–è€…å®Œå…¨å¯ä»¥çœç•¥, 
+                2. ç±»å: ä¸€ä¸ªåˆæ³•çš„æ ‡è¯†ç¬¦(å­—æ¯,æ•°å­—,ä¸‹åˆ’çº¿,$, ç»„æˆ, ä½†æ˜¯æ•°å­—ä¸èƒ½å¼€å¤´, ä¹Ÿä¸è¦ç”¨($)å¼€å¤´),
+                        ç”±æœ‰æ„ä¹‰çš„å•è¯ç»„æˆ, æ¯ä¸ªå•è¯é¦–å­—æ¯å¤§å†™, å…¶ä»–å­—æ¯å°å†™, å•è¯ä¹‹é—´ä¸è¦æœ‰åˆ†éš”ç¬¦
+                3. ä¸€ä¸ªç±»æœ€å¸¸è§çš„æˆå‘˜: æž„é€ å™¨,æˆå‘˜å˜é‡,æ–¹æ³•. è¿™ä¸‰ç§éƒ½å¯ä»¥æ˜¯é›¶ä¸ªæˆ–å¤šä¸ª,å¦‚æžœé›¶ä¸ª,è¡¨ç¤ºç©ºç±».
+                4. static ä¿®é¥°çš„æˆå‘˜ä¸èƒ½è®¿é—®æ²¡æœ‰ static ä¿®é¥°çš„æˆå‘˜
+                5. èŠ±æ‹¬å·"{", "}" ä¹‹é—´çš„éƒ¨åˆ†å«åš" ç±»ä½“ "
             
-        ³ÉÔ±±äÁ¿(field):
-            ÓÃÓÚ¶¨Òå¸ÃÀà»ò¸ÃÀàµÄÊµÀýËù°üº¬µÄ×´Ì¬Êý¾Ý
+        æˆå‘˜å˜é‡(field):
+            ç”¨äºŽå®šä¹‰è¯¥ç±»æˆ–è¯¥ç±»çš„å®žä¾‹æ‰€åŒ…å«çš„çŠ¶æ€æ•°æ®
             
-            ¶¨ÒåÓï·¨:
-                [ÐÞÊÎ·û] ÀàÐÍ ³ÉÔ±±äÁ¿Ãû [=Ä¬ÈÏÖµ;]
+            å®šä¹‰è¯­æ³•:
+                [ä¿®é¥°ç¬¦] ç±»åž‹ æˆå‘˜å˜é‡å [=é»˜è®¤å€¼;]
             
-            Óï·¨ËµÃ÷:
-                1. ÐÞÊÎ·û: private | protected | public, final, static, (transient: ÐòÁÐ»¯Ïà¹Ø)
-                2. ÀàÐÍ: ÈÎÒâ»ù±¾ÀàÐÍ»òÕßÒýÓÃÀàÐÍ
-                3. ±äÁ¿Ãû: ÍÕ·åÃüÃû·¨, Ê××ÖÄ¸Ð¡Ð´ ºóÃæÃ¿¸öµ¥´ÊÊ××ÖÄ¸´óÐ´, ¾¡Á¿Ê¹ÓÃÓëÏîÄ¿Ïà¹ØµÄÃèÊöÐÔ
-                           µÄÃû´Ê
-                4. staticÐÞÊÎ³ÉÔ±±äÁ¿±íÃ÷ËüÊôÓÚÕâ¸öÀà±¾Éí, ¶ø²»ÊôÓÚ¸ÃÀàµÄµ¥¸öÊµÀý, ËùÒÔstaticÐÞÊÎµÄ
-                    ±äÁ¿½Ð×ö Àà±äÁ¿, Í¨³£°Ñ²»ÊÊÓÃstaticÐÞÊÎµÄ³ÉÔ±±äÁ¿»ò·½·¨Ò²½Ð×öÊµÀý±äÁ¿, ÊµÀý·½·¨.
+            è¯­æ³•è¯´æ˜Ž:
+                1. ä¿®é¥°ç¬¦: private | protected | public, final, static, (transient: åºåˆ—åŒ–ç›¸å…³)
+                2. ç±»åž‹: ä»»æ„åŸºæœ¬ç±»åž‹æˆ–è€…å¼•ç”¨ç±»åž‹
+                3. å˜é‡å: é©¼å³°å‘½åæ³•, é¦–å­—æ¯å°å†™ åŽé¢æ¯ä¸ªå•è¯é¦–å­—æ¯å¤§å†™, å°½é‡ä½¿ç”¨ä¸Žé¡¹ç›®ç›¸å…³çš„æè¿°æ€§
+                           çš„åè¯
+                4. staticä¿®é¥°æˆå‘˜å˜é‡è¡¨æ˜Žå®ƒå±žäºŽè¿™ä¸ªç±»æœ¬èº«, è€Œä¸å±žäºŽè¯¥ç±»çš„å•ä¸ªå®žä¾‹, æ‰€ä»¥staticä¿®é¥°çš„
+                    å˜é‡å«åš ç±»å˜é‡, é€šå¸¸æŠŠä¸é€‚ç”¨staticä¿®é¥°çš„æˆå‘˜å˜é‡æˆ–æ–¹æ³•ä¹Ÿå«åšå®žä¾‹å˜é‡, å®žä¾‹æ–¹æ³•.
                     
-        ·½·¨(method):
-            ÓÃÓÚ¶¨Òå¸ÃÀà»ò¸ÃÀýµÄÊµÀýµÄÐÐÎªÌØÕ÷»òÕß¹¦ÄÜÊµÏÖ
+        æ–¹æ³•(method):
+            ç”¨äºŽå®šä¹‰è¯¥ç±»æˆ–è¯¥ä¾‹çš„å®žä¾‹çš„è¡Œä¸ºç‰¹å¾æˆ–è€…åŠŸèƒ½å®žçŽ°
             
-            ¶¨ÒåÓï·¨:
-                [ÐÞÊÎ·û] ·½·¨·µ»ØÖµÀàÐÍ ·½·¨Ãû(ÐÎ²ÎÁÐ±í)
+            å®šä¹‰è¯­æ³•:
+                [ä¿®é¥°ç¬¦] æ–¹æ³•è¿”å›žå€¼ç±»åž‹ æ–¹æ³•å(å½¢å‚åˆ—è¡¨)
                 {
-                    // ´úÂë: ÓÉÁãÌõ»òÕß¶àÌõ¿ÉÖ´ÐÐÓï¾ä×é³ÉµÄ·½·¨Ìå
-                    // ´úÂë: ¶¨Òå±äÁ¿(°üÀ¨Êý×é), ±äÁ¿¸³Öµ, Á÷³Ì¿ØÖÆ, Êý¾ÝÓï¾ä 
+                    // ä»£ç : ç”±é›¶æ¡æˆ–è€…å¤šæ¡å¯æ‰§è¡Œè¯­å¥ç»„æˆçš„æ–¹æ³•ä½“
+                    // ä»£ç : å®šä¹‰å˜é‡(åŒ…æ‹¬æ•°ç»„), å˜é‡èµ‹å€¼, æµç¨‹æŽ§åˆ¶, æ•°æ®è¯­å¥ 
 
-                    // Èç¹ûÉùÃ÷ÁË·µ»ØÖµÀàÐÍ£¬ ±ØÐëÓÐreturnÓï¾ä
+                    // å¦‚æžœå£°æ˜Žäº†è¿”å›žå€¼ç±»åž‹ï¼Œ å¿…é¡»æœ‰returnè¯­å¥
                 }
             
-            Óï·¨ËµÃ÷:
-                1. ÐÞÊÎ·û:  private | protected | public, final | abstract, static, 
-                2. ·½·¨·µ»ØÖµÀàÐÍ: ¿ÉÒÔÊÇÈÎÒâ»ù±¾ÀàÐÍ»òÒýÓÃÀàÐÍ, ¿ÉÊ¹ÓÃ void ÉùÃ÷Ã»ÓÐ·µ»ØÖµ
-                3. ·½·¨Ãû: ÍÕ·åÐ´·¨, Í¨³£Ê¹ÓÃÓëÏîÄ¿Ïà¹ØµÄ¶¯´Ê
-                4. ÐÎ²ÎÁÐ±í: ¶¨Òå¸Ã·½·¨¿ÉÒÔ½ÓÊÜµÄ²ÎÊý, ¿ÉÓÐÁã×é»ò¶à×é"²ÎÊýÀàÐÍ ÐÎ²ÎÃû" ×éºÏ¶ø³É, ¶à×é
-                             ²ÎÊýÖ®¼äÓÃ(,) ¸ô¿ª, ÀýÈç£º ÐÎ²ÎÀàÐÍ1 ÐÎ²ÎÃû1, ÐÎ²ÎÀàÐÍ2 ÐÎ²ÎÃû2, ...
-                5. ·½·¨ÌåÖÐ¶àÌõ¿ÉÖ´ÐÐÓï¾äÖ®¼äÓÐÑÏ¸ñµÄÖ´ÐÐË³Ðò, ÅÅÔÚ·½·¨ÌåÇ°ÃæµÄÓï¾ä×ÜÊÇÏÈÖ´ÐÐ, ÅÅÔÚ
-                    ·½·¨ÌåºóÃæµÄÓï¾ä×ÜÊÇºóÖ´ÐÐ
-                6.  »¨À¨ºÅ"{", "}" Ö®¼äµÄ²¿·Ö½Ð×ö" ·½·¨Ìå "
+            è¯­æ³•è¯´æ˜Ž:
+                1. ä¿®é¥°ç¬¦:  private | protected | public, final | abstract, static, 
+                2. æ–¹æ³•è¿”å›žå€¼ç±»åž‹: å¯ä»¥æ˜¯ä»»æ„åŸºæœ¬ç±»åž‹æˆ–å¼•ç”¨ç±»åž‹, å¯ä½¿ç”¨ void å£°æ˜Žæ²¡æœ‰è¿”å›žå€¼
+                3. æ–¹æ³•å: é©¼å³°å†™æ³•, é€šå¸¸ä½¿ç”¨ä¸Žé¡¹ç›®ç›¸å…³çš„åŠ¨è¯
+                4. å½¢å‚åˆ—è¡¨: å®šä¹‰è¯¥æ–¹æ³•å¯ä»¥æŽ¥å—çš„å‚æ•°, å¯æœ‰é›¶ç»„æˆ–å¤šç»„"å‚æ•°ç±»åž‹ å½¢å‚å" ç»„åˆè€Œæˆ, å¤šç»„
+                             å‚æ•°ä¹‹é—´ç”¨(,) éš”å¼€, ä¾‹å¦‚ï¼š å½¢å‚ç±»åž‹1 å½¢å‚å1, å½¢å‚ç±»åž‹2 å½¢å‚å2, ...
+                5. æ–¹æ³•ä½“ä¸­å¤šæ¡å¯æ‰§è¡Œè¯­å¥ä¹‹é—´æœ‰ä¸¥æ ¼çš„æ‰§è¡Œé¡ºåº, æŽ’åœ¨æ–¹æ³•ä½“å‰é¢çš„è¯­å¥æ€»æ˜¯å…ˆæ‰§è¡Œ, æŽ’åœ¨
+                    æ–¹æ³•ä½“åŽé¢çš„è¯­å¥æ€»æ˜¯åŽæ‰§è¡Œ
+                6.  èŠ±æ‹¬å·"{", "}" ä¹‹é—´çš„éƒ¨åˆ†å«åš" æ–¹æ³•ä½“ "
             
-        ¹¹ÔìÆ÷:
-            ¹¹ÔìÆ÷ÊÇÒ»¸öÀà´´½¨¶ÔÏóµÄ¸ù±¾Í¾¾¶, Èç¹ûÒ»¸öÀàÃ»ÓÐ¹¹ÔìÆ÷, Õâ¸öÀàÍ¨³£ÎÞ·¨´´½¨ÊµÀý, Ê¹ÓÃ new 
-            µ÷ÓÃ¹¹ÔìÆ÷´´½¨¶ÔÏó£¬ËùÓÐµÄÀà¶¼ÓÐ¹¹ÔìÆ÷£¬¼´Ê¹²»¶¨Òå¹¹ÔìÆ÷£¬ÏµÍ³Ò²»áÄ¬ÈÏµÄ´´½¨ÎÞÐÎ²ÎµÄ¹¹ÔìÆ÷
+        æž„é€ å™¨:
+            æž„é€ å™¨æ˜¯ä¸€ä¸ªç±»åˆ›å»ºå¯¹è±¡çš„æ ¹æœ¬é€”å¾„, å¦‚æžœä¸€ä¸ªç±»æ²¡æœ‰æž„é€ å™¨, è¿™ä¸ªç±»é€šå¸¸æ— æ³•åˆ›å»ºå®žä¾‹, ä½¿ç”¨ new 
+            è°ƒç”¨æž„é€ å™¨åˆ›å»ºå¯¹è±¡ï¼Œæ‰€æœ‰çš„ç±»éƒ½æœ‰æž„é€ å™¨ï¼Œå³ä½¿ä¸å®šä¹‰æž„é€ å™¨ï¼Œç³»ç»Ÿä¹Ÿä¼šé»˜è®¤çš„åˆ›å»ºæ— å½¢å‚çš„æž„é€ å™¨
             
-            ¶¨ÒåÓï·¨:
-                [ÐÞÊÎ·û] ¹¹ÔìÆ÷Ãû(ÐÎ²ÎÁÐ±í)
+            å®šä¹‰è¯­æ³•:
+                [ä¿®é¥°ç¬¦] æž„é€ å™¨å(å½¢å‚åˆ—è¡¨)
                 {
-                    // ´úÂë: ¶¨Òå±äÁ¿(°üÀ¨Êý×é), ±äÁ¿¸³Öµ, Á÷³Ì¿ØÖÆ, Êý¾ÝÓï¾ä 
+                    // ä»£ç : å®šä¹‰å˜é‡(åŒ…æ‹¬æ•°ç»„), å˜é‡èµ‹å€¼, æµç¨‹æŽ§åˆ¶, æ•°æ®è¯­å¥ 
                 }
-            Óï·¨ËµÃ÷:
-                1. ÐÞÊÎ·û: private | protected | public ÆäÖÐÖ®Ò»
-                2. ¹¹ÔìÆ÷Ãû: ¹¹ÔìÆ÷Ãû±ØÐëºÍÀàÃûÏàÍ¬
-                3. ºÍ¶¨Òå·½·¨ÐÎ²ÎÁÐ±íµÄ¸ñÊ½ÍêÈ«ÏàÍ¬
-                4. ×¢Òâ: ¹¹ÔìÆ÷¼È²»ÄÜ¶¨Òå·µ»ØÖµÀàÐÍ, Ò²²»ÄÜÊ¹ÓÃvoidÉùÃ÷¹¹ÔìÆ÷Ã»ÓÐ·µ»ØÖµ
-                5. ¶¨ÒåÀàµÄ´úÂëÃ»ÓÐ¶¨Òå¹¹ÔìÆ÷, ÏµÍ³½«ÎªËüÌá¹©Ò»¸öÄ¬ÈÏµÄ¹¹ÔìÆ÷, ÏµÍ³Ìá¹©µÄ¹¹ÔìÆ÷×ÜÊÇ
-                    Ã»ÓÐ²ÎÊýµÄ
+            è¯­æ³•è¯´æ˜Ž:
+                1. ä¿®é¥°ç¬¦: private | protected | public å…¶ä¸­ä¹‹ä¸€
+                2. æž„é€ å™¨å: æž„é€ å™¨åå¿…é¡»å’Œç±»åç›¸åŒ
+                3. å’Œå®šä¹‰æ–¹æ³•å½¢å‚åˆ—è¡¨çš„æ ¼å¼å®Œå…¨ç›¸åŒ
+                4. æ³¨æ„: æž„é€ å™¨æ—¢ä¸èƒ½å®šä¹‰è¿”å›žå€¼ç±»åž‹, ä¹Ÿä¸èƒ½ä½¿ç”¨voidå£°æ˜Žæž„é€ å™¨æ²¡æœ‰è¿”å›žå€¼
+                5. å®šä¹‰ç±»çš„ä»£ç æ²¡æœ‰å®šä¹‰æž„é€ å™¨, ç³»ç»Ÿå°†ä¸ºå®ƒæä¾›ä¸€ä¸ªé»˜è®¤çš„æž„é€ å™¨, ç³»ç»Ÿæä¾›çš„æž„é€ å™¨æ€»æ˜¯
+                    æ²¡æœ‰å‚æ•°çš„
 
-        Àý×Ó: ¶¨ÒåÒ»¸öPersonÀà
+        ä¾‹å­: å®šä¹‰ä¸€ä¸ªPersonç±»
             public class Person
             {
-                // ¶¨ÒåÁ½¸ö³ÉÔ±±äÁ¿
+                // å®šä¹‰ä¸¤ä¸ªæˆå‘˜å˜é‡
                 public String name;
                 public int age;
 
-                // ¶¨ÒåÒ»¸ösay·½·¨
+                // å®šä¹‰ä¸€ä¸ªsayæ–¹æ³•
                 public void say(String content)
                 {
                     System.out.println(content);
                 }
-                // ¶¨ÒåÒ»¸ö¹¹ÔìÆ÷
+                // å®šä¹‰ä¸€ä¸ªæž„é€ å™¨
                 public Person()
                 {
-                    System.out.println("´´½¨µÄµÚÒ»¸ö¹¹ÔìÆ÷");
+                    System.out.println("åˆ›å»ºçš„ç¬¬ä¸€ä¸ªæž„é€ å™¨");
                 }
             }
         
         
-    1.2 ¶ÔÏóµÄ²úÉúºÍ×÷ÓÃ
-        ËµÃ÷:
-            ´´½¨¶ÔÏóµÄ¸ù±¾Í¾¾¶ÊÇ¹¹ÔìÆ÷, Í¨¹ý new ¹Ø¼ü×ÖÀ´µ÷ÓÃÄ³¸öÀàµÄ¹¹ÔìÆ÷¼´¿É´´½¨Õâ¸öÀàµÄÊµÀý           
+    1.2 å¯¹è±¡çš„äº§ç”Ÿå’Œä½œç”¨
+        è¯´æ˜Ž:
+            åˆ›å»ºå¯¹è±¡çš„æ ¹æœ¬é€”å¾„æ˜¯æž„é€ å™¨, é€šè¿‡ new å…³é”®å­—æ¥è°ƒç”¨æŸä¸ªç±»çš„æž„é€ å™¨å³å¯åˆ›å»ºè¿™ä¸ªç±»çš„å®žä¾‹           
         
-        Java¶ÔÏóµÄ×÷ÓÃ:
-            1. ·ÃÎÊ¶ÔÏóµÄÊµÀý±äÁ¿
-            2. µ÷ÓÃ¶ÔÏóµÄ·½·¨           
+        Javaå¯¹è±¡çš„ä½œç”¨:
+            1. è®¿é—®å¯¹è±¡çš„å®žä¾‹å˜é‡
+            2. è°ƒç”¨å¯¹è±¡çš„æ–¹æ³•           
         
-        Àà»òÊµÀý·ÃÎÊ·½·¨»ò³ÉÔ±±äÁ¿µÄÓï·¨:
-            1.  Àà.Àà±äÁ¿|·½·¨
-            2.  ÊµÀý.ÊµÀý±äÁ¿|·½·¨
-            3.  static ÐÞÊÎµÄ·½·¨»ò³ÉÔ±±äÁ¿, ¼È¿ÉÍ¨¹ýÀàÀ´µ÷ÓÃ, Ò²¿ÉÍ¨¹ýÊµÀýÀ´; Ã»ÓÐ static ÐÞÊÎµÄ
-                ÆÕÍ¨·½·¨ºÍ³ÉÔ±±äÁ¿, Ö»ÄÜÓÃ¹ýÊµÀýÀ´µ÷ÓÃ
+        ç±»æˆ–å®žä¾‹è®¿é—®æ–¹æ³•æˆ–æˆå‘˜å˜é‡çš„è¯­æ³•:
+            1.  ç±».ç±»å˜é‡|æ–¹æ³•
+            2.  å®žä¾‹.å®žä¾‹å˜é‡|æ–¹æ³•
+            3.  static ä¿®é¥°çš„æ–¹æ³•æˆ–æˆå‘˜å˜é‡, æ—¢å¯é€šè¿‡ç±»æ¥è°ƒç”¨, ä¹Ÿå¯é€šè¿‡å®žä¾‹æ¥; æ²¡æœ‰ static ä¿®é¥°çš„
+                æ™®é€šæ–¹æ³•å’Œæˆå‘˜å˜é‡, åªèƒ½ç”¨è¿‡å®žä¾‹æ¥è°ƒç”¨
         
-        Àý×Ó:
-            // Ê¹ÓÃÉÏÃæ¶¨ÒåµÄ Person ÀàÀ´¶¨ÒåÒ»¸ö Person ÀàÐÍµÄ±äÁ¿(ÒòÎªÀàÒ²ÊÇÒ»ÖÖ×Ô¶¨ÒåµÄÊý¾ÝÀàÐÍ)
+        ä¾‹å­:
+            // ä½¿ç”¨ä¸Šé¢å®šä¹‰çš„ Person ç±»æ¥å®šä¹‰ä¸€ä¸ª Person ç±»åž‹çš„å˜é‡(å› ä¸ºç±»ä¹Ÿæ˜¯ä¸€ç§è‡ªå®šä¹‰çš„æ•°æ®ç±»åž‹)
             Person p;
-            // Í¨¹ý new ¹Ø¼ü×Öµ÷ÓÃ Person ÀàµÄ¹¹ÔìÆ÷, ·µ»ØÒ»¸ö Person ÊµÀý
-            // ½«¸Ã Person ÊµÀý¸³¸øP±äÁ¿
+            // é€šè¿‡ new å…³é”®å­—è°ƒç”¨ Person ç±»çš„æž„é€ å™¨, è¿”å›žä¸€ä¸ª Person å®žä¾‹
+            // å°†è¯¥ Person å®žä¾‹èµ‹ç»™På˜é‡
             p = new Person();
             
-            // ÉÏÃæÄãµÄ´úÂëÒ²¿ÉÒÔ¼ò»¯; ¶¨ÒåP±äÁ¿µÄÍ¬Ê±²¢Îªp±äÁ¿¸³Öµ
+            // ä¸Šé¢ä½ çš„ä»£ç ä¹Ÿå¯ä»¥ç®€åŒ–; å®šä¹‰På˜é‡çš„åŒæ—¶å¹¶ä¸ºpå˜é‡èµ‹å€¼
             // Person p = new Person();
-            // ·ÃÎÊpµÄnameºÍageÊµÀý±äÁ¿, Ö±½ÓÎª¸Ã±äÁ¿¸³Öµ
+            // è®¿é—®pçš„nameå’Œageå®žä¾‹å˜é‡, ç›´æŽ¥ä¸ºè¯¥å˜é‡èµ‹å€¼
             p.name = "jefxff";
             p.age = 19;
-            // µ÷ÓÃpµÄsay()·½·¨, ÉùÃ÷ say() ·½·¨µÄÊ±ºò¶¨ÒåÒ»¸öÐÎ²Î
-            // µ÷ÓÃ¸Ã·½·¨±ØÐëÎªÐÎ²ÎÖ¸¶¨Ò»¸ö¶¨ÒåÊ±ÉùÃ÷ÀàÐÍµÄÖµ
+            // è°ƒç”¨pçš„say()æ–¹æ³•, å£°æ˜Ž say() æ–¹æ³•çš„æ—¶å€™å®šä¹‰ä¸€ä¸ªå½¢å‚
+            // è°ƒç”¨è¯¥æ–¹æ³•å¿…é¡»ä¸ºå½¢å‚æŒ‡å®šä¸€ä¸ªå®šä¹‰æ—¶å£°æ˜Žç±»åž‹çš„å€¼
             p.Say("Java is so hard! But I can do it!")
-            // Ö±½ÓÊä³ö p µÄ name ÊµÀý±äÁ¿
+            // ç›´æŽ¥è¾“å‡º p çš„ name å®žä¾‹å˜é‡
             System.out.println(p.name);
 
 
-    1.3 ¶ÔÏó, ÒýÓÃºÍÖ¸Õë
-        ËµÃ÷:
-            1. ½áºÏÉÏÃæÄãµÄJava´úÂëµÄÀý×Ó,  ´úÂë: Person p = new Person(); ÕâÐÐ´úÂë´´½¨ÁËÒ»¸ö Person
-               ÊµÀý, Ò²±»³ÆÖ®ÎªPerson¶ÔÏó;ÕâÐÐ´úÂëÊµ¼Ê²úÉúÁËÁ½¸ö¶«Î÷:Ò»¸öÊÇp±äÁ¿, Ò»¸öÊÇPerson¶ÔÏó. 
-               Õâ¸öPerson¶ÔÏó±»¸³¸øp±äÁ¿. 
+    1.3 å¯¹è±¡, å¼•ç”¨å’ŒæŒ‡é’ˆ
+        è¯´æ˜Ž:
+            1. ç»“åˆä¸Šé¢ä½ çš„Javaä»£ç çš„ä¾‹å­,  ä»£ç : Person p = new Person(); è¿™è¡Œä»£ç åˆ›å»ºäº†ä¸€ä¸ª Person
+               å®žä¾‹, ä¹Ÿè¢«ç§°ä¹‹ä¸ºPersonå¯¹è±¡;è¿™è¡Œä»£ç å®žé™…äº§ç”Ÿäº†ä¸¤ä¸ªä¸œè¥¿:ä¸€ä¸ªæ˜¯på˜é‡, ä¸€ä¸ªæ˜¯Personå¯¹è±¡. 
+               è¿™ä¸ªPersonå¯¹è±¡è¢«èµ‹ç»™på˜é‡. 
                
-            2. ÀàÒ²ÊÇÒ»ÖÖÒýÓÃÀàÐÍ, Òò´Ë³ÌÐòÖÐ¶¨ÒåµÄPersonÀàÐÍµÄ±äÁ¿(p)Êµ¼ÊÉÏÊÇÒ»¸öÒýÓÃ, Ëû±»´æ·ÅÔÚÕ»ÄÚ
-               ´æÖÐ, Ö¸ÏòÊµ¼ÊµÄPerson¶ÔÏó; ¶øÕæÕýµÄPerson¶ÔÏóÔò´æ·ÅÔÚ¶Ñ(heap)ÄÚ´æÖÐ. 
+            2. ç±»ä¹Ÿæ˜¯ä¸€ç§å¼•ç”¨ç±»åž‹, å› æ­¤ç¨‹åºä¸­å®šä¹‰çš„Personç±»åž‹çš„å˜é‡(p)å®žé™…ä¸Šæ˜¯ä¸€ä¸ªå¼•ç”¨, ä»–è¢«å­˜æ”¾åœ¨æ ˆå†…
+               å­˜ä¸­, æŒ‡å‘å®žé™…çš„Personå¯¹è±¡; è€ŒçœŸæ­£çš„Personå¯¹è±¡åˆ™å­˜æ”¾åœ¨å †(heap)å†…å­˜ä¸­. 
                
-            3. ²»¹ÜÊÇÊý×é»¹ÊÇ¶ÔÏó,µ±³ÌÐò·ÃÎÊÒýÓÃ±äÁ¿µÄ³ÉÔ±±äÁ¿»ò·½·¨Ê±, Êµ¼ÊÉÏÊÇ·ÃÎÊ¸ÃÒýÓÃ±äÁ¿ËùÒýÓÃ
-               µÄÊý×é, ¶ÔÏóµÄ³ÉÔ±±äÁ¿»ò·½·¨.
+            3. ä¸ç®¡æ˜¯æ•°ç»„è¿˜æ˜¯å¯¹è±¡,å½“ç¨‹åºè®¿é—®å¼•ç”¨å˜é‡çš„æˆå‘˜å˜é‡æˆ–æ–¹æ³•æ—¶, å®žé™…ä¸Šæ˜¯è®¿é—®è¯¥å¼•ç”¨å˜é‡æ‰€å¼•ç”¨
+               çš„æ•°ç»„, å¯¹è±¡çš„æˆå‘˜å˜é‡æˆ–æ–¹æ³•.
                
-            4. Õ»ÄÚ´æÀïÃæµÄÒýÓÃ±äÁ¿²¢Î´ÕæÕý´æ´¢¶ÔÏóµÄ³ÉÔ±±äÁ¿, ¶ÔÏóµÄ³ÉÔ±±äÁ¿Êý¾ÝÊµ¼ÊÉÏ´æ·ÅÔÚ¶ÑÄÚ´æÀï,
-               ¶øÒýÓÃ±äÁ¿Ö»ÊÇÖ¸Ïò¸Ã¶ÑÄÚ´æÀïÃæµÄ¶ÔÏó.
+            4. æ ˆå†…å­˜é‡Œé¢çš„å¼•ç”¨å˜é‡å¹¶æœªçœŸæ­£å­˜å‚¨å¯¹è±¡çš„æˆå‘˜å˜é‡, å¯¹è±¡çš„æˆå‘˜å˜é‡æ•°æ®å®žé™…ä¸Šå­˜æ”¾åœ¨å †å†…å­˜é‡Œ,
+               è€Œå¼•ç”¨å˜é‡åªæ˜¯æŒ‡å‘è¯¥å †å†…å­˜é‡Œé¢çš„å¯¹è±¡.
                
-            5. ËùÒÔ, ÒýÓÃ±äÁ¿Óë C ÓïÑÔÀïµÄÖ¸ÕëºÜÏñ, ËûÃÇ¶¼ÊÇ´æ´¢Ò»¸öµØÖ·Öµ, Í¨¹ýÕâ¸öµØÖ·À´ÒýÓÃµ½Êµ¼Ê
-               ¶ÔÏó, Ö»ÊÇ Java ¶ÔÕâ¸öÖ¸Õë½øÐÐÁË·â×°,
+            5. æ‰€ä»¥, å¼•ç”¨å˜é‡ä¸Ž C è¯­è¨€é‡Œçš„æŒ‡é’ˆå¾ˆåƒ, ä»–ä»¬éƒ½æ˜¯å­˜å‚¨ä¸€ä¸ªåœ°å€å€¼, é€šè¿‡è¿™ä¸ªåœ°å€æ¥å¼•ç”¨åˆ°å®žé™…
+               å¯¹è±¡, åªæ˜¯ Java å¯¹è¿™ä¸ªæŒ‡é’ˆè¿›è¡Œäº†å°è£…,
                
-            6. ¶ÑÄÚ´æÀïµÄ¶ÔÏó¿ÉÒÔÓÐ¶à¸öÒýÓÃ, ¼´¶à¸öÒýÓÃ±äÁ¿Ö¸ÏòÍ¬Ò»¸ö¶ÔÏó, ´úÂë: Person p2 = p; ÕâÐÐ 
-               ´úÂë°Ñp±äÁ¿µÄÖµ¸³Öµ¸ø p2 ±äÁ¿, Ò²¾ÍÊÇ½« p ±äÁ¿±£´æµÄµØÖ·Öµ¸³¸ø p2 ±äÁ¿, ÕâÑù p2 ±äÁ¿ 
-               ºÍ p ±äÁ¿½«Ö¸Ïò¶ÑÄÚ´æÀïµÄÍ¬Ò»¸ö Person ¶ÔÏó,  ËùÒÔ²»¹Ü·ÃÎÊ p ±äÁ¿»¹ÊÇ·ÃÎÊ p2 ±äÁ¿µÄ
-               ³ÉÔ±±äÁ¿ºÍ·½·¨, ËûÃÇÊµ¼ÊÉÏÊÇ·ÃÎÊÍ¬Ò»¸ö Person ¶ÔÏóµÄ³ÉÔ±±äÁ¿ºÍ·½·¨, ½«»á·µ»ØÏàÍ¬µÄ½á¹û
+            6. å †å†…å­˜é‡Œçš„å¯¹è±¡å¯ä»¥æœ‰å¤šä¸ªå¼•ç”¨, å³å¤šä¸ªå¼•ç”¨å˜é‡æŒ‡å‘åŒä¸€ä¸ªå¯¹è±¡, ä»£ç : Person p2 = p; è¿™è¡Œ 
+               ä»£ç æŠŠpå˜é‡çš„å€¼èµ‹å€¼ç»™ p2 å˜é‡, ä¹Ÿå°±æ˜¯å°† p å˜é‡ä¿å­˜çš„åœ°å€å€¼èµ‹ç»™ p2 å˜é‡, è¿™æ · p2 å˜é‡ 
+               å’Œ p å˜é‡å°†æŒ‡å‘å †å†…å­˜é‡Œçš„åŒä¸€ä¸ª Person å¯¹è±¡,  æ‰€ä»¥ä¸ç®¡è®¿é—® p å˜é‡è¿˜æ˜¯è®¿é—® p2 å˜é‡çš„
+               æˆå‘˜å˜é‡å’Œæ–¹æ³•, ä»–ä»¬å®žé™…ä¸Šæ˜¯è®¿é—®åŒä¸€ä¸ª Person å¯¹è±¡çš„æˆå‘˜å˜é‡å’Œæ–¹æ³•, å°†ä¼šè¿”å›žç›¸åŒçš„ç»“æžœ
 
-    1.4 ¶ÔÏóµÄ this ÒýÓÃ
-        ËµÃ÷:
-            1. this ¹Ø¼ü×Ö×ÜÊÇÖ¸Ïòµ÷ÓÃ¸Ã·½·¨µÄ¶ÔÏó. ¸ù¾Ý this ³öÏÖÎ»ÖÃ, ÓÐÈçÏÂÁ½ÖÖÇéÐÎ£º
-                ³öÏÖÔÚ¹¹ÔìÆ÷ÖÐ, this ¾Í´ú±í¸Ã¹¹ÔìÆ÷ÕýÔÚ³õÊ¼»¯µÄ¶ÔÏó;
-                ³öÏÖÔÚ·Ç static ·½·¨ÖÐ(ÊµÀý·½·¨), this¾Í´ú±íÁË¸Ã·½·¨µÄÓµÓÐÕß;
-            2. this¹Ø¼ü×Ö×î´óµÄ×÷ÓÃ¾ÍÊÇÈÃÀàÖÐÒ»¸ö·½·¨, ·ÃÎÊ¸ÃÀàÀïµÄÁíÒ»¸ö·½·¨»òÊµÀý±äÁ¿
-            3. Ë­ÔÚµ÷ÓÃÕâ¸ö·½·¨, this¾Í´ú±íË­
-            4. this. µÄºÜÖØÒªµÄ×÷ÓÃÊÇ: ÓÃÓÚÇø·Ö·½·¨»ò¹¹ÔìÆ÷µÄ¾Ö²¿±äÁ¿. ÓÈÆäÊÇÓë³ÉÔ±±äÁ¿Í¬ÃûÊ±--¸üÐè
-                Òªthis½øÐÐÇø·Ö
-            5. Èç¹ûÔÚ static ÐÞÊÎµÄ·½·¨ÖÐÊ¹ÓÃthis¹Ø¼ü×Ö, ÔòÕâ¸ö¹Ø¼ü×Ö¾ÍÎÞ·¨Ö¸ÏòºÏÊÊµÄ¶ÔÏó, ËùÒÔstatic 
-                ÐÞÊÎµÄ·½·¨²»ÄÜÊ¹ÓÃthisÒýÓÃ. Òò´Ë static ÐÞÊÎµÄ·½·¨²»ÄÜ·ÃÎÊ²»Ê¹ÓÃ static ÐÞÊÎµÄÆÕÍ¨³É
-                Ô±, ËùÒÔ: ¾²Ì¬³ÉÔ±²»ÄÜÖ±½Ó·ÃÎÊ·Ç¾²Ì¬³ÉÔ±.
+    1.4 å¯¹è±¡çš„ this å¼•ç”¨
+        è¯´æ˜Ž:
+            1. this å…³é”®å­—æ€»æ˜¯æŒ‡å‘è°ƒç”¨è¯¥æ–¹æ³•çš„å¯¹è±¡. æ ¹æ® this å‡ºçŽ°ä½ç½®, æœ‰å¦‚ä¸‹ä¸¤ç§æƒ…å½¢ï¼š
+                å‡ºçŽ°åœ¨æž„é€ å™¨ä¸­, this å°±ä»£è¡¨è¯¥æž„é€ å™¨æ­£åœ¨åˆå§‹åŒ–çš„å¯¹è±¡;
+                å‡ºçŽ°åœ¨éž static æ–¹æ³•ä¸­(å®žä¾‹æ–¹æ³•), thiså°±ä»£è¡¨äº†è¯¥æ–¹æ³•çš„æ‹¥æœ‰è€…;
+            2. thiså…³é”®å­—æœ€å¤§çš„ä½œç”¨å°±æ˜¯è®©ç±»ä¸­ä¸€ä¸ªæ–¹æ³•, è®¿é—®è¯¥ç±»é‡Œçš„å¦ä¸€ä¸ªæ–¹æ³•æˆ–å®žä¾‹å˜é‡
+            3. è°åœ¨è°ƒç”¨è¿™ä¸ªæ–¹æ³•, thiså°±ä»£è¡¨è°
+            4. this. çš„å¾ˆé‡è¦çš„ä½œç”¨æ˜¯: ç”¨äºŽåŒºåˆ†æ–¹æ³•æˆ–æž„é€ å™¨çš„å±€éƒ¨å˜é‡. å°¤å…¶æ˜¯ä¸Žæˆå‘˜å˜é‡åŒåæ—¶--æ›´éœ€
+                è¦thisè¿›è¡ŒåŒºåˆ†
+            5. å¦‚æžœåœ¨ static ä¿®é¥°çš„æ–¹æ³•ä¸­ä½¿ç”¨thiså…³é”®å­—, åˆ™è¿™ä¸ªå…³é”®å­—å°±æ— æ³•æŒ‡å‘åˆé€‚çš„å¯¹è±¡, æ‰€ä»¥static 
+                ä¿®é¥°çš„æ–¹æ³•ä¸èƒ½ä½¿ç”¨thiså¼•ç”¨. å› æ­¤ static ä¿®é¥°çš„æ–¹æ³•ä¸èƒ½è®¿é—®ä¸ä½¿ç”¨ static ä¿®é¥°çš„æ™®é€šæˆ
+                å‘˜, æ‰€ä»¥: é™æ€æˆå‘˜ä¸èƒ½ç›´æŽ¥è®¿é—®éžé™æ€æˆå‘˜.
 
-        Àý×Ó: 1. Ã»ÓÐÊ¹ÓÃthisµÄÇé¿öÏÂ, ÏÂÃæÀý×Óµ÷ÓÃÄÚ²¿·½·¨ÐèÒª´´½¨Á½¸öÊµÀýÀ´ÊµÏÖ
+        ä¾‹å­: 1. æ²¡æœ‰ä½¿ç”¨thisçš„æƒ…å†µä¸‹, ä¸‹é¢ä¾‹å­è°ƒç”¨å†…éƒ¨æ–¹æ³•éœ€è¦åˆ›å»ºä¸¤ä¸ªå®žä¾‹æ¥å®žçŽ°
             public class Dog
             {
-                // ¶¨ÒåÒ»¸öjump ·½·¨
+                // å®šä¹‰ä¸€ä¸ªjump æ–¹æ³•
                 public void jump()
                 {
-                    System.out.println("ÕýÔÚÖ´ÐÐ jump ·½·¨.....");
+                    System.out.println("æ­£åœ¨æ‰§è¡Œ jump æ–¹æ³•.....");
                 }
-                // ¶¨ÒåÒ»¸ö run() ·½·¨, run()·½·¨ÐèÒª½èÖú jump() ·½·¨
+                // å®šä¹‰ä¸€ä¸ª run() æ–¹æ³•, run()æ–¹æ³•éœ€è¦å€ŸåŠ© jump() æ–¹æ³•
                 public void run()
                 {
                     Dog d = new Dog();
                     d.jump();
                     
-                    System.out.println("ÕýÔÚÖ´ÐÐ run ·½·¨.....");
+                    System.out.println("æ­£åœ¨æ‰§è¡Œ run æ–¹æ³•.....");
                 }
                 public static void main(String[] args)
                 {
-                    // ´´½¨ dog ¶ÔÏó
+                    // åˆ›å»º dog å¯¹è±¡
                     Dog dog = new Dog();
-                    // µ÷ÓÃ Dog ¶ÔÏóµÄ run() ·½·¨
+                    // è°ƒç”¨ Dog å¯¹è±¡çš„ run() æ–¹æ³•
                     dog.run();
                 }
             }
             
-            ËµÃ÷: 1. ÉÏÃæµÄ³ÌÐòÖÐÒ»¹²²úÉúÁËÁ½¸ö Dog ¶ÔÏó, µ÷ÓÃrun() ·½·¨µÄÊÇ dog , ¶øÔÚ run() 
-                    ·½·¨ÖÐµ÷ÓÃjump() ·½·¨µÄÊÇ d 
-                  2. ÔÙ¼ÇÒ»±é, **Ã»ÓÐ static** ÐÞÊÎµÄ³ÉÔ±±äÁ¿ºÍ·½·¨¶¼±ØÐëÊ¹ÓÃ**¶ÔÏó**À´µ÷ÓÃ
-                  3. static ÐÞÊÎµÄ·½·¨ÊôÓÚÀà, ²»ÊôÓÚ¶ÔÏó
+            è¯´æ˜Ž: 1. ä¸Šé¢çš„ç¨‹åºä¸­ä¸€å…±äº§ç”Ÿäº†ä¸¤ä¸ª Dog å¯¹è±¡, è°ƒç”¨run() æ–¹æ³•çš„æ˜¯ dog , è€Œåœ¨ run() 
+                    æ–¹æ³•ä¸­è°ƒç”¨jump() æ–¹æ³•çš„æ˜¯ d 
+                  2. å†è®°ä¸€é, **æ²¡æœ‰ static** ä¿®é¥°çš„æˆå‘˜å˜é‡å’Œæ–¹æ³•éƒ½å¿…é¡»ä½¿ç”¨**å¯¹è±¡**æ¥è°ƒç”¨
+                  3. static ä¿®é¥°çš„æ–¹æ³•å±žäºŽç±», ä¸å±žäºŽå¯¹è±¡
                 
-        Àý×Ó: 2. Ê¹ÓÃthis·½·¨, ´úÂëÍ¬ÉÏÃæÀý×Ó1, µ«ÊÇÖ»ÐèÒª´´½¨Ò»¸öÊµÀý
+        ä¾‹å­: 2. ä½¿ç”¨thisæ–¹æ³•, ä»£ç åŒä¸Šé¢ä¾‹å­1, ä½†æ˜¯åªéœ€è¦åˆ›å»ºä¸€ä¸ªå®žä¾‹
             public class Dog
             {
-                // ¶¨ÒåÒ»¸öjump ·½·¨
+                // å®šä¹‰ä¸€ä¸ªjump æ–¹æ³•
                 public void jump()
                 {
-                    System.out.println("ÕýÔÚÖ´ÐÐ jump ·½·¨.....");
+                    System.out.println("æ­£åœ¨æ‰§è¡Œ jump æ–¹æ³•.....");
                 }
-                // ¶¨ÒåÒ»¸ö run() ·½·¨, run()·½·¨ÐèÒª½èÖú jump() ·½·¨
+                // å®šä¹‰ä¸€ä¸ª run() æ–¹æ³•, run()æ–¹æ³•éœ€è¦å€ŸåŠ© jump() æ–¹æ³•
                 public void run()
                 {
-                    // Ë­µ÷ÓÃÕâ¸ö·½·¨, this¾Í´ú±íË­
+                    // è°è°ƒç”¨è¿™ä¸ªæ–¹æ³•, thiså°±ä»£è¡¨è°
                     this.jump();
-                    // ÕâÊÇÒ»ÖÖÊ¡ÂÔ this µÄÐ´·¨, µ«ÊÇÎÒÊôÓÚ¸Õ¿ªÊ¼Ñ§, ¾Í²»ÒªÊ¡ÂÔÁË
+                    // è¿™æ˜¯ä¸€ç§çœç•¥ this çš„å†™æ³•, ä½†æ˜¯æˆ‘å±žäºŽåˆšå¼€å§‹å­¦, å°±ä¸è¦çœç•¥äº†
                     // jump();
                     
-                    System.out.println("ÕýÔÚÖ´ÐÐ run ·½·¨.....");
+                    System.out.println("æ­£åœ¨æ‰§è¡Œ run æ–¹æ³•.....");
                 }
                 public static void main(String[] args)
                 {
-                    // ´´½¨ dog ¶ÔÏó
+                    // åˆ›å»º dog å¯¹è±¡
                     Dog dog = new Dog();
-                    // µ÷ÓÃ Dog ¶ÔÏóµÄ run() ·½·¨
+                    // è°ƒç”¨ Dog å¯¹è±¡çš„ run() æ–¹æ³•
                     dog.run();
                 }
             }
         
-        Àý×Ó: 3. this ÔÚ¹¹ÔìÆ÷ÖÐ, ´ú±í¹¹ÔìÆ÷ÕýÔÚ³õÊ¼»¯µÄ¶ÔÏó; Ò²¿ÉÒÔÇø·Ö³ÉÔ±±äÁ¿ºÍ¾Ö²¿±äÁ¿
+        ä¾‹å­: 3. this åœ¨æž„é€ å™¨ä¸­, ä»£è¡¨æž„é€ å™¨æ­£åœ¨åˆå§‹åŒ–çš„å¯¹è±¡; ä¹Ÿå¯ä»¥åŒºåˆ†æˆå‘˜å˜é‡å’Œå±€éƒ¨å˜é‡
         public class ThisInConstructor
         {
-            // ¶¨ÒåÒ»¸öÃûÎªfooµÄ³ÉÔ±±äÁ¿
+            // å®šä¹‰ä¸€ä¸ªåä¸ºfooçš„æˆå‘˜å˜é‡
             public int foo;
             
-            // ¶¨Òå¹¹ÔìÆ÷
+            // å®šä¹‰æž„é€ å™¨
             public ThisInConstructor()
             {
-                // ÔÚ¹¹ÔìÆ÷ÀïÃæ¶¨ÒåÒ»¸öºÍ³ÉÔ±±äÁ¿Í¬ÃûµÄ foo ±äÁ¿
+                // åœ¨æž„é€ å™¨é‡Œé¢å®šä¹‰ä¸€ä¸ªå’Œæˆå‘˜å˜é‡åŒåçš„ foo å˜é‡
                 int foo = 0;
-                // Ê¹ÓÃthis´ú±í¸Ã¹¹ÔìÆ÷ÕýÔÚ³õÊ¼»¯µÄ¶ÔÏó
-                // ÏÂÃæµÄ´úÂë½«»á°Ñ¸Ã¹¹ÔìÆ÷ÕýÔÚ³õÊ¼»¯µÄ¶ÔÏóµÄfoo³ÉÔ±±äÁ¿ÉèÎª 6
+                // ä½¿ç”¨thisä»£è¡¨è¯¥æž„é€ å™¨æ­£åœ¨åˆå§‹åŒ–çš„å¯¹è±¡
+                // ä¸‹é¢çš„ä»£ç å°†ä¼šæŠŠè¯¥æž„é€ å™¨æ­£åœ¨åˆå§‹åŒ–çš„å¯¹è±¡çš„fooæˆå‘˜å˜é‡è®¾ä¸º 6
                 this.foo = 6;
                 
             }
             public static void main(String[] args)
             {
-                //ËùÓÐÊ¹ÓÃ ThisInConstructor ´´½¨µÄ¶ÔÏóµÄfoo ³ÉÔ±±äÁ¿¶¼½«±»ÉèÎª6
+                //æ‰€æœ‰ä½¿ç”¨ ThisInConstructor åˆ›å»ºçš„å¯¹è±¡çš„foo æˆå‘˜å˜é‡éƒ½å°†è¢«è®¾ä¸º6
                 System.out.println(new ThisInConstructor().foo);   // out: 6
                 
-                // ´´½¨¶ÔÏó, Ê¹ÓÃ¶ÔÏóÊä³ö foo 
+                // åˆ›å»ºå¯¹è±¡, ä½¿ç”¨å¯¹è±¡è¾“å‡º foo 
                 ThisInConstructor t = new ThisInConstructor();
                 System.out.println(t.foo);   // out: 6
             }
         }
 
 
-2. ·½·¨Ïê½â
-    2.1 ·½·¨µÄËùÊôÐÔ
-        ËµÃ÷:
-            1. ·½·¨ÊÇÀà»òÕß¶ÔÏóµÄÐÐÎªÌØÕ÷µÄ³éÏó, ·½·¨ÊÇÀà»ò¶ÔÏóµÄ×îÖØÒª×é³É²¿·Ö;
+2. æ–¹æ³•è¯¦è§£
+    2.1 æ–¹æ³•çš„æ‰€å±žæ€§
+        è¯´æ˜Ž:
+            1. æ–¹æ³•æ˜¯ç±»æˆ–è€…å¯¹è±¡çš„è¡Œä¸ºç‰¹å¾çš„æŠ½è±¡, æ–¹æ³•æ˜¯ç±»æˆ–å¯¹è±¡çš„æœ€é‡è¦ç»„æˆéƒ¨åˆ†;
             
-            2. JavaÀïÃæµÄ·½·¨²»ÄÜ¶ÀÁ¢´æÔÚ, ËùÓÐµÄ·½·¨¶¼±ØÐë¶¨ÒåÔÚÀàÀïÃæ; ·½·¨ÔÚÂß¼­ÉÏÒªÃ´ÊôÓÚÀà, Òª
-                Ã´ÊôÓÚ¸ÃÀàµÄÒ»¸ö¶ÔÏó;
+            2. Javaé‡Œé¢çš„æ–¹æ³•ä¸èƒ½ç‹¬ç«‹å­˜åœ¨, æ‰€æœ‰çš„æ–¹æ³•éƒ½å¿…é¡»å®šä¹‰åœ¨ç±»é‡Œé¢; æ–¹æ³•åœ¨é€»è¾‘ä¸Šè¦ä¹ˆå±žäºŽç±», è¦
+                ä¹ˆå±žäºŽè¯¥ç±»çš„ä¸€ä¸ªå¯¹è±¡;
                 
-            3. JavaÖÐ, ÀàÊÇÒ»µÈ¹«Ãñ, Õû¸öÏµÍ³ÓÉÒ»¸öÒ»¸öµÄÀà×é³É, Ò»µ©½«Ò»¸ö·½·¨¶¨ÒåÔÚÄ³¸öÀàÌåÀïÃæ, Èç
-                ¹ûÕâ¸ö·½·¨Ê¹ÓÃÁËstaticÐÞÊÎ, ÔòÕâ¸ö·½·¨ÊôÓÚÕâ¸öÀà, ·ñÔòÕâ¸ö·½·¨ÊôÓÚÕâ¸öÀàµÄÊµÀý;
+            3. Javaä¸­, ç±»æ˜¯ä¸€ç­‰å…¬æ°‘, æ•´ä¸ªç³»ç»Ÿç”±ä¸€ä¸ªä¸€ä¸ªçš„ç±»ç»„æˆ, ä¸€æ—¦å°†ä¸€ä¸ªæ–¹æ³•å®šä¹‰åœ¨æŸä¸ªç±»ä½“é‡Œé¢, å¦‚
+                æžœè¿™ä¸ªæ–¹æ³•ä½¿ç”¨äº†staticä¿®é¥°, åˆ™è¿™ä¸ªæ–¹æ³•å±žäºŽè¿™ä¸ªç±», å¦åˆ™è¿™ä¸ªæ–¹æ³•å±žäºŽè¿™ä¸ªç±»çš„å®žä¾‹;
                 
-            4. JavaÖÐÖ´ÐÐ·½·¨Ê±±ØÐëÊ¹ÓÃÀà»òÕß¶ÔÏóÀ´×÷Îªµ÷ÓÃÕß, ¼´ËùÓÐµÄ·½·¨¶¼±ØÐëÊ¹ÓÃ "Àà.·½·¨" »òÕß
-                Ê¹ÓÃÀà´´½¨³öÀ´µÄ¶ÔÏóÍ¨¹ý "¶ÔÏó.·½·¨" µÄÐÎÊ½À´µ÷ÓÃ;
+            4. Javaä¸­æ‰§è¡Œæ–¹æ³•æ—¶å¿…é¡»ä½¿ç”¨ç±»æˆ–è€…å¯¹è±¡æ¥ä½œä¸ºè°ƒç”¨è€…, å³æ‰€æœ‰çš„æ–¹æ³•éƒ½å¿…é¡»ä½¿ç”¨ "ç±».æ–¹æ³•" æˆ–è€…
+                ä½¿ç”¨ç±»åˆ›å»ºå‡ºæ¥çš„å¯¹è±¡é€šè¿‡ "å¯¹è±¡.æ–¹æ³•" çš„å½¢å¼æ¥è°ƒç”¨;
                 
-            5. Í¬Ò»¸öÀàµÄÒ»¸ö·½·¨µ÷ÓÃÁíÍâÒ»¸ö·½·¨: Èç¹ûµ÷ÓÃµÄÊÇÆÕÍ¨·½·¨, ÔòÄ¬ÈÏÊ¹ÓÃ this ×÷Îªµ÷ÓÃÕß, 
-                Èç¹û±»µ÷ÓÃµÄ·½·¨ÊÇ¾²Ì¬·½·¨(Àà·½·¨), ÔòÄ¬ÈÏÊ¹ÓÃ Àà ×÷Îªµ÷ÓÃÕß. 
+            5. åŒä¸€ä¸ªç±»çš„ä¸€ä¸ªæ–¹æ³•è°ƒç”¨å¦å¤–ä¸€ä¸ªæ–¹æ³•: å¦‚æžœè°ƒç”¨çš„æ˜¯æ™®é€šæ–¹æ³•, åˆ™é»˜è®¤ä½¿ç”¨ this ä½œä¸ºè°ƒç”¨è€…, 
+                å¦‚æžœè¢«è°ƒç”¨çš„æ–¹æ³•æ˜¯é™æ€æ–¹æ³•(ç±»æ–¹æ³•), åˆ™é»˜è®¤ä½¿ç”¨ ç±» ä½œä¸ºè°ƒç”¨è€…. 
                 
-            6. ¼Ç×¡: ×¢Òâ: Ê¹ÓÃ static ÐÞÊÎµÄ·½·¨¼È¿ÉÒÔÊ¹ÓÃÀà×÷Îªµ÷ÓÃÕßÀ´µ÷ÓÃ, Ò²¿ÉÒÔÊ¹ÓÃ¶ÔÏó×÷Îªµ÷ÓÃ
-                ÕßÀ´µ÷ÓÃ;  ·Ç static ·½·¨ÔòÊôÓÚ¸ÃÀàµÄ¶ÔÏó, ²»ÊôÓÚÀà±¾Éí, ËùÒÔ ·Çstatic·½·¨Ö»ÄÜÊ¹ÓÃ¶Ô
-                ÏóÀ´µ÷ÓÃ.
+            6. è®°ä½: æ³¨æ„: ä½¿ç”¨ static ä¿®é¥°çš„æ–¹æ³•æ—¢å¯ä»¥ä½¿ç”¨ç±»ä½œä¸ºè°ƒç”¨è€…æ¥è°ƒç”¨, ä¹Ÿå¯ä»¥ä½¿ç”¨å¯¹è±¡ä½œä¸ºè°ƒç”¨
+                è€…æ¥è°ƒç”¨;  éž static æ–¹æ³•åˆ™å±žäºŽè¯¥ç±»çš„å¯¹è±¡, ä¸å±žäºŽç±»æœ¬èº«, æ‰€ä»¥ éžstaticæ–¹æ³•åªèƒ½ä½¿ç”¨å¯¹
+                è±¡æ¥è°ƒç”¨.
                 
-        Àý×Ó:
+        ä¾‹å­:
             public class Dog
             {
-                // ¶¨Òå3¸ö³ÉÔ±±äÁ¿£¨ÊµÀý±äÁ¿£©
-                public String name = "Íú²Æ";
+                // å®šä¹‰3ä¸ªæˆå‘˜å˜é‡ï¼ˆå®žä¾‹å˜é‡ï¼‰
+                public String name = "æ—ºè´¢";
                 public String color;
                 public double weight;
                 
-                // ¶¨ÒåÒ»¸ö·½·¨ £¨ÊµÀý·½·¨£©
+                // å®šä¹‰ä¸€ä¸ªæ–¹æ³• ï¼ˆå®žä¾‹æ–¹æ³•ï¼‰
                 public void jump()
                 {
-                    System.out.println(this.name + " ÕýÔÚÖ´ÐÐ jump ·½·¨.....");
+                    System.out.println(this.name + " æ­£åœ¨æ‰§è¡Œ jump æ–¹æ³•.....");
                 }
-                // ¶¨ÒåÒ»¸örun·½·¨£¨ÊµÀý·½·¨£©
+                // å®šä¹‰ä¸€ä¸ªrunæ–¹æ³•ï¼ˆå®žä¾‹æ–¹æ³•ï¼‰
                 public void run()
                 {
                     // Dog d = new Dog();
                     // d.jump();
                     this.jump();
-                    System.out.println("ÕýÔÚÖ´ÐÐ run ·½·¨.....");
+                    System.out.println("æ­£åœ¨æ‰§è¡Œ run æ–¹æ³•.....");
                 }
-                // ¶¨ÒåÒ»¸ö static ÐÞÊÎµÄ barking ·½·¨ £¨Àà·½·¨£©
+                // å®šä¹‰ä¸€ä¸ª static ä¿®é¥°çš„ barking æ–¹æ³• ï¼ˆç±»æ–¹æ³•ï¼‰
                 public static void barking()
                 {
                     System.out.println("wangwangwang............");
                 }
-                // ³ÌÐòµÄÈë¿Ú main·½·¨
+                // ç¨‹åºçš„å…¥å£ mainæ–¹æ³•
                 public static void main(String... args)
                 {
                     Dog dog = new Dog();
-                    // ÊµÀýµ÷ÓÃ·ÇstaticÐÞÊÎµÄ·½·¨
+                    // å®žä¾‹è°ƒç”¨éžstaticä¿®é¥°çš„æ–¹æ³•
                     dog.run();
-                    // ²âÊÔÁË, ÏÖÔÚÔÙ¼Ç×¡Ò»´Î, Ã»ÓÐstaticÐÞÊÎµÄ·½·¨, Ö»ÄÜÓÃÊµÀýÀ´µ÷ÓÃ, ÏÂÃæÓÃÀà Dog 
-                    // µ÷ÓÃÃ»ÓÐstaticÐÞÊÎµÄ·½·¨,  ±¨´íÎó:ÎÞ·¨´Ó¾²Ì¬ÉÏÏÂÎÄÖÐÒýÓÃ·Ç¾²Ì¬ ·½·¨ run()
+                    // æµ‹è¯•äº†, çŽ°åœ¨å†è®°ä½ä¸€æ¬¡, æ²¡æœ‰staticä¿®é¥°çš„æ–¹æ³•, åªèƒ½ç”¨å®žä¾‹æ¥è°ƒç”¨, ä¸‹é¢ç”¨ç±» Dog 
+                    // è°ƒç”¨æ²¡æœ‰staticä¿®é¥°çš„æ–¹æ³•,  æŠ¥é”™è¯¯:æ— æ³•ä»Žé™æ€ä¸Šä¸‹æ–‡ä¸­å¼•ç”¨éžé™æ€ æ–¹æ³• run()
                     // Dog.run();
                     System.out.println();
-                    // ÊµÀýµ÷ÓÃstaticÐÞÊÎµÄ·½·¨
+                    // å®žä¾‹è°ƒç”¨staticä¿®é¥°çš„æ–¹æ³•
                     dog.barking();
-                    // Ààµ÷ÓÃstaticÐÞÊÎµÄ·½·¨
+                    // ç±»è°ƒç”¨staticä¿®é¥°çš„æ–¹æ³•
                     Dog.barking();
                     
                 }
             }
 
-    2.2 ·½·¨µÄ²ÎÊý´«µÝ»úÖÆ
-        ²ÎÊý´«µÝ·½Ê½:
-            1. JavaÀï·½·¨µÄ²ÎÊý´«µÝ·½Ê½Ö»ÓÐÒ»ÖÖ: Öµ´«µÝ. Öµ´«µÝ¾ÍÊÇ½«Êµ¼Ê²ÎÊýÖµµÄ¸±±¾(¸´ÖÆÆ·)´«Èë·½
-                ·¨ÄÚ,¶ø²ÎÊý±¾Éí²»»áÊÜµ½ÈÎºÎÓ°Ïì;
+    2.2 æ–¹æ³•çš„å‚æ•°ä¼ é€’æœºåˆ¶
+        å‚æ•°ä¼ é€’æ–¹å¼:
+            1. Javaé‡Œæ–¹æ³•çš„å‚æ•°ä¼ é€’æ–¹å¼åªæœ‰ä¸€ç§: å€¼ä¼ é€’. å€¼ä¼ é€’å°±æ˜¯å°†å®žé™…å‚æ•°å€¼çš„å‰¯æœ¬(å¤åˆ¶å“)ä¼ å…¥æ–¹
+                æ³•å†…,è€Œå‚æ•°æœ¬èº«ä¸ä¼šå—åˆ°ä»»ä½•å½±å“;
                 
-            2. Öµ´«µÝµÄÊµÖÊ: µ±ÏµÍ³¿ªÊ¼Ö´ÐÐ·½·¨Ê±,ÏµÍ³ÎªÐÎ²ÎÖ´ÐÐ³õÊ¼»¯, ¾ÍÊÇ°ÑÊµ²Î±äÁ¿µÄÖµ¸³¸ø·½·¨µÄ
-                ÐÎ²Î±äÁ¿, ·½·¨Àï²Ù×÷µÄ²¢²»ÊÇÊµ¼ÊµÄÊµ²Î±äÁ¿.
+            2. å€¼ä¼ é€’çš„å®žè´¨: å½“ç³»ç»Ÿå¼€å§‹æ‰§è¡Œæ–¹æ³•æ—¶,ç³»ç»Ÿä¸ºå½¢å‚æ‰§è¡Œåˆå§‹åŒ–, å°±æ˜¯æŠŠå®žå‚å˜é‡çš„å€¼èµ‹ç»™æ–¹æ³•çš„
+                å½¢å‚å˜é‡, æ–¹æ³•é‡Œæ“ä½œçš„å¹¶ä¸æ˜¯å®žé™…çš„å®žå‚å˜é‡.
                 
-        Àý×Ó1: »ù±¾ÀàÐÍµÄ²ÎÊý´«µÝÐ§¹û
+        ä¾‹å­1: åŸºæœ¬ç±»åž‹çš„å‚æ•°ä¼ é€’æ•ˆæžœ
             public class PrimitiveTransferTest
             {
-                // ¶¨ÒåÒ»¸öÀà·½·¨£¬½ÓÊÜÁ½¸öintÀàÐÍµÄ²ÎÊý
+                // å®šä¹‰ä¸€ä¸ªç±»æ–¹æ³•ï¼ŒæŽ¥å—ä¸¤ä¸ªintç±»åž‹çš„å‚æ•°
                 public static void swap(int a, int b)
                 {
-                    // ÏÂÃæÈýÐÐ´úÂëÊµÏÖa, b ±äÁ¿µÄÖµ½»»»£¨pythonÖÐ£º a, b = b, a Ò»¾ä»°¾Í×ª»»ÁË£©
-                    // ¶¨ÒåÒ»¸öÁÙÊ±±äÁ¿À´±£´æ a ±äÁ¿µÄÖµ
+                    // ä¸‹é¢ä¸‰è¡Œä»£ç å®žçŽ°a, b å˜é‡çš„å€¼äº¤æ¢ï¼ˆpythonä¸­ï¼š a, b = b, a ä¸€å¥è¯å°±è½¬æ¢äº†ï¼‰
+                    // å®šä¹‰ä¸€ä¸ªä¸´æ—¶å˜é‡æ¥ä¿å­˜ a å˜é‡çš„å€¼
                     int tmp = a;
-                    // °Ñ b µÄÖµ¸³¸ø a
+                    // æŠŠ b çš„å€¼èµ‹ç»™ a
                     a = b;
-                    // °ÑÁÙÊ±±äÁ¿ tmp µÄÖµ¸³¸ø b
+                    // æŠŠä¸´æ—¶å˜é‡ tmp çš„å€¼èµ‹ç»™ b
                     b = tmp;
-                    System.out.println("swap·½·¨Àï½»»»ºó, aµÄÖµÊÇ: " + a + "; ±äÁ¿bµÄÖµÊÇ: " + b );   
+                    System.out.println("swapæ–¹æ³•é‡Œäº¤æ¢åŽ, açš„å€¼æ˜¯: " + a + "; å˜é‡bçš„å€¼æ˜¯: " + b );   
                 }
                 public static void main(String... args)
                 {
                     int a = 6;
                     int b = 9;
                     swap(a, b);  // out: a = 9, b = 6
-                    // ÏÂÃæ´úÂëÊä³ö£º a = 6, b =9
-                    System.out.println("½»»»½áÊøºó: aµÄÖµÊÇ: " + a + "; ±äÁ¿bµÄÖµÊÇ: " + b );
+                    // ä¸‹é¢ä»£ç è¾“å‡ºï¼š a = 6, b =9
+                    System.out.println("äº¤æ¢ç»“æŸåŽ: açš„å€¼æ˜¯: " + a + "; å˜é‡bçš„å€¼æ˜¯: " + b );
                     System.out.println(); 
                 }
             }
         
-            ³ÌÐòËµÃ÷:
-                ³ÌÐòµÄÔËÐÐ½á¹ûËµÃ÷: swap()·½·¨Àï aºÍb µÄÖµÊÇ 9ºÍ6, ½»»»½áÊøºó, ±äÁ¿aºÍ±äÁ¿bµÄÖµÒÀ
-                È»ÊÇ 6ºÍ9. ËµÃ÷mian·½·¨ÀïÃæµÄ±äÁ¿aºÍb, ²¢²»ÊÇswap()·½·¨ÀïµÄaºÍb, swap()·½·¨µÄaºÍbÖ»
-                ÊÇmain()·½·¨Àï±äÁ¿aºÍbµÄ¸´ÖÆÆ·.
+            ç¨‹åºè¯´æ˜Ž:
+                ç¨‹åºçš„è¿è¡Œç»“æžœè¯´æ˜Ž: swap()æ–¹æ³•é‡Œ aå’Œb çš„å€¼æ˜¯ 9å’Œ6, äº¤æ¢ç»“æŸåŽ, å˜é‡aå’Œå˜é‡bçš„å€¼ä¾
+                ç„¶æ˜¯ 6å’Œ9. è¯´æ˜Žmianæ–¹æ³•é‡Œé¢çš„å˜é‡aå’Œb, å¹¶ä¸æ˜¯swap()æ–¹æ³•é‡Œçš„aå’Œb, swap()æ–¹æ³•çš„aå’Œbåª
+                æ˜¯main()æ–¹æ³•é‡Œå˜é‡aå’Œbçš„å¤åˆ¶å“.
         
-        Àý×Ó2:ÒýÓÃÀàÐÍµÄ²ÎÊý´«µÝÐ§¹û
+        ä¾‹å­2:å¼•ç”¨ç±»åž‹çš„å‚æ•°ä¼ é€’æ•ˆæžœ
             class DataWrap
             {
                 int a;
@@ -374,15 +374,15 @@
             {
                 public static void swap(DataWrap dw)
                 {
-                    // ÏÂÃæÈýÐÐ´úÂëÊµÏÖ dw µÄ a, bÁ½¸ö³ÉÔ±±äÁ¿µÄÖµ½»»»
-                    // ¶¨ÒåÒ»¸öÁÙÊ±±äÁ¿À´±£´ædw¶ÔÏóµÄa³ÉÔ±±äÁ¿µÄÖµ
+                    // ä¸‹é¢ä¸‰è¡Œä»£ç å®žçŽ° dw çš„ a, bä¸¤ä¸ªæˆå‘˜å˜é‡çš„å€¼äº¤æ¢
+                    // å®šä¹‰ä¸€ä¸ªä¸´æ—¶å˜é‡æ¥ä¿å­˜dwå¯¹è±¡çš„aæˆå‘˜å˜é‡çš„å€¼
                     int tmp = dw.a;
-                    //°Ñdw¶ÔÏóµÄb³ÉÔ±±äÁ¿µÄÖµ¸³¸øa³ÉÔ±±äÁ¿
+                    //æŠŠdwå¯¹è±¡çš„bæˆå‘˜å˜é‡çš„å€¼èµ‹ç»™aæˆå‘˜å˜é‡
                     dw.a = dw.b;
-                    //°ÑÁÙÊ±±äÁ¿tmpµÄÖµ¸³¸ødw¶ÔÏóµÄb³ÉÔ±±äÁ¿
+                    //æŠŠä¸´æ—¶å˜é‡tmpçš„å€¼èµ‹ç»™dwå¯¹è±¡çš„bæˆå‘˜å˜é‡
                     dw.b = tmp;
-                    System.out.println("swap·½·¨Àï, a³ÉÔ±±äÁ¿µÄÖµÊÇ: " + dw.a + 
-                        "; b³ÉÔ±±äÁ¿µÄÖµÊÇ: " + dw.b ); 
+                    System.out.println("swapæ–¹æ³•é‡Œ, aæˆå‘˜å˜é‡çš„å€¼æ˜¯: " + dw.a + 
+                        "; bæˆå‘˜å˜é‡çš„å€¼æ˜¯: " + dw.b ); 
                 }
                 public static void main(String[] args)
                 {
@@ -390,67 +390,67 @@
                     dw.a = 6;
                     dw.b = 9;
                     swap(dw);
-                    System.out.println("½»»»½áÊøºó, a³ÉÔ±±äÁ¿µÄÖµÊÇ: " + dw.a + 
-                        "; b³ÉÔ±±äÁ¿µÄÖµÊÇ: " + dw.b ); 
+                    System.out.println("äº¤æ¢ç»“æŸåŽ, aæˆå‘˜å˜é‡çš„å€¼æ˜¯: " + dw.a + 
+                        "; bæˆå‘˜å˜é‡çš„å€¼æ˜¯: " + dw.b ); 
                 }
             }
 
-            ³ÌÐòËµÃ÷:
-                1.ÒýÓÃÀàÐÍµÄ²ÎÊý´«µÝ»¹ÊÇÖµ´«µÝµÄ·½Ê½, ÏµÍ³Ò»Ñù¸´ÖÆÁË dw µÄ¸±±¾´«Èë swap() ·½·¨, µ«
-                  ¹Ø¼üÔÚÓÚdwÖ»ÊÇÒ»¸öÒýÓÃ±äÁ¿, ËùÒÔÏµÍ³¸´ÖÆÁË dw µÄ±äÁ¿, µ«²¢Î´¸´ÖÆDataWrap¶ÔÏó.
-                2. ÓÉÓÚdwÖ»ÊÇÒ»¸öÒýÓÃ±äÁ¿, ¹ÊÊµ¼Ê²Ù×÷µÄ»¹ÊÇ¶ÑÄÚ´æÖÐµÄDataWrap¶ÔÏó.
-                3. ÔÚ swap·½·¨ÖÐ ½« dw ¸³ÖµÎªnull ºó, ²»»áÓ°Ïìmain·½·¨ÖÐdw±äÁ¿²Ù×÷.
+            ç¨‹åºè¯´æ˜Ž:
+                1.å¼•ç”¨ç±»åž‹çš„å‚æ•°ä¼ é€’è¿˜æ˜¯å€¼ä¼ é€’çš„æ–¹å¼, ç³»ç»Ÿä¸€æ ·å¤åˆ¶äº† dw çš„å‰¯æœ¬ä¼ å…¥ swap() æ–¹æ³•, ä½†
+                  å…³é”®åœ¨äºŽdwåªæ˜¯ä¸€ä¸ªå¼•ç”¨å˜é‡, æ‰€ä»¥ç³»ç»Ÿå¤åˆ¶äº† dw çš„å˜é‡, ä½†å¹¶æœªå¤åˆ¶DataWrapå¯¹è±¡.
+                2. ç”±äºŽdwåªæ˜¯ä¸€ä¸ªå¼•ç”¨å˜é‡, æ•…å®žé™…æ“ä½œçš„è¿˜æ˜¯å †å†…å­˜ä¸­çš„DataWrapå¯¹è±¡.
+                3. åœ¨ swapæ–¹æ³•ä¸­ å°† dw èµ‹å€¼ä¸ºnull åŽ, ä¸ä¼šå½±å“mainæ–¹æ³•ä¸­dwå˜é‡æ“ä½œ.
 
 
-    2.3 ÐÎ²Î¸öÊý¿É±äµÄ·½·¨
-        ´«µÝÀàÐÍ:
-            1. (ÀàÐÍ... ÐÎ²ÎÃû) ÕâÖÖ´«µÝÐÎ²ÎÊÇ¸öÊý¿É±äµÄ, ±¾ÖÊ¾ÍÊÇÊý×é, ÕâÖÖÐ´·¨µÈÍ¬ÓÚÏÂÃæµÄ2ÀàÐÍ
-                Èç¶¨ÒåÐÎ²Î: public static void test(int a, String... books);
-                  ´«µÝÐÎ²Î:test(6, "python", "java", "C", "JavaScript");
+    2.3 å½¢å‚ä¸ªæ•°å¯å˜çš„æ–¹æ³•
+        ä¼ é€’ç±»åž‹:
+            1. (ç±»åž‹... å½¢å‚å) è¿™ç§ä¼ é€’å½¢å‚æ˜¯ä¸ªæ•°å¯å˜çš„, æœ¬è´¨å°±æ˜¯æ•°ç»„, è¿™ç§å†™æ³•ç­‰åŒäºŽä¸‹é¢çš„2ç±»åž‹
+                å¦‚å®šä¹‰å½¢å‚: public static void test(int a, String... books);
+                  ä¼ é€’å½¢å‚:test(6, "python", "java", "C", "JavaScript");
                   
-            2. (ÀàÐÍ[] ÐÎ²ÎÃû) 
-                Èç¶¨ÒåÐÎ²Î: public static void test(int a, String[] books); 
-                  ´«µÝÐÎ²Î: test(6, new String[]{"python", "java", "C", "JavaScript"});
+            2. (ç±»åž‹[] å½¢å‚å) 
+                å¦‚å®šä¹‰å½¢å‚: public static void test(int a, String[] books); 
+                  ä¼ é€’å½¢å‚: test(6, new String[]{"python", "java", "C", "JavaScript"});
 
-        ´«µÝÀàÐÍËµÃ÷:
-            1. (ÀàÐÍ... ÐÎ²ÎÃû) ÕâÖÖÐ´·¨µÄºÃ´¦ÊÇ: µ÷ÓÃ·½·¨¸ü¼Ó·½±ã, ¼È¿ÉÖ±½Ó´«Èë¶à¸öÔªËØ, ÏµÍ³»á×Ô
-                ¶¯½«ËûÃÇ·â×°³ÉÊý×é, Ò²¿ÉÒÔÓÃÊý×é; È±µãÊÇ: ÕâÖÖÐ´·¨Ö»ÄÜ×÷ÎªÐÎ²ÎÁÐ±íµÄ×îºóÒ»¸öÐÎ²Î;
-                [°µÊ¾]: Ò»¸ö·½·¨×î¶àÖ»ÄÜÓÐÒ»¸ö"¸öÊý¿É±ä"µÄÐÎ²Î
+        ä¼ é€’ç±»åž‹è¯´æ˜Ž:
+            1. (ç±»åž‹... å½¢å‚å) è¿™ç§å†™æ³•çš„å¥½å¤„æ˜¯: è°ƒç”¨æ–¹æ³•æ›´åŠ æ–¹ä¾¿, æ—¢å¯ç›´æŽ¥ä¼ å…¥å¤šä¸ªå…ƒç´ , ç³»ç»Ÿä¼šè‡ª
+                åŠ¨å°†ä»–ä»¬å°è£…æˆæ•°ç»„, ä¹Ÿå¯ä»¥ç”¨æ•°ç»„; ç¼ºç‚¹æ˜¯: è¿™ç§å†™æ³•åªèƒ½ä½œä¸ºå½¢å‚åˆ—è¡¨çš„æœ€åŽä¸€ä¸ªå½¢å‚;
+                [æš—ç¤º]: ä¸€ä¸ªæ–¹æ³•æœ€å¤šåªèƒ½æœ‰ä¸€ä¸ª"ä¸ªæ•°å¯å˜"çš„å½¢å‚
                 
-            2. (ÀàÐÍ[] ÐÎ²ÎÃû) ÕâÖÖÐ´·¨µÄºÃ´¦ÊÇ: ÕâÖÖÊý×éÐÎÊ½µÄÐÎ²Î¿ÉÒÔ³öÏÖÔÚÐÎ²ÎÁÐ±íµÄÈÎÒâÎ»ÖÃ.
+            2. (ç±»åž‹[] å½¢å‚å) è¿™ç§å†™æ³•çš„å¥½å¤„æ˜¯: è¿™ç§æ•°ç»„å½¢å¼çš„å½¢å‚å¯ä»¥å‡ºçŽ°åœ¨å½¢å‚åˆ—è¡¨çš„ä»»æ„ä½ç½®.
 
-        Àý×Ó1:ÐÎ²Î¸öÊý¿É±äµÄ·½·¨
+        ä¾‹å­1:å½¢å‚ä¸ªæ•°å¯å˜çš„æ–¹æ³•
             public class Varargs
             {
-                //¶¨ÒåÒ»¸öÐÎ²Î¸öÊý¿É±äµÄ·½·¨
+                //å®šä¹‰ä¸€ä¸ªå½¢å‚ä¸ªæ•°å¯å˜çš„æ–¹æ³•
                 public static void test(int a, String... books)
                 {
-                    //books ±»µ±³ÉÊý×é´¦Àí, Ê¹ÓÃforeachÑ­»·Êä³ö
+                    //books è¢«å½“æˆæ•°ç»„å¤„ç†, ä½¿ç”¨foreachå¾ªçŽ¯è¾“å‡º
                     for (String book : books)
                     {
                         System.out.println(book);
                     }
-                    //Êä³öa±äÁ¿µÄÖµ
+                    //è¾“å‡ºaå˜é‡çš„å€¼
                     System.out.println(a);
                 }
                 public static void main(String[] args)
                 {
-                    //Ö±½ÓÓÃÀàµ÷ÓÃstaticÐÞÊÎµÄ·½·¨(Ó¦¸ÃÊÇ Varargs.test()µ«ÊÇÊ¡ÂÔÁË...)
+                    //ç›´æŽ¥ç”¨ç±»è°ƒç”¨staticä¿®é¥°çš„æ–¹æ³•(åº”è¯¥æ˜¯ Varargs.test()ä½†æ˜¯çœç•¥äº†...)
                     test(6, "python", "java", "C", "JavaScript");
-                    // µ÷ÓÃtestµÄÊ±ºò, ÐÎ²Î´«ÈëÒ»¸öÊý×é
+                    // è°ƒç”¨testçš„æ—¶å€™, å½¢å‚ä¼ å…¥ä¸€ä¸ªæ•°ç»„
                     test(6, new String[]{"python1", "java1", "C1", "JavaScript1"});
                 }
             }
 
-    2.4 µÝ¹é·½·¨
-        ËµÃ÷: 
-            1. µÝ¹é¾ÍÊÇÒ»¸ö·½·¨ÌåÄÚ²¿µ÷ÓÃËü×ÔÉí. µÝ¹é·½·¨°üº¬ÁËÒ»ÖÖÒþÊ½µÄÑ­»·, Ëû»áÖØ¸´Ö´ÐÐÄ³¶Î´úÂë,
-                µ«ÕâÖÖÖØ¸´Ö´ÐÐÎÞÐèÑ­»·¿ØÖÆ, µ«ÊÇ»¹ÊÇÒªÓÐÈÃµÝ¹éÍ£Ö¹µÄÌõ¼þ, ²¢ÇÒÕâÖÖÌõ¼þ´æÔÚ, ·ñÔò¾ÍËÀ
-                Ñ­»·ÁË.
-            2. µÝ¹é±ØÐëÒ»¶¨ÒªÏòÒÑÖªµÄ·½ÏòµÝ¹é.
+    2.4 é€’å½’æ–¹æ³•
+        è¯´æ˜Ž: 
+            1. é€’å½’å°±æ˜¯ä¸€ä¸ªæ–¹æ³•ä½“å†…éƒ¨è°ƒç”¨å®ƒè‡ªèº«. é€’å½’æ–¹æ³•åŒ…å«äº†ä¸€ç§éšå¼çš„å¾ªçŽ¯, ä»–ä¼šé‡å¤æ‰§è¡ŒæŸæ®µä»£ç ,
+                ä½†è¿™ç§é‡å¤æ‰§è¡Œæ— éœ€å¾ªçŽ¯æŽ§åˆ¶, ä½†æ˜¯è¿˜æ˜¯è¦æœ‰è®©é€’å½’åœæ­¢çš„æ¡ä»¶, å¹¶ä¸”è¿™ç§æ¡ä»¶å­˜åœ¨, å¦åˆ™å°±æ­»
+                å¾ªçŽ¯äº†.
+            2. é€’å½’å¿…é¡»ä¸€å®šè¦å‘å·²çŸ¥çš„æ–¹å‘é€’å½’.
             
-        Àý×Ó: 
-            // ¼ÆËã: ÒÑÖªÒ»¸öÊýÁÐ, f(0)=1, f(1)=4, f(n+2) = 2*f(n+1) + f(n); Çó: f(10)µÄÖµ
+        ä¾‹å­: 
+            // è®¡ç®—: å·²çŸ¥ä¸€ä¸ªæ•°åˆ—, f(0)=1, f(1)=4, f(n+2) = 2*f(n+1) + f(n); æ±‚: f(10)çš„å€¼
             public class recursive
             {
                 public static int fn(int n)
@@ -472,267 +472,267 @@
                 }
             }
             
-            ³ÌÐòËµÃ÷:
-                ÈçÉÏ³ÌÐò: µ±Ò»¸ö·½·¨²»¶ÏµØµ÷ÓÃËü±¾ÉíµÄÊ±ºò, ±ØÐëÔÚÄ³¸öÊ±¿Ì·½·¨µÄ·µ»ØÖµÊÇÈ·¶¨µÄ, ¼´²»
-                    ÔÙµ÷ÓÃËü±¾Éí, ·ñÔòÕâÖÖµÝ¹é¾Í±ä³ÉÁËÎÞÇîµÝ¹é, ÀàËÆÓëËÀÑ­»·,
+            ç¨‹åºè¯´æ˜Ž:
+                å¦‚ä¸Šç¨‹åº: å½“ä¸€ä¸ªæ–¹æ³•ä¸æ–­åœ°è°ƒç”¨å®ƒæœ¬èº«çš„æ—¶å€™, å¿…é¡»åœ¨æŸä¸ªæ—¶åˆ»æ–¹æ³•çš„è¿”å›žå€¼æ˜¯ç¡®å®šçš„, å³ä¸
+                    å†è°ƒç”¨å®ƒæœ¬èº«, å¦åˆ™è¿™ç§é€’å½’å°±å˜æˆäº†æ— ç©·é€’å½’, ç±»ä¼¼ä¸Žæ­»å¾ªçŽ¯,
             
-    2.5 ·½·¨ÖØÔØ
-        ËµÃ÷: 
-            JavaÔÊÐíÍ¬Ò»¸öÀàÀïÃæ¶¨Òå¶à¸öÍ¬Ãû·½·¨,Ö»ÒªÐÎ²ÎÁÐ±í²»Í¬¾ÍÐÐ. Èç¹ûÍ¬Ò»¸öÀàÀïÃæ°üº¬ÁË¶à¸ö·½
-            ·¨ÃûÏàÍ¬, µ«ÐÎ²ÎÁÐ±í²»Í¬µÄ·½·¨. Ôò±»³ÆÖ®Îª·½·¨ÖØÔØ
+    2.5 æ–¹æ³•é‡è½½
+        è¯´æ˜Ž: 
+            Javaå…è®¸åŒä¸€ä¸ªç±»é‡Œé¢å®šä¹‰å¤šä¸ªåŒåæ–¹æ³•,åªè¦å½¢å‚åˆ—è¡¨ä¸åŒå°±è¡Œ. å¦‚æžœåŒä¸€ä¸ªç±»é‡Œé¢åŒ…å«äº†å¤šä¸ªæ–¹
+            æ³•åç›¸åŒ, ä½†å½¢å‚åˆ—è¡¨ä¸åŒçš„æ–¹æ³•. åˆ™è¢«ç§°ä¹‹ä¸ºæ–¹æ³•é‡è½½
         
-        ×¢Òâ:
-            1. µ÷ÓÃÕß, Ò²¾ÍÊÇ·½·¨µÄÓµÓÐÕß, ¼È¿ÉÒÔÊÇÀà, Ò²¿ÉÒÔÊÇ¶ÔÏó
-            2. ·½·¨Ãû, ·½·¨µÄ±êÊ¶
-            3. ÐÎ²ÎÁÐ±í, µ±µ÷ÓÃ·½·¨Ê±, ÏµÍ³½«»á¸ù¾Ý´«ÈëµÄÊµ²ÎÁÐ±íÆ¥Åä
-            4. Á½Í¬Ò»²»Í¬: Í¬Ò»¸öÀàÖÐ·½·¨ÃûÏàÍ¬, ²ÎÊýÁÐ±í²»Í¬; ÆäËûµÄ·½·¨·µ»ØÖµÀàÐÍ, ÐÞÊÎ·ûµÈÓë·½·¨
-                ÖØÔØÎÞ¹Ø.
-            5. ¾¡Á¿²»Òª¶¨Òå³¤¶È¿É±äµÄÐÎ²ÎÁÐ±í
+        æ³¨æ„:
+            1. è°ƒç”¨è€…, ä¹Ÿå°±æ˜¯æ–¹æ³•çš„æ‹¥æœ‰è€…, æ—¢å¯ä»¥æ˜¯ç±», ä¹Ÿå¯ä»¥æ˜¯å¯¹è±¡
+            2. æ–¹æ³•å, æ–¹æ³•çš„æ ‡è¯†
+            3. å½¢å‚åˆ—è¡¨, å½“è°ƒç”¨æ–¹æ³•æ—¶, ç³»ç»Ÿå°†ä¼šæ ¹æ®ä¼ å…¥çš„å®žå‚åˆ—è¡¨åŒ¹é…
+            4. ä¸¤åŒä¸€ä¸åŒ: åŒä¸€ä¸ªç±»ä¸­æ–¹æ³•åç›¸åŒ, å‚æ•°åˆ—è¡¨ä¸åŒ; å…¶ä»–çš„æ–¹æ³•è¿”å›žå€¼ç±»åž‹, ä¿®é¥°ç¬¦ç­‰ä¸Žæ–¹æ³•
+                é‡è½½æ— å…³.
+            5. å°½é‡ä¸è¦å®šä¹‰é•¿åº¦å¯å˜çš„å½¢å‚åˆ—è¡¨
         
-        Àý×Ó: ·½·¨µÄÖØÔØ
+        ä¾‹å­: æ–¹æ³•çš„é‡è½½
             public class OverloadVarargs
             {
                 public void test(String msg)
                 {
-                    System.out.println("Ö»ÓÐÒ»¸ö×Ö·û´®²ÎÊýµÄtest·½·¨" + msg);
+                    System.out.println("åªæœ‰ä¸€ä¸ªå­—ç¬¦ä¸²å‚æ•°çš„testæ–¹æ³•" + msg);
                 }
                 public void test(String name, String gender)
                 {
-                    System.out.println("ÐÎ²Î³¤¶ÈÎª2µÄtest·½·¨" 
+                    System.out.println("å½¢å‚é•¿åº¦ä¸º2çš„testæ–¹æ³•" 
                     + name + gender);
                 }
-                // ÒòÎªÇ°ÃæÒÑ¾­¶¨ÒåÁËÁ½¸ötest()·½·¨, test()·½·¨ÀïÃæÓÐÒ»¸ö×Ö·û´®²ÎÊýºÍÁ½¸ö×Ö·û´®
-                // ´Ë´¦µÄ³¤¶È¿É±ä²ÎÊýÀï²»°üº¬Ò»¸ö×Ö·û´®²ÎÊýµÄÐÎÊ½
+                // å› ä¸ºå‰é¢å·²ç»å®šä¹‰äº†ä¸¤ä¸ªtest()æ–¹æ³•, test()æ–¹æ³•é‡Œé¢æœ‰ä¸€ä¸ªå­—ç¬¦ä¸²å‚æ•°å’Œä¸¤ä¸ªå­—ç¬¦ä¸²
+                // æ­¤å¤„çš„é•¿åº¦å¯å˜å‚æ•°é‡Œä¸åŒ…å«ä¸€ä¸ªå­—ç¬¦ä¸²å‚æ•°çš„å½¢å¼
                 public static void test(String... books)
                 {
-                    System.out.println("#-----ÐÎ²Î³¤¶È¿É±äµÄtest·½·¨-----#");
+                    System.out.println("#-----å½¢å‚é•¿åº¦å¯å˜çš„testæ–¹æ³•-----#");
                 }
                 public static void main(String[] args)
                 {
                     OverloadVarargs orl = new OverloadVarargs();
-                    orl.test("×¢Òâ¿´ ");
-                    orl.test("Ë®µº½òÊµ", "Å®");
+                    orl.test("æ³¨æ„çœ‹ ");
+                    orl.test("æ°´å²›æ´¥å®ž", "å¥³");
                     orl.test(new String[]{"python1", "java1", "C1", "JavaScript1"});
                 }
             }
         
 
-3. ³ÉÔ±±äÁ¿ºÍ¾Ö²¿±äÁ¿
-    3.1 ³ÉÔ±±äÁ¿ºÍ¾Ö²¿±äÁ¿ 
+3. æˆå‘˜å˜é‡å’Œå±€éƒ¨å˜é‡
+    3.1 æˆå‘˜å˜é‡å’Œå±€éƒ¨å˜é‡ 
     
-        ³ÉÔ±±äÁ¿: 
-            º¬Òå: 
-                ³ÉÔ±±äÁ¿Ö¸ÔÚÀàÀïÃæ¶¨ÒåµÄ±äÁ¿,Ò²¾ÍÊÇÇ°ÃæÑ§¹ýµÄfield(ÓÃÓÚ¶¨Òå¸ÃÀà»ò¸ÃÀàµÄÊµÀýËù°üº¬µÄ×´Ì¬Êý¾Ý)
+        æˆå‘˜å˜é‡: 
+            å«ä¹‰: 
+                æˆå‘˜å˜é‡æŒ‡åœ¨ç±»é‡Œé¢å®šä¹‰çš„å˜é‡,ä¹Ÿå°±æ˜¯å‰é¢å­¦è¿‡çš„field(ç”¨äºŽå®šä¹‰è¯¥ç±»æˆ–è¯¥ç±»çš„å®žä¾‹æ‰€åŒ…å«çš„çŠ¶æ€æ•°æ®)
 
-            °üº¬: 
-                ÊµÀý±äÁ¿ (²»ÒÔstaticÐÞÊÎ)
-                Àà±äÁ¿ (ÒÔstaticÐÞÊÎ)
+            åŒ…å«: 
+                å®žä¾‹å˜é‡ (ä¸ä»¥staticä¿®é¥°)
+                ç±»å˜é‡ (ä»¥staticä¿®é¥°)
                 
-            ·ÃÎÊÓï·¨:
-                1. Àà±äÁ¿, Ò²¾ÍÊÇÀà³ÉÔ±±äÁ¿, ¿ÉÍ¨¹ýÀà»òÕßÊµÀý·ÃÎÊ
-                    Àà.Àà±äÁ¿ 
-                    ÊµÀý.Àà±äÁ¿
-                2. ÊµÀý±äÁ¿, Ò²¾ÍÊÇÊµÀý³ÉÔ±±äÁ¿
-                    ÊµÀý.ÊµÀý±äÁ¿
+            è®¿é—®è¯­æ³•:
+                1. ç±»å˜é‡, ä¹Ÿå°±æ˜¯ç±»æˆå‘˜å˜é‡, å¯é€šè¿‡ç±»æˆ–è€…å®žä¾‹è®¿é—®
+                    ç±».ç±»å˜é‡ 
+                    å®žä¾‹.ç±»å˜é‡
+                2. å®žä¾‹å˜é‡, ä¹Ÿå°±æ˜¯å®žä¾‹æˆå‘˜å˜é‡
+                    å®žä¾‹.å®žä¾‹å˜é‡
                     
-            ËµÃ÷:
-                1.Àà±äÁ¿:´Ó¸ÃÀàµÄ×¼±¸½×¶ÎÆð¿ªÊ¼´æÔÚ, Ö±µ½ÏµÍ³ÍêÈ«Ïú»ÙÕâ¸öÀà, Àà±äÁ¿µÄ×÷ÓÃÓòÓëÕâ¸öÀà
-                   µÄÉú´æ·¶Î§ÏàÍ¬
-                2. ÊµÀý±äÁ¿: ´Ó¸ÃÀàµÄÊµÀý±»´´½¨Æð¿ªÊ¼´æÔÚ,Ö±µ½ÏµÍ³ÍêÈ«Ïú»ÙÕâ¸öÊµÀý,ÊµÀý±äÁ¿µÄ×÷ÓÃÓò
-                   Óë¶ÔÓ¦ÊµÀýµÄÉú´æ·¶Î§ÏàÍ¬
-                3. ÃüÃû¹æÔò: ¶à¸öÓÐÒâÒåµÄµ¥´ÊÁ¬×º¶ø³É, µÚÒ»¸öµ¥´ÊÊ××ÖÄ¸Ð¡Ð´, ºóÃæµ¥´ÊÊ××ÖÄ¸´óÐ´
-                4. Èç¹ûÍ¨¹ýÒ»¸öÊµÀýÐÞ¸ÄÁËÀà±äÁ¿µÄÖµ, ÓÉÓÚÕâ¸öÀà±äÁ¿²»ÊôÓÚËü, ¶øÊÇÊôÓÚËüËù¶ÔÓ¦µÄÀà,
-                   Òò´ËÐÞ¸ÄµÄÒÀÈ»ÊÇ¸ÃÀàµÄÀà±äÁ¿, ÓëÍ¨¹ý¸ÃÀàÀ´ÐÞ¸ÄÀà±äÁ¿µÄ½á¹ûÍêÈ«ÏàÍ¬, Õâ»áµ¼ÖÂ¸ÃÀà
-                   µÄÆäËûÊµÀýÀ´·ÃÎÊÕâ¸öÀà±äÁ¿Ê±Ò²½«»ñµÃÕâ¸ö±»ÐÞ¸Ä¹ýµÄÖµ
+            è¯´æ˜Ž:
+                1.ç±»å˜é‡:ä»Žè¯¥ç±»çš„å‡†å¤‡é˜¶æ®µèµ·å¼€å§‹å­˜åœ¨, ç›´åˆ°ç³»ç»Ÿå®Œå…¨é”€æ¯è¿™ä¸ªç±», ç±»å˜é‡çš„ä½œç”¨åŸŸä¸Žè¿™ä¸ªç±»
+                   çš„ç”Ÿå­˜èŒƒå›´ç›¸åŒ
+                2. å®žä¾‹å˜é‡: ä»Žè¯¥ç±»çš„å®žä¾‹è¢«åˆ›å»ºèµ·å¼€å§‹å­˜åœ¨,ç›´åˆ°ç³»ç»Ÿå®Œå…¨é”€æ¯è¿™ä¸ªå®žä¾‹,å®žä¾‹å˜é‡çš„ä½œç”¨åŸŸ
+                   ä¸Žå¯¹åº”å®žä¾‹çš„ç”Ÿå­˜èŒƒå›´ç›¸åŒ
+                3. å‘½åè§„åˆ™: å¤šä¸ªæœ‰æ„ä¹‰çš„å•è¯è¿žç¼€è€Œæˆ, ç¬¬ä¸€ä¸ªå•è¯é¦–å­—æ¯å°å†™, åŽé¢å•è¯é¦–å­—æ¯å¤§å†™
+                4. å¦‚æžœé€šè¿‡ä¸€ä¸ªå®žä¾‹ä¿®æ”¹äº†ç±»å˜é‡çš„å€¼, ç”±äºŽè¿™ä¸ªç±»å˜é‡ä¸å±žäºŽå®ƒ, è€Œæ˜¯å±žäºŽå®ƒæ‰€å¯¹åº”çš„ç±»,
+                   å› æ­¤ä¿®æ”¹çš„ä¾ç„¶æ˜¯è¯¥ç±»çš„ç±»å˜é‡, ä¸Žé€šè¿‡è¯¥ç±»æ¥ä¿®æ”¹ç±»å˜é‡çš„ç»“æžœå®Œå…¨ç›¸åŒ, è¿™ä¼šå¯¼è‡´è¯¥ç±»
+                   çš„å…¶ä»–å®žä¾‹æ¥è®¿é—®è¿™ä¸ªç±»å˜é‡æ—¶ä¹Ÿå°†èŽ·å¾—è¿™ä¸ªè¢«ä¿®æ”¹è¿‡çš„å€¼
             
-            Àý×Ó:
+            ä¾‹å­:
                 class Person
                 {
-                    // ¶¨ÒåÒ»¸öÊµÀý±äÁ¿
+                    // å®šä¹‰ä¸€ä¸ªå®žä¾‹å˜é‡
                     public String name;
-                    //¶¨ÒåÒ»¸öÀà±äÁ¿
+                    //å®šä¹‰ä¸€ä¸ªç±»å˜é‡
                     public static int eyeNum;
                 }
                 public class PersonTest
                 {
                     public static void main(String[] args)
                     {
-                        // µÚÒ»´ÎÖ÷¶¯Ê¹ÓÃPersonÀà,¸ÃÀà×Ô¶¯³õÊ¼»¯, ÔòeyeNum±äÁ¿¿ªÊ¼×÷ÓÃ,Êä³ö0
-                        System.out.println("PersonÀàµÄeyeNumÀà±äÁ¿Öµ:" + Person.eyeNum);
+                        // ç¬¬ä¸€æ¬¡ä¸»åŠ¨ä½¿ç”¨Personç±»,è¯¥ç±»è‡ªåŠ¨åˆå§‹åŒ–, åˆ™eyeNumå˜é‡å¼€å§‹ä½œç”¨,è¾“å‡º0
+                        System.out.println("Personç±»çš„eyeNumç±»å˜é‡å€¼:" + Person.eyeNum);
                         
-                        // ´´½¨Person¶ÔÏó
+                        // åˆ›å»ºPersonå¯¹è±¡
                         Person p = new Person();
-                        // Í¨¹ýPerson¶ÔÏóµÄÒýÓÃp·ÃÎÊPerson¶ÔÏónameÊµÀý±äÁ¿
-                        // ²¢Í¨¹ýÊµÀý·ÃÎÊeyeNumÀà±äÁ¿
-                        System.out.println("p±äÁ¿µÄname±äÁ¿µÄÖµÊÇ: " + p.name 
-                            + " p¶ÔÏóµÄeyeNum±äÁ¿ÖµÊÇ: " + p.eyeNum);
-                        // Ö±½ÓÎª name ÊµÀý±äÁ¿¸³Öµ
-                        p.name = "ËïÎò¿Õ";
-                        //Í¨¹ýp·ÃÎÊµÄ eyeNum Àà±äÁ¿, ÒÀÈ»ÊÇ·ÃÎÊPersonµÄeyeNumÀà±äÁ¿
+                        // é€šè¿‡Personå¯¹è±¡çš„å¼•ç”¨pè®¿é—®Personå¯¹è±¡nameå®žä¾‹å˜é‡
+                        // å¹¶é€šè¿‡å®žä¾‹è®¿é—®eyeNumç±»å˜é‡
+                        System.out.println("på˜é‡çš„nameå˜é‡çš„å€¼æ˜¯: " + p.name 
+                            + " på¯¹è±¡çš„eyeNumå˜é‡å€¼æ˜¯: " + p.eyeNum);
+                        // ç›´æŽ¥ä¸º name å®žä¾‹å˜é‡èµ‹å€¼
+                        p.name = "å­™æ‚Ÿç©º";
+                        //é€šè¿‡pè®¿é—®çš„ eyeNum ç±»å˜é‡, ä¾ç„¶æ˜¯è®¿é—®Personçš„eyeNumç±»å˜é‡
                         p.eyeNum = 2;
                         
-                        // ÔÙ´ÎÍ¨¹ýPerson¶ÔÏóÀ´·ÃÎÊnameÊµÀý±äÁ¿ºÍeyeNumÀà±äÁ¿
-                        System.out.println("p±äÁ¿µÄname±äÁ¿µÄÖµÊÇ: " + p.name 
-                            + " p¶ÔÏóµÄeyeNum±äÁ¿ÖµÊÇ: " + p.eyeNum);
+                        // å†æ¬¡é€šè¿‡Personå¯¹è±¡æ¥è®¿é—®nameå®žä¾‹å˜é‡å’ŒeyeNumç±»å˜é‡
+                        System.out.println("på˜é‡çš„nameå˜é‡çš„å€¼æ˜¯: " + p.name 
+                            + " på¯¹è±¡çš„eyeNumå˜é‡å€¼æ˜¯: " + p.eyeNum);
                         
-                        // Ç°ÃæÍ¨¹ýpÐÞ¸ÄÁËPersonµÄeyeNum,´Ë´¦µÄPerson.eyeNum½«Êä³ö2
-                        System.out.println("PersonÀàµÄeyeNumÀà±äÁ¿Öµ:" + Person.eyeNum);
+                        // å‰é¢é€šè¿‡pä¿®æ”¹äº†Personçš„eyeNum,æ­¤å¤„çš„Person.eyeNumå°†è¾“å‡º2
+                        System.out.println("Personç±»çš„eyeNumç±»å˜é‡å€¼:" + Person.eyeNum);
                         
-                        // ÔÙ´´½¨Ò»¸öÊµÀý¶ÔÏó
+                        // å†åˆ›å»ºä¸€ä¸ªå®žä¾‹å¯¹è±¡
                         Person p2 = new Person();
-                        // p2·ÃÎÊµÄeyeNumÀà±äÁ¿ÒÀÈ»ÒýÓÃPersonÀàµÄ, Òò´ËÊä³ö2
-                        System.out.println("p2¶ÔÏóµÄeyeNumÀà±äÁ¿Öµ: " + p2.eyeNum);
+                        // p2è®¿é—®çš„eyeNumç±»å˜é‡ä¾ç„¶å¼•ç”¨Personç±»çš„, å› æ­¤è¾“å‡º2
+                        System.out.println("p2å¯¹è±¡çš„eyeNumç±»å˜é‡å€¼: " + p2.eyeNum);
                     }
                 }
-                ³ÌÐòËµÃ÷: 
-                    1. ³ÉÔ±±äÁ¿ÎÞÐèÏÔÊ¾µÄ³õÊ¼»¯, Ö»ÒªÎªÒ»¸öÀà¶¨ÒåÁËÀà±äÁ¿»òÕßÊµÀý±äÁ¿, ÏµÍ³¾Í»áÔÚÕâ
-                        ¸öÀàµÄ×¼±¸½×¶Î»ò´´½¨¸ÃÀàµÄÊµÀýÊ±½øÐÐÄ¬ÈÏµÄ¸³Öµ, ³ÉÔ±±äÁ¿Ä¬ÈÏ³õÊ¼»¯Ê±µÄ¸³Öµ¹æ
-                        ÔòÓëÊý×é¶¯Ì¬³õÊ¼»¯Ê±Êý×éÔªËØµÄ¸³Öµ¹æÔòÍêÈ«ÏàÍ¬;
-                    2. Àà±äÁ¿µÄ×÷ÓÃÓò´óÓÚÊµÀý±äÁ¿µÄ×÷ÓÃÓò: ÊµÀý±äÁ¿ËæÊµÀýµÄ´æÔÚ¶ø´æÔÚ, ¶øÀà±äÁ¿ÔòËæ
-                        ÀàµÄ´æÔÚ¶ø´æÔÚ. ÊµÀýÒ²¿ÉÒÔ·ÃÎÊÀà±äÁ¿, Í¬Ò»¸öÀàµÄËùÓÐÊµÀý·ÃÎÊÀà±äÁ¿Ê±, Êµ¼ÊÉÏ 
-                        ·ÃÎÊµÄÊÇ¸ÃÀà±¾ÉíµÄÍ¬Ò»¸ö±äÁ¿, Ò²¾ÍÊÇËµ, ·ÃÎÊÁËÍ¬Ò»Æ¬ÄÚ´æ.
+                ç¨‹åºè¯´æ˜Ž: 
+                    1. æˆå‘˜å˜é‡æ— éœ€æ˜¾ç¤ºçš„åˆå§‹åŒ–, åªè¦ä¸ºä¸€ä¸ªç±»å®šä¹‰äº†ç±»å˜é‡æˆ–è€…å®žä¾‹å˜é‡, ç³»ç»Ÿå°±ä¼šåœ¨è¿™
+                        ä¸ªç±»çš„å‡†å¤‡é˜¶æ®µæˆ–åˆ›å»ºè¯¥ç±»çš„å®žä¾‹æ—¶è¿›è¡Œé»˜è®¤çš„èµ‹å€¼, æˆå‘˜å˜é‡é»˜è®¤åˆå§‹åŒ–æ—¶çš„èµ‹å€¼è§„
+                        åˆ™ä¸Žæ•°ç»„åŠ¨æ€åˆå§‹åŒ–æ—¶æ•°ç»„å…ƒç´ çš„èµ‹å€¼è§„åˆ™å®Œå…¨ç›¸åŒ;
+                    2. ç±»å˜é‡çš„ä½œç”¨åŸŸå¤§äºŽå®žä¾‹å˜é‡çš„ä½œç”¨åŸŸ: å®žä¾‹å˜é‡éšå®žä¾‹çš„å­˜åœ¨è€Œå­˜åœ¨, è€Œç±»å˜é‡åˆ™éš
+                        ç±»çš„å­˜åœ¨è€Œå­˜åœ¨. å®žä¾‹ä¹Ÿå¯ä»¥è®¿é—®ç±»å˜é‡, åŒä¸€ä¸ªç±»çš„æ‰€æœ‰å®žä¾‹è®¿é—®ç±»å˜é‡æ—¶, å®žé™…ä¸Š 
+                        è®¿é—®çš„æ˜¯è¯¥ç±»æœ¬èº«çš„åŒä¸€ä¸ªå˜é‡, ä¹Ÿå°±æ˜¯è¯´, è®¿é—®äº†åŒä¸€ç‰‡å†…å­˜.
        
             
-        ¾Ö²¿±äÁ¿:
-            º¬Òå: 
-                ¾Ö²¿±äÁ¿¾ÍÊÇÖ¸ÔÚ·½·¨ÀïÃæ¶¨ÒåµÄ±äÁ¿
+        å±€éƒ¨å˜é‡:
+            å«ä¹‰: 
+                å±€éƒ¨å˜é‡å°±æ˜¯æŒ‡åœ¨æ–¹æ³•é‡Œé¢å®šä¹‰çš„å˜é‡
                 
-            °üº¬:
-                ÐÎ²Î (·½·¨Ç©ÃûÖÐ¶¨ÒåµÄ±äÁ¿): ×÷ÓÃÓòÔÚÕû¸ö·½·¨ÌåÄÚÓÐÐ§
-                ·½·¨¾Ö²¿±äÁ¿ (ÔÚ·½·¨ÖÐ¶¨Òå): ×÷ÓÃÓòÊÇ´Ó¶¨Òå¸Ã±äÁ¿µÄµØ·½ÉúÐ§, ¸Ã·½·¨½áÊøÊ±Ê§Ð§
-                ´úÂë¿é¾Ö²¿±äÁ¿ (ÔÚ´úÂë¿éÄÚ¶¨Òå): ×÷ÓÃÓò´Ó¶¨Òå¸Ã±äÁ¿µÄµØ·½ÉúÐ§, µ½¸Ã´úÂë¿é½áÊøÊ±Ê§Ð§
+            åŒ…å«:
+                å½¢å‚ (æ–¹æ³•ç­¾åä¸­å®šä¹‰çš„å˜é‡): ä½œç”¨åŸŸåœ¨æ•´ä¸ªæ–¹æ³•ä½“å†…æœ‰æ•ˆ
+                æ–¹æ³•å±€éƒ¨å˜é‡ (åœ¨æ–¹æ³•ä¸­å®šä¹‰): ä½œç”¨åŸŸæ˜¯ä»Žå®šä¹‰è¯¥å˜é‡çš„åœ°æ–¹ç”Ÿæ•ˆ, è¯¥æ–¹æ³•ç»“æŸæ—¶å¤±æ•ˆ
+                ä»£ç å—å±€éƒ¨å˜é‡ (åœ¨ä»£ç å—å†…å®šä¹‰): ä½œç”¨åŸŸä»Žå®šä¹‰è¯¥å˜é‡çš„åœ°æ–¹ç”Ÿæ•ˆ, åˆ°è¯¥ä»£ç å—ç»“æŸæ—¶å¤±æ•ˆ
                 
-            ËµÃ÷:
-                1. ¾Ö²¿±äÁ¿³ýÁËÐÎ²ÎÖ®Íâ(ÐÎ²ÎµÄ³õÊ¼»¯ÔÚµ÷ÓÃ¸Ã·½·¨Ê±ÓÉÏµÍ³Íê³É, ÖµÓÉ·½·¨µÄµ÷ÓÃÕßÖ¸¶¨),
-                    ¶¼±ØÐëÏÔÊ½µÄ³õÊ¼»¯; Ò²¾ÍÊÇËµ, ±ØÐëÏÈ¸ø·½·¨¾Ö²¿±äÁ¿ºÍ´úÂë¿é¾Ö²¿±äÁ¿Ö¸¶¨³õÊ¼Öµ,
-                    ·ñÔò²»¿ÉÒÔ·ÃÎÊËüÃÇ.
-                2. ·½·¨µÄ¾Ö²¿±äÁ¿, Æä×÷ÓÃÓò´Ó¶¨Òå¸Ã±äÁ¿¿ªÊ¼, Ö±µ½·½·¨½áÊø
+            è¯´æ˜Ž:
+                1. å±€éƒ¨å˜é‡é™¤äº†å½¢å‚ä¹‹å¤–(å½¢å‚çš„åˆå§‹åŒ–åœ¨è°ƒç”¨è¯¥æ–¹æ³•æ—¶ç”±ç³»ç»Ÿå®Œæˆ, å€¼ç”±æ–¹æ³•çš„è°ƒç”¨è€…æŒ‡å®š),
+                    éƒ½å¿…é¡»æ˜¾å¼çš„åˆå§‹åŒ–; ä¹Ÿå°±æ˜¯è¯´, å¿…é¡»å…ˆç»™æ–¹æ³•å±€éƒ¨å˜é‡å’Œä»£ç å—å±€éƒ¨å˜é‡æŒ‡å®šåˆå§‹å€¼,
+                    å¦åˆ™ä¸å¯ä»¥è®¿é—®å®ƒä»¬.
+                2. æ–¹æ³•çš„å±€éƒ¨å˜é‡, å…¶ä½œç”¨åŸŸä»Žå®šä¹‰è¯¥å˜é‡å¼€å§‹, ç›´åˆ°æ–¹æ³•ç»“æŸ
                 
-            Àý×Ó1:´úÂë¿é¾Ö²¿±äÁ¿Àý×Ó
+            ä¾‹å­1:ä»£ç å—å±€éƒ¨å˜é‡ä¾‹å­
                 public class BlockTest
                 {
                     public static void main(String[] args)
                     {
-                        // ´úÂë¿é
+                        // ä»£ç å—
                         {
-                            // ¶¨ÒåÒ»¸ö´úÂë¿é¾Ö²¿±äÁ¿a
+                            // å®šä¹‰ä¸€ä¸ªä»£ç å—å±€éƒ¨å˜é‡a
                             int a;
-                            // ÏÂÃæ´úÂë½«³öÏÖ´íÎó, ÒòÎªa±äÁ¿»¹Î´³õÊ¼»¯
-                            // BlockTest.java:10: ´íÎó: ¿ÉÄÜÉÐÎ´³õÊ¼»¯±äÁ¿a
-                            // System.out.println("´úÂë¿é¾Ö²¿±äÁ¿aµÄÖµ: " + a);
-                            // Îªa ±äÁ¿¸³³õÊ¼Öµ, Ò²¾ÍÊÇ½øÐÐ³õÊ¼»¯
+                            // ä¸‹é¢ä»£ç å°†å‡ºçŽ°é”™è¯¯, å› ä¸ºaå˜é‡è¿˜æœªåˆå§‹åŒ–
+                            // BlockTest.java:10: é”™è¯¯: å¯èƒ½å°šæœªåˆå§‹åŒ–å˜é‡a
+                            // System.out.println("ä»£ç å—å±€éƒ¨å˜é‡açš„å€¼: " + a);
+                            // ä¸ºa å˜é‡èµ‹åˆå§‹å€¼, ä¹Ÿå°±æ˜¯è¿›è¡Œåˆå§‹åŒ–
                             a = 5;
-                            System.out.println("´úÂë¿é¾Ö²¿±äÁ¿aµÄÖµ: " + a);
+                            System.out.println("ä»£ç å—å±€éƒ¨å˜é‡açš„å€¼: " + a);
                         }
-                        // ÔÚ´úÂë¿éµÄÍâÃæ·ÃÎÊa±äÁ¿, ²¢²»´æÔÚ
+                        // åœ¨ä»£ç å—çš„å¤–é¢è®¿é—®aå˜é‡, å¹¶ä¸å­˜åœ¨
                         // System.out.println( a);
                     }
                 }
             
-            Àý×Ó2: ·½·¨ÌåÄÚ¾Ö²¿±äÁ¿Àý×Ó
+            ä¾‹å­2: æ–¹æ³•ä½“å†…å±€éƒ¨å˜é‡ä¾‹å­
                 public class BlockTest
                 {
                     public static void main(String[] args)
                     {                    
-                        // ¶¨ÒåÒ»¸ö·½·¨¾Ö²¿±äÁ¿
+                        // å®šä¹‰ä¸€ä¸ªæ–¹æ³•å±€éƒ¨å˜é‡
                         int a ;
-                        // ÏÂÃæµÄ´úÂëÊÇ´íÎóµÄ, ÒòÎªa±äÁ¿Î´³õÊ¼»¯
-                        // System.out.println("·½·¨¾Ö²¿±äÁ¿aµÄÖµ: " + a);
-                        // Îªa ±äÁ¿¸³³õÊ¼Öµ, Ò²¾ÍÊÇ½øÐÐ³õÊ¼»¯
+                        // ä¸‹é¢çš„ä»£ç æ˜¯é”™è¯¯çš„, å› ä¸ºaå˜é‡æœªåˆå§‹åŒ–
+                        // System.out.println("æ–¹æ³•å±€éƒ¨å˜é‡açš„å€¼: " + a);
+                        // ä¸ºa å˜é‡èµ‹åˆå§‹å€¼, ä¹Ÿå°±æ˜¯è¿›è¡Œåˆå§‹åŒ–
                         a = 5;
-                        System.out.println("·½·¨¾Ö²¿±äÁ¿aµÄÖµ: " + a);
+                        System.out.println("æ–¹æ³•å±€éƒ¨å˜é‡açš„å€¼: " + a);
                     }
                 }
 
-            ×¢Òâ: 
-                1. Í¬Ò»¸öÀàÀïÃæ, ³ÉÔ±±äÁ¿µÄ×÷ÓÃ·¶Î§ÊÇÕû¸öÀàÀïÃæÓÐÐ§
-                2. Ò»¸öÀàÀï²»ÄÜ¶¨ÒåÁ½¸öÍ¬ÃûµÄ³ÉÔ±±äÁ¿, ¼´Ê¹Ò»¸öÊÇÀà±äÁ¿, Ò»¸öÊÇÊµÀý±äÁ¿¶¼²»ÐÐ
-                3. Ò»¸ö·½·¨Àï²»ÄÜ¶¨ÒåÁ½¸öÍ¬ÃûµÄ·½·¨¾Ö²¿±äÁ¿, ·½·¨¾Ö²¿±äÁ¿ÓëÐÎ²ÎÒ²²»ÄÜÍ¬Ãû
-                4. Í¬Ò»¸ö·½·¨ÖÐ²»Í¬´úÂë¿éÄÚµÄ´úÂë¿é¾Ö²¿±äÁ¿¿ÉÒÔÍ¬Ãû; 
-                5. Èç¹ûÏÈ¶¨Òå´úÂë¿é¾Ö²¿±äÁ¿, ºó¶¨Òå·½·¨¾Ö²¿±äÁ¿, Ç°Ãæ¶¨ÒåµÄ´úÂë¿é¾Ö²¿±äÁ¿ÓëºóÃæ¶¨Òå
-                    µÄ·½·¨¾Ö²¿±äÁ¿Ò²¿ÉÒÔÍ¬Ãû
-                6. Java ÔÊÐí¾Ö²¿±äÁ¿ºÍ³ÉÔ±±äÁ¿Í¬Ãû, Èç¹û·½·¨ÀïµÄ¾Ö²¿±äÁ¿ºÍ³ÉÔ±±äÁ¿Í¬Ãû, ¾Ö²¿±äÁ¿»á
-                    ¸²¸Ç³ÉÔ±±äÁ¿, Èç¹ûÐèÒªÔÚÕâ¸ö·½·¨ÀïÒýÓÃ±»¸²¸ÇµÄ³ÉÔ±±äÁ¿, Ôò¿ÉÒÔÊ¹ÓÃthis(¶ÔÓÚÊµ
-                    Àý±äÁ¿) »òÀàÃû(¶ÔÓÚÀà±äÁ¿)×÷Îªµ÷ÓÃÕßÀ´ÏÞ¶¨·ÃÎÊ³ÉÔ±±äÁ¿.
+            æ³¨æ„: 
+                1. åŒä¸€ä¸ªç±»é‡Œé¢, æˆå‘˜å˜é‡çš„ä½œç”¨èŒƒå›´æ˜¯æ•´ä¸ªç±»é‡Œé¢æœ‰æ•ˆ
+                2. ä¸€ä¸ªç±»é‡Œä¸èƒ½å®šä¹‰ä¸¤ä¸ªåŒåçš„æˆå‘˜å˜é‡, å³ä½¿ä¸€ä¸ªæ˜¯ç±»å˜é‡, ä¸€ä¸ªæ˜¯å®žä¾‹å˜é‡éƒ½ä¸è¡Œ
+                3. ä¸€ä¸ªæ–¹æ³•é‡Œä¸èƒ½å®šä¹‰ä¸¤ä¸ªåŒåçš„æ–¹æ³•å±€éƒ¨å˜é‡, æ–¹æ³•å±€éƒ¨å˜é‡ä¸Žå½¢å‚ä¹Ÿä¸èƒ½åŒå
+                4. åŒä¸€ä¸ªæ–¹æ³•ä¸­ä¸åŒä»£ç å—å†…çš„ä»£ç å—å±€éƒ¨å˜é‡å¯ä»¥åŒå; 
+                5. å¦‚æžœå…ˆå®šä¹‰ä»£ç å—å±€éƒ¨å˜é‡, åŽå®šä¹‰æ–¹æ³•å±€éƒ¨å˜é‡, å‰é¢å®šä¹‰çš„ä»£ç å—å±€éƒ¨å˜é‡ä¸ŽåŽé¢å®šä¹‰
+                    çš„æ–¹æ³•å±€éƒ¨å˜é‡ä¹Ÿå¯ä»¥åŒå
+                6. Java å…è®¸å±€éƒ¨å˜é‡å’Œæˆå‘˜å˜é‡åŒå, å¦‚æžœæ–¹æ³•é‡Œçš„å±€éƒ¨å˜é‡å’Œæˆå‘˜å˜é‡åŒå, å±€éƒ¨å˜é‡ä¼š
+                    è¦†ç›–æˆå‘˜å˜é‡, å¦‚æžœéœ€è¦åœ¨è¿™ä¸ªæ–¹æ³•é‡Œå¼•ç”¨è¢«è¦†ç›–çš„æˆå‘˜å˜é‡, åˆ™å¯ä»¥ä½¿ç”¨this(å¯¹äºŽå®ž
+                    ä¾‹å˜é‡) æˆ–ç±»å(å¯¹äºŽç±»å˜é‡)ä½œä¸ºè°ƒç”¨è€…æ¥é™å®šè®¿é—®æˆå‘˜å˜é‡.
             
-            Àý×Ó3: ¾Ö²¿±äÁ¿¸²¸Ç³ÉÔ±±äÁ¿
+            ä¾‹å­3: å±€éƒ¨å˜é‡è¦†ç›–æˆå‘˜å˜é‡
                 public class VariableOverrideTest
                 {
-                    // ¶¨ÒåÒ»¸ö name ÊµÀý±äÁ¿
-                    public String name = "Àî¸Õ";
-                    // ¶¨ÒåÒ»¸öpriceÀà±äÁ¿
+                    // å®šä¹‰ä¸€ä¸ª name å®žä¾‹å˜é‡
+                    public String name = "æŽåˆš";
+                    // å®šä¹‰ä¸€ä¸ªpriceç±»å˜é‡
                     public static double price = 78.0;
-                    // Ö÷·½·¨³ÌÐòÈë¿Ú
+                    // ä¸»æ–¹æ³•ç¨‹åºå…¥å£
                     public  static void main(String[] args)
                     {
-                        // ·½·¨ÀïµÄ¾Ö²¿±äÁ¿, ¾Ö²¿±äÁ¿¸²¸Ç³ÉÔ±±äÁ¿
+                        // æ–¹æ³•é‡Œçš„å±€éƒ¨å˜é‡, å±€éƒ¨å˜é‡è¦†ç›–æˆå‘˜å˜é‡
                         int price = 65;
-                        // Ö±½Ó·ÃÎÊ price ±äÁ¿, ½«Êä³ö price¡¡¾Ö²¿±äÁ¿µÄÖµ:65
+                        // ç›´æŽ¥è®¿é—® price å˜é‡, å°†è¾“å‡º priceã€€å±€éƒ¨å˜é‡çš„å€¼:65
                         System.out.println(price);
-                        // Ê¹ÓÃÀàÃû×÷Îªprice±äÁ¿µÄÏÞ¶¨
-                        // ½«Êä³öpriceÀà±äÁ¿µÄÖµ: 78.0
+                        // ä½¿ç”¨ç±»åä½œä¸ºpriceå˜é‡çš„é™å®š
+                        // å°†è¾“å‡ºpriceç±»å˜é‡çš„å€¼: 78.0
                         System.out.println(VariableOverrideTest.price);
                         
-                        // ÔËÐÐinfo ·½·¨
+                        // è¿è¡Œinfo æ–¹æ³•
                         new VariableOverrideTest().info();
                     }
                     public void info()
                     {
-                        // ·½·¨ÀïµÄ¾Ö²¿±äÁ¿, ¾Ö²¿±äÁ¿¸²¸Ç³ÉÔ±±äÁ¿
-                        String name = "ËïÎò¿Õ";
-                        // Ö±½Ó·ÃÎÊname±äÁ¿, ½«Êä³öname¾Ö²¿±äÁ¿µÄÖµ: "ËïÎò¿Õ"
+                        // æ–¹æ³•é‡Œçš„å±€éƒ¨å˜é‡, å±€éƒ¨å˜é‡è¦†ç›–æˆå‘˜å˜é‡
+                        String name = "å­™æ‚Ÿç©º";
+                        // ç›´æŽ¥è®¿é—®nameå˜é‡, å°†è¾“å‡ºnameå±€éƒ¨å˜é‡çš„å€¼: "å­™æ‚Ÿç©º"
                         System.out.println(name);
-                        // Ê¹ÓÃthisÀ´×÷Îªname±äÁ¿µÄÏÞ¶¨
-                        // ½«Êä³önameÊµÀý±äÁ¿µÄÖµ: "Àî¸Õ"
+                        // ä½¿ç”¨thisæ¥ä½œä¸ºnameå˜é‡çš„é™å®š
+                        // å°†è¾“å‡ºnameå®žä¾‹å˜é‡çš„å€¼: "æŽåˆš"
                         System.out.println(this.name);
                     }
                     
                 }
 
             
-    3.2 ³ÉÔ±±äÁ¿µÄ³õÊ¼»¯ºÍÄÚ´æÖÐµÄÔËÐÐ»úÖÆ
-        ËµÃ÷£º
-            1. µ±ÏµÍ³¼ÓÔØÀà»ò´´½¨¸ÃÀàµÄÊµÀýÊ±£¬ÏµÍ³×Ô¶¯Îª³ÉÔ±±äÁ¿·ÖÅäÄÚ´æ¿Õ¼ä£¬²¢ÔÚ·ÖÅäÄÚ´æ¿Õ¼äºó,×Ô
-                ¶¯Îª³ÉÔ±±äÁ¿Ö¸¶¨³õÊ¼Öµ¡£
-            2. (Ê×´Î¼ÓÔØÀàÊ±)ÔÚÀàµÄ×¼±¸½×¶Î£¬ÏµÍ³½«Îª¸ÃÀàµÄÀà±äÁ¿·ÖÅäÄÚ´æ¿Õ¼ä£¬²¢Ö¸¶¨Ä¬ÈÏ³õÊ¼Öµ
-            3. ÊµÀý±äÁ¿ÊÇÔÚ´´½¨ÊµÀýÊ±·ÖÅäÄÚ´æ¿Õ¼ä²¢Ö¸¶¨³õÊ¼Öµ
-            4. Í¨¹ýÊµÀý.Àà±äÁ¿À´·ÃÎÊÀà±äÁ¿Ê±£¬ÓÉÓÚÊµÀý±äÁ¿²¢Ã»ÓÐ±£´æÀà±äÁ¿£¬ËùÒÔ·ÃÎÊµÄ»¹ÊÇ¸ÃÀàµÄÀà±äÁ¿;
-                ËùÒÔËùÓÐµÄÊµÀý·ÃÎÊÀà±äÁ¿¶¼ÊÇ·ÃÎÊµÄÀàµÄÀà±äÁ¿£¬¼´Í¬Ò»¿éÄÚ´æÇø
-            5. ËùÒÔÓÉÓÚÉÏÃæ4µÄÔ­Òò£¬·ÃÎÊÀà±äÁ¿Ê±£¬¾¡Á¿Ê¹ÓÃÀà×÷ÎªÖ÷µ÷
+    3.2 æˆå‘˜å˜é‡çš„åˆå§‹åŒ–å’Œå†…å­˜ä¸­çš„è¿è¡Œæœºåˆ¶
+        è¯´æ˜Žï¼š
+            1. å½“ç³»ç»ŸåŠ è½½ç±»æˆ–åˆ›å»ºè¯¥ç±»çš„å®žä¾‹æ—¶ï¼Œç³»ç»Ÿè‡ªåŠ¨ä¸ºæˆå‘˜å˜é‡åˆ†é…å†…å­˜ç©ºé—´ï¼Œå¹¶åœ¨åˆ†é…å†…å­˜ç©ºé—´åŽ,è‡ª
+                åŠ¨ä¸ºæˆå‘˜å˜é‡æŒ‡å®šåˆå§‹å€¼ã€‚
+            2. (é¦–æ¬¡åŠ è½½ç±»æ—¶)åœ¨ç±»çš„å‡†å¤‡é˜¶æ®µï¼Œç³»ç»Ÿå°†ä¸ºè¯¥ç±»çš„ç±»å˜é‡åˆ†é…å†…å­˜ç©ºé—´ï¼Œå¹¶æŒ‡å®šé»˜è®¤åˆå§‹å€¼
+            3. å®žä¾‹å˜é‡æ˜¯åœ¨åˆ›å»ºå®žä¾‹æ—¶åˆ†é…å†…å­˜ç©ºé—´å¹¶æŒ‡å®šåˆå§‹å€¼
+            4. é€šè¿‡å®žä¾‹.ç±»å˜é‡æ¥è®¿é—®ç±»å˜é‡æ—¶ï¼Œç”±äºŽå®žä¾‹å˜é‡å¹¶æ²¡æœ‰ä¿å­˜ç±»å˜é‡ï¼Œæ‰€ä»¥è®¿é—®çš„è¿˜æ˜¯è¯¥ç±»çš„ç±»å˜é‡;
+                æ‰€ä»¥æ‰€æœ‰çš„å®žä¾‹è®¿é—®ç±»å˜é‡éƒ½æ˜¯è®¿é—®çš„ç±»çš„ç±»å˜é‡ï¼Œå³åŒä¸€å—å†…å­˜åŒº
+            5. æ‰€ä»¥ç”±äºŽä¸Šé¢4çš„åŽŸå› ï¼Œè®¿é—®ç±»å˜é‡æ—¶ï¼Œå°½é‡ä½¿ç”¨ç±»ä½œä¸ºä¸»è°ƒ
 
 
-    3.3 ¾Ö²¿±äÁ¿µÄ³õÊ¼»¯ºÍÄÚ´æÖÐµÄÔËÐÐ»úÖÆ
-        ËµÃ÷£º
-            1. ¶¨Òå¾Ö²¿±äÁ¿ºó£¬ÏµÍ³²¢Î´ÎªÕâ¸ö±äÁ¿·ÖÅäÄÚ´æµØÖ·£¬Ö±µ½µÈµ½³ÌÐòÎªÕâ¸ö±äÁ¿¸³³õÊ¼ÖµµÄÊ±ºò
-                ÏµÍ³²Å»áÎª¾Ö²¿±äÁ¿·ÖÅäÄÚ´æ£¬²¢½«³õÊ¼Öµ±£´æµ½Õâ¿éÄÚ´æÖÐ
-            2. ¾Ö²¿±äÁ¿²»ÊôÓÚÈÎºÎÀà»òÕßÊµÀý£¬Òò´Ë¾Ö²¿±äÁ¿×ÜÊÇ±£´æÔÚÆäËùÔÚ·½·¨µÄÕ»ÄÚ´æÖÐ
-            3. Èô¾Ö²¿±äÁ¿ÊÇ»ù±¾ÀàÐÍµÄ±äÁ¿:ÔòÖ±½Ó°ÑÕâ¸ö±äÁ¿µÄÖµ±£´æÔÚ¸Ã±äÁ¿¶ÔÓ¦µÄÄÚ´æÖÐ
-            4. Èô¾Ö²¿±äÁ¿ÊÇÒýÓÃÀàÐÍµÄ±äÁ¿:ÔòÕâ¸ö±äÁ¿Àï±ß´æ·ÅµÄÊÇµØÖ·£¬Í¨¹ýµØÖ·ÒýÓÃµ½¸Ã±äÁ¿Êµ¼ÊÒýÓÃµÄ
-                ¶ÔÏó»òÊý×é
-            5. ¾Ö²¿±äÁ¿ËùÕ¼µÄÄÚ´æÇøÍ¨³£±È½ÏÐ¡
-            6. Õ»ÄÚ´æÖÐµÄ±äÁ¿ÎÞÐëÏµÍ³»ØÊÕ£¬ÍùÍùËæ·½·¨»ò´úÂë¿éµÄÔËÐÐ½áÊø¶ø½áÊø 
+    3.3 å±€éƒ¨å˜é‡çš„åˆå§‹åŒ–å’Œå†…å­˜ä¸­çš„è¿è¡Œæœºåˆ¶
+        è¯´æ˜Žï¼š
+            1. å®šä¹‰å±€éƒ¨å˜é‡åŽï¼Œç³»ç»Ÿå¹¶æœªä¸ºè¿™ä¸ªå˜é‡åˆ†é…å†…å­˜åœ°å€ï¼Œç›´åˆ°ç­‰åˆ°ç¨‹åºä¸ºè¿™ä¸ªå˜é‡èµ‹åˆå§‹å€¼çš„æ—¶å€™
+                ç³»ç»Ÿæ‰ä¼šä¸ºå±€éƒ¨å˜é‡åˆ†é…å†…å­˜ï¼Œå¹¶å°†åˆå§‹å€¼ä¿å­˜åˆ°è¿™å—å†…å­˜ä¸­
+            2. å±€éƒ¨å˜é‡ä¸å±žäºŽä»»ä½•ç±»æˆ–è€…å®žä¾‹ï¼Œå› æ­¤å±€éƒ¨å˜é‡æ€»æ˜¯ä¿å­˜åœ¨å…¶æ‰€åœ¨æ–¹æ³•çš„æ ˆå†…å­˜ä¸­
+            3. è‹¥å±€éƒ¨å˜é‡æ˜¯åŸºæœ¬ç±»åž‹çš„å˜é‡:åˆ™ç›´æŽ¥æŠŠè¿™ä¸ªå˜é‡çš„å€¼ä¿å­˜åœ¨è¯¥å˜é‡å¯¹åº”çš„å†…å­˜ä¸­
+            4. è‹¥å±€éƒ¨å˜é‡æ˜¯å¼•ç”¨ç±»åž‹çš„å˜é‡:åˆ™è¿™ä¸ªå˜é‡é‡Œè¾¹å­˜æ”¾çš„æ˜¯åœ°å€ï¼Œé€šè¿‡åœ°å€å¼•ç”¨åˆ°è¯¥å˜é‡å®žé™…å¼•ç”¨çš„
+                å¯¹è±¡æˆ–æ•°ç»„
+            5. å±€éƒ¨å˜é‡æ‰€å çš„å†…å­˜åŒºé€šå¸¸æ¯”è¾ƒå°
+            6. æ ˆå†…å­˜ä¸­çš„å˜é‡æ— é¡»ç³»ç»Ÿå›žæ”¶ï¼Œå¾€å¾€éšæ–¹æ³•æˆ–ä»£ç å—çš„è¿è¡Œç»“æŸè€Œç»“æŸ 
 
 
-    3.4 ±äÁ¿µÄÊ¹ÓÃ¹æÔò
-        Ô­Ôò£º
-            1. ÄÜÓÃ¾Ö²¿±äÁ¿¾Í²»ÓÃ³ÉÔ±±äÁ¿
-            2. Ê¹ÓÃ¾Ö²¿±äÁ¿Ò²Ó¦¸Ã¾¡¿ÉÄÜËõÐ¡¾Ö²¿±äÁ¿µÄÊ¹ÓÃ·¶Î§
+    3.4 å˜é‡çš„ä½¿ç”¨è§„åˆ™
+        åŽŸåˆ™ï¼š
+            1. èƒ½ç”¨å±€éƒ¨å˜é‡å°±ä¸ç”¨æˆå‘˜å˜é‡
+            2. ä½¿ç”¨å±€éƒ¨å˜é‡ä¹Ÿåº”è¯¥å°½å¯èƒ½ç¼©å°å±€éƒ¨å˜é‡çš„ä½¿ç”¨èŒƒå›´
 
-        Ê¹ÓÃ³ÉÔ±±äÁ¿µÄ³¡¾°£º
-            1. ÈôÐèÒª¶¨ÒåµÄ±äÁ¿ÊÇÓÃÓÚÃèÊöÄ³¸öÀà»òÄ³¸ö¶ÔÏóµÄ¹ÌÓÐÐÅÏ¢
-                Èç¹û£ºÕâÖÖÐÅÏ¢¶ÔÕâ¸öÀàµÄËùÓÐÊµÀýÍêÈ«ÏàÍ¬£¬ÕâÖÖ±äÁ¿Ó¦¶¨ÒåÎªÀà±äÁ¿
-                Èç¹û£ºÕâÖÖÐÅÏ¢ÊÇÊµÀýÏà¹ØµÄ£¬ÕâÖÖ±äÁ¿Ó¦¶¨ÒåÎªÊµÀý±äÁ¿ 
-            2. Èç¹ûÔÚÄ³¸öÀàÖÐÐèÒªÒÔÒ»¸ö±äÁ¿À´±£´æ¸ÃÀà»òÕßÊµÀýÔËÐÐÊ±µÄ×´Ì¬ÐÅÏ¢£¬ÕâÖÖÓÃÓÚ±£´æÄ³¸öÀà»ò
-                Ä³¸öÊµÀý×´Ì¬ÐÅÏ¢µÄ±äÁ¿Í¨³£Ó¦¸ÃÊ¹ÓÃ³ÉÔ±±äÁ¿
-            3. Èç¹ûÄ³¸öÐÅÏ¢ÐèÒªÔÚÄ³¸öÀàµÄ¶à¸ö·½·¨Ö®¼ä½øÐÐ¹²Ïí£¬ÔòÕâ¸öÐÅÏ¢Ó¦¸ÃÊ¹ÓÃ³ÉÔ±±äÁ¿À´±£´æ
+        ä½¿ç”¨æˆå‘˜å˜é‡çš„åœºæ™¯ï¼š
+            1. è‹¥éœ€è¦å®šä¹‰çš„å˜é‡æ˜¯ç”¨äºŽæè¿°æŸä¸ªç±»æˆ–æŸä¸ªå¯¹è±¡çš„å›ºæœ‰ä¿¡æ¯
+                å¦‚æžœï¼šè¿™ç§ä¿¡æ¯å¯¹è¿™ä¸ªç±»çš„æ‰€æœ‰å®žä¾‹å®Œå…¨ç›¸åŒï¼Œè¿™ç§å˜é‡åº”å®šä¹‰ä¸ºç±»å˜é‡
+                å¦‚æžœï¼šè¿™ç§ä¿¡æ¯æ˜¯å®žä¾‹ç›¸å…³çš„ï¼Œè¿™ç§å˜é‡åº”å®šä¹‰ä¸ºå®žä¾‹å˜é‡ 
+            2. å¦‚æžœåœ¨æŸä¸ªç±»ä¸­éœ€è¦ä»¥ä¸€ä¸ªå˜é‡æ¥ä¿å­˜è¯¥ç±»æˆ–è€…å®žä¾‹è¿è¡Œæ—¶çš„çŠ¶æ€ä¿¡æ¯ï¼Œè¿™ç§ç”¨äºŽä¿å­˜æŸä¸ªç±»æˆ–
+                æŸä¸ªå®žä¾‹çŠ¶æ€ä¿¡æ¯çš„å˜é‡é€šå¸¸åº”è¯¥ä½¿ç”¨æˆå‘˜å˜é‡
+            3. å¦‚æžœæŸä¸ªä¿¡æ¯éœ€è¦åœ¨æŸä¸ªç±»çš„å¤šä¸ªæ–¹æ³•ä¹‹é—´è¿›è¡Œå…±äº«ï¼Œåˆ™è¿™ä¸ªä¿¡æ¯åº”è¯¥ä½¿ç”¨æˆå‘˜å˜é‡æ¥ä¿å­˜
 
-        À©´ó±äÁ¿µÄ×÷ÓÃÓòµÄÈ±µã£º
-            1. Ôö´óÁË±äÁ¿µÄÉú´æÊ±¼ä£¬µ¼ÖÂ¸ü´óµÄÄÚ´æ¿ªÏú
-            2. À©´óÁË±äÁ¿µÄ×÷ÓÃÓò£¬²»ÀûÓÚÌá¸ß³ÌÐòµÄÄÚ¾ÛÐÔ
+        æ‰©å¤§å˜é‡çš„ä½œç”¨åŸŸçš„ç¼ºç‚¹ï¼š
+            1. å¢žå¤§äº†å˜é‡çš„ç”Ÿå­˜æ—¶é—´ï¼Œå¯¼è‡´æ›´å¤§çš„å†…å­˜å¼€é”€
+            2. æ‰©å¤§äº†å˜é‡çš„ä½œç”¨åŸŸï¼Œä¸åˆ©äºŽæé«˜ç¨‹åºçš„å†…èšæ€§
         
-        Àý×Ó:
+        ä¾‹å­:
             public class ScopeTest1{
-                //¶¨ÒåÒ»¸öÀà³ÉÔ±±äÁ¿×÷ÎªÑ­»·±äÁ¿
+                //å®šä¹‰ä¸€ä¸ªç±»æˆå‘˜å˜é‡ä½œä¸ºå¾ªçŽ¯å˜é‡
                 static int i;
                 public static void main(String[] args){
                     for (i<0; i < 10; i++){
@@ -745,7 +745,7 @@
             {
                 public static void main(String[] args)
                 {
-                    //¶¨ÒåÒ»¸ö·½·¨¾Ö²¿±äÁ¿×÷ÎªÑ­»·Ìõ¼þ
+                    //å®šä¹‰ä¸€ä¸ªæ–¹æ³•å±€éƒ¨å˜é‡ä½œä¸ºå¾ªçŽ¯æ¡ä»¶
                     int i;
                     for (i < 0; i < 10; i++)
                     {
@@ -758,7 +758,7 @@
             {
                 public static void main(String[] args)
                 {
-                    // ¶¨ÒåÒ»¸ö´úÂë¿é¾Ö²¿±äÁ¿×÷ÎªÑ­»·±äÁ¿
+                    // å®šä¹‰ä¸€ä¸ªä»£ç å—å±€éƒ¨å˜é‡ä½œä¸ºå¾ªçŽ¯å˜é‡
                     for(int i < 0; i < 10; i++)
                     {
                         System.out.println("hello!");
@@ -766,80 +766,80 @@
                 }
             }
         
-            ËµÃ÷: ÉÏÃæÈý¸ö³ÌÐòµÄÖ´ÐÐ½á¹ûÍêÈ«Ò»Ñù, µ«ÊÇ³ÌÐòµÄÐ§¹ûÔò´óÓÐ²îÒì. µÚÈý¸ö³ÌÐò×î·ûºÏÈí¼þµÄ
-                ¿ª·¢¹æ·¶;
+            è¯´æ˜Ž: ä¸Šé¢ä¸‰ä¸ªç¨‹åºçš„æ‰§è¡Œç»“æžœå®Œå…¨ä¸€æ ·, ä½†æ˜¯ç¨‹åºçš„æ•ˆæžœåˆ™å¤§æœ‰å·®å¼‚. ç¬¬ä¸‰ä¸ªç¨‹åºæœ€ç¬¦åˆè½¯ä»¶çš„
+                å¼€å‘è§„èŒƒ;
         
 
-4. Òþ²ØºÍ·â×°
-    4.1 Àí½â·â×°
-        º¬Òå:
-            ·â×°(Encapsulation)ÊÇÃæÏò¶ÔÏóµÄÈý´óÌØÕ÷Ö®Ò»(»¹ÓÐ¼Ì³ÐºÍ¶àÌ¬), ËüÖ¸µÄÊÇ½«¶Ô¶ÔÏóµÄ×´Ì¬ÐÅÏ¢
-            Òþ²ØÔÚ¶ÔÏóÄÚ²¿, ²»ÔÊÐíÍâ²¿³ÌÐòÖ±½Ó·ÃÎÊ¶ÔÏóÄÚ²¿ÐÅÏ¢, ¶øÊÇÍ¨¹ý¸ÃÀàËùÌá¹©µÄ·½·¨À´ÊµÏÖ¶ÔÄÚ
-            ²¿ÐÅÏ¢µÄ²Ù×÷ºÍ·ÃÎÊ
+4. éšè—å’Œå°è£…
+    4.1 ç†è§£å°è£…
+        å«ä¹‰:
+            å°è£…(Encapsulation)æ˜¯é¢å‘å¯¹è±¡çš„ä¸‰å¤§ç‰¹å¾ä¹‹ä¸€(è¿˜æœ‰ç»§æ‰¿å’Œå¤šæ€), å®ƒæŒ‡çš„æ˜¯å°†å¯¹å¯¹è±¡çš„çŠ¶æ€ä¿¡æ¯
+            éšè—åœ¨å¯¹è±¡å†…éƒ¨, ä¸å…è®¸å¤–éƒ¨ç¨‹åºç›´æŽ¥è®¿é—®å¯¹è±¡å†…éƒ¨ä¿¡æ¯, è€Œæ˜¯é€šè¿‡è¯¥ç±»æ‰€æä¾›çš„æ–¹æ³•æ¥å®žçŽ°å¯¹å†…
+            éƒ¨ä¿¡æ¯çš„æ“ä½œå’Œè®¿é—®
             
-        ·â×°µÄÄ¿µÄ:
-            1. Òþ²ØÀàµÄÊµÏÖÏ¸½Ú
-            2. ÈÃÊ¹ÓÃÕßÖ»ÄÜÍ¨¹ýÊÂÏÈÔ¤¶¨µÄ·½·¨À´·ÃÎÊÊý¾Ý, ´Ó¶ø¿ÉÒÔÔÚ¸Ã·½·¨Àï¼ÓÈë¿ØÖÆÂß¼­, ÏÞÖÆ¶Ô³ÉÔ±
-                ±äÁ¿µÄ²»ºÏÀí·ÃÎÊ
-            3. ¿É½øÐÐÊý¾Ý¼ì²é, ´Ó¶øÓÐÀûÓÚ±£Ö¤¶ÔÏóÐÅÏ¢µÄÍêÕûÐÔ
-            4. ±ãÓÚÐÞ¸Ä, Ìá¸ß´úÂëµÄ¿ÉÎ¬»¤ÐÔ
+        å°è£…çš„ç›®çš„:
+            1. éšè—ç±»çš„å®žçŽ°ç»†èŠ‚
+            2. è®©ä½¿ç”¨è€…åªèƒ½é€šè¿‡äº‹å…ˆé¢„å®šçš„æ–¹æ³•æ¥è®¿é—®æ•°æ®, ä»Žè€Œå¯ä»¥åœ¨è¯¥æ–¹æ³•é‡ŒåŠ å…¥æŽ§åˆ¶é€»è¾‘, é™åˆ¶å¯¹æˆå‘˜
+                å˜é‡çš„ä¸åˆç†è®¿é—®
+            3. å¯è¿›è¡Œæ•°æ®æ£€æŸ¥, ä»Žè€Œæœ‰åˆ©äºŽä¿è¯å¯¹è±¡ä¿¡æ¯çš„å®Œæ•´æ€§
+            4. ä¾¿äºŽä¿®æ”¹, æé«˜ä»£ç çš„å¯ç»´æŠ¤æ€§
         
-        ·â×°µÄ¹æÔò:
-            1. ½«¶ÔÏóµÄ³ÉÔ±±äÁ¿ºÍÊµÏÖÏ¸½ÚÒþ²ØÆðÀ´, ²»ÔÊÐíÍâ²¿·ÃÎÊ
-            2. °Ñ·½·¨ÆØÂ¶³öÀ´, ·½·¨À´¿ØÖÆ¶ÔÕâÐ©³ÉÔ±±äÁ¿½øÐÐ°²È«·ÃÎÊºÍ²Ù×÷
+        å°è£…çš„è§„åˆ™:
+            1. å°†å¯¹è±¡çš„æˆå‘˜å˜é‡å’Œå®žçŽ°ç»†èŠ‚éšè—èµ·æ¥, ä¸å…è®¸å¤–éƒ¨è®¿é—®
+            2. æŠŠæ–¹æ³•æ›éœ²å‡ºæ¥, æ–¹æ³•æ¥æŽ§åˆ¶å¯¹è¿™äº›æˆå‘˜å˜é‡è¿›è¡Œå®‰å…¨è®¿é—®å’Œæ“ä½œ
 
-    4.2 Ê¹ÓÃ·ÃÎÊ¿ØÖÆ·û
-        ËµÃ÷:
-            1. ¿ØÖÆ¼¶±ð:´Ó×óÖÁÓÒ, ¿ØÖÆ¼¶±ð´ÓÐ¡µ½´ó
+    4.2 ä½¿ç”¨è®¿é—®æŽ§åˆ¶ç¬¦
+        è¯´æ˜Ž:
+            1. æŽ§åˆ¶çº§åˆ«:ä»Žå·¦è‡³å³, æŽ§åˆ¶çº§åˆ«ä»Žå°åˆ°å¤§
                 private ----------> default ----------> protected ----------> public 
-            2. ·ÃÎÊ¿ØÖÆ·ûÓÃÓÚ¿ØÖÆÒ»¸öÀàµÄ³ÉÔ±ÊÇ·ñ¿ÉÒÔ±»ÆäËûÀà·ÃÎÊ, ¶ÔÓÚ¾Ö²¿±äÁ¿¶øÑÔ, Æä×÷ÓÃÓò¾ÍÊÇËü
-                ËùÔÚµÄ·½·¨, ²»¿ÉÄÜ±»ÆäËûÀà·ÃÎÊ, Òò´Ë²»ÄÜÊ¹ÓÃ·ÃÎÊ¿ØÖÆ·ûÀ´ÐÞÊÎ.
-            3. Íâ²¿ÀàÖ»ÄÜÓÐÁ½ÖÖ·ÃÎÊ¿ØÖÆ¼¶±ð: public ºÍÄ¬ÈÏdefault(¿ÉÊ¡ÂÔ²»Ð´), Íâ²¿Àà²»ÄÜÊ¹ÓÃprivate
-                ºÍ protected ÐÞÊÎ. Ô­ÒòÊÇ: Íâ²¿ÀàÃ»ÓÐ´¦ÓÚÈÎºÎÀàµÄÄÚ²¿, Ò²¾ÍÃ»ÓÐÆäËùÔÚÀàµÄÄÚ²¿, ËùÔÚ 
-                ÀàµÄ×ÓÀàÁ½¸ö·¶Î§, Òò´Ë private ºÍ protected ·ÃÎÊ¿ØÖÆ·û¶ÔÍâ²¿ÀàÃ»ÓÐÒâÒå
-            4. Íâ²¿Àà¿ÉÒÔÊ¹ÓÃpublic ºÍ °ü ·ÃÎÊ¿ØÖÆÈ¨ÏÞ, Ê¹ÓÃ public ÐÞÊÎµÄÍâ²¿Àà¿ÉÒÔ±»ËùÓÐÀàÊ¹ÓÃ,
-            5. ²»Ê¹ÓÃÈÎºÎ·ÃÎÊ¿ØÖÆ·ûÐÞÊÎµÄÍâ²¿ÀàÖ»ÄÜ±»Í¬Ò»¸ö°üÖÐµÄÆäËûÀàÊ¹ÓÃ
+            2. è®¿é—®æŽ§åˆ¶ç¬¦ç”¨äºŽæŽ§åˆ¶ä¸€ä¸ªç±»çš„æˆå‘˜æ˜¯å¦å¯ä»¥è¢«å…¶ä»–ç±»è®¿é—®, å¯¹äºŽå±€éƒ¨å˜é‡è€Œè¨€, å…¶ä½œç”¨åŸŸå°±æ˜¯å®ƒ
+                æ‰€åœ¨çš„æ–¹æ³•, ä¸å¯èƒ½è¢«å…¶ä»–ç±»è®¿é—®, å› æ­¤ä¸èƒ½ä½¿ç”¨è®¿é—®æŽ§åˆ¶ç¬¦æ¥ä¿®é¥°.
+            3. å¤–éƒ¨ç±»åªèƒ½æœ‰ä¸¤ç§è®¿é—®æŽ§åˆ¶çº§åˆ«: public å’Œé»˜è®¤default(å¯çœç•¥ä¸å†™), å¤–éƒ¨ç±»ä¸èƒ½ä½¿ç”¨private
+                å’Œ protected ä¿®é¥°. åŽŸå› æ˜¯: å¤–éƒ¨ç±»æ²¡æœ‰å¤„äºŽä»»ä½•ç±»çš„å†…éƒ¨, ä¹Ÿå°±æ²¡æœ‰å…¶æ‰€åœ¨ç±»çš„å†…éƒ¨, æ‰€åœ¨ 
+                ç±»çš„å­ç±»ä¸¤ä¸ªèŒƒå›´, å› æ­¤ private å’Œ protected è®¿é—®æŽ§åˆ¶ç¬¦å¯¹å¤–éƒ¨ç±»æ²¡æœ‰æ„ä¹‰
+            4. å¤–éƒ¨ç±»å¯ä»¥ä½¿ç”¨public å’Œ åŒ… è®¿é—®æŽ§åˆ¶æƒé™, ä½¿ç”¨ public ä¿®é¥°çš„å¤–éƒ¨ç±»å¯ä»¥è¢«æ‰€æœ‰ç±»ä½¿ç”¨,
+            5. ä¸ä½¿ç”¨ä»»ä½•è®¿é—®æŽ§åˆ¶ç¬¦ä¿®é¥°çš„å¤–éƒ¨ç±»åªèƒ½è¢«åŒä¸€ä¸ªåŒ…ä¸­çš„å…¶ä»–ç±»ä½¿ç”¨
             
-        ¿ØÖÆ¼¶±ð:
-            1. private (µ±Ç°Àà·ÃÎÊÈ¨ÏÞ):
-                Èç¹ûÀàÀïÃæµÄÒ»¸ö³ÉÔ±(°üÀ¨³ÉÔ±±äÁ¿, ·½·¨ºÍ¹¹ÔìÆ÷µÈ)Ê¹ÓÃ private ·ÃÎÊ¿ØÖÆ·ûÀ´ÐÞÊÎ, Ôò 
-                Õâ¸ö³ÉÔ±Ö»ÄÜÔÚµ±Ç°ÀàµÄÄÚ²¿±»·ÃÎÊ. ÊÊÓÃÓÚÐÞÊÎ³ÉÔ±±äÁ¿, privateÐÞÊÎ³ÉÔ±±äÁ¿¿ÉÒÔ°Ñ³ÉÔ±
-                ±äÁ¿Òþ²ØÔÚ¸ÃÀàµÄÄÚ²¿
-            2. default (°ü·ÃÎÊÈ¨ÏÞ):
-                Èç¹ûÀàÀïÃæµÄÒ»¸ö³ÉÔ±(°üÀ¨³ÉÔ±±äÁ¿, ·½·¨ºÍ¹¹ÔìÆ÷µÈ)»òÕßÒ»¸öÍâ²¿Àà²»Ê¹ÓÃÈÎºÎ·ÃÎÊ¿ØÖÆ
-                ·ûÐÞÊÎ, ¾Í³ÆËüÊÇ°ü·ÃÎÊÈ¨ÏÞ, default ·ÃÎÊ¿ØÖÆµÄ³ÉÔ±»òÕßÍâ²¿Àà¿ÉÒÔ±»ÏàÍ¬°üÏÂµÄÆäËûÀà
-                ·ÃÎÊ
-            3. protected (×ÓÀà·ÃÎÊÈ¨ÏÞ):
-                Èç¹ûÒ»¸ö³ÉÔ±(°üÀ¨³ÉÔ±±äÁ¿, ·½·¨ºÍ¹¹ÔìÆ÷µÈ)Ê¹ÓÃ protected ·ÃÎÊ¿ØÖÆ·ûÐÞÊÎ, ÄÇÃ´Õâ¸ö³É
-                Ô±¼È¿ÉÒÔ±»Í¬Ò»¸ö°üÖÐµÄÆäËûÀà·ÃÎÊ, Ò²¿ÉÒÔ±»²»Í¬°üÖÐµÄ×ÓÀà·ÃÎÊ. ÔÚÍ¨³£Çé¿öÏÂ, Èç¹ûÊ¹
-                ÓÃprotected À´ÐÞÊÎÒ»¸ö·½·¨, Í¨³£ÊÇÏ£ÍûÆä×ÓÀàÀ´ÖØÐ´Õâ¸ö·½·¨
-            4. public (¹«¹²·ÃÎÊÈ¨ÏÞ):
-                ÕâÊÇÒ»¸ö×î¿íËÉµÄ·ÃÎÊ¿ØÖÆ¼¶±ð, Èç¹ûÒ»¸ö³ÉÔ±(°üÀ¨³ÉÔ±±äÁ¿, ·½·¨ºÍ¹¹ÔìÆ÷µÈ) »òÕßÒ»¸öÍâ 
-                ²¿ÀàÊ¹ÓÃ public ·ÃÎÊ¿ØÖÆ·ûÐÞÊÎ, ÄÇÃ´Õâ¸ö³ÉÔ±»òÍâ²¿Àà¾Í¿ÉÒÔ±»ËùÓÐÀà·ÃÎÊ, ²»¹Ü·ÃÎÊÀà
-                ºÍ±»·ÃÎÊÀàÊÇ·ñ´¦ÓÚÍ¬Ò»¸ö°üÖÐ, ÊÇ·ñ¾ßÓÐ¸¸×Ó¼Ì³Ð¹ØÏµ
+        æŽ§åˆ¶çº§åˆ«:
+            1. private (å½“å‰ç±»è®¿é—®æƒé™):
+                å¦‚æžœç±»é‡Œé¢çš„ä¸€ä¸ªæˆå‘˜(åŒ…æ‹¬æˆå‘˜å˜é‡, æ–¹æ³•å’Œæž„é€ å™¨ç­‰)ä½¿ç”¨ private è®¿é—®æŽ§åˆ¶ç¬¦æ¥ä¿®é¥°, åˆ™ 
+                è¿™ä¸ªæˆå‘˜åªèƒ½åœ¨å½“å‰ç±»çš„å†…éƒ¨è¢«è®¿é—®. é€‚ç”¨äºŽä¿®é¥°æˆå‘˜å˜é‡, privateä¿®é¥°æˆå‘˜å˜é‡å¯ä»¥æŠŠæˆå‘˜
+                å˜é‡éšè—åœ¨è¯¥ç±»çš„å†…éƒ¨
+            2. default (åŒ…è®¿é—®æƒé™):
+                å¦‚æžœç±»é‡Œé¢çš„ä¸€ä¸ªæˆå‘˜(åŒ…æ‹¬æˆå‘˜å˜é‡, æ–¹æ³•å’Œæž„é€ å™¨ç­‰)æˆ–è€…ä¸€ä¸ªå¤–éƒ¨ç±»ä¸ä½¿ç”¨ä»»ä½•è®¿é—®æŽ§åˆ¶
+                ç¬¦ä¿®é¥°, å°±ç§°å®ƒæ˜¯åŒ…è®¿é—®æƒé™, default è®¿é—®æŽ§åˆ¶çš„æˆå‘˜æˆ–è€…å¤–éƒ¨ç±»å¯ä»¥è¢«ç›¸åŒåŒ…ä¸‹çš„å…¶ä»–ç±»
+                è®¿é—®
+            3. protected (å­ç±»è®¿é—®æƒé™):
+                å¦‚æžœä¸€ä¸ªæˆå‘˜(åŒ…æ‹¬æˆå‘˜å˜é‡, æ–¹æ³•å’Œæž„é€ å™¨ç­‰)ä½¿ç”¨ protected è®¿é—®æŽ§åˆ¶ç¬¦ä¿®é¥°, é‚£ä¹ˆè¿™ä¸ªæˆ
+                å‘˜æ—¢å¯ä»¥è¢«åŒä¸€ä¸ªåŒ…ä¸­çš„å…¶ä»–ç±»è®¿é—®, ä¹Ÿå¯ä»¥è¢«ä¸åŒåŒ…ä¸­çš„å­ç±»è®¿é—®. åœ¨é€šå¸¸æƒ…å†µä¸‹, å¦‚æžœä½¿
+                ç”¨protected æ¥ä¿®é¥°ä¸€ä¸ªæ–¹æ³•, é€šå¸¸æ˜¯å¸Œæœ›å…¶å­ç±»æ¥é‡å†™è¿™ä¸ªæ–¹æ³•
+            4. public (å…¬å…±è®¿é—®æƒé™):
+                è¿™æ˜¯ä¸€ä¸ªæœ€å®½æ¾çš„è®¿é—®æŽ§åˆ¶çº§åˆ«, å¦‚æžœä¸€ä¸ªæˆå‘˜(åŒ…æ‹¬æˆå‘˜å˜é‡, æ–¹æ³•å’Œæž„é€ å™¨ç­‰) æˆ–è€…ä¸€ä¸ªå¤– 
+                éƒ¨ç±»ä½¿ç”¨ public è®¿é—®æŽ§åˆ¶ç¬¦ä¿®é¥°, é‚£ä¹ˆè¿™ä¸ªæˆå‘˜æˆ–å¤–éƒ¨ç±»å°±å¯ä»¥è¢«æ‰€æœ‰ç±»è®¿é—®, ä¸ç®¡è®¿é—®ç±»
+                å’Œè¢«è®¿é—®ç±»æ˜¯å¦å¤„äºŽåŒä¸€ä¸ªåŒ…ä¸­, æ˜¯å¦å…·æœ‰çˆ¶å­ç»§æ‰¿å…³ç³»
         
-        ·ÃÎÊ¿ØÖÆ·ûµÄÊ¹ÓÃÔ­Ôò:
-            1. ÀàÀïÃæµÄ¾ø´ó²¿·Ö³ÉÔ±±äÁ¿¶¼Ó¦¸ÃÊ¹ÓÃ private ÐÞÊÎ, Ö»ÓÐÒ»Ð© static ÐÞÊÎµÄ, ÀàËÆÈ«¾Ö±äÁ¿
-                µÄ³ÉÔ±±äÁ¿, ²Å¿¼ÂÇÊ¹ÓÃ public ÐÞÊÎ, ÁíÍâ: ÓÐÐ©·½·¨Ö»ÓÃÓÚ¸¨ÖúÊµÏÖ¸ÃÀàµÄÆäËû·½·¨, ÕâÐ©
-                ·½·¨±»³ÆÖ®Îª¹¤¾ß·½·¨, ¹¤¾ß·½·¨Ò²Ó¦¸ÃÊ¹ÓÃ private ÐÞÊÎ
-            2. Èç¹ûÄ³¸öÀàÖ÷ÒªÓÃ×öÆäËûÀàµÄ¸¸Àà, ¸ÃÀàÀï°üº¬µÄ´ó²¿·Ö·½·¨¿ÉÄÜ½öÏ£Íû±»Æä×ÓÀàÖØÐ´, ¶ø²»Ïë
-                ±»Íâ½çÖ±½Óµ÷ÓÃ, Ó¦¸ÃÓÃ protected ÐÞÊÎÕâÐ©·½·¨
-            3. Ï£Íû±©Â¶³öÀ´¸øÆäËûÀàÀ´µ÷ÓÃµÄ·½·¨Ó¦¸ÃÊ¹ÓÃ public ÐÞÊÎ, ÀýÈç¹¹ÔìÆ÷
+        è®¿é—®æŽ§åˆ¶ç¬¦çš„ä½¿ç”¨åŽŸåˆ™:
+            1. ç±»é‡Œé¢çš„ç»å¤§éƒ¨åˆ†æˆå‘˜å˜é‡éƒ½åº”è¯¥ä½¿ç”¨ private ä¿®é¥°, åªæœ‰ä¸€äº› static ä¿®é¥°çš„, ç±»ä¼¼å…¨å±€å˜é‡
+                çš„æˆå‘˜å˜é‡, æ‰è€ƒè™‘ä½¿ç”¨ public ä¿®é¥°, å¦å¤–: æœ‰äº›æ–¹æ³•åªç”¨äºŽè¾…åŠ©å®žçŽ°è¯¥ç±»çš„å…¶ä»–æ–¹æ³•, è¿™äº›
+                æ–¹æ³•è¢«ç§°ä¹‹ä¸ºå·¥å…·æ–¹æ³•, å·¥å…·æ–¹æ³•ä¹Ÿåº”è¯¥ä½¿ç”¨ private ä¿®é¥°
+            2. å¦‚æžœæŸä¸ªç±»ä¸»è¦ç”¨åšå…¶ä»–ç±»çš„çˆ¶ç±», è¯¥ç±»é‡ŒåŒ…å«çš„å¤§éƒ¨åˆ†æ–¹æ³•å¯èƒ½ä»…å¸Œæœ›è¢«å…¶å­ç±»é‡å†™, è€Œä¸æƒ³
+                è¢«å¤–ç•Œç›´æŽ¥è°ƒç”¨, åº”è¯¥ç”¨ protected ä¿®é¥°è¿™äº›æ–¹æ³•
+            3. å¸Œæœ›æš´éœ²å‡ºæ¥ç»™å…¶ä»–ç±»æ¥è°ƒç”¨çš„æ–¹æ³•åº”è¯¥ä½¿ç”¨ public ä¿®é¥°, ä¾‹å¦‚æž„é€ å™¨
             
-        Àý×Ó:
-            // Ò»¸öÊµÏÖÁËºÏÀí·â×°µÄ Person Àà 
+        ä¾‹å­:
+            // ä¸€ä¸ªå®žçŽ°äº†åˆç†å°è£…çš„ Person ç±» 
             public class Person
             {
-                // Ê¹ÓÃprivateÐÞÊÎ³ÉÔ±±äÁ¿, ½«ÕâÐ©³ÉÔ±±äÁ¿Òþ²ØÆðÀ´
+                // ä½¿ç”¨privateä¿®é¥°æˆå‘˜å˜é‡, å°†è¿™äº›æˆå‘˜å˜é‡éšè—èµ·æ¥
                 private String name;
                 private int age;
-                //Ìá¹©·½·¨À´²Ù×÷ name ³ÉÔ±±äÁ¿
+                //æä¾›æ–¹æ³•æ¥æ“ä½œ name æˆå‘˜å˜é‡
                 public void setName(String name)
                 {
-                    // Ö´ÐÐºÏÀíÐÔÐ£Ñé, ÒªÇóÓÃ»§Ãû±ØÐëÔÚ2~6Î»Ö®¼ä
+                    // æ‰§è¡Œåˆç†æ€§æ ¡éªŒ, è¦æ±‚ç”¨æˆ·åå¿…é¡»åœ¨2~6ä½ä¹‹é—´
                     if (name.length() > 6 || name.length() < 2)
                     {
-                        System.out.println("ÉèÖÃµÄÈËÃû²»·ûºÏÒªÇó!");
+                        System.out.println("è®¾ç½®çš„äººåä¸ç¬¦åˆè¦æ±‚!");
                         return;
                     }
                     else
@@ -851,13 +851,13 @@
                 {
                     return this.name;
                 }
-                // Ìá¹©·½·¨À´²Ù×÷age³ÉÔ±±äÁ¿
+                // æä¾›æ–¹æ³•æ¥æ“ä½œageæˆå‘˜å˜é‡
                 public void setAge(int age)
                 {
-                    // Ö´ÐÐºÏÀíÐÍÐ£Ñé, ÒªÇóÊäÈëµÄÄêÁä±ØÐëÔÚ 0~100 Ö®¼ä
+                    // æ‰§è¡Œåˆç†åž‹æ ¡éªŒ, è¦æ±‚è¾“å…¥çš„å¹´é¾„å¿…é¡»åœ¨ 0~100 ä¹‹é—´
                     if (age > 100 || age < 0)
                     {
-                        System.out.println("ÊäÈëµÄÄêÁä²»ºÏ·¨!");
+                        System.out.println("è¾“å…¥çš„å¹´é¾„ä¸åˆæ³•!");
                         return;
                     }
                     else
@@ -871,59 +871,59 @@
                 }
                 
             } 
-                ËµÃ÷:
-                    1. setter ºÍ getter ·½·¨
-                        ÀàÀïÃæ¶¨ÒåÁËÒ»¸ö abc µÄÊµÀý±äÁ¿, ÔòÆä¶ÔÓ¦µÄ setter ºÍ getter ·½·¨ÃûÓ¦¸ÃÎª
-                        setAbc() ºÍ getAbc() (¼´½«Ô­À´ÊµÀý±äÁ¿ÃûÊ××ÖÄ¸´óÐ´, ²¢ÔÚÇ°Ãæ·Ö±ðÔö¼Ó set 
-                        ºÍ get ¶¯´Ê)
-                    2. Èç¹ûÒ»¸öJavaÀàµÄÃ¿¸öÊµÀý±äÁ¿¶¼±»Ê¹ÓÃ private ÐÞÊÎ, ²¢ÎªÃ¿¸öÊµÀý±äÁ¿¶¼Ìá¹©ÁË
-                        publicÐÞÊÎµÄ setter ºÍ getter ·½·¨, ÄÇÃ´Õâ¸öÀà¾ÍÊÇ·ûºÏJavaBean¹æ·¶µÄÀà
-                    3. ½øÐÐ³ÌÐòÉè¼ÆµÄÊ±, Ó¦¾¡Á¿±ÜÃâÒ»¸öÄ£¿éÖ±½Ó²Ù×÷ºÍ·ÃÎÊÁíÍâÒ»¸öÄ£¿éµÄÊý¾Ý, Ä£¿é
-                        µÄÉè¼Æ×·Çó¸ßÄÚ¾Û(¾¡¿ÉÄÜ°ÑÄ£¿éµÄÄÚ²¿Êý¾Ý, ¹¦ÄÜÊµÏÖÏ¸½ÚÒþ²ØÔÚÄ£¿éÄÚ²¿¶ÀÁ¢Íê
-                        ³É,²»ÔÊÐíÍâ²¿Ö±½Ó¸ÉÔ¤), µÍñîºÏ(½ö±©Â¶ÉÙÁ¿µÄ·½·¨¸øÍâ²¿Ê¹ÓÃ)
+                è¯´æ˜Ž:
+                    1. setter å’Œ getter æ–¹æ³•
+                        ç±»é‡Œé¢å®šä¹‰äº†ä¸€ä¸ª abc çš„å®žä¾‹å˜é‡, åˆ™å…¶å¯¹åº”çš„ setter å’Œ getter æ–¹æ³•ååº”è¯¥ä¸º
+                        setAbc() å’Œ getAbc() (å³å°†åŽŸæ¥å®žä¾‹å˜é‡åé¦–å­—æ¯å¤§å†™, å¹¶åœ¨å‰é¢åˆ†åˆ«å¢žåŠ  set 
+                        å’Œ get åŠ¨è¯)
+                    2. å¦‚æžœä¸€ä¸ªJavaç±»çš„æ¯ä¸ªå®žä¾‹å˜é‡éƒ½è¢«ä½¿ç”¨ private ä¿®é¥°, å¹¶ä¸ºæ¯ä¸ªå®žä¾‹å˜é‡éƒ½æä¾›äº†
+                        publicä¿®é¥°çš„ setter å’Œ getter æ–¹æ³•, é‚£ä¹ˆè¿™ä¸ªç±»å°±æ˜¯ç¬¦åˆJavaBeanè§„èŒƒçš„ç±»
+                    3. è¿›è¡Œç¨‹åºè®¾è®¡çš„æ—¶, åº”å°½é‡é¿å…ä¸€ä¸ªæ¨¡å—ç›´æŽ¥æ“ä½œå’Œè®¿é—®å¦å¤–ä¸€ä¸ªæ¨¡å—çš„æ•°æ®, æ¨¡å—
+                        çš„è®¾è®¡è¿½æ±‚é«˜å†…èš(å°½å¯èƒ½æŠŠæ¨¡å—çš„å†…éƒ¨æ•°æ®, åŠŸèƒ½å®žçŽ°ç»†èŠ‚éšè—åœ¨æ¨¡å—å†…éƒ¨ç‹¬ç«‹å®Œ
+                        æˆ,ä¸å…è®¸å¤–éƒ¨ç›´æŽ¥å¹²é¢„), ä½Žè€¦åˆ(ä»…æš´éœ²å°‘é‡çš„æ–¹æ³•ç»™å¤–éƒ¨ä½¿ç”¨)
             
-            // ²âÊÔÉÏÃæµÄPersonÀà
+            // æµ‹è¯•ä¸Šé¢çš„Personç±»
             public class PersonTest
             {
                 public static void main(String[] args)
                 {
                     Person p = new Person();
-                    // ÒòÎªage³ÉÔ±±äÁ¿ÒÔ±»Òþ²Ø, ËùÒÔÏÂÃæµÄÓï¾ä³öÏÖ±àÒë´íÎó
-                    // p.age = 1000;  // out: ´íÎó: age ÔÚ Person ÖÐÊÇ private ·ÃÎÊ¿ØÖÆ
-                    // ÏÂÃæÓï¾ä±àÒë²»»á³öÏÖ´íÎó, µ«ÊÇÔËÐÐÊ±ÌáÊ¾"ÊäÈëµÄÄêÁä²»ºÏ·¨"
-                    // ³ÌÐò²»ÊÇÐÞ¸Ä p µÄ age ³ÉÔ±±äÁ¿
+                    // å› ä¸ºageæˆå‘˜å˜é‡ä»¥è¢«éšè—, æ‰€ä»¥ä¸‹é¢çš„è¯­å¥å‡ºçŽ°ç¼–è¯‘é”™è¯¯
+                    // p.age = 1000;  // out: é”™è¯¯: age åœ¨ Person ä¸­æ˜¯ private è®¿é—®æŽ§åˆ¶
+                    // ä¸‹é¢è¯­å¥ç¼–è¯‘ä¸ä¼šå‡ºçŽ°é”™è¯¯, ä½†æ˜¯è¿è¡Œæ—¶æç¤º"è¾“å…¥çš„å¹´é¾„ä¸åˆæ³•"
+                    // ç¨‹åºä¸æ˜¯ä¿®æ”¹ p çš„ age æˆå‘˜å˜é‡
                     p.setAge(1000);
-                    // ·ÃÎÊ p µÄ age ³ÉÔ±±äÁ¿Ò²±ØÐëÍ¨¹ýÆä¶ÔÓ¦µÄ getter ·½·¨
-                    // ÒòÎªÉÏÃæ´ÓÎ´³É¹¦ÉèÖÃ p µÄ age ³ÉÔ±±äÁ¿, ¹Ê´Ë´¦Êä³ö0
-                    System.out.println("Î´ÉèÖÃ age µÄ³ÉÔ±±äÁ¿Ê±: " + p.getAge());
-                    // ³É¹¦ÐÞ¸Ä p µÄ age ³ÉÔ±±äÁ¿ 
+                    // è®¿é—® p çš„ age æˆå‘˜å˜é‡ä¹Ÿå¿…é¡»é€šè¿‡å…¶å¯¹åº”çš„ getter æ–¹æ³•
+                    // å› ä¸ºä¸Šé¢ä»ŽæœªæˆåŠŸè®¾ç½® p çš„ age æˆå‘˜å˜é‡, æ•…æ­¤å¤„è¾“å‡º0
+                    System.out.println("æœªè®¾ç½® age çš„æˆå‘˜å˜é‡æ—¶: " + p.getAge());
+                    // æˆåŠŸä¿®æ”¹ p çš„ age æˆå‘˜å˜é‡ 
                     p.setAge(30);
-                    // ÒòÎªÉÏÃæ³É¹¦ÉèÖÃÁË p µÄ age ³ÉÔ±±äÁ¿, ¹Ê´Ë´¦Êä³ö30
-                    System.out.println("³É¹¦ÉèÖÃ age µÄ³ÉÔ±±äÁ¿ºó: " + p.getAge());
+                    // å› ä¸ºä¸Šé¢æˆåŠŸè®¾ç½®äº† p çš„ age æˆå‘˜å˜é‡, æ•…æ­¤å¤„è¾“å‡º30
+                    System.out.println("æˆåŠŸè®¾ç½® age çš„æˆå‘˜å˜é‡åŽ: " + p.getAge());
                     
-                    // ²»ÄÜÖ±½Ó²Ù×÷ p µÄ name  ³ÉÔ±±äÁ¿, Ö»ÄÜÍ¨¹ýÆä¶ÔÓ¦µÄ setter ·½·¨ 
-                    // ÒòÎª "Àî¸Õ" ×Ö·û´®µÄ³¤¶ÈÂú×ã2~6, ËùÒÔ¿ÉÒÔ³É¹¦ÉèÖÃ
-                    p.setName("Àî¸Õ");
-                    System.out.println("³É¹¦ÉèÖÃ name µÄ³ÉÔ±±äÁ¿ºó: " + p.getName());
+                    // ä¸èƒ½ç›´æŽ¥æ“ä½œ p çš„ name  æˆå‘˜å˜é‡, åªèƒ½é€šè¿‡å…¶å¯¹åº”çš„ setter æ–¹æ³• 
+                    // å› ä¸º "æŽåˆš" å­—ç¬¦ä¸²çš„é•¿åº¦æ»¡è¶³2~6, æ‰€ä»¥å¯ä»¥æˆåŠŸè®¾ç½®
+                    p.setName("æŽåˆš");
+                    System.out.println("æˆåŠŸè®¾ç½® name çš„æˆå‘˜å˜é‡åŽ: " + p.getName());
                 }
             }
 
-    4.3 package, import ºÍ import static 
-        °ü£¨package£© 
-            °ü(package)»úÖÆ:
-                1. °ü»úÖÆÌá¹©ÁËÀàµÄ¶à²ãÃüÃû¿Õ¼ä, ÓÃÓÚ½â¾öÀàµÄÃüÃû³åÍ», ÀàÎÄ¼þ¹ÜÀíµÈÎÊÌâ.
-                2. JavaÔÊÐí½«Ò»×é¹¦ÄÜÏà¹ØµÄÀà·ÅÔÚÍ¬Ò»¸ö package ÏÂ, ´Ó¶ø×é³ÉÂß¼­ÉÏµÄÀà¿âµ¥Ôª
-                3. Î»ÓÚ°üÖÐµÄÀà, ÔÚÎÄ¼þÏµÍ³ÖÐÒ²±ØÐëÓÐÓë°üÃû²ã´ÎÏàÍ¬µÄÄ¿Â¼½á¹¹
-                4. JavaÔ´ÎÄ¼þÖÐÊ¹ÓÃÁËpackageÓï¾ä, ÄÇÃ´Ô´ÎÄ¼þÀï¶¨ÒåµÄËùÓÐÀà¶¼ÊôÓÚÕâ¸ö°ü, Î»ÓÚ°üÖÐ
-                    µÄÃ¿¸öÀàµÄÍêÕûÀàÃû¶¼Ó¦¸ÃÊÇ °üÃûºÍÀàÃû µÄ×éºÏ, Èç¹ûÆäËûÈËÐèÒªÊ¹ÓÃ¸Ã°üÏÂµÄÀà, 
-                    Ò²Ó¦¸ÃÊ¹ÓÃ°üÃû¼ÓÀàÃûµÄ×éºÏ
-                5. Ò»¸öJavaÔ´ÎÄ¼þÖ»ÄÜÖ¸¶¨Ò»¸ö°ü, package Óï¾ä±ØÐëÊÇµÚÒ»Ìõ·Ç×¢ÊÍÐÍÓï¾ä
-                6. Í¬Ò»¸ö°üÏÂµÄÀà¿ÉÒÔ×ÔÓÉ·ÃÎÊ, ÎÞÐëÌí¼Ó°üÇ°×º
+    4.3 package, import å’Œ import static 
+        åŒ…ï¼ˆpackageï¼‰ 
+            åŒ…(package)æœºåˆ¶:
+                1. åŒ…æœºåˆ¶æä¾›äº†ç±»çš„å¤šå±‚å‘½åç©ºé—´, ç”¨äºŽè§£å†³ç±»çš„å‘½åå†²çª, ç±»æ–‡ä»¶ç®¡ç†ç­‰é—®é¢˜.
+                2. Javaå…è®¸å°†ä¸€ç»„åŠŸèƒ½ç›¸å…³çš„ç±»æ”¾åœ¨åŒä¸€ä¸ª package ä¸‹, ä»Žè€Œç»„æˆé€»è¾‘ä¸Šçš„ç±»åº“å•å…ƒ
+                3. ä½äºŽåŒ…ä¸­çš„ç±», åœ¨æ–‡ä»¶ç³»ç»Ÿä¸­ä¹Ÿå¿…é¡»æœ‰ä¸ŽåŒ…åå±‚æ¬¡ç›¸åŒçš„ç›®å½•ç»“æž„
+                4. Javaæºæ–‡ä»¶ä¸­ä½¿ç”¨äº†packageè¯­å¥, é‚£ä¹ˆæºæ–‡ä»¶é‡Œå®šä¹‰çš„æ‰€æœ‰ç±»éƒ½å±žäºŽè¿™ä¸ªåŒ…, ä½äºŽåŒ…ä¸­
+                    çš„æ¯ä¸ªç±»çš„å®Œæ•´ç±»åéƒ½åº”è¯¥æ˜¯ åŒ…åå’Œç±»å çš„ç»„åˆ, å¦‚æžœå…¶ä»–äººéœ€è¦ä½¿ç”¨è¯¥åŒ…ä¸‹çš„ç±», 
+                    ä¹Ÿåº”è¯¥ä½¿ç”¨åŒ…ååŠ ç±»åçš„ç»„åˆ
+                5. ä¸€ä¸ªJavaæºæ–‡ä»¶åªèƒ½æŒ‡å®šä¸€ä¸ªåŒ…, package è¯­å¥å¿…é¡»æ˜¯ç¬¬ä¸€æ¡éžæ³¨é‡Šåž‹è¯­å¥
+                6. åŒä¸€ä¸ªåŒ…ä¸‹çš„ç±»å¯ä»¥è‡ªç”±è®¿é—®, æ— é¡»æ·»åŠ åŒ…å‰ç¼€
                 
-            °üµÄÒýÈëÓï·¨:
+            åŒ…çš„å¼•å…¥è¯­æ³•:
                 package packageName;
                 
-            Àý×Ó1: ¼òµ¥µÄÒýÈë°üÀý×Ó
+            ä¾‹å­1: ç®€å•çš„å¼•å…¥åŒ…ä¾‹å­
                 package lee;
                 public class Hello
                 {
@@ -933,17 +933,17 @@
                     }
                 }
                 
-                ËµÃ÷:
-                    1. Ö´ÐÐ " javac -d . hello.java " ÃüÁî, »áÔÚµ±Ç°µÄÄ¿Â¼ÏÂÉú³ÉÒ»¸öleeÎÄ¼þ¼Ð, ±à
-                        ÒëºóµÄ hello.class ÎÄ¼þ¾ÍÔÚ lee µÄÕâ¸öÄ¿Â¼ÖÐ, ¶øÇÒ Ò²±ØÐëÔÚÕâ¸ö lee Ä¿Â¼ÏÂ
-                        ²ÅÓÐÐ§
-                    2. ÔÚ lee ÎÄ¼þ¼ÐËùÔÚÄ¿Â¼Ö´ÐÐ: " java lee.hello " ÃüÁîÖ´ÐÐ³ÌÐò
-                    3. Í¬Ò»¸ö°üÖÐµÄÀà²»±ØÎ»ÓÚÏàÍ¬µÄÄ¿Â¼ÏÂ, Ö»Òª½«Â·¾¶Ìí¼Óµ½ CLASSPATH »·¾³±äÁ¿Àï¾ÍÐÐ
-                    4. java µÄÔ´ÎÄ¼þÓ¦·ÅÔÚÓë°üÃûÒ»ÖÂµÄÄ¿Â¼½á¹¹ÏÂ
-                    5. ÔÚÍ¬Ò»¸ö°üµÄ×Ó°üÖÐµÄÀà, (¾ÍÊÇ²»ÔÙµ±Ç°Ä¿Â¼Ê±), ÒýÈëÀàÐèÒªÌí¼ÓÀàÇ°×º: ¸¸°ü.×Ó°ü.Àà 
+                è¯´æ˜Ž:
+                    1. æ‰§è¡Œ " javac -d . hello.java " å‘½ä»¤, ä¼šåœ¨å½“å‰çš„ç›®å½•ä¸‹ç”Ÿæˆä¸€ä¸ªleeæ–‡ä»¶å¤¹, ç¼–
+                        è¯‘åŽçš„ hello.class æ–‡ä»¶å°±åœ¨ lee çš„è¿™ä¸ªç›®å½•ä¸­, è€Œä¸” ä¹Ÿå¿…é¡»åœ¨è¿™ä¸ª lee ç›®å½•ä¸‹
+                        æ‰æœ‰æ•ˆ
+                    2. åœ¨ lee æ–‡ä»¶å¤¹æ‰€åœ¨ç›®å½•æ‰§è¡Œ: " java lee.hello " å‘½ä»¤æ‰§è¡Œç¨‹åº
+                    3. åŒä¸€ä¸ªåŒ…ä¸­çš„ç±»ä¸å¿…ä½äºŽç›¸åŒçš„ç›®å½•ä¸‹, åªè¦å°†è·¯å¾„æ·»åŠ åˆ° CLASSPATH çŽ¯å¢ƒå˜é‡é‡Œå°±è¡Œ
+                    4. java çš„æºæ–‡ä»¶åº”æ”¾åœ¨ä¸ŽåŒ…åä¸€è‡´çš„ç›®å½•ç»“æž„ä¸‹
+                    5. åœ¨åŒä¸€ä¸ªåŒ…çš„å­åŒ…ä¸­çš„ç±», (å°±æ˜¯ä¸å†å½“å‰ç›®å½•æ—¶), å¼•å…¥ç±»éœ€è¦æ·»åŠ ç±»å‰ç¼€: çˆ¶åŒ….å­åŒ….ç±» 
                 
-            Àý×Ó2: 
-                // ÔÚlee°üÏÂÃæÔÙ¶¨ÒåÒ»¸ösub×Ó°ü, ¶¨ÒåÒ»¸öAppleÀà, 
+            ä¾‹å­2: 
+                // åœ¨leeåŒ…ä¸‹é¢å†å®šä¹‰ä¸€ä¸ªsubå­åŒ…, å®šä¹‰ä¸€ä¸ªAppleç±», 
                 package lee.sub;
                 public class Apple{
                     public static void main(String[] args)
@@ -952,65 +952,65 @@
                     }
                 }
 
-            Àý×Ó3:
-                // ¶¨ÒåHelloTest ²âÊÔHello Àà
+            ä¾‹å­3:
+                // å®šä¹‰HelloTest æµ‹è¯•Hello ç±»
                 package lee;
                 public class HelloTest{
                     public static void main(String[] args){
-                        // Ö±½Ó·ÃÎÊÏàÍ¬°üÏÂÃæµÄÁíÒ»¸öÀà, ÎÞÐèÊ¹ÓÃ°üÇ°×º(lee.Hello())
+                        // ç›´æŽ¥è®¿é—®ç›¸åŒåŒ…ä¸‹é¢çš„å¦ä¸€ä¸ªç±», æ— éœ€ä½¿ç”¨åŒ…å‰ç¼€(lee.Hello())
                         Hello h = new Hello();
                         
-                        // µ÷ÓÃ°üÖÐ°ü(Ç¶Ì×°ü)ÏÂÃæµÄÀàÊ±, ¾ÍÐèÒªÌí¼Ó°üÇ°×º
+                        // è°ƒç”¨åŒ…ä¸­åŒ…(åµŒå¥—åŒ…)ä¸‹é¢çš„ç±»æ—¶, å°±éœ€è¦æ·»åŠ åŒ…å‰ç¼€
                         lee.sub.Apple a = new lee.sub.Apple();
                         
                     }
                 }
 
 
-        import ¹Ø¼ü×Ö
-            ËµÃ÷: 
-                1. import¿ÉÒÔÏòÄ³¸öJavaÎÄ¼þµ¼ÈëÖ¸¶¨°ü²ã´ÎÏÂÄ³¸öÀà»òÈ«²¿Àà
-                2. import Óï¾äÓ¦¸Ã·ÅÔÚ package Óï¾äÖ®ºó, Àà¶¨ÒåÖ®Ç°
-                3. ×÷ÓÃ: Ê¹ÓÃ import ¿ÉÒÔÊ¡ÂÔÐ´°üÃû
+        import å…³é”®å­—
+            è¯´æ˜Ž: 
+                1. importå¯ä»¥å‘æŸä¸ªJavaæ–‡ä»¶å¯¼å…¥æŒ‡å®šåŒ…å±‚æ¬¡ä¸‹æŸä¸ªç±»æˆ–å…¨éƒ¨ç±»
+                2. import è¯­å¥åº”è¯¥æ”¾åœ¨ package è¯­å¥ä¹‹åŽ, ç±»å®šä¹‰ä¹‹å‰
+                3. ä½œç”¨: ä½¿ç”¨ import å¯ä»¥çœç•¥å†™åŒ…å
             
-            import ÓÃ·¨:
-                1. µ¼Èëµ¥¸öÀà
+            import ç”¨æ³•:
+                1. å¯¼å…¥å•ä¸ªç±»
                     import package.subpackage...className;
-                    Èç: import lee.sub.Apple;
-                2. µ¼Èë°üÏÂµÄÈ«²¿Àà
+                    å¦‚: import lee.sub.Apple;
+                2. å¯¼å…¥åŒ…ä¸‹çš„å…¨éƒ¨ç±»
                     import package.subpackage...*;
                     
-            Àý×Ó: 
-                // ¸ÄÐ´ÉÏÃæµÄÀý×Ó3; Ê¹ÓÃimport Óï¾ä¿ÉÒÔ¼ò»¯±à³Ì
+            ä¾‹å­: 
+                // æ”¹å†™ä¸Šé¢çš„ä¾‹å­3; ä½¿ç”¨import è¯­å¥å¯ä»¥ç®€åŒ–ç¼–ç¨‹
                 package lee;
-                // Ê¹ÓÃ import µ¼Èë lee.sub.Apple Àà 
+                // ä½¿ç”¨ import å¯¼å…¥ lee.sub.Apple ç±» 
                 import lee.sub.Apple;
                 public class Hellotest
                 {
                     pubic static void main(String[] args)
                     {
-                        // Ê¹ÓÃÀàÈ«ÃæÐ´·¨
+                        // ä½¿ç”¨ç±»å…¨é¢å†™æ³•
                         lee.sub.Apple a = new lee.sub.Apple();
                         
-                        // Èç¹ûÊ¹ÓÃ import Óï¾äÀ´µ¼Èë Apple Àà, ¾Í¿ÉÒÔ²»ÔÙÊ¹ÓÃÀàÈ«ÃûÁË
+                        // å¦‚æžœä½¿ç”¨ import è¯­å¥æ¥å¯¼å…¥ Apple ç±», å°±å¯ä»¥ä¸å†ä½¿ç”¨ç±»å…¨åäº†
                         Apple a = new Apple();
                     }
                 }
 
-        import static ¾²Ì¬µ¼Èë:
-            ËµÃ÷:
-                1. ÓÃÓÚµ¼ÈëÖ¸¶¨ÀàµÄÄ³¸ö¾²Ì¬³ÉÔ±±äÁ¿, ·½·¨»òÈ«²¿¾²Ì¬³ÉÔ±±äÁ¿¼°·½·¨
-                2. import static Óï¾äÓ¦¸Ã·ÅÔÚ package Óï¾äÖ®ºó, Àà¶¨ÒåÖ®Ç°, ºÍ import Óï¾äÏàÍ¬Î»ÖÃ
-                3. ¾²Ì¬³ÉÔ±±äÁ¿¾ÍÊÇÇ°ÃæÑ§¹ýµÄÀà±äÁ¿, Àà·½·¨, ËûÃÇ¶¼Ê¹ÓÃ static ÐÞÊÎ 
-                4. Ê¹ÓÃ import static Ôò¿ÉÒÔÁ¬ÀàÃû¶¼Ê¡ÂÔ
+        import static é™æ€å¯¼å…¥:
+            è¯´æ˜Ž:
+                1. ç”¨äºŽå¯¼å…¥æŒ‡å®šç±»çš„æŸä¸ªé™æ€æˆå‘˜å˜é‡, æ–¹æ³•æˆ–å…¨éƒ¨é™æ€æˆå‘˜å˜é‡åŠæ–¹æ³•
+                2. import static è¯­å¥åº”è¯¥æ”¾åœ¨ package è¯­å¥ä¹‹åŽ, ç±»å®šä¹‰ä¹‹å‰, å’Œ import è¯­å¥ç›¸åŒä½ç½®
+                3. é™æ€æˆå‘˜å˜é‡å°±æ˜¯å‰é¢å­¦è¿‡çš„ç±»å˜é‡, ç±»æ–¹æ³•, ä»–ä»¬éƒ½ä½¿ç”¨ static ä¿®é¥° 
+                4. ä½¿ç”¨ import static åˆ™å¯ä»¥è¿žç±»åéƒ½çœç•¥
                 
-            µ¼ÈëÓï·¨:
-                1. µ¼ÈëÖ¸¶¨ÀàµÄµ¥¸ö³ÉÔ±±äÁ¿, ·½·¨
+            å¯¼å…¥è¯­æ³•:
+                1. å¯¼å…¥æŒ‡å®šç±»çš„å•ä¸ªæˆå‘˜å˜é‡, æ–¹æ³•
                     import static package.subpackage...ClassName.fieldName|methodname
-                    ÀýÈç: import static java.lang.System.out;
-                2. µ¼ÈëÖ¸¶¨ÀàµÄÈ«²¿³ÉÔ±±äÁ¿, ·½·¨
+                    ä¾‹å¦‚: import static java.lang.System.out;
+                2. å¯¼å…¥æŒ‡å®šç±»çš„å…¨éƒ¨æˆå‘˜å˜é‡, æ–¹æ³•
                     import static package.subpackage...ClassName.*;
-            Àý×Ó:
+            ä¾‹å­:
                 import static java.lang.System.*;
                 import static java.lang.Math.*;
                 
@@ -1018,117 +1018,117 @@
                 {
                     public static void main(String[] args)
                     {
-                        // out ÊÇ java.lang.System ÀàµÄ¾²Ì¬³ÉÔ±±äÁ¿, ´ú±í±ê×¼Êä³ö
-                        // PI ÊÇ java.lang.Math ÀàµÄ¾²Ì¬³ÉÔ±±äÁ¿, ´ú±í¦Ð³£Á¿
+                        // out æ˜¯ java.lang.System ç±»çš„é™æ€æˆå‘˜å˜é‡, ä»£è¡¨æ ‡å‡†è¾“å‡º
+                        // PI æ˜¯ java.lang.Math ç±»çš„é™æ€æˆå‘˜å˜é‡, ä»£è¡¨Ï€å¸¸é‡
                         out.println(PI);
-                        // Ö±½Óµ÷ÓÃ Math ÀàµÄ aqrt ¾²Ì¬·½·¨
+                        // ç›´æŽ¥è°ƒç”¨ Math ç±»çš„ aqrt é™æ€æ–¹æ³•
                         out.println(sqrt(356));
                     }
                 }
 
-            Java Ô´ÎÄ¼þ½á¹¹:
-                // 0 ¸ö»ò 1¸ö, ±ØÐë·ÅÔÚÎÄ¼þ¿ªÊ¼
-                package Óï¾ä 
+            Java æºæ–‡ä»¶ç»“æž„:
+                // 0 ä¸ªæˆ– 1ä¸ª, å¿…é¡»æ”¾åœ¨æ–‡ä»¶å¼€å§‹
+                package è¯­å¥ 
                 
-                // 0 ¸ö»ò¶à¸ö, ±ØÐë·ÅÔÚÀà¶¨ÒåÖ®Ç°
-                import | import static Óï¾ä 
+                // 0 ä¸ªæˆ–å¤šä¸ª, å¿…é¡»æ”¾åœ¨ç±»å®šä¹‰ä¹‹å‰
+                import | import static è¯­å¥ 
                 
-                // 0 ¸ö»ò1¸öpublicÀà, ½è¿Ú»òÃ¶¾Ù¶¨Òå
+                // 0 ä¸ªæˆ–1ä¸ªpublicç±», å€Ÿå£æˆ–æžšä¸¾å®šä¹‰
                 public ClassDefinition | interfaceDefinition | enumDefinotion
                 
-                // 0 ¸ö»ò¶à¸öÆÕÍ¨Àà, ½è¿Ú»òÃ¶¾Ù¶¨Òå 
+                // 0 ä¸ªæˆ–å¤šä¸ªæ™®é€šç±», å€Ÿå£æˆ–æžšä¸¾å®šä¹‰ 
                 classDefinition | interfaceDefinition | enumDefinotion
 
-    4.4 Java µÄ³£ÓÃ°ü
-        Î»ÖÃ:
-            1. JavaµÄºËÐÄÀà¶¼·ÅÔÚJava°üÒÔ¼°Æä×Ó°üÏÂ, JavaÀ©Õ¹µÄÐí¶àÀà·ÅÔÚ Javax °üÒÔ¼°Æä×Ó°üÏÂ, ÕâÐ©
-                Ê¹ÓÃÀàÒ²¾ÍÊÇAPI(Ó¦ÓÃ³ÌÐò½Ó¿Ú)
+    4.4 Java çš„å¸¸ç”¨åŒ…
+        ä½ç½®:
+            1. Javaçš„æ ¸å¿ƒç±»éƒ½æ”¾åœ¨JavaåŒ…ä»¥åŠå…¶å­åŒ…ä¸‹, Javaæ‰©å±•çš„è®¸å¤šç±»æ”¾åœ¨ Javax åŒ…ä»¥åŠå…¶å­åŒ…ä¸‹, è¿™äº›
+                ä½¿ç”¨ç±»ä¹Ÿå°±æ˜¯API(åº”ç”¨ç¨‹åºæŽ¥å£)
         
-        ³£ÓÃ°ü:
+        å¸¸ç”¨åŒ…:
             1. java.lang 
-                Õâ¸ö°üÏÂ°üº¬ÁËJavaÓïÑÔµÄºËÐÄÀà, Èç String, Math, System ºÍ ThreadÀàµÈ, Õâ¸ö°üÏÂµÄÀà
-                ÎÞÐëÊ¹ÓÃimportÓï¾äµ¼Èë, ÏµÍ³»áÖ÷¶¯µ¼ÈëÕâ¸ö°üÏÂµÄËùÓÐÀà
+                è¿™ä¸ªåŒ…ä¸‹åŒ…å«äº†Javaè¯­è¨€çš„æ ¸å¿ƒç±», å¦‚ String, Math, System å’Œ Threadç±»ç­‰, è¿™ä¸ªåŒ…ä¸‹çš„ç±»
+                æ— é¡»ä½¿ç”¨importè¯­å¥å¯¼å…¥, ç³»ç»Ÿä¼šä¸»åŠ¨å¯¼å…¥è¿™ä¸ªåŒ…ä¸‹çš„æ‰€æœ‰ç±»
             
             2. java.util
-                Õâ¸ö°üÏÂ°üº¬ÁËJavaµÄ´óÁ¿¹¤¾ßÀà/½Ó¿ÚºÍ¼¯ºÏ¿ò¼ÜÀà/½Ó¿Ú, ÀýÈç: Arrays, List, SetµÈ
+                è¿™ä¸ªåŒ…ä¸‹åŒ…å«äº†Javaçš„å¤§é‡å·¥å…·ç±»/æŽ¥å£å’Œé›†åˆæ¡†æž¶ç±»/æŽ¥å£, ä¾‹å¦‚: Arrays, List, Setç­‰
             
             3. java.net
-                °üº¬Ò»Ð©JavaÍøÂç±à³ÌÏà¹ØµÄÀà/½Ó¿Ú
+                åŒ…å«ä¸€äº›Javaç½‘ç»œç¼–ç¨‹ç›¸å…³çš„ç±»/æŽ¥å£
                
             4. java.io
-                °üº¬ÁËÒ»Ð©JavaÊäÈë/Êä³ö±à³ÌÏà¹ØµÄÀà/½Ó¿Ú 
+                åŒ…å«äº†ä¸€äº›Javaè¾“å…¥/è¾“å‡ºç¼–ç¨‹ç›¸å…³çš„ç±»/æŽ¥å£ 
             
             5. java.text
-                °üº¬ÁËJava¸ñÊ½»¯µÄÏà¹ØµÄÀà
+                åŒ…å«äº†Javaæ ¼å¼åŒ–çš„ç›¸å…³çš„ç±»
                 
             6. java.sql
-                °üº¬ÁËJava½øÐÐJDBCÊý¾Ý¿â±à³ÌÏà¹ØÀà/½Ó¿Ú 
+                åŒ…å«äº†Javaè¿›è¡ŒJDBCæ•°æ®åº“ç¼–ç¨‹ç›¸å…³ç±»/æŽ¥å£ 
             
             7. java.awt
-                °üº¬ÁË³éÏó´°¿Ú¹¤¾ß¼¯(Abstract Window toolkits) µÄÏà¹ØÀà/½Ó¿Ú, Õâ¸öÀàÖ÷ÒªÓÃÓÚ¹¹½¨Í¼ÐÎ
-                ÓÃ»§½çÃæ(GUI)³ÌÐò 
+                åŒ…å«äº†æŠ½è±¡çª—å£å·¥å…·é›†(Abstract Window toolkits) çš„ç›¸å…³ç±»/æŽ¥å£, è¿™ä¸ªç±»ä¸»è¦ç”¨äºŽæž„å»ºå›¾å½¢
+                ç”¨æˆ·ç•Œé¢(GUI)ç¨‹åº 
             
             8. java.swing 
-                Õâ¸ö°üº¬ÁËSwing Í¼ÐÎÓÃ»§½çÃæ±à³ÌµÄÏà¹ØÀà/½Ó¿Ú. ÕâÐ©Àà¿ÉÓÃÓÚ¹¹½¨Æ½Ì¨ÎÞ¹ØµÄGUI³ÌÐò
+                è¿™ä¸ªåŒ…å«äº†Swing å›¾å½¢ç”¨æˆ·ç•Œé¢ç¼–ç¨‹çš„ç›¸å…³ç±»/æŽ¥å£. è¿™äº›ç±»å¯ç”¨äºŽæž„å»ºå¹³å°æ— å…³çš„GUIç¨‹åº
                 
 
-5. ÉîÈëÀí½â¹¹ÔìÆ÷
-    5.1 Ê¹ÓÃ¹¹ÔìÆ÷Ö´ÐÐ³õÊ¼»¯
-        ËµÃ÷:
-            1. ¹¹ÔìÆ÷ÈÃÏµÍ³´´½¨¶ÔÏóÊ±¾ÍÎª¸Ã¶ÔÏóµÄÊµÀý±äÁ¿ÏÔÊ½µÄÖ¸¶¨³õÊ¼Öµ
-            2. Í¨¹ý new ¹Ø¼ü×Öµ÷ÓÃ¹¹ÔìÆ÷Ê±, ¹¹ÔìÆ÷Ò²È·Êµ·µ»ØÁË¸ÃÀàµÄ¶ÔÏó, µ«ÊÇÕâ¸ö¶ÔÏó²¢²»ÊÇÍêÈ«ÓÉ
-               ¹¹ÔìÆ÷¸ºÔð´´½¨µÄ; µ÷ÓÃ¹¹ÔìÆ÷Ê±, ÏµÍ³»áÏÈÎª¸Ã¶ÔÏó·ÖÅäÄÚ´æ¿Õ¼ä, ²¢ÎªÕâ¸ö¶ÔÏóÖ´ÐÐÄ¬ÈÏ
-               ³õÊ¼»¯(¶¯Ì¬Êý×éÄ¬ÈÏ¸³ÖµÒ»Ñù), Õâ¸ö¶ÔÏóÒÑ¾­²úÉúÁË---ÕâÐ©²Ù×÷ÔÚ¹¹ÔìÆ÷Ö´ÐÐÖ®Ç°¾ÍÒÑ¾­Íê
-               ³ÉÁË; 
-            3. µ±ÏµÍ³¿ªÊ¼Ö´ÐÐ¹¹ÔìÆ÷µÄÖ´ÐÐÌåÖ®Ç°, ÏµÍ³ÒÑ¾­´´½¨ÁËÒ»¸ö¶ÔÏó, Ö»ÊÇÕâ¸ö¶ÔÏó»¹²»ÄÜ±»Íâ²¿·Ã
-               ÎÊ, Ö»ÄÜÔÚ¸Ã¹¹ÔìÆ÷ÖÐÍ¨¹ý this À´ÒýÓÃ. µ±¹¹ÔìÆ÷µÄÖ´ÐÐÌåÖ´ÐÐ½áÊøºó, Õâ¸ö¶ÔÏó×÷Îª¹¹ÔìÆ÷
-               µÄ·µ»ØÖµ±»·µ»Ø, Í¨³£»¹»á¸³¸øÁíÒ»¸öÒýÓÃÀàÐÍµÄ±äÁ¿, ´Ó¶øÈÃÍâ²¿³ÌÐò¿ÉÒÔ·ÃÎÊ¸Ã¶ÔÏó
-            4. Ò»µ©³ÌÐòÔ±×Ô¶¨ÒåÁË¹¹ÔìÆ÷, ÏµÍ³¾Í²»ÔÙÌá¹©Ä¬ÈÏµÄ¹¹ÔìÆ÷
-            5. Í¨³£¹¹ÔìÆ÷Ê¹ÓÃ public ÐÞÊÎ, ÔÊÐíÏµÍ³ÖÐÈÎºÎÎ»ÖÃµÄÀàÀ´´´½¨¸ÃÀàµÄ¶ÔÏó; protected ÐÞÊÎÖ÷
-                ÒªÓÃÓÚ±»Æä×ÓÀàµ÷ÓÃ; private ÐÞÊÎÓÃÓÚ×èÖ¹ÆäËûÀà´´½¨¸ÃÀàµÄÊµÀý
-        Àý×Ó:
+5. æ·±å…¥ç†è§£æž„é€ å™¨
+    5.1 ä½¿ç”¨æž„é€ å™¨æ‰§è¡Œåˆå§‹åŒ–
+        è¯´æ˜Ž:
+            1. æž„é€ å™¨è®©ç³»ç»Ÿåˆ›å»ºå¯¹è±¡æ—¶å°±ä¸ºè¯¥å¯¹è±¡çš„å®žä¾‹å˜é‡æ˜¾å¼çš„æŒ‡å®šåˆå§‹å€¼
+            2. é€šè¿‡ new å…³é”®å­—è°ƒç”¨æž„é€ å™¨æ—¶, æž„é€ å™¨ä¹Ÿç¡®å®žè¿”å›žäº†è¯¥ç±»çš„å¯¹è±¡, ä½†æ˜¯è¿™ä¸ªå¯¹è±¡å¹¶ä¸æ˜¯å®Œå…¨ç”±
+               æž„é€ å™¨è´Ÿè´£åˆ›å»ºçš„; è°ƒç”¨æž„é€ å™¨æ—¶, ç³»ç»Ÿä¼šå…ˆä¸ºè¯¥å¯¹è±¡åˆ†é…å†…å­˜ç©ºé—´, å¹¶ä¸ºè¿™ä¸ªå¯¹è±¡æ‰§è¡Œé»˜è®¤
+               åˆå§‹åŒ–(åŠ¨æ€æ•°ç»„é»˜è®¤èµ‹å€¼ä¸€æ ·), è¿™ä¸ªå¯¹è±¡å·²ç»äº§ç”Ÿäº†---è¿™äº›æ“ä½œåœ¨æž„é€ å™¨æ‰§è¡Œä¹‹å‰å°±å·²ç»å®Œ
+               æˆäº†; 
+            3. å½“ç³»ç»Ÿå¼€å§‹æ‰§è¡Œæž„é€ å™¨çš„æ‰§è¡Œä½“ä¹‹å‰, ç³»ç»Ÿå·²ç»åˆ›å»ºäº†ä¸€ä¸ªå¯¹è±¡, åªæ˜¯è¿™ä¸ªå¯¹è±¡è¿˜ä¸èƒ½è¢«å¤–éƒ¨è®¿
+               é—®, åªèƒ½åœ¨è¯¥æž„é€ å™¨ä¸­é€šè¿‡ this æ¥å¼•ç”¨. å½“æž„é€ å™¨çš„æ‰§è¡Œä½“æ‰§è¡Œç»“æŸåŽ, è¿™ä¸ªå¯¹è±¡ä½œä¸ºæž„é€ å™¨
+               çš„è¿”å›žå€¼è¢«è¿”å›ž, é€šå¸¸è¿˜ä¼šèµ‹ç»™å¦ä¸€ä¸ªå¼•ç”¨ç±»åž‹çš„å˜é‡, ä»Žè€Œè®©å¤–éƒ¨ç¨‹åºå¯ä»¥è®¿é—®è¯¥å¯¹è±¡
+            4. ä¸€æ—¦ç¨‹åºå‘˜è‡ªå®šä¹‰äº†æž„é€ å™¨, ç³»ç»Ÿå°±ä¸å†æä¾›é»˜è®¤çš„æž„é€ å™¨
+            5. é€šå¸¸æž„é€ å™¨ä½¿ç”¨ public ä¿®é¥°, å…è®¸ç³»ç»Ÿä¸­ä»»ä½•ä½ç½®çš„ç±»æ¥åˆ›å»ºè¯¥ç±»çš„å¯¹è±¡; protected ä¿®é¥°ä¸»
+                è¦ç”¨äºŽè¢«å…¶å­ç±»è°ƒç”¨; private ä¿®é¥°ç”¨äºŽé˜»æ­¢å…¶ä»–ç±»åˆ›å»ºè¯¥ç±»çš„å®žä¾‹
+        ä¾‹å­:
             public class ConstructorTest
             {
                 public String name;
                 public int count;
-                //Ìá¹©×Ô¶¨ÒåµÄ¹¹ÔìÆ÷, °üº¬Á½¸ö²ÎÊý
+                //æä¾›è‡ªå®šä¹‰çš„æž„é€ å™¨, åŒ…å«ä¸¤ä¸ªå‚æ•°
                 Public ConstructorTest(String name, int count)
                 {
-                    // ¹¹ÔìÆ÷ÀïµÄ this ´ú±íËü½øÐÐ³õÊ¼»¯µÄ¶ÔÏó
-                    // ÏÂÃæÁ½ÐÐ´úÂë½«´«ÈëµÄ2¸ö²ÎÊý¸³¸ø this ´ú±í¶ÔÏóµÄ name ºÍ count ÊµÀý±äÁ¿ 
+                    // æž„é€ å™¨é‡Œçš„ this ä»£è¡¨å®ƒè¿›è¡Œåˆå§‹åŒ–çš„å¯¹è±¡
+                    // ä¸‹é¢ä¸¤è¡Œä»£ç å°†ä¼ å…¥çš„2ä¸ªå‚æ•°èµ‹ç»™ this ä»£è¡¨å¯¹è±¡çš„ name å’Œ count å®žä¾‹å˜é‡ 
                     this.name = name;
                     this.count = count;
                 }
                 public static void main(String[] args)
                 {
-                    // Ê¹ÓÃÏµÍ³×Ô¶¨ÒåµÄ¹¹ÔìÆ÷À´´´½¨¶ÔÏó
-                    // ÏµÍ³½«»á¶Ô¸Ã¶ÔÏóÖ´ÐÐ×Ô¶¨ÒåµÄ³õÊ¼»¯
+                    // ä½¿ç”¨ç³»ç»Ÿè‡ªå®šä¹‰çš„æž„é€ å™¨æ¥åˆ›å»ºå¯¹è±¡
+                    // ç³»ç»Ÿå°†ä¼šå¯¹è¯¥å¯¹è±¡æ‰§è¡Œè‡ªå®šä¹‰çš„åˆå§‹åŒ–
                     ConstructorTest tc = new ConstructorTest("jefxff", 29);
-                    // Êä³ö ConstructorTest ¶ÔÏóµÄ name ºÍ count Á½¸öÊµÀý±äÁ¿
+                    // è¾“å‡º ConstructorTest å¯¹è±¡çš„ name å’Œ count ä¸¤ä¸ªå®žä¾‹å˜é‡
                     System.out.println(tc.name);
                     System.out.println(tc.count);
                 }
             }
                 
-    5.2 ¹¹ÔìÆ÷µÄÖØÔØ
-        ËµÃ÷:
-            1. Í¬Ò»¸öÀàÀï¾ßÓÐ¶à¸ö¹¹ÔìÆ÷, ¶à¸ö¹¹ÔìÆ÷µÄÐÎ²ÎÁÐ±í²»Í¬, ¼´±»³ÆÖ®Îª¹¹ÔìÆ÷µÄÖØÔØ.
-            2. ¹¹ÔìÆ÷ÖØÔØÔÊÐíJavaÀàÀï°üº¬¶à¸ö³õÊ¼»¯Âß¼­, ´Ó¶øÔÊÐíÊ¹ÓÃ²»Í¬µÄ¹¹ÔìÆ÷À´³õÊ¼»¯Java¶ÔÏó
-            3. Ê¹ÓÃ this µ÷ÓÃÁíÍâÒ»¸öÖØÔØµÄ¹¹ÔìÆ÷Ö»ÄÜÔÚ¹¹ÔìÆ÷ÖÐÊ¹ÓÃ,¶øÇÒ±ØÐë×÷Îª¹¹ÔìÆ÷Ö´ÐÐÌåµÄµÚÒ»
-               ÌõÓï¾ä. Ê¹ÓÃ this µ÷ÓÃÖØÔØµÄ¹¹ÔìÆ÷Ê±, ÏµÍ³»á¸ù¾Ý this ºóÀ¨ºÅÀïÃæµÄÊµ²ÎÀ´µ÷ÓÃÐÎ²ÎÁÐ
-               ±íÓëÖ®¶ÔÓ¦µÄ¹¹ÔìÆ÷
+    5.2 æž„é€ å™¨çš„é‡è½½
+        è¯´æ˜Ž:
+            1. åŒä¸€ä¸ªç±»é‡Œå…·æœ‰å¤šä¸ªæž„é€ å™¨, å¤šä¸ªæž„é€ å™¨çš„å½¢å‚åˆ—è¡¨ä¸åŒ, å³è¢«ç§°ä¹‹ä¸ºæž„é€ å™¨çš„é‡è½½.
+            2. æž„é€ å™¨é‡è½½å…è®¸Javaç±»é‡ŒåŒ…å«å¤šä¸ªåˆå§‹åŒ–é€»è¾‘, ä»Žè€Œå…è®¸ä½¿ç”¨ä¸åŒçš„æž„é€ å™¨æ¥åˆå§‹åŒ–Javaå¯¹è±¡
+            3. ä½¿ç”¨ this è°ƒç”¨å¦å¤–ä¸€ä¸ªé‡è½½çš„æž„é€ å™¨åªèƒ½åœ¨æž„é€ å™¨ä¸­ä½¿ç”¨,è€Œä¸”å¿…é¡»ä½œä¸ºæž„é€ å™¨æ‰§è¡Œä½“çš„ç¬¬ä¸€
+               æ¡è¯­å¥. ä½¿ç”¨ this è°ƒç”¨é‡è½½çš„æž„é€ å™¨æ—¶, ç³»ç»Ÿä¼šæ ¹æ® this åŽæ‹¬å·é‡Œé¢çš„å®žå‚æ¥è°ƒç”¨å½¢å‚åˆ—
+               è¡¨ä¸Žä¹‹å¯¹åº”çš„æž„é€ å™¨
             
-        Àý×Ó1: ¹¹ÔìÆ÷µÄÖØÔØ 
+        ä¾‹å­1: æž„é€ å™¨çš„é‡è½½ 
             public class ConstructorOverlaod
             {
                 public String name;
                 public int count;
 
-                // Ìá¹©ÎÞ²ÎÊýµÄ¹¹ÔìÆ÷
+                // æä¾›æ— å‚æ•°çš„æž„é€ å™¨
                 public ConstructorOverlaod(){}
 
-                // Ìá¹©Á½¸ö²ÎÊýµÄ¹¹ÔìÆ÷
-                // ¶Ô¸Ã¹¹ÔìÆ÷·µ»ØµÄ¶ÔÏóÖ´ÐÐ³õÊ¼»¯
+                // æä¾›ä¸¤ä¸ªå‚æ•°çš„æž„é€ å™¨
+                // å¯¹è¯¥æž„é€ å™¨è¿”å›žçš„å¯¹è±¡æ‰§è¡Œåˆå§‹åŒ–
                 public ConstructorOverlaod(String name, int count)
                 {
                     this.name = name;
@@ -1136,9 +1136,9 @@
                 }
                 public static void main(String[] args)
                 {
-                    // Í¨¹ýÎÞ²ÎÊý¹¹ÔìÆ÷´´½¨ConstructorOverlaod¶ÔÏó
+                    // é€šè¿‡æ— å‚æ•°æž„é€ å™¨åˆ›å»ºConstructorOverlaodå¯¹è±¡
                     ConstructorOverlaod oc1 = new ConstructorOverlaod();
-                    // Í¨¹ýÓÐ²ÎÊý¹¹ÔìÆ÷´´½¨ConstructorOverlaod¶ÔÏó
+                    // é€šè¿‡æœ‰å‚æ•°æž„é€ å™¨åˆ›å»ºConstructorOverlaodå¯¹è±¡
                     ConstructorOverlaod oc2 = new ConstructorOverlaod("jefxff", 29);
                     
                     System.out.println(oc1.name + "  " + oc1.count);
@@ -1146,162 +1146,162 @@
                 }
             }
         
-        Àý×Ó2: Ê¹ÓÃ this µ÷ÓÃÁíÍâÒ»¸öÖØÔØµÄ¹¹ÔìÆ÷
+        ä¾‹å­2: ä½¿ç”¨ this è°ƒç”¨å¦å¤–ä¸€ä¸ªé‡è½½çš„æž„é€ å™¨
             public class Apple
             {
                 public String name;
                 public String color;
                 public double weight;
                 
-                // ÎÞ²ÎÊýµÄ¹¹ÔìÆ÷
+                // æ— å‚æ•°çš„æž„é€ å™¨
                 public Apple(){}
-                // Á½²ÎÊýµÄ¹¹ÔìÆ÷
+                // ä¸¤å‚æ•°çš„æž„é€ å™¨
                 public Apple(String name, String color)
                 {
                     this.name = name;
                     this.color = color;
                 }
-                // Èý¸ö²ÎÊýµÄ¹¹ÔìÆ÷
+                // ä¸‰ä¸ªå‚æ•°çš„æž„é€ å™¨
                 public Apple(String name, String color, double weight)
                 {
-                    // Í¨¹ý this µ÷ÓÃÁíÒ»¸öÖØÔØµÄ¹¹ÔìÆ÷µÄ³õÊ¼»¯´úÂë
+                    // é€šè¿‡ this è°ƒç”¨å¦ä¸€ä¸ªé‡è½½çš„æž„é€ å™¨çš„åˆå§‹åŒ–ä»£ç 
                     this(name, color);
-                    // ÏÂÃæ this ÒýÓÃ¸Ã¹¹ÔìÆ÷ÕýÔÚ³õÊ¼»¯µÄ Java ¶ÔÏó
+                    // ä¸‹é¢ this å¼•ç”¨è¯¥æž„é€ å™¨æ­£åœ¨åˆå§‹åŒ–çš„ Java å¯¹è±¡
                     this.weight = weight;
                 }
             }
-            ËµÃ÷:
-                1. ÉÏÃæµÄAppleÀàÀï°üº¬ÁËÈý¸ö¹¹ÔìÆ÷, ÆäÖÐµÚÈý¸ö¹¹ÔìÆ÷Í¨¹ý this À´µ÷ÓÃÁíÒ»¸öÖØÔØ¹¹Ôì
-                    Æ÷µÄ³õÊ¼»¯´úÂë.³ÌÐòÖÐ this(name,color);µ÷ÓÃ±íÃ÷ÓÃ¸ÃÀàÁíÍâÒ»¸ö´øÁ½×Ö·û´®²ÎÊýµÄ
-                    ¹¹ÔìÆ÷.
+            è¯´æ˜Ž:
+                1. ä¸Šé¢çš„Appleç±»é‡ŒåŒ…å«äº†ä¸‰ä¸ªæž„é€ å™¨, å…¶ä¸­ç¬¬ä¸‰ä¸ªæž„é€ å™¨é€šè¿‡ this æ¥è°ƒç”¨å¦ä¸€ä¸ªé‡è½½æž„é€ 
+                    å™¨çš„åˆå§‹åŒ–ä»£ç .ç¨‹åºä¸­ this(name,color);è°ƒç”¨è¡¨æ˜Žç”¨è¯¥ç±»å¦å¤–ä¸€ä¸ªå¸¦ä¸¤å­—ç¬¦ä¸²å‚æ•°çš„
+                    æž„é€ å™¨.
 
 
-6. ÀàµÄ¼Ì³Ð
-    6.1 ¼Ì³ÐµÄÌØµã
-        ÌØµã£º
-            1. JavaµÄ¼Ì³ÐÍ¨¹ý extends ÊµÏÖ£¬ÊµÏÖ¼Ì³ÐµÄÀà±»³ÆÖ®Îª×ÓÀà£¬±»¼Ì³ÐµÄÀà±»³ÆÖ®Îª¸¸Àà
-            2. JavaµÄ¼Ì³Ð¾ßÓÐµ¥¼Ì³ÐµÄÌØµã£¬Ã¿¸ö×ÓÀàÖ»ÓÐÒ»¸öÖ±½Ó¸¸Àà£¬¼ä½Ó¸¸Àà¿ÉÒÔÓÐÎÞÏÞ¶à¸ö
-            3. ¸¸ÀàºÍ×ÓÀàµÄ¹ØÏµÊÇÒ»ÖÖÒ»°ãºÍÌØÊâµÄ¹ØÏµ£¬×ÓÀàÊÇ¶Ô¸¸ÀàµÄÀ©Õ¹£»Èç: Ë®¹ûºÍÆ»¹û
-            4. ÒòÎª×ÓÀàÊÇÒ»ÖÖÌØÊâµÄ¸¸Àà£¬Òò´Ë¸¸Àà°üº¬µÄ·¶Î§×Ü±È×ÓÀà°üº¬µÄ·¶Î§Òª´ó
-            5. JavaµÄ×ÓÀà²»ÄÜ»ñµÃ¸¸ÀàµÄ¹¹ÔìÆ÷
-            6. ¶¨ÒåJavaÀàµÄÊ±ºò£¬ÎÞÏÔÊ½Ö¸¶¨JavaÖ±½Ó¸¸ÀàµÄ£¬Õâ¸öÀàµÄÄ¬ÈÏ¸¸ÀàÊÇ java.lang.Object Àà£¬
-                Òò´Ë java.lang.Object ÊÇËùÓÐÀàµÄ¸¸Àà£¬ÒªÃ´Ö±½Ó¸¸Àà£¬ÒªÃ´¼ä½Ó¸¸Àà; ËùÓÐµÄ Java ¶ÔÏó
-                ¶¼¿ÉÒÔµ÷ÓÃ java.lang.Object ÀàËù¶¨ÒåµÄÊµÀý·½·¨
-            7. ×ÓÀà½Ç¶È½«: ×ÓÀàÀ©Õ¹(»ò¼Ì³Ð)ÁË¸¸Àà£» ¸¸Àà½Ç¶È½²: ¸¸ÀàÅÉÉúÁË×ÓÀà£¬ÃèÊöµÄÊÇÍ¬Ò»¼þÊÂ£¬Ö»
-                ÊÇ¹Û²ìµÄ½Ç¶È²»Í¬
+6. ç±»çš„ç»§æ‰¿
+    6.1 ç»§æ‰¿çš„ç‰¹ç‚¹
+        ç‰¹ç‚¹ï¼š
+            1. Javaçš„ç»§æ‰¿é€šè¿‡ extends å®žçŽ°ï¼Œå®žçŽ°ç»§æ‰¿çš„ç±»è¢«ç§°ä¹‹ä¸ºå­ç±»ï¼Œè¢«ç»§æ‰¿çš„ç±»è¢«ç§°ä¹‹ä¸ºçˆ¶ç±»
+            2. Javaçš„ç»§æ‰¿å…·æœ‰å•ç»§æ‰¿çš„ç‰¹ç‚¹ï¼Œæ¯ä¸ªå­ç±»åªæœ‰ä¸€ä¸ªç›´æŽ¥çˆ¶ç±»ï¼Œé—´æŽ¥çˆ¶ç±»å¯ä»¥æœ‰æ— é™å¤šä¸ª
+            3. çˆ¶ç±»å’Œå­ç±»çš„å…³ç³»æ˜¯ä¸€ç§ä¸€èˆ¬å’Œç‰¹æ®Šçš„å…³ç³»ï¼Œå­ç±»æ˜¯å¯¹çˆ¶ç±»çš„æ‰©å±•ï¼›å¦‚: æ°´æžœå’Œè‹¹æžœ
+            4. å› ä¸ºå­ç±»æ˜¯ä¸€ç§ç‰¹æ®Šçš„çˆ¶ç±»ï¼Œå› æ­¤çˆ¶ç±»åŒ…å«çš„èŒƒå›´æ€»æ¯”å­ç±»åŒ…å«çš„èŒƒå›´è¦å¤§
+            5. Javaçš„å­ç±»ä¸èƒ½èŽ·å¾—çˆ¶ç±»çš„æž„é€ å™¨
+            6. å®šä¹‰Javaç±»çš„æ—¶å€™ï¼Œæ— æ˜¾å¼æŒ‡å®šJavaç›´æŽ¥çˆ¶ç±»çš„ï¼Œè¿™ä¸ªç±»çš„é»˜è®¤çˆ¶ç±»æ˜¯ java.lang.Object ç±»ï¼Œ
+                å› æ­¤ java.lang.Object æ˜¯æ‰€æœ‰ç±»çš„çˆ¶ç±»ï¼Œè¦ä¹ˆç›´æŽ¥çˆ¶ç±»ï¼Œè¦ä¹ˆé—´æŽ¥çˆ¶ç±»; æ‰€æœ‰çš„ Java å¯¹è±¡
+                éƒ½å¯ä»¥è°ƒç”¨ java.lang.Object ç±»æ‰€å®šä¹‰çš„å®žä¾‹æ–¹æ³•
+            7. å­ç±»è§’åº¦å°†: å­ç±»æ‰©å±•(æˆ–ç»§æ‰¿)äº†çˆ¶ç±»ï¼› çˆ¶ç±»è§’åº¦è®²: çˆ¶ç±»æ´¾ç”Ÿäº†å­ç±»ï¼Œæè¿°çš„æ˜¯åŒä¸€ä»¶äº‹ï¼Œåª
+                æ˜¯è§‚å¯Ÿçš„è§’åº¦ä¸åŒ
 
-        Óï·¨¸ñÊ½£º
-            ÐÞÊÎ·û class SubSlass extends SuperClass
+        è¯­æ³•æ ¼å¼ï¼š
+            ä¿®é¥°ç¬¦ class SubSlass extends SuperClass
             {
-                // Àà¶¨Òå²¿·Ö
+                // ç±»å®šä¹‰éƒ¨åˆ†
             }
-        Àý×Ó£º 
-            // ¶¨ÒåÒ»¸öË®¹ûÀà
+        ä¾‹å­ï¼š 
+            // å®šä¹‰ä¸€ä¸ªæ°´æžœç±»
             public class Fruit
             {
                 public double weight;
                 public void info()
                 {
-                    System.out.println("ÎÒÊÇÒ»¸öË®¹û£¡ ÖØ " + weight + " g!");
+                    System.out.println("æˆ‘æ˜¯ä¸€ä¸ªæ°´æžœï¼ é‡ " + weight + " g!");
                 }
             }
 
-            // ¶¨ÒåÒ»¸öÆ»¹ûÀà¼Ì³ÐË®¹ûÀà
+            // å®šä¹‰ä¸€ä¸ªè‹¹æžœç±»ç»§æ‰¿æ°´æžœç±»
             public class Apple extends Fruit
             {
                 public static void main(String[] args)
                 {
-                    // ´´½¨Ò»¸ö Apple ¶ÔÏó
+                    // åˆ›å»ºä¸€ä¸ª Apple å¯¹è±¡
                     Apple a = new Apple();
-                    // ÒòÎª Apple ¶ÔÏó±¾ÉíÃ»ÓÐ weight ³ÉÔ±±äÁ¿
-                    // ÒòÎª Apple µÄ¸¸ÀàÊÇÓÐ weight ³ÉÔ±±äÁ¿µÄ£¬Ò²¿ÉÒÔ·ÃÎÊ Apple ¶ÔÏóµÄ weight ³ÉÔ±±äÁ¿
+                    // å› ä¸º Apple å¯¹è±¡æœ¬èº«æ²¡æœ‰ weight æˆå‘˜å˜é‡
+                    // å› ä¸º Apple çš„çˆ¶ç±»æ˜¯æœ‰ weight æˆå‘˜å˜é‡çš„ï¼Œä¹Ÿå¯ä»¥è®¿é—® Apple å¯¹è±¡çš„ weight æˆå‘˜å˜é‡
                     a.weight = 65;
-                    // µ÷ÓÃ Apple ¶ÔÏóµÄ info() ·½·¨
+                    // è°ƒç”¨ Apple å¯¹è±¡çš„ info() æ–¹æ³•
                     a.info(); 
                 }
             }
 
-            // ¼ä½Ó¼Ì³ÐµÄÀý×Ó
+            // é—´æŽ¥ç»§æ‰¿çš„ä¾‹å­
             public class Fruit extends Plant{...}
             public class Apple extends Fruit{...}
-            // Àý×ÓÖÐFruitÀàÊÇAppleÀàµÄÖ±½Ó¸¸Àà£¬PlantÀàÊÇFruitÀàµÄÖ±½Ó¸¸Àà£¬ ËùÒÔPlantÀàÊÇAppleÀàµÄ
-            // ¼ä½Ó¸¸Àà
+            // ä¾‹å­ä¸­Fruitç±»æ˜¯Appleç±»çš„ç›´æŽ¥çˆ¶ç±»ï¼ŒPlantç±»æ˜¯Fruitç±»çš„ç›´æŽ¥çˆ¶ç±»ï¼Œ æ‰€ä»¥Plantç±»æ˜¯Appleç±»çš„
+            // é—´æŽ¥çˆ¶ç±»
 
-    6.2 ÖØÐ´¸¸ÀàµÄ·½·¨
-        ËµÃ÷£º
-            1. ×ÓÀà°üº¬Óë¸¸ÀàÍ¬Ãû·½·¨µÄÏÖÏó½Ð×ö·½·¨µÄÖØÐ´(Override)£¬Ò²½Ð×ö·½·¨¸²¸Ç¡£ 
-            2. ¸²¸Ç·½·¨ºÍ±»¸²¸Ç·½·¨ÒªÃ´¶¼ÊÇÀà·½·¨£¬ÒªÃ´¶¼ÊÇÊµÀý·½·¨£¬²»ÄÜÒ»¸öÊÇÀà·½·¨£¬Ò»¸öÊÇÊµÀý·½·¨
-            3. ×ÓÀà¸²¸ÇÁË¸¸ÀàµÄ·½·¨ºó£¬×ÓÀàµÄ¶ÔÏó½«ÎÞ·¨·ÃÎÊ¸¸ÀàÖÐ±»¸²¸ÇµÄ·½·¨£¬µ«ÊÇ¿ÉÒÔÔÚ×ÓÀà·½·¨ÖÐµ÷
-                ÓÃ¸¸ÀàÖÐ±»¸²¸ÇµÄ·½·¨¡£
-            4. ×ÓÀàµ÷ÓÃ¸¸Àà±»¸²¸ÇµÄ·½·¨£¬Ôò¿ÉÒÔÊ¹ÓÃ super (±»¸²¸ÇµÄÊÇÊµÀý·½·¨)»òÕßÊ¹ÓÃ¸¸ÀàÃû(±»¸²¸ÇµÄ
-                ÊÇÀà·½·¨)×÷Îªµ÷ÓÃÕßµ÷ÓÃ¸¸ÀàÖÐ±»¸²¸ÇµÄ·½·¨
-            5. ¸¸ÀàÖÐ private ÐÞÊÎµÄ·½·¨£¬×ÓÀàÎÞ·¨ÖØÐ´£»¼´Ê¹×ÓÀà°´ÕÕÖØÐ´¸ñÊ½ÖØÐ´ÁË¸¸ÀàÖÐ private ÐÞÊÎ
-                µÄ·½·¨£¬ÒÀÈ»²»ÊÇÖØÐ´£¬ÊÇ×ÓÀàÖØÐÂ¶¨ÒåµÄÒ»¸öÐÂ·½·¨
+    6.2 é‡å†™çˆ¶ç±»çš„æ–¹æ³•
+        è¯´æ˜Žï¼š
+            1. å­ç±»åŒ…å«ä¸Žçˆ¶ç±»åŒåæ–¹æ³•çš„çŽ°è±¡å«åšæ–¹æ³•çš„é‡å†™(Override)ï¼Œä¹Ÿå«åšæ–¹æ³•è¦†ç›–ã€‚ 
+            2. è¦†ç›–æ–¹æ³•å’Œè¢«è¦†ç›–æ–¹æ³•è¦ä¹ˆéƒ½æ˜¯ç±»æ–¹æ³•ï¼Œè¦ä¹ˆéƒ½æ˜¯å®žä¾‹æ–¹æ³•ï¼Œä¸èƒ½ä¸€ä¸ªæ˜¯ç±»æ–¹æ³•ï¼Œä¸€ä¸ªæ˜¯å®žä¾‹æ–¹æ³•
+            3. å­ç±»è¦†ç›–äº†çˆ¶ç±»çš„æ–¹æ³•åŽï¼Œå­ç±»çš„å¯¹è±¡å°†æ— æ³•è®¿é—®çˆ¶ç±»ä¸­è¢«è¦†ç›–çš„æ–¹æ³•ï¼Œä½†æ˜¯å¯ä»¥åœ¨å­ç±»æ–¹æ³•ä¸­è°ƒ
+                ç”¨çˆ¶ç±»ä¸­è¢«è¦†ç›–çš„æ–¹æ³•ã€‚
+            4. å­ç±»è°ƒç”¨çˆ¶ç±»è¢«è¦†ç›–çš„æ–¹æ³•ï¼Œåˆ™å¯ä»¥ä½¿ç”¨ super (è¢«è¦†ç›–çš„æ˜¯å®žä¾‹æ–¹æ³•)æˆ–è€…ä½¿ç”¨çˆ¶ç±»å(è¢«è¦†ç›–çš„
+                æ˜¯ç±»æ–¹æ³•)ä½œä¸ºè°ƒç”¨è€…è°ƒç”¨çˆ¶ç±»ä¸­è¢«è¦†ç›–çš„æ–¹æ³•
+            5. çˆ¶ç±»ä¸­ private ä¿®é¥°çš„æ–¹æ³•ï¼Œå­ç±»æ— æ³•é‡å†™ï¼›å³ä½¿å­ç±»æŒ‰ç…§é‡å†™æ ¼å¼é‡å†™äº†çˆ¶ç±»ä¸­ private ä¿®é¥°
+                çš„æ–¹æ³•ï¼Œä¾ç„¶ä¸æ˜¯é‡å†™ï¼Œæ˜¯å­ç±»é‡æ–°å®šä¹‰çš„ä¸€ä¸ªæ–°æ–¹æ³•
 
-        ×ñÑ­µÄ¹æÔò£º(Á½Í¬Á½Ð¡Ò»´ó)
-            1. "Á½Í¬"£º ·½·¨ÃûÏàÍ¬£¬ÐÎ²ÎÁÐ±íÏàÍ¬
-            2. "Á½Ð¡"£º µÚÒ»ÊÇ×ÓÀà·½·¨·µ»ØÖµÀàÐÍÓ¦±È¸¸Àà·½·¨·µ»ØÖµÀàÐÍ¸üÐ¡»òÏàµÈ£» µÚ¶þÊÇ×ÓÀà·½·¨ÉùÃ÷Å×
-                ³öµÄÒì³£ÀàÓ¦±È¸¸Àà·½·¨ÉùÃ÷Å×³öµÄÒì³£Àà¸üÐ¡»òÏàµÈ
-            3. "Ò»´ó"£º Ö¸µÄÊÇ×ÓÀà·½·¨µÄ·ÃÎÊÈ¨ÏÞÓ¦±È¸¸Àà·½·¨µÄ·ÃÎÊÈ¨ÏÞ¸ü´ó»òÕßÏàµÈ 
+        éµå¾ªçš„è§„åˆ™ï¼š(ä¸¤åŒä¸¤å°ä¸€å¤§)
+            1. "ä¸¤åŒ"ï¼š æ–¹æ³•åç›¸åŒï¼Œå½¢å‚åˆ—è¡¨ç›¸åŒ
+            2. "ä¸¤å°"ï¼š ç¬¬ä¸€æ˜¯å­ç±»æ–¹æ³•è¿”å›žå€¼ç±»åž‹åº”æ¯”çˆ¶ç±»æ–¹æ³•è¿”å›žå€¼ç±»åž‹æ›´å°æˆ–ç›¸ç­‰ï¼› ç¬¬äºŒæ˜¯å­ç±»æ–¹æ³•å£°æ˜ŽæŠ›
+                å‡ºçš„å¼‚å¸¸ç±»åº”æ¯”çˆ¶ç±»æ–¹æ³•å£°æ˜ŽæŠ›å‡ºçš„å¼‚å¸¸ç±»æ›´å°æˆ–ç›¸ç­‰
+            3. "ä¸€å¤§"ï¼š æŒ‡çš„æ˜¯å­ç±»æ–¹æ³•çš„è®¿é—®æƒé™åº”æ¯”çˆ¶ç±»æ–¹æ³•çš„è®¿é—®æƒé™æ›´å¤§æˆ–è€…ç›¸ç­‰ 
 
-        ÖØÐ´(override)ºÍÖØÔØ(overload)µÄÇø±ð£º
-            1. ÖØÔØÖ÷Òª·¢ÉúÔÚÍ¬Ò»¸öÀàµÄ¶à¸öÍ¬Ãû·½·¨Ö®¼ä£¬ÖØÐ´·¢ÉúÔÚ×ÓÀàºÍ¸¸ÀàµÄÍ¬Ãû·½·¨Ö®¼ä
-            2. ¶¼·¢ÉúÔÚ·½·¨Ö®¼ä£¬¶¼ÒªÇó·½·¨ÃûÏàÍ¬
-            3. ¸¸Àà·½·¨ºÍ×ÓÀà·½·¨Ö®¼äµÄÖØÔØ£º×ÓÀà»ñµÃÁË¸¸Àà·½·¨£¬Èç¹û×ÓÀà¶¨ÒåÁËÒ»¸öÓë¸¸Àà·½·¨ÓÐÏàÍ¬µÄ·½·¨
-                Ãû£¬µ«ÐÎ²ÎÁÐ±í²»Í¬µÄ·½·¨£¬¾Í»áÐÎ³É¸¸Àà·½·¨ºÍ×ÓÀà·½·¨µÄÖØÔØ
-        Àý×Ó£º
-            // ÖØÐ´¸¸Àà·½·¨µÄÀý×Ó
+        é‡å†™(override)å’Œé‡è½½(overload)çš„åŒºåˆ«ï¼š
+            1. é‡è½½ä¸»è¦å‘ç”Ÿåœ¨åŒä¸€ä¸ªç±»çš„å¤šä¸ªåŒåæ–¹æ³•ä¹‹é—´ï¼Œé‡å†™å‘ç”Ÿåœ¨å­ç±»å’Œçˆ¶ç±»çš„åŒåæ–¹æ³•ä¹‹é—´
+            2. éƒ½å‘ç”Ÿåœ¨æ–¹æ³•ä¹‹é—´ï¼Œéƒ½è¦æ±‚æ–¹æ³•åç›¸åŒ
+            3. çˆ¶ç±»æ–¹æ³•å’Œå­ç±»æ–¹æ³•ä¹‹é—´çš„é‡è½½ï¼šå­ç±»èŽ·å¾—äº†çˆ¶ç±»æ–¹æ³•ï¼Œå¦‚æžœå­ç±»å®šä¹‰äº†ä¸€ä¸ªä¸Žçˆ¶ç±»æ–¹æ³•æœ‰ç›¸åŒçš„æ–¹æ³•
+                åï¼Œä½†å½¢å‚åˆ—è¡¨ä¸åŒçš„æ–¹æ³•ï¼Œå°±ä¼šå½¢æˆçˆ¶ç±»æ–¹æ³•å’Œå­ç±»æ–¹æ³•çš„é‡è½½
+        ä¾‹å­ï¼š
+            // é‡å†™çˆ¶ç±»æ–¹æ³•çš„ä¾‹å­
             public class Bird
             {
-                // BirdÀàµÄfly()·½·¨
+                // Birdç±»çš„fly()æ–¹æ³•
                 pubilc void fly()
                 {
-                    System.out.println("ÎÒÔÚÌì¿Õ×ÔÓÉµÄ·ÉÏè...");
+                    System.out.println("æˆ‘åœ¨å¤©ç©ºè‡ªç”±çš„é£žç¿”...");
                 }
             }
-            // ÔÙ¶¨ÒåÒ»¸ö Ostrich Àà
+            // å†å®šä¹‰ä¸€ä¸ª Ostrich ç±»
             public class Ostrish extends Bird
             {
-                // ÖØÐ´¸¸ÀàµÄ·½·¨
+                // é‡å†™çˆ¶ç±»çš„æ–¹æ³•
                 public void fly()
                 {
-                    System.out.println("ÎÒÖ»ÄÜ±¼ÅÜ...");
+                    System.out.println("æˆ‘åªèƒ½å¥”è·‘...");
                 }
                 public static void main(String[] args)
                 {
-                    // ´´½¨Ò»¸ö Ostrish ¶ÔÏó
+                    // åˆ›å»ºä¸€ä¸ª Ostrish å¯¹è±¡
                     Ostrish os = new Ostrish();
-                    // Ö´ÐÐ Ostrish ¶ÔÏóµÄ fly() ·½·¨£¬ Êä³ö£º "ÎÒÖ»ÄÜ±¼ÅÜ..."
+                    // æ‰§è¡Œ Ostrish å¯¹è±¡çš„ fly() æ–¹æ³•ï¼Œ è¾“å‡ºï¼š "æˆ‘åªèƒ½å¥”è·‘..."
                     os.fly();
-                    // ÔÚ×ÓÀà·½·¨ÖÐÍ¨¹ý super ÏÔÊ½µÄµ÷ÓÃ¸¸Àà±»¸²¸ÇµÄÊµÀý·½·¨
+                    // åœ¨å­ç±»æ–¹æ³•ä¸­é€šè¿‡ super æ˜¾å¼çš„è°ƒç”¨çˆ¶ç±»è¢«è¦†ç›–çš„å®žä¾‹æ–¹æ³•
                     super.fly();
                 }
             }
 
-    6.3 super ÏÞ¶¨
-        ËµÃ÷£º
-            1. ÓÃÓÚÐèÒªÔÚ×ÓÀàÖÐµ÷ÓÃ¸¸Àà±»¸²¸ÇµÄÊµÀý·½·¨£¬Ôò¿ÉÊ¹ÓÃ super ÏÞ¶¨À´µ÷ÓÃ¸¸Àà±»¸²¸ÇµÄÊµÀý·½·¨
-            2. Èç¹û±»¸²¸ÇµÄÊÇÀà±äÁ¿£¬ÔÚ×ÓÀàµÄ·½·¨ÖÐÔò¿ÉÒÔÍ¨¹ý¸¸ÀàÃû×÷Îªµ÷ÓÃÕßÀ´·ÃÎÊ±»¸²¸ÇµÄÀà±äÁ¿
-            3. super ²»ÄÜ³öÏÖÔÚ static ÐÞÊÎµÄ·½·¨ÖÐ£¬static ÐÞÊÎµÄ·½·¨ÊôÓÚÀà£¬¸Ã·½·¨µÄµ÷ÓÃÕß¿ÉÄÜÊÇÒ»
-                ¸öÀà£¬¶ø²»ÊÇÒ»¸ö¶ÔÏó£¬Òò¶ø super ÏÞ¶¨Ò²¾ÍÊ§È¥ÁËÒâÒå
-            4. Èç¹ûÔÚ¹¹ÔìÆ÷ÖÐÊ¹ÓÃ super£¬ Ôò super ÓÃÓÚÏÞ¶¨¸Ã¹¹ÔìÆ÷³õÊ¼»¯µÄÊÇ¸Ã¶ÔÏó´Ó¸¸Àà¼Ì³ÐµÃµ½µÄÊµ
-                Àý±äÁ¿£¬¶ø²»ÊÇ¸ÃÀà×Ô¼º¶¨ÒåµÄÊµÀý±äÁ¿
-            5. Èç¹û×ÓÀà¶¨ÒåÁËºÍ¸¸ÀàÍ¬ÃûµÄÊÇ±äÁ¿£¬Ôò»á·¢Éú×ÓÀàÊµÀý±äÁ¿Òþ²Ø¸¸ÀàÊµÀý±äÁ¿µÄÇéÐÎ£¬Õý³£Çé¿öÏÂ
-                ×ÓÀàÀï¶¨ÒåµÄ·½·¨Ö±½Ó·ÃÎÊ¸ÃÊµÀý±äÁ¿Ä¬ÈÏ»á·ÃÎÊµ½×ÓÀàÖÐ¶¨ÒåµÄÊµÀý±äÁ¿£¬ÎÞ·¨·ÃÎÊ¸¸ÀàÖÐ±»
-                Òþ²ØµÄÊµÀý±äÁ¿¡£ ÔÚ×ÓÀà¶¨ÒåµÄÊµÀý·½·¨ÖÐ¿ÉÒÔÍ¨¹ý super À´·ÃÎÊ¸¸ÀàµÄÊµÀý±äÁ¿
-            6. Èç¹û×ÓÀàÀïÃ»ÓÐ°üº¬ºÍ¸¸ÀàÍ¬ÃûµÄÊµÀý±äÁ¿£¬ÄÇÃ´ÔÚ×ÓÀàÊµÀý·½·¨ÖÐ·ÃÎÊ³ÉÔ±±äÁ¿Ê±£¬ÎÞÐèÏÔÊ½µÄÊ¹
-                ÓÃ super »ò¸¸ÀàÃû×÷Îªµ÷ÓÃÕß
-            7. Èç¹ûÔÚ×ÓÀàÀï¶¨ÒåÁËÓë¸¸ÀàÖÐÒÑÓÐ±äÁ¿Í¬ÃûµÄ±äÁ¿£¬ÄÇÃ´×ÓÀàÖÐ¶¨ÒåµÄ±äÁ¿»áÒþ²Ø¸¸ÀàÖÐ¶¨ÒåµÄ±äÁ¿£¬
-                ²»ÊÇÍêÈ«¸²¸Ç£¬Òò´ËÔÚÏµÍ³´´½¨×ÓÀà¶ÔÏóÊ±£¬ÒÀÈ»»áÎª¸¸ÀàÖÐ¶¨ÒåµÄ£¬±»Òþ²ØµÄ±äÁ¿·ÖÅäÄÚ´æ¿Õ¼ä
+    6.3 super é™å®š
+        è¯´æ˜Žï¼š
+            1. ç”¨äºŽéœ€è¦åœ¨å­ç±»ä¸­è°ƒç”¨çˆ¶ç±»è¢«è¦†ç›–çš„å®žä¾‹æ–¹æ³•ï¼Œåˆ™å¯ä½¿ç”¨ super é™å®šæ¥è°ƒç”¨çˆ¶ç±»è¢«è¦†ç›–çš„å®žä¾‹æ–¹æ³•
+            2. å¦‚æžœè¢«è¦†ç›–çš„æ˜¯ç±»å˜é‡ï¼Œåœ¨å­ç±»çš„æ–¹æ³•ä¸­åˆ™å¯ä»¥é€šè¿‡çˆ¶ç±»åä½œä¸ºè°ƒç”¨è€…æ¥è®¿é—®è¢«è¦†ç›–çš„ç±»å˜é‡
+            3. super ä¸èƒ½å‡ºçŽ°åœ¨ static ä¿®é¥°çš„æ–¹æ³•ä¸­ï¼Œstatic ä¿®é¥°çš„æ–¹æ³•å±žäºŽç±»ï¼Œè¯¥æ–¹æ³•çš„è°ƒç”¨è€…å¯èƒ½æ˜¯ä¸€
+                ä¸ªç±»ï¼Œè€Œä¸æ˜¯ä¸€ä¸ªå¯¹è±¡ï¼Œå› è€Œ super é™å®šä¹Ÿå°±å¤±åŽ»äº†æ„ä¹‰
+            4. å¦‚æžœåœ¨æž„é€ å™¨ä¸­ä½¿ç”¨ superï¼Œ åˆ™ super ç”¨äºŽé™å®šè¯¥æž„é€ å™¨åˆå§‹åŒ–çš„æ˜¯è¯¥å¯¹è±¡ä»Žçˆ¶ç±»ç»§æ‰¿å¾—åˆ°çš„å®ž
+                ä¾‹å˜é‡ï¼Œè€Œä¸æ˜¯è¯¥ç±»è‡ªå·±å®šä¹‰çš„å®žä¾‹å˜é‡
+            5. å¦‚æžœå­ç±»å®šä¹‰äº†å’Œçˆ¶ç±»åŒåçš„æ˜¯å˜é‡ï¼Œåˆ™ä¼šå‘ç”Ÿå­ç±»å®žä¾‹å˜é‡éšè—çˆ¶ç±»å®žä¾‹å˜é‡çš„æƒ…å½¢ï¼Œæ­£å¸¸æƒ…å†µä¸‹
+                å­ç±»é‡Œå®šä¹‰çš„æ–¹æ³•ç›´æŽ¥è®¿é—®è¯¥å®žä¾‹å˜é‡é»˜è®¤ä¼šè®¿é—®åˆ°å­ç±»ä¸­å®šä¹‰çš„å®žä¾‹å˜é‡ï¼Œæ— æ³•è®¿é—®çˆ¶ç±»ä¸­è¢«
+                éšè—çš„å®žä¾‹å˜é‡ã€‚ åœ¨å­ç±»å®šä¹‰çš„å®žä¾‹æ–¹æ³•ä¸­å¯ä»¥é€šè¿‡ super æ¥è®¿é—®çˆ¶ç±»çš„å®žä¾‹å˜é‡
+            6. å¦‚æžœå­ç±»é‡Œæ²¡æœ‰åŒ…å«å’Œçˆ¶ç±»åŒåçš„å®žä¾‹å˜é‡ï¼Œé‚£ä¹ˆåœ¨å­ç±»å®žä¾‹æ–¹æ³•ä¸­è®¿é—®æˆå‘˜å˜é‡æ—¶ï¼Œæ— éœ€æ˜¾å¼çš„ä½¿
+                ç”¨ super æˆ–çˆ¶ç±»åä½œä¸ºè°ƒç”¨è€…
+            7. å¦‚æžœåœ¨å­ç±»é‡Œå®šä¹‰äº†ä¸Žçˆ¶ç±»ä¸­å·²æœ‰å˜é‡åŒåçš„å˜é‡ï¼Œé‚£ä¹ˆå­ç±»ä¸­å®šä¹‰çš„å˜é‡ä¼šéšè—çˆ¶ç±»ä¸­å®šä¹‰çš„å˜é‡ï¼Œ
+                ä¸æ˜¯å®Œå…¨è¦†ç›–ï¼Œå› æ­¤åœ¨ç³»ç»Ÿåˆ›å»ºå­ç±»å¯¹è±¡æ—¶ï¼Œä¾ç„¶ä¼šä¸ºçˆ¶ç±»ä¸­å®šä¹‰çš„ï¼Œè¢«éšè—çš„å˜é‡åˆ†é…å†…å­˜ç©ºé—´
 
-        ÎÞÏÔÊ½Ö¸¶¨µ÷ÓÃÕß£¬Ä³·½·¨ÖÐ·ÃÎÊ³ÉÔ±±äÁ¿ a Ê±²éÕÒµÄË³Ðò:
-            1. ²éÕÒ¸Ã·½·¨ÖÐÊÇ·ñÓÐÃû a µÄ¾Ö²¿±äÁ¿
-            2. ²éÕÒµ±Ç°ÀàÖÐÊÇ·ñ°üº¬ÃûÎª a µÄ³ÉÔ±±äÁ¿
-            3. ²éÕÒ a µÄÖ±½Ó¸¸ÀàÖÐÊÇ·ñ°üº¬ÃûÎª a µÄ³ÉÔ±±äÁ¿£¬ÒÀ´ÎÉÏËÝ a µÄËùÓÐ¸¸Àà£¬Ö±µ½ java.lang.Object
-                Àà£¬Èç¹û×îÖÕ²»ÄÜÕÒµ½ÃûÎª a µÄ³ÉÔ±±äÁ¿£¬ÔòÏµÍ³±¨±àÒë³ö´íÎó
+        æ— æ˜¾å¼æŒ‡å®šè°ƒç”¨è€…ï¼ŒæŸæ–¹æ³•ä¸­è®¿é—®æˆå‘˜å˜é‡ a æ—¶æŸ¥æ‰¾çš„é¡ºåº:
+            1. æŸ¥æ‰¾è¯¥æ–¹æ³•ä¸­æ˜¯å¦æœ‰å a çš„å±€éƒ¨å˜é‡
+            2. æŸ¥æ‰¾å½“å‰ç±»ä¸­æ˜¯å¦åŒ…å«åä¸º a çš„æˆå‘˜å˜é‡
+            3. æŸ¥æ‰¾ a çš„ç›´æŽ¥çˆ¶ç±»ä¸­æ˜¯å¦åŒ…å«åä¸º a çš„æˆå‘˜å˜é‡ï¼Œä¾æ¬¡ä¸Šæº¯ a çš„æ‰€æœ‰çˆ¶ç±»ï¼Œç›´åˆ° java.lang.Object
+                ç±»ï¼Œå¦‚æžœæœ€ç»ˆä¸èƒ½æ‰¾åˆ°åä¸º a çš„æˆå‘˜å˜é‡ï¼Œåˆ™ç³»ç»ŸæŠ¥ç¼–è¯‘å‡ºé”™è¯¯
 
-        Àý×Ó1£º
-            // ×ÓÀà¶¨ÒåµÄÊµÀý·½·¨Í¨¹ý super À´·ÃÎÊ¸¸ÀàÖÐ±»Òþ²ØµÄÊµÀý±äÁ¿
+        ä¾‹å­1ï¼š
+            // å­ç±»å®šä¹‰çš„å®žä¾‹æ–¹æ³•é€šè¿‡ super æ¥è®¿é—®çˆ¶ç±»ä¸­è¢«éšè—çš„å®žä¾‹å˜é‡
             public BaseClass
             {
                 public int a = 5;
@@ -1316,7 +1316,7 @@
                 }
                 public void accessBase()
                 {
-                    // Í¨¹ý super À´ÏÞ¶¨·ÃÎÊ´Ó¸¸Àà¼Ì³ÐµÃµ½µÄ a ÊµÀý±äÁ¿
+                    // é€šè¿‡ super æ¥é™å®šè®¿é—®ä»Žçˆ¶ç±»ç»§æ‰¿å¾—åˆ°çš„ a å®žä¾‹å˜é‡
                     System.out.println(super.a);
                 }
                 public static void main(String[] args)
@@ -1326,76 +1326,76 @@
                     sc.accessBase();    // out: 5
                 }
             }
-            ³ÌÐòËµÃ÷£º
-                1. ÉÏÃæ³ÌÐòµÄ BaseClass ºÍ SubClass ÖÐ¶¼¶¨ÒåÁËÃûÎª a µÄÊµÀý±äÁ¿£¬Ôò SubClass µÄ
-                    a ÊµÀý±äÁ¿½«»áÒþ²Ø BaseClass µÄ a ÊµÀý±äÁ¿¡£
-                2. µ±ÏµÍ³´´½¨ÁË SubClass ¶ÔÏóµÄÊ±ºò£¬Êµ¼ÊÉÏ»áÎª SubClass ¶ÔÏó·ÖÅäÁ½¿éÄÚ´æ£¬Ò»¿éÓÃ
-                    ÓÚ´æ´¢ÔÚ SubClass ÀàÖÐ¶¨ÒåµÄ a ÊµÀý±äÁ¿£¬ Ò»¿éÓÃÓÚ´æ´¢´Ó BaseClass ÀàÖÐ¼Ì³Ð
-                    µÃµ½µÄ a ÊµÀý±äÁ¿¡£
-                3. System.out.println(super.a); Õâ¾ä´úÂëÖÐµ±·ÃÎÊ super.a Ê±£¬´ËÊ±Ê¹ÓÃ super ÏÞ
-                    ¶¨¸ÃÊµÀý´Ó¸¸Àà¼Ì³ÐµÃµ½µÄ a ÊµÀý±äÁ¿£¬ ¶ø²»ÊÇÔÚµ±Ç°ÀàÖÐ¶¨ÒåµÄ a ±äÁ¿
-        Àý×Ó2£º
-            // ×ÓÀàÖÐ¶¨Òå¸¸ÀàÍ¬ÃûµÄÊµÀý±äÁ¿²¢²»»áÍêÈ«¸²¸Ç¸¸ÀàÖÐ¶¨ÒåµÄÊµÀý±äÁ¿£¬¶øÖ»ÊÇ¼òµ¥Òþ²Ø
+            ç¨‹åºè¯´æ˜Žï¼š
+                1. ä¸Šé¢ç¨‹åºçš„ BaseClass å’Œ SubClass ä¸­éƒ½å®šä¹‰äº†åä¸º a çš„å®žä¾‹å˜é‡ï¼Œåˆ™ SubClass çš„
+                    a å®žä¾‹å˜é‡å°†ä¼šéšè— BaseClass çš„ a å®žä¾‹å˜é‡ã€‚
+                2. å½“ç³»ç»Ÿåˆ›å»ºäº† SubClass å¯¹è±¡çš„æ—¶å€™ï¼Œå®žé™…ä¸Šä¼šä¸º SubClass å¯¹è±¡åˆ†é…ä¸¤å—å†…å­˜ï¼Œä¸€å—ç”¨
+                    äºŽå­˜å‚¨åœ¨ SubClass ç±»ä¸­å®šä¹‰çš„ a å®žä¾‹å˜é‡ï¼Œ ä¸€å—ç”¨äºŽå­˜å‚¨ä»Ž BaseClass ç±»ä¸­ç»§æ‰¿
+                    å¾—åˆ°çš„ a å®žä¾‹å˜é‡ã€‚
+                3. System.out.println(super.a); è¿™å¥ä»£ç ä¸­å½“è®¿é—® super.a æ—¶ï¼Œæ­¤æ—¶ä½¿ç”¨ super é™
+                    å®šè¯¥å®žä¾‹ä»Žçˆ¶ç±»ç»§æ‰¿å¾—åˆ°çš„ a å®žä¾‹å˜é‡ï¼Œ è€Œä¸æ˜¯åœ¨å½“å‰ç±»ä¸­å®šä¹‰çš„ a å˜é‡
+        ä¾‹å­2ï¼š
+            // å­ç±»ä¸­å®šä¹‰çˆ¶ç±»åŒåçš„å®žä¾‹å˜é‡å¹¶ä¸ä¼šå®Œå…¨è¦†ç›–çˆ¶ç±»ä¸­å®šä¹‰çš„å®žä¾‹å˜é‡ï¼Œè€Œåªæ˜¯ç®€å•éšè—
             class Parent
             {
-                public String tag = "java";             // ¢Ù
+                public String tag = "java";             // â‘ 
             }
             class Dericed extends Perent
             {
-                // ¶¨ÒåÒ»¸öË½ÓÐµÄ tag ÊµÀý±äÁ¿À´Òþ²Ø¸¸ÀàµÄ tag ÊµÀý±äÁ¿
-                private String tag = "I Love Java";                      // ¢Ú
+                // å®šä¹‰ä¸€ä¸ªç§æœ‰çš„ tag å®žä¾‹å˜é‡æ¥éšè—çˆ¶ç±»çš„ tag å®žä¾‹å˜é‡
+                private String tag = "I Love Java";                      // â‘¡
             }
             public class HideTest
             {
                 public static void main(String[] args)
                 {
                     Dericed d = new Dericed();
-                    // ³ÌÐò²»¿É·ÃÎÊ d µÄË½ÓÐ±äÁ¿ tag (ÒòÎª private ÐÞÊÎµÄ±äÁ¿»òÕß·½·¨£¬Ö»ÄÜÔÚµ±Ç°
-                    // ÀàÖÐÊ¹ÓÃ) ËùÒÔÏÂÃæµÄÕâ¾ä´úÂë½«ÒýÆð±àÒë´íÎó
-                    // System.out.println(d.tag);                        // ¢Û
-                    // ½« d ±äÁ¿ÏÔÊ½µØÏòÉÏ×ªÐÍÎª Parent ºó£¬¼´¿É·ÃÎÊ tag ÊµÀý±äÁ¿
-                    System.out.println(((Parent)p).tag);                // ¢Ü
+                    // ç¨‹åºä¸å¯è®¿é—® d çš„ç§æœ‰å˜é‡ tag (å› ä¸º private ä¿®é¥°çš„å˜é‡æˆ–è€…æ–¹æ³•ï¼Œåªèƒ½åœ¨å½“å‰
+                    // ç±»ä¸­ä½¿ç”¨) æ‰€ä»¥ä¸‹é¢çš„è¿™å¥ä»£ç å°†å¼•èµ·ç¼–è¯‘é”™è¯¯
+                    // System.out.println(d.tag);                        // â‘¢
+                    // å°† d å˜é‡æ˜¾å¼åœ°å‘ä¸Šè½¬åž‹ä¸º Parent åŽï¼Œå³å¯è®¿é—® tag å®žä¾‹å˜é‡
+                    System.out.println(((Parent)p).tag);                // â‘£
 
                 }
             }
 
-            ³ÌÐòËµÃ÷£º
-                1. ÉÏÃæ³ÌÐòµÄ¢Ù´¦´úÂëÎª¸¸ÀàParent¶¨ÒåÁËÒ»¸ö tag µÄÊµÀý±äÁ¿£¬¢Ú´¦µÄ´úÂëÎªÆä×ÓÀà¶¨ÒåÁËÒ»¸ö 
-                    private µÄ tag ÊµÀý±äÁ¿£¬×ÓÀàÖÐ¶¨ÒåµÄÕâ¸öÊµÀý±äÁ¿½«»áÒþ²Ø¸¸ÀàÖÐ¶¨ÒåµÄ tag ÊµÀý±äÁ¿ 
-                2. ³ÌÐòµÄÈë¿Ú main() ÀàÖÐÏÈ´´½¨ÁËÒ»¸ö Dericed ¶ÔÏó£¬ Õâ¸ö Dericed ¶ÔÏó½«»á±£´æÁ½¸ö tag 
-                    ÊµÀý±äÁ¿£¬ Ò»¸öÊÇÔÚ Parent ÖÐ¶¨ÒåµÄ tag ÊµÀý±äÁ¿£¬ Ò»¸öÊÇÔÚ Dericed ÖÐ¶¨ÒåµÄ tag 
-                    ÊµÀý±äÁ¿£¬´ËÊ±³ÌÐòÖÐ»¹°üº¬Ò»¸ö d ±äÁ¿£¬ËüÒýÓÃÒ»¸ö Dericed ¶ÔÏó
-                3. ³ÌÐò½« Dericed ¶ÔÏó¸³¸ø d ±äÁ¿£¬µ±ÔÚ¢Û³öµÄ´úÂëÊÔÍ¼Í¨¹ýdÀ´·ÃÎÊtag ÊµÀý±äÁ¿Ê±£¬³ÌÐò½«
-                    ÌáÊ¾·ÃÎÊÈ¨ÏÞ²»ÔÊÐí£¬ÕâÊÇÒòÎª·ÃÎÊÄÄ¸öÊµÀý±äÁ¿ÓÐÉùÃ÷¸Ã±äÁ¿µÄÀàÐÍ¾ö¶¨£¬ËùÒÔÏµÍ³½«»áÊÔÍ¼
-                    ·ÃÎÊÔÚ¢Ú´¦¶¨ÒåµÄ tag ÊµÀý±äÁ¿£»³ÌÐòÔÚ¢Ü´¦µÄ´úÂëÏÈ½«d±äÁ¿Ç¿ÖÆÏòÉÏ×ªÐÍÎªParentÀàÐÍ£¬
-                    ÔÙÍ¨¹ýËüÀ´·ÃÎÊ tag ÊµÀý±äÁ¿ÊÇÔÊÐíµÄ£¬ÒòÎª´ËÊ±ÏµÍ³½«»á·ÃÎÊÔÚ¢Ù´¦¶¨ÒåµÄ tag ÊµÀý±äÁ¿
-                    Ò²¾Í»áÊä³ö ¡°java¡±
+            ç¨‹åºè¯´æ˜Žï¼š
+                1. ä¸Šé¢ç¨‹åºçš„â‘ å¤„ä»£ç ä¸ºçˆ¶ç±»Parentå®šä¹‰äº†ä¸€ä¸ª tag çš„å®žä¾‹å˜é‡ï¼Œâ‘¡å¤„çš„ä»£ç ä¸ºå…¶å­ç±»å®šä¹‰äº†ä¸€ä¸ª 
+                    private çš„ tag å®žä¾‹å˜é‡ï¼Œå­ç±»ä¸­å®šä¹‰çš„è¿™ä¸ªå®žä¾‹å˜é‡å°†ä¼šéšè—çˆ¶ç±»ä¸­å®šä¹‰çš„ tag å®žä¾‹å˜é‡ 
+                2. ç¨‹åºçš„å…¥å£ main() ç±»ä¸­å…ˆåˆ›å»ºäº†ä¸€ä¸ª Dericed å¯¹è±¡ï¼Œ è¿™ä¸ª Dericed å¯¹è±¡å°†ä¼šä¿å­˜ä¸¤ä¸ª tag 
+                    å®žä¾‹å˜é‡ï¼Œ ä¸€ä¸ªæ˜¯åœ¨ Parent ä¸­å®šä¹‰çš„ tag å®žä¾‹å˜é‡ï¼Œ ä¸€ä¸ªæ˜¯åœ¨ Dericed ä¸­å®šä¹‰çš„ tag 
+                    å®žä¾‹å˜é‡ï¼Œæ­¤æ—¶ç¨‹åºä¸­è¿˜åŒ…å«ä¸€ä¸ª d å˜é‡ï¼Œå®ƒå¼•ç”¨ä¸€ä¸ª Dericed å¯¹è±¡
+                3. ç¨‹åºå°† Dericed å¯¹è±¡èµ‹ç»™ d å˜é‡ï¼Œå½“åœ¨â‘¢å‡ºçš„ä»£ç è¯•å›¾é€šè¿‡dæ¥è®¿é—®tag å®žä¾‹å˜é‡æ—¶ï¼Œç¨‹åºå°†
+                    æç¤ºè®¿é—®æƒé™ä¸å…è®¸ï¼Œè¿™æ˜¯å› ä¸ºè®¿é—®å“ªä¸ªå®žä¾‹å˜é‡æœ‰å£°æ˜Žè¯¥å˜é‡çš„ç±»åž‹å†³å®šï¼Œæ‰€ä»¥ç³»ç»Ÿå°†ä¼šè¯•å›¾
+                    è®¿é—®åœ¨â‘¡å¤„å®šä¹‰çš„ tag å®žä¾‹å˜é‡ï¼›ç¨‹åºåœ¨â‘£å¤„çš„ä»£ç å…ˆå°†då˜é‡å¼ºåˆ¶å‘ä¸Šè½¬åž‹ä¸ºParentç±»åž‹ï¼Œ
+                    å†é€šè¿‡å®ƒæ¥è®¿é—® tag å®žä¾‹å˜é‡æ˜¯å…è®¸çš„ï¼Œå› ä¸ºæ­¤æ—¶ç³»ç»Ÿå°†ä¼šè®¿é—®åœ¨â‘ å¤„å®šä¹‰çš„ tag å®žä¾‹å˜é‡
+                    ä¹Ÿå°±ä¼šè¾“å‡º â€œjavaâ€
 
-    6.4 µ÷ÓÃ¸¸ÀàµÄ¹¹ÔìÆ÷
-        ËµÃ÷:
-            1. ×ÓÀà²»»á»ñµÃ¸¸ÀàµÄ¹¹ÔìÆ÷,µ«ÊÇ×ÓÀà¹¹ÔìÆ÷Àï¿ÉÒÔµ÷ÓÃ¸¸Àà¹¹ÔìÆ÷µÄ³õÊ¼»¯´úÂë, ÀàËÆÓÚÇ°ÃæÑ§
-                µÄÒ»¸ö¹¹ÔìÆ÷µ÷ÓÃÁíÒ»¸öÖØÔØµÄ¹¹ÔìÆ÷
-            2. ÔÚÒ»¸ö¹¹ÔìÆ÷ÖÐµ÷ÓÃÁíÒ»¸öÖØÔØµÄ¹¹ÔìÆ÷Ê¹ÓÃ this µ÷ÓÃÀ´Íê³É, ÔÚ×ÓÀà¹¹ÔìÆ÷ÖÐµ÷ÓÃ¸¸ÀàµÄ¹¹
-                ÔìÆ÷Ê¹ÓÃ super µ÷ÓÃÀ´Íê³É 
-            3. Ê¹ÓÃ super µ÷ÓÃ¸¸Àà¹¹ÔìÆ÷Ò²±ØÐë³öÏÖÔÚ×ÓÀà¹¹ÔìÆ÷Ö´ÐÐÌåµÄµÚÒ»ÐÐ, ËùÒÔ this µ÷ÓÃºÍ super 
-                µ÷ÓÃ²»¿ÉÒÔÍ¬Ê±³öÏÖ
-            4. ²»¹ÜÊÇ·ñÊ¹ÓÃ super µ÷ÓÃÀ´Ö´ÐÐ¸¸Àà¹¹ÔìÆ÷µÄ³õÊ¼»¯´úÂë, ×ÓÀà¹¹ÔìÆ÷×ÜÊÇµ÷ÓÃ¸¸Àà¹¹ÔìÆ÷Ò»´Î
-            5. ´´½¨ÈÎºÎ¶ÔÏó×ÜÊÇ´Ó¸ÃÀàËùÔÚ¼Ì³ÐÊ÷×î¶¥²ãÀàµÄ¹¹ÔìÆ÷¿ªÊ¼Ö´ÐÐ,È»ºóÒÀ´ÎÏòÏÂÖ´ÐÐ, ×îºó²ÅÖ´ÐÐ
-                ±¾ÀàµÄ¹¹ÔìÆ÷; Èç¹ûÄ³¸öÀàÍ¨¹ý this µ÷ÓÃÁËÍ¬ÀàÖÐÖØÔØµÄ¹¹ÔìÆ÷, ¾Í»áÒÀ´ÎÖ´ÐÐ´Ë¸¸ÀàµÄ¶à¸ö
-                ¹¹ÔìÆ÷ 
+    6.4 è°ƒç”¨çˆ¶ç±»çš„æž„é€ å™¨
+        è¯´æ˜Ž:
+            1. å­ç±»ä¸ä¼šèŽ·å¾—çˆ¶ç±»çš„æž„é€ å™¨,ä½†æ˜¯å­ç±»æž„é€ å™¨é‡Œå¯ä»¥è°ƒç”¨çˆ¶ç±»æž„é€ å™¨çš„åˆå§‹åŒ–ä»£ç , ç±»ä¼¼äºŽå‰é¢å­¦
+                çš„ä¸€ä¸ªæž„é€ å™¨è°ƒç”¨å¦ä¸€ä¸ªé‡è½½çš„æž„é€ å™¨
+            2. åœ¨ä¸€ä¸ªæž„é€ å™¨ä¸­è°ƒç”¨å¦ä¸€ä¸ªé‡è½½çš„æž„é€ å™¨ä½¿ç”¨ this è°ƒç”¨æ¥å®Œæˆ, åœ¨å­ç±»æž„é€ å™¨ä¸­è°ƒç”¨çˆ¶ç±»çš„æž„
+                é€ å™¨ä½¿ç”¨ super è°ƒç”¨æ¥å®Œæˆ 
+            3. ä½¿ç”¨ super è°ƒç”¨çˆ¶ç±»æž„é€ å™¨ä¹Ÿå¿…é¡»å‡ºçŽ°åœ¨å­ç±»æž„é€ å™¨æ‰§è¡Œä½“çš„ç¬¬ä¸€è¡Œ, æ‰€ä»¥ this è°ƒç”¨å’Œ super 
+                è°ƒç”¨ä¸å¯ä»¥åŒæ—¶å‡ºçŽ°
+            4. ä¸ç®¡æ˜¯å¦ä½¿ç”¨ super è°ƒç”¨æ¥æ‰§è¡Œçˆ¶ç±»æž„é€ å™¨çš„åˆå§‹åŒ–ä»£ç , å­ç±»æž„é€ å™¨æ€»æ˜¯è°ƒç”¨çˆ¶ç±»æž„é€ å™¨ä¸€æ¬¡
+            5. åˆ›å»ºä»»ä½•å¯¹è±¡æ€»æ˜¯ä»Žè¯¥ç±»æ‰€åœ¨ç»§æ‰¿æ ‘æœ€é¡¶å±‚ç±»çš„æž„é€ å™¨å¼€å§‹æ‰§è¡Œ,ç„¶åŽä¾æ¬¡å‘ä¸‹æ‰§è¡Œ, æœ€åŽæ‰æ‰§è¡Œ
+                æœ¬ç±»çš„æž„é€ å™¨; å¦‚æžœæŸä¸ªç±»é€šè¿‡ this è°ƒç”¨äº†åŒç±»ä¸­é‡è½½çš„æž„é€ å™¨, å°±ä¼šä¾æ¬¡æ‰§è¡Œæ­¤çˆ¶ç±»çš„å¤šä¸ª
+                æž„é€ å™¨ 
                 
         
-        ×ÓÀà¹¹ÔìÆ÷µ÷ÓÃ¸¸Àà¹¹ÔìÆ÷ÇéÐÎ:
-            1. ×ÓÀà¹¹ÔìÆ÷Ö´ÐÐÌåµÄµÚÒ»ÐÐÊ¹ÓÃ super ÏÔÊ½µÄµ÷ÓÃ¸¸Àà¹¹ÔìÆ÷, ÏµÍ³½«¸ù¾Ý super µ÷ÓÃÀï´«Èë
-                µÄÊµ²ÎÁÐ±íµ÷ÓÃ¸¸Àà¶ÔÓ¦µÄ¹¹ÔìÆ÷
-            2. ×ÓÀà¹¹ÔìÆ÷Ö´ÐÐÌåµÄµÚÒ»ÐÐ´úÂëÊ¹ÓÃ this ÏÔÊ½µ÷ÓÃ±¾ÀàÖÐÖØÔØµÄ¹¹ÔìÆ÷, ÏµÍ³½«¸ù¾Ý this µ÷ÓÃ
-                Àï´«ÈëµÄÊµ²ÎÁÐ±íµ÷ÓÃ±¾ÀàÖÐµÄÁíÒ»¸ö¹¹ÔìÆ÷, Ö´ÐÐ±¾ÀàÖÐÁíÍâÒ»¸ö¹¹ÔìÆ÷Ê±¼´»áµ÷ÓÃ¸¸ÀàµÄ
-                ¹¹ÔìÆ÷
-            3. ×ÓÀà¹¹ÔìÆ÷Ö´ÐÐÌåÖÐ¼ÈÃ»ÓÐ super µ÷ÓÃ, Ò²Ã»ÓÐ this µ÷ÓÃ,ÏµÍ³½«»áÔÚÖ´ÐÐ×ÓÀà¹¹ÔìÆ÷Ö®Ç°,
-                ÒþÊ½µ÷ÓÃ¸¸ÀàÎÞ²ÎÊýµÄ¹¹ÔìÆ÷
+        å­ç±»æž„é€ å™¨è°ƒç”¨çˆ¶ç±»æž„é€ å™¨æƒ…å½¢:
+            1. å­ç±»æž„é€ å™¨æ‰§è¡Œä½“çš„ç¬¬ä¸€è¡Œä½¿ç”¨ super æ˜¾å¼çš„è°ƒç”¨çˆ¶ç±»æž„é€ å™¨, ç³»ç»Ÿå°†æ ¹æ® super è°ƒç”¨é‡Œä¼ å…¥
+                çš„å®žå‚åˆ—è¡¨è°ƒç”¨çˆ¶ç±»å¯¹åº”çš„æž„é€ å™¨
+            2. å­ç±»æž„é€ å™¨æ‰§è¡Œä½“çš„ç¬¬ä¸€è¡Œä»£ç ä½¿ç”¨ this æ˜¾å¼è°ƒç”¨æœ¬ç±»ä¸­é‡è½½çš„æž„é€ å™¨, ç³»ç»Ÿå°†æ ¹æ® this è°ƒç”¨
+                é‡Œä¼ å…¥çš„å®žå‚åˆ—è¡¨è°ƒç”¨æœ¬ç±»ä¸­çš„å¦ä¸€ä¸ªæž„é€ å™¨, æ‰§è¡Œæœ¬ç±»ä¸­å¦å¤–ä¸€ä¸ªæž„é€ å™¨æ—¶å³ä¼šè°ƒç”¨çˆ¶ç±»çš„
+                æž„é€ å™¨
+            3. å­ç±»æž„é€ å™¨æ‰§è¡Œä½“ä¸­æ—¢æ²¡æœ‰ super è°ƒç”¨, ä¹Ÿæ²¡æœ‰ this è°ƒç”¨,ç³»ç»Ÿå°†ä¼šåœ¨æ‰§è¡Œå­ç±»æž„é€ å™¨ä¹‹å‰,
+                éšå¼è°ƒç”¨çˆ¶ç±»æ— å‚æ•°çš„æž„é€ å™¨
             
-        Àý×Ó1:
-            // ×ÓÀàÍ¨¹ý super µ÷ÓÃ¸¸ÀàµÄ¹¹ÔìÆ÷ 
+        ä¾‹å­1:
+            // å­ç±»é€šè¿‡ super è°ƒç”¨çˆ¶ç±»çš„æž„é€ å™¨ 
             class base
             {
                 public double size;
@@ -1409,161 +1409,161 @@
             public class Sub extends Base
             {
                 public String color;
-                // ×Ô¶¨Òå¹¹ÔìÆ÷
+                // è‡ªå®šä¹‰æž„é€ å™¨
                 public Sub(double size, String name, String color)
                 {
-                    // Í¨¹ý super µ÷ÓÃÀ´µ÷ÓÃ¸¸Àà¹¹ÔìÆ÷³õÊ¼»¯¹ý³Ì
+                    // é€šè¿‡ super è°ƒç”¨æ¥è°ƒç”¨çˆ¶ç±»æž„é€ å™¨åˆå§‹åŒ–è¿‡ç¨‹
                     super(size, name);
                     this.color = color;
                 }
                 piblic static void main(String[] args)
                 {
-                    Sub a = new Sub(5.6, "²âÊÔ¶ÔÏó", "ºìÉ«");
-                    // Êä³ö Sub ¶ÔÏóµÄÈý¸öÊµÀý±äÁ¿
+                    Sub a = new Sub(5.6, "æµ‹è¯•å¯¹è±¡", "çº¢è‰²");
+                    // è¾“å‡º Sub å¯¹è±¡çš„ä¸‰ä¸ªå®žä¾‹å˜é‡
                     System.out.println(a.size + " --- " + s.name + " --- " + s.color);
                 }
             }
 
-        Àý×Ó2:
-            // ¶¨ÒåÈý¸öÀà,ËûÃÇÖ®¼äÓÐÑÏ¸ñµÄ¼¯³É¹ØÏµ,ÁË½â¹¹ÔìÆ÷Ö®¼äµÄµ÷ÓÃ¹ØÏµ
+        ä¾‹å­2:
+            // å®šä¹‰ä¸‰ä¸ªç±»,ä»–ä»¬ä¹‹é—´æœ‰ä¸¥æ ¼çš„é›†æˆå…³ç³»,äº†è§£æž„é€ å™¨ä¹‹é—´çš„è°ƒç”¨å…³ç³»
             public Creature
             {
                 public Creature()
                 {
-                    System.out.println("CreatureÎÞ²ÎÊýµÄ¹¹ÔìÆ÷");
+                    System.out.println("Creatureæ— å‚æ•°çš„æž„é€ å™¨");
                 }
             }
             class Animal extends Creature
             {
                 public Animal(String name)
                 {
-                    System.out.println("Animal ´øÒ»¸ö²ÎÊýµÄ¹¹ÔìÆ÷, " + "¸Ã¶¯ÎïµÄnameÎª " + name);
+                    System.out.println("Animal å¸¦ä¸€ä¸ªå‚æ•°çš„æž„é€ å™¨, " + "è¯¥åŠ¨ç‰©çš„nameä¸º " + name);
                 }
                 public Animal(String name, int age)
                 {
-                    // Ê¹ÓÃ this µ÷ÓÃÍ¬Ò»¸öÖØÔØµÄ¹¹ÔìÆ÷
+                    // ä½¿ç”¨ this è°ƒç”¨åŒä¸€ä¸ªé‡è½½çš„æž„é€ å™¨
                     this(name);
-                    System.out.println("Animal´øÓÐÁ½¸ö²ÎÊýµÄ¹¹ÔìÆ÷, " + " Æä age Îª " + age);
+                    System.out.println("Animalå¸¦æœ‰ä¸¤ä¸ªå‚æ•°çš„æž„é€ å™¨, " + " å…¶ age ä¸º " + age);
                 }
             }
             public class Wolf extends Animal
             {
                 public Wolf()
                 {
-                    // ÏÔÊ½µ÷ÓÃ¸¸ÀàÓÐÁ½¸ö²ÎÊýµÄ¹¹ÔìÆ÷
-                    super("»ÒÌ«ÀÇ", 3);
-                    System.out.println("WolfÎÞ²ÎÊýµÄ¹¹ÔìÆ÷");
+                    // æ˜¾å¼è°ƒç”¨çˆ¶ç±»æœ‰ä¸¤ä¸ªå‚æ•°çš„æž„é€ å™¨
+                    super("ç°å¤ªç‹¼", 3);
+                    System.out.println("Wolfæ— å‚æ•°çš„æž„é€ å™¨");
                 }
                 public static void main(Srting[] args)
                 {
                     new Wolf();
                 }
             }
-            ³ÌÐòËµÃ÷:
-                1. ³ÌÐòÊä³ö: 
-                    creature ÎÞ²ÎÊýµÄ¹¹ÔìÆ÷ 
-                    Animal ´øÓÐÒ»¸ö²ÎÊýµÄ¹¹ÔìÆ÷, ¸Ã¶¯ÎïµÄ name Îª»ÒÌ«ÀÇ
-                    Animal ´øÓÐÁ½¸ö²ÎÊýµÄ¹¹ÔìÆ÷, Æä age Îª 3 
-                    Wolf ÎÞ²ÎÊý¹¹ÔìÆ÷
+            ç¨‹åºè¯´æ˜Ž:
+                1. ç¨‹åºè¾“å‡º: 
+                    creature æ— å‚æ•°çš„æž„é€ å™¨ 
+                    Animal å¸¦æœ‰ä¸€ä¸ªå‚æ•°çš„æž„é€ å™¨, è¯¥åŠ¨ç‰©çš„ name ä¸ºç°å¤ªç‹¼
+                    Animal å¸¦æœ‰ä¸¤ä¸ªå‚æ•°çš„æž„é€ å™¨, å…¶ age ä¸º 3 
+                    Wolf æ— å‚æ•°æž„é€ å™¨
                        
                 
-7. ¶àÌ¬
-    7.1 ¶àÌ¬ÐÔ
-        ËµÃ÷:
-            1. JavaÒýÓÃ±äÁ¿ÓÐÁ½¸öÀàÐÍ:Ò»¸öÊÇ±àÒëÊ±ÀàÐÍ, Ò»¸öÊÇÔËÐÐÊ±ÀàÐÍ. ±àÒëÊ±ÀàÐÍÓÉÉùÃ÷¸Ã±äÁ¿Ê±
-                Ê¹ÓÃµÄÀàÐÍ¾ö¶¨, ÔËÐÐÊ±ÀàÐÍÓÉÊµ¼Ê¸³¸ø¸Ã±äÁ¿µÄ¶ÔÏó¾ö¶¨. Èç¹û±àÒëÊ±ÀàÐÍºÍÔËÐÐÊ±ÀàÐÍ²»
-                Ò»ÖÂ, ¾Í¿ÉÄÜ³öÏÖËùÎ½µÄ¶àÌ¬(Polymorphism)
-            2. ÒòÎª×ÓÀàÊÇÒ»ÖÖÌØÊâµÄ¸¸Àà, Òò´ËJavaÔÊÐí°ÑÒ»¸ö×ÓÀà¶ÔÏóÖ±½Ó¸³¸øÒ»¸ö¸¸ÀàÒýÓÃ±äÁ¿, ÎÞÐë
-                ÈÎºÎÀàÐÍµÄ×ª»», »òÕß±»³ÆÖ®ÎªÏòÉÏ×ªÐÍ(upcasting), ÏòÉÏ×ªÐÍÓÉÏµÍ³×Ô¶¯Íê³É.
-            3. ÏàÍ¬ÀàÐÍµÄ±äÁ¿, µ÷ÓÃÍ¬Ò»¸ö·½·¨Ê±³ÊÏÖ³ö¶àÖÖ²»Í¬µÄÐÐÎªÌØÕ÷,¾ÍÊÇ¶àÌ¬
-            4. ÒýÓÃ±äÁ¿ÔÚ±àÒë½×¶ÎÖ»ÄÜµ÷ÓÃÆä±àÒëÊ±ÀàÐÍËù¾ßÓÐµÄ·½·¨£¬µ«ÔËÐÐÊ±ÔòÖ´ÐÐËüÔËÐÐÊ±ÀàÐÍËù¾ßÓÐ
-                µÄ·½·¨£¬ËùÒÔ±àÐ´ Java ´úÂëÊ±£¬ÒýÓÃ±äÁ¿Ö»ÄÜµ÷ÓÃÉùÃ÷±äÁ¿Ê±ËùÓÃÀàÀï°üº¬µÄ·½·¨¡£
-                ÀýÈç: Í¨¹ý Object p = new Person(); ´úÂë¶¨ÒåÁËÒ»¸ö±äÁ¿ p, ÔòÕâ¸ö p Ö»ÄÜµ÷ÓÃ Object  
-                ÀàµÄ·½·¨£¬¶ø²»ÄÜµ÷ÓÃ Person ÀàÀï¶¨ÒåµÄ·½·¨
-            5. Í¨¹ýÒýÓÃ±äÁ¿À´·ÃÎÊÆä°üº¬µÄÊµÀý±äÁ¿Ê±£¬ÏµÍ³×ÜÊÇÊÔÍ¼·ÃÎÊËü±àÒëÊ±ÀàÐÍËù¶¨ÒåµÄ³ÉÔ±±äÁ¿£¬
-                ¶ø²»ÊÇËüÔËÐÐÊ±ÀàÐÍËù¶¨ÒåµÄ³ÉÔ±±äÁ¿
+7. å¤šæ€
+    7.1 å¤šæ€æ€§
+        è¯´æ˜Ž:
+            1. Javaå¼•ç”¨å˜é‡æœ‰ä¸¤ä¸ªç±»åž‹:ä¸€ä¸ªæ˜¯ç¼–è¯‘æ—¶ç±»åž‹, ä¸€ä¸ªæ˜¯è¿è¡Œæ—¶ç±»åž‹. ç¼–è¯‘æ—¶ç±»åž‹ç”±å£°æ˜Žè¯¥å˜é‡æ—¶
+                ä½¿ç”¨çš„ç±»åž‹å†³å®š, è¿è¡Œæ—¶ç±»åž‹ç”±å®žé™…èµ‹ç»™è¯¥å˜é‡çš„å¯¹è±¡å†³å®š. å¦‚æžœç¼–è¯‘æ—¶ç±»åž‹å’Œè¿è¡Œæ—¶ç±»åž‹ä¸
+                ä¸€è‡´, å°±å¯èƒ½å‡ºçŽ°æ‰€è°“çš„å¤šæ€(Polymorphism)
+            2. å› ä¸ºå­ç±»æ˜¯ä¸€ç§ç‰¹æ®Šçš„çˆ¶ç±», å› æ­¤Javaå…è®¸æŠŠä¸€ä¸ªå­ç±»å¯¹è±¡ç›´æŽ¥èµ‹ç»™ä¸€ä¸ªçˆ¶ç±»å¼•ç”¨å˜é‡, æ— é¡»
+                ä»»ä½•ç±»åž‹çš„è½¬æ¢, æˆ–è€…è¢«ç§°ä¹‹ä¸ºå‘ä¸Šè½¬åž‹(upcasting), å‘ä¸Šè½¬åž‹ç”±ç³»ç»Ÿè‡ªåŠ¨å®Œæˆ.
+            3. ç›¸åŒç±»åž‹çš„å˜é‡, è°ƒç”¨åŒä¸€ä¸ªæ–¹æ³•æ—¶å‘ˆçŽ°å‡ºå¤šç§ä¸åŒçš„è¡Œä¸ºç‰¹å¾,å°±æ˜¯å¤šæ€
+            4. å¼•ç”¨å˜é‡åœ¨ç¼–è¯‘é˜¶æ®µåªèƒ½è°ƒç”¨å…¶ç¼–è¯‘æ—¶ç±»åž‹æ‰€å…·æœ‰çš„æ–¹æ³•ï¼Œä½†è¿è¡Œæ—¶åˆ™æ‰§è¡Œå®ƒè¿è¡Œæ—¶ç±»åž‹æ‰€å…·æœ‰
+                çš„æ–¹æ³•ï¼Œæ‰€ä»¥ç¼–å†™ Java ä»£ç æ—¶ï¼Œå¼•ç”¨å˜é‡åªèƒ½è°ƒç”¨å£°æ˜Žå˜é‡æ—¶æ‰€ç”¨ç±»é‡ŒåŒ…å«çš„æ–¹æ³•ã€‚
+                ä¾‹å¦‚: é€šè¿‡ Object p = new Person(); ä»£ç å®šä¹‰äº†ä¸€ä¸ªå˜é‡ p, åˆ™è¿™ä¸ª p åªèƒ½è°ƒç”¨ Object  
+                ç±»çš„æ–¹æ³•ï¼Œè€Œä¸èƒ½è°ƒç”¨ Person ç±»é‡Œå®šä¹‰çš„æ–¹æ³•
+            5. é€šè¿‡å¼•ç”¨å˜é‡æ¥è®¿é—®å…¶åŒ…å«çš„å®žä¾‹å˜é‡æ—¶ï¼Œç³»ç»Ÿæ€»æ˜¯è¯•å›¾è®¿é—®å®ƒç¼–è¯‘æ—¶ç±»åž‹æ‰€å®šä¹‰çš„æˆå‘˜å˜é‡ï¼Œ
+                è€Œä¸æ˜¯å®ƒè¿è¡Œæ—¶ç±»åž‹æ‰€å®šä¹‰çš„æˆå‘˜å˜é‡
             
-        Àý×Ó:
+        ä¾‹å­:
             class BaseClass
             {
                 public int book = 6;
                 public void base()
                 {
-                    System.out.println("¸¸ÀàµÄÆÕÍ¨·½·¨!");
+                    System.out.println("çˆ¶ç±»çš„æ™®é€šæ–¹æ³•!");
                 }
                 public void test()
                 {
-                    System.out.println("¸¸ÀàµÄ±»¸²¸ÇµÄ·½·¨!");
+                    System.out.println("çˆ¶ç±»çš„è¢«è¦†ç›–çš„æ–¹æ³•!");
                 }
             }
             public class SubClass extends BaseClass 
             {
-                // ÖØÐÂ¶¨ÒåÒ»¸ö book ÊµÀý±äÁ¿Òþ²Ø¸¸ÀàµÄbookÊµÀý±äÁ¿
-                public String book = "ÇáÁ¿¼¶ Java EE ÆóÒµÓ¦ÓÃÊµÕ½";
+                // é‡æ–°å®šä¹‰ä¸€ä¸ª book å®žä¾‹å˜é‡éšè—çˆ¶ç±»çš„bookå®žä¾‹å˜é‡
+                public String book = "è½»é‡çº§ Java EE ä¼ä¸šåº”ç”¨å®žæˆ˜";
                 public void test()
                 {
-                    System.out.println("×ÓÀàµÄ¸²¸Ç¸¸ÀàµÄ·½·¨");
+                    System.out.println("å­ç±»çš„è¦†ç›–çˆ¶ç±»çš„æ–¹æ³•");
                 }
                 public void sub()
                 {
-                    System.out.println("×ÓÀàµÄÆÕÍ¨·½·¨");
+                    System.out.println("å­ç±»çš„æ™®é€šæ–¹æ³•");
                 }
                 public static void main(String[] args)
                 {
-                    // ÏÂÃæ±àÒëÊ±ÀàÐÍºÍÔËÐÐÊÇÀàÐÍÍêÈ«Ò»ÖÂ, Òò´Ë²»´æÔÚ¶àÌ¬
+                    // ä¸‹é¢ç¼–è¯‘æ—¶ç±»åž‹å’Œè¿è¡Œæ˜¯ç±»åž‹å®Œå…¨ä¸€è‡´, å› æ­¤ä¸å­˜åœ¨å¤šæ€
                     BaseClass bc = new BaseClass();
-                    // Êä³ö 6
+                    // è¾“å‡º 6
                     System.out.println(bc.book);
-                    // ÏÂÃæÁ½´Îµ÷ÓÃ½«Ö´ÐÐ BaseClass µÄ·½·¨ 
+                    // ä¸‹é¢ä¸¤æ¬¡è°ƒç”¨å°†æ‰§è¡Œ BaseClass çš„æ–¹æ³• 
                     bc.base();
                     bc.test();
                     
-                    // ÏÂÃæ±àÒëÊ±ÀàÐÍºÍÔËÐÐÊ±ÀàÐÍÍêÈ«Ò»ÖÂ, ²»´æÔÚ¶àÌ¬
+                    // ä¸‹é¢ç¼–è¯‘æ—¶ç±»åž‹å’Œè¿è¡Œæ—¶ç±»åž‹å®Œå…¨ä¸€è‡´, ä¸å­˜åœ¨å¤šæ€
                     SubClass sc = new SubClass();
-                    // Êä³ö "ÇáÁ¿¼¶ Java EE ÆóÒµÓ¦ÓÃÊµÕ½"
+                    // è¾“å‡º "è½»é‡çº§ Java EE ä¼ä¸šåº”ç”¨å®žæˆ˜"
                     System.out.println(sc.book);
-                    // ÏÂÃæµ÷ÓÃ½«Ö´ÐÐ´Ó¸¸Àà¼Ì³ÐµÃµ½µÄ base() ·½·¨ 
+                    // ä¸‹é¢è°ƒç”¨å°†æ‰§è¡Œä»Žçˆ¶ç±»ç»§æ‰¿å¾—åˆ°çš„ base() æ–¹æ³• 
                     sc.base();
-                    // ÏÂÃæµ÷ÓÃ½«Ö´ÐÐµ±Ç°ÀàµÄ test() ·½·¨ 
+                    // ä¸‹é¢è°ƒç”¨å°†æ‰§è¡Œå½“å‰ç±»çš„ test() æ–¹æ³• 
                     sc.test();
                     
-                    // ÏÂÃæ±àÒëÊ±ÀàÐÍºÍÔËÐÐÊÇÀàÐÍ²»Ò»Ñù, ¶àÌ¬·¢Éú
+                    // ä¸‹é¢ç¼–è¯‘æ—¶ç±»åž‹å’Œè¿è¡Œæ˜¯ç±»åž‹ä¸ä¸€æ ·, å¤šæ€å‘ç”Ÿ
                     BaseClass ploymophicBc = new SubClass();
-                    // Êä³ö 6 ---- ±íÃ÷·ÃÎÊµÄÊÇ¸¸Àà¶ÔÏóµÄÊµÀý±äÁ¿
+                    // è¾“å‡º 6 ---- è¡¨æ˜Žè®¿é—®çš„æ˜¯çˆ¶ç±»å¯¹è±¡çš„å®žä¾‹å˜é‡
                     System.out.println(ploymophicBc.book);
-                    //ÏÂÃæµ÷ÓÃ½«Ö´ÐÐ´Ó¸¸Àà¼Ì³ÐµÃµ½µÄ base() ·½·¨ 
+                    //ä¸‹é¢è°ƒç”¨å°†æ‰§è¡Œä»Žçˆ¶ç±»ç»§æ‰¿å¾—åˆ°çš„ base() æ–¹æ³• 
                     ploymophicBc.base();
-                    // ÏÂÃæµ÷ÓÃ½«Ö´ÐÐµ±Ç°ÀàµÄ test() ·½·¨ 
+                    // ä¸‹é¢è°ƒç”¨å°†æ‰§è¡Œå½“å‰ç±»çš„ test() æ–¹æ³• 
                     ploymophicBc.test();
-                    // ÒòÎª ploymophicBc µÄ±àÒëÊ±ÀàÐÍ(Ò²¾ÍÊÇÉùÃ÷µÄÀàÐÍ)ÊÇ BaseClass
-                    // BaseClass ÀàÃ»ÓÐÌá¹© sub() ·½·¨, ËùÒÔÏÂÃæµÄ´úÂë±àÒëÊ±»á³öÏÖ´íÎó
+                    // å› ä¸º ploymophicBc çš„ç¼–è¯‘æ—¶ç±»åž‹(ä¹Ÿå°±æ˜¯å£°æ˜Žçš„ç±»åž‹)æ˜¯ BaseClass
+                    // BaseClass ç±»æ²¡æœ‰æä¾› sub() æ–¹æ³•, æ‰€ä»¥ä¸‹é¢çš„ä»£ç ç¼–è¯‘æ—¶ä¼šå‡ºçŽ°é”™è¯¯
                     //ploymophicBc.sub();
                 }
             }
 
-    7.2 ÒýÓÃ±äÁ¿µÄÇ¿ÖÆÀàÐÍ×ª»»
-        ËµÃ÷£º
-            1. ÒýÓÃ±äÁ¿Ö»ÄÜµ÷ÓÃËü±àÒëÊ±ÀàÐÍµÄ·½·¨£¬¶ø²»ÄÜµ÷ÓÃËüÔËÐÐÊ±ÀàÐÍµÄ·½·¨£¬¼´Ê¹ËüÊµ¼ÊËùÒýÓÃµÄ
-                ¶ÔÏóÈ·Êµ°üº¬¸Ã·½·¨
-            2. Èç¹ûÐèÒªÈÃÒýÓÃ±äÁ¿µ÷ÓÃËüÔËÐÐÊ±ÀàÐÍµÄ·½·¨£¬Ôò±ØÐë°ÑËüÇ¿ÖÆÀàÐÍ×ª»»³ÉÔËÐÐÊ±µÄÀàÐÍ£¬
-        ÓÃ·¨:
+    7.2 å¼•ç”¨å˜é‡çš„å¼ºåˆ¶ç±»åž‹è½¬æ¢
+        è¯´æ˜Žï¼š
+            1. å¼•ç”¨å˜é‡åªèƒ½è°ƒç”¨å®ƒç¼–è¯‘æ—¶ç±»åž‹çš„æ–¹æ³•ï¼Œè€Œä¸èƒ½è°ƒç”¨å®ƒè¿è¡Œæ—¶ç±»åž‹çš„æ–¹æ³•ï¼Œå³ä½¿å®ƒå®žé™…æ‰€å¼•ç”¨çš„
+                å¯¹è±¡ç¡®å®žåŒ…å«è¯¥æ–¹æ³•
+            2. å¦‚æžœéœ€è¦è®©å¼•ç”¨å˜é‡è°ƒç”¨å®ƒè¿è¡Œæ—¶ç±»åž‹çš„æ–¹æ³•ï¼Œåˆ™å¿…é¡»æŠŠå®ƒå¼ºåˆ¶ç±»åž‹è½¬æ¢æˆè¿è¡Œæ—¶çš„ç±»åž‹ï¼Œ
+        ç”¨æ³•:
             (type)variable      
-            ËµÃ÷£º ÕâÖÖÓÃ·¨¿ÉÒÔ½« variable ±äÁ¿×ª»»³ÉÒ»¸ö type ÀàÐÍµÄ±äÁ¿
+            è¯´æ˜Žï¼š è¿™ç§ç”¨æ³•å¯ä»¥å°† variable å˜é‡è½¬æ¢æˆä¸€ä¸ª type ç±»åž‹çš„å˜é‡
 
-        ×¢Òâµã£º
-            1. »ù±¾ÀàÐÍÖ®¼ä×ª»»Ö»ÄÜÔÚÊýÖµÀàÐÍÖ®¼ä½øÐÐ£¬°üÀ¨(ÕûÊýÀàÐÍ£¬×Ö·ûÐÍ£¬¸¡µãÐÍ)£¬µ«ÊÇÊýÖµÀàÐÍ
-                ºÍ²¼¶ûÀàÐÍÖ®¼ä²»ÄÜ½øÐÐÀàÐÍ×ª»»
-            2. ÒýÓÃÀàÐÍÖ®¼äµÄ×ª»»Ö»ÄÜÔÚ¾ßÓÐ¼Ì³Ð¹ØÏµµÄÁ½¸öÀàÐÍÖ®¼ä½øÐÐ£¬Èç¹ûÊÇÁ½¸öÃ»ÓÐÈÎºÎ¼Ì³Ð¹ØÏµµÄ
-                ÀàÐÍ£¬ÔòÎÞ·¨½øÐÐÀàÐÍ×ª»»£¬Èç£ºÊÔÍ¼½«Ò»¸ö¸¸ÀàÊµÀý×ª»»³É×ÓÀàÀàÐÍ£¬ÔòÕâ¸ö¶ÔÏó±ØÐëÊµ¼Ê
-                ÉÏÊÇ×ÓÀàÊµÀý²ÅÐÐ(¼´±àÒëÊ±ÀàÐÍÎª¸¸ÀàÀàÐÍ£¬¶øÔËÐÐÊ±ÀàÐÍÎª×ÓÀàÀàÐÍ), ·ñÔò±¨ ClasscaCas-
-                tException Òì³£
-            3. ÔÚ½øÐÐÇ¿ÖÆ×ª»»Ö®Ç°£¬Ó¦ÏÈÍ¨¹ý instanceof ÔËËã·ûÀ´ÅÐ¶ÏÊÇ·ñ¿ÉÒÔ³É¹¦×ª»»£¬ÈçÏÂÃæÀý×Ó2
-            4. µ±°ÑÒ»¸ö×ÓÀà¶ÔÏó¸³¸ø¸¸ÀàÒýÓÃ±äÁ¿Ê±£¬±»³ÆÎªÏòÉÏ×ªÐÍ(upcasting), ÕâÖÖ×ªÐÍ×ÜÊÇ¿ÉÒÔ³É¹¦£¬
-                ÕâÖÖ×ªÐÍ±íÃ÷Õâ¸öÒýÓÃ±äÁ¿µÄ±àÒëÊ±ÀàÐÍÊ±¸¸Àà£¬µ«Êµ¼ÊÖ´ÐÐËûµÄ·½·¨Ê±£¬ÒÀÈ»±íÏÖ³ö×ÓÀà¶ÔÏó
-                µÄÐÐÎª·½Ê½£»µ«ÊÇ°ÑÒ»¸ö¸¸Àà¶ÔÏó¸³¸ø×ÓÀàÒýÓÃ±äÁ¿Ê±£¬¾ÍÐèÒª½øÐÐÇ¿ÖÆÀàÐÍ×ª»»£¬¶øÇÒ»¹¿ÉÄÜ
-                ÔÚÔËÐÐÊ±²úÉúClasscaCastExceptionÒì³£
-        Àý×Ó1£º
-            // Ç¿ÖÆÀàÐÍ×ª»»µÄÀý×Ó
+        æ³¨æ„ç‚¹ï¼š
+            1. åŸºæœ¬ç±»åž‹ä¹‹é—´è½¬æ¢åªèƒ½åœ¨æ•°å€¼ç±»åž‹ä¹‹é—´è¿›è¡Œï¼ŒåŒ…æ‹¬(æ•´æ•°ç±»åž‹ï¼Œå­—ç¬¦åž‹ï¼Œæµ®ç‚¹åž‹)ï¼Œä½†æ˜¯æ•°å€¼ç±»åž‹
+                å’Œå¸ƒå°”ç±»åž‹ä¹‹é—´ä¸èƒ½è¿›è¡Œç±»åž‹è½¬æ¢
+            2. å¼•ç”¨ç±»åž‹ä¹‹é—´çš„è½¬æ¢åªèƒ½åœ¨å…·æœ‰ç»§æ‰¿å…³ç³»çš„ä¸¤ä¸ªç±»åž‹ä¹‹é—´è¿›è¡Œï¼Œå¦‚æžœæ˜¯ä¸¤ä¸ªæ²¡æœ‰ä»»ä½•ç»§æ‰¿å…³ç³»çš„
+                ç±»åž‹ï¼Œåˆ™æ— æ³•è¿›è¡Œç±»åž‹è½¬æ¢ï¼Œå¦‚ï¼šè¯•å›¾å°†ä¸€ä¸ªçˆ¶ç±»å®žä¾‹è½¬æ¢æˆå­ç±»ç±»åž‹ï¼Œåˆ™è¿™ä¸ªå¯¹è±¡å¿…é¡»å®žé™…
+                ä¸Šæ˜¯å­ç±»å®žä¾‹æ‰è¡Œ(å³ç¼–è¯‘æ—¶ç±»åž‹ä¸ºçˆ¶ç±»ç±»åž‹ï¼Œè€Œè¿è¡Œæ—¶ç±»åž‹ä¸ºå­ç±»ç±»åž‹), å¦åˆ™æŠ¥ ClasscaCas-
+                tException å¼‚å¸¸
+            3. åœ¨è¿›è¡Œå¼ºåˆ¶è½¬æ¢ä¹‹å‰ï¼Œåº”å…ˆé€šè¿‡ instanceof è¿ç®—ç¬¦æ¥åˆ¤æ–­æ˜¯å¦å¯ä»¥æˆåŠŸè½¬æ¢ï¼Œå¦‚ä¸‹é¢ä¾‹å­2
+            4. å½“æŠŠä¸€ä¸ªå­ç±»å¯¹è±¡èµ‹ç»™çˆ¶ç±»å¼•ç”¨å˜é‡æ—¶ï¼Œè¢«ç§°ä¸ºå‘ä¸Šè½¬åž‹(upcasting), è¿™ç§è½¬åž‹æ€»æ˜¯å¯ä»¥æˆåŠŸï¼Œ
+                è¿™ç§è½¬åž‹è¡¨æ˜Žè¿™ä¸ªå¼•ç”¨å˜é‡çš„ç¼–è¯‘æ—¶ç±»åž‹æ—¶çˆ¶ç±»ï¼Œä½†å®žé™…æ‰§è¡Œä»–çš„æ–¹æ³•æ—¶ï¼Œä¾ç„¶è¡¨çŽ°å‡ºå­ç±»å¯¹è±¡
+                çš„è¡Œä¸ºæ–¹å¼ï¼›ä½†æ˜¯æŠŠä¸€ä¸ªçˆ¶ç±»å¯¹è±¡èµ‹ç»™å­ç±»å¼•ç”¨å˜é‡æ—¶ï¼Œå°±éœ€è¦è¿›è¡Œå¼ºåˆ¶ç±»åž‹è½¬æ¢ï¼Œè€Œä¸”è¿˜å¯èƒ½
+                åœ¨è¿è¡Œæ—¶äº§ç”ŸClasscaCastExceptionå¼‚å¸¸
+        ä¾‹å­1ï¼š
+            // å¼ºåˆ¶ç±»åž‹è½¬æ¢çš„ä¾‹å­
             pbulic class ConversionTest
             {
                 public static void main(String[] args)
@@ -1572,159 +1572,159 @@
                     long l = (long)d;
                     System.out.println(l);
                     int in = 5;
-                    // ÊÔÍ¼°ÑÒ»¸öÊýÖµÐÍµÄ±äÁ¿×ª»»³ÉÒ»¸öBooleanÀàÐÍ£¬±àÒëÊ±½«±¨´í£º²»¿É×ª»»ÀàÐÍ
+                    // è¯•å›¾æŠŠä¸€ä¸ªæ•°å€¼åž‹çš„å˜é‡è½¬æ¢æˆä¸€ä¸ªBooleanç±»åž‹ï¼Œç¼–è¯‘æ—¶å°†æŠ¥é”™ï¼šä¸å¯è½¬æ¢ç±»åž‹
                     // boolean b = (boolean)in;
                     Object obj = "Hello";
-                    // obj ±äÁ¿µÄ±àÒëÊ±ÀàÐÍÎª Object, Object Óë String ´æÔÚ¼Ì³Ð¹ØÏµ,¿ÉÒÔÇ¿ÖÆÀàÐÍ×ª»»
-                    // ¶øÇÒ obj ±äÁ¿µÄÊµ¼ÊÀàÐÍÊÇ String£¬ËùÒÔÔËÐÐÊ±Ò²¿ÉÒÔÍ¨¹ý
+                    // obj å˜é‡çš„ç¼–è¯‘æ—¶ç±»åž‹ä¸º Object, Object ä¸Ž String å­˜åœ¨ç»§æ‰¿å…³ç³»,å¯ä»¥å¼ºåˆ¶ç±»åž‹è½¬æ¢
+                    // è€Œä¸” obj å˜é‡çš„å®žé™…ç±»åž‹æ˜¯ Stringï¼Œæ‰€ä»¥è¿è¡Œæ—¶ä¹Ÿå¯ä»¥é€šè¿‡
                     String objStr = (String)obj;
                     System.out.println(objStr);
-                    // ¶¨ÒåÒ»¸ö objPri ±äÁ¿£¬±àÒëÊ±ÀàÐÍÎª Object£¬Êµ¼ÊÀàÐÍÎª Integer
+                    // å®šä¹‰ä¸€ä¸ª objPri å˜é‡ï¼Œç¼–è¯‘æ—¶ç±»åž‹ä¸º Objectï¼Œå®žé™…ç±»åž‹ä¸º Integer
                     Object objPri = new Integer(5);
-                    // objPri ±äÁ¿µÄ±àÒëÊ±ÀàÐÍÎª Object£¬objPri µÄÔËÐÐÊ±ÀàÐÍÎª Integer
-                    // Object Óë Integer ´æÔÚ¼Ì³Ð¹ØÏµ
-                    // ¿ÉÒÔÇ¿ÖÆÀàÐÍ×ª»»£¬¶ø objPri ±äÁ¿µÄÊµ¼ÊÀàÐÍÊ± Integer
-                    // ËùÒÔÏÂÃæµÄ´úÂëÔËÐÐÊ±Òý·¢ClasscaCastExceptionÒì³£
+                    // objPri å˜é‡çš„ç¼–è¯‘æ—¶ç±»åž‹ä¸º Objectï¼ŒobjPri çš„è¿è¡Œæ—¶ç±»åž‹ä¸º Integer
+                    // Object ä¸Ž Integer å­˜åœ¨ç»§æ‰¿å…³ç³»
+                    // å¯ä»¥å¼ºåˆ¶ç±»åž‹è½¬æ¢ï¼Œè€Œ objPri å˜é‡çš„å®žé™…ç±»åž‹æ—¶ Integer
+                    // æ‰€ä»¥ä¸‹é¢çš„ä»£ç è¿è¡Œæ—¶å¼•å‘ClasscaCastExceptionå¼‚å¸¸
                     // String str = (String)objPri;
                 }
             }
 
-        Àý×Ó2£º
+        ä¾‹å­2ï¼š
             if (objPri instanceof String)
             {
                 String str = (String)objPri;
             }
             
-    7.3 instanceof ÔËËã·û
-        ËµÃ÷£º
-            1. instanceof ÔËËã·ûµÄÇ°Ò»¸ö²Ù×÷ÊýÍ¨³£ÊÇÒ»¸öÒýÓÃÀàÐÍ±äÁ¿£¬ºóÒ»¸ö²Ù×÷ÊýÍ¨³£ÊÇÒ»¸öÀà(Ò²¿É
-                ÒÔÊÇ½Ó¿Ú)£¬ÓÃÓÚÅÐ¶ÏÇ°ÃæµÄ¶ÔÏóÊÇ·ñÊÇºóÃæµÄÀà£¬»òÕßÆä×ÓÀà£¬ÊµÏÖÀàµÄÊµÀý£¬Èç¹ûÊÇ£¬·µ»Ø
-                true£¬·ñÔò·µ»Øfalse
-            2. instanceof ÔËËã·ûÇ°Ãæ²Ù×÷ÊýµÄ±àÒëÊ±ÀàÐÍÒªÃ´ÓëºóÃæµÄÀàÏàÍ¬£¬ÒªÃ´ÊÇºóÃæµÄÀà¾ßÓÐ¸¸×Ó¼Ì
-                ³Ð¹ØÏµ£¬·ñÔò»áÒý·¢±àÒë´íÎó
-            3. instanceof µÄ×÷ÓÃÊÇ£ºÔÚ½øÐÐÇ¿ÖÆÀàÐÍ×ª»»Ö®Ç°£¬Ê×ÏÈÅÐ¶ÏÇ°Ò»¸ö¶ÔÏóÊÇ·ñÊÇºóÒ»¸öÀàµÄÊµÀý£¬
-                ÊÇ·ñ¿É³É¹¦×ª»»£¬ÏÈÍ¨¹ý instanceof ÅÐ¶ÏÊÇ·ñ¿ÉÒÔ×ª»»£¬ ÔÙÊ¹ÓÃ type ÔËËã·û½øÐÐÇ¿×ª
+    7.3 instanceof è¿ç®—ç¬¦
+        è¯´æ˜Žï¼š
+            1. instanceof è¿ç®—ç¬¦çš„å‰ä¸€ä¸ªæ“ä½œæ•°é€šå¸¸æ˜¯ä¸€ä¸ªå¼•ç”¨ç±»åž‹å˜é‡ï¼ŒåŽä¸€ä¸ªæ“ä½œæ•°é€šå¸¸æ˜¯ä¸€ä¸ªç±»(ä¹Ÿå¯
+                ä»¥æ˜¯æŽ¥å£)ï¼Œç”¨äºŽåˆ¤æ–­å‰é¢çš„å¯¹è±¡æ˜¯å¦æ˜¯åŽé¢çš„ç±»ï¼Œæˆ–è€…å…¶å­ç±»ï¼Œå®žçŽ°ç±»çš„å®žä¾‹ï¼Œå¦‚æžœæ˜¯ï¼Œè¿”å›ž
+                trueï¼Œå¦åˆ™è¿”å›žfalse
+            2. instanceof è¿ç®—ç¬¦å‰é¢æ“ä½œæ•°çš„ç¼–è¯‘æ—¶ç±»åž‹è¦ä¹ˆä¸ŽåŽé¢çš„ç±»ç›¸åŒï¼Œè¦ä¹ˆæ˜¯åŽé¢çš„ç±»å…·æœ‰çˆ¶å­ç»§
+                æ‰¿å…³ç³»ï¼Œå¦åˆ™ä¼šå¼•å‘ç¼–è¯‘é”™è¯¯
+            3. instanceof çš„ä½œç”¨æ˜¯ï¼šåœ¨è¿›è¡Œå¼ºåˆ¶ç±»åž‹è½¬æ¢ä¹‹å‰ï¼Œé¦–å…ˆåˆ¤æ–­å‰ä¸€ä¸ªå¯¹è±¡æ˜¯å¦æ˜¯åŽä¸€ä¸ªç±»çš„å®žä¾‹ï¼Œ
+                æ˜¯å¦å¯æˆåŠŸè½¬æ¢ï¼Œå…ˆé€šè¿‡ instanceof åˆ¤æ–­æ˜¯å¦å¯ä»¥è½¬æ¢ï¼Œ å†ä½¿ç”¨ type è¿ç®—ç¬¦è¿›è¡Œå¼ºè½¬
 
-        Àý×Ó£º
+        ä¾‹å­ï¼š
             public class InstanceofTest
             {
                 public static void main(String[] args)
                 {
-                    // ÉùÃ÷ hello ÊÇÊ¹ÓÃ Object Àà,Ôò hello µÄ±àÒëÊ±ÀàÐÍÊÇ Object 
-                    // Object ÊÇËùÓÐÀàµÄ¸¸Àà, µ« hello ±äÁ¿µÄÊµ¼ÊÀàÐÍÊÇ String 
+                    // å£°æ˜Ž hello æ˜¯ä½¿ç”¨ Object ç±»,åˆ™ hello çš„ç¼–è¯‘æ—¶ç±»åž‹æ˜¯ Object 
+                    // Object æ˜¯æ‰€æœ‰ç±»çš„çˆ¶ç±», ä½† hello å˜é‡çš„å®žé™…ç±»åž‹æ˜¯ String 
                     Object hello = "Hello";
-                    // String Óë Object Àà´æÔÚ¼¯³É¹ØÏµ, ¿ÉÒÔ½øÐÐ instanceof ÔËËã, ·µ»Ø true
-                    System.out.println("×Ö·û´®ÊÇ·ñÊÇ Object ÀàµÄÊµÀý:" 
+                    // String ä¸Ž Object ç±»å­˜åœ¨é›†æˆå…³ç³», å¯ä»¥è¿›è¡Œ instanceof è¿ç®—, è¿”å›ž true
+                    System.out.println("å­—ç¬¦ä¸²æ˜¯å¦æ˜¯ Object ç±»çš„å®žä¾‹:" 
                         + (hello instanceof Object));
-                    System.out.println("×Ö·û´®ÊÇ·ñÊÇ String ÀàµÄÊµÀý:" 
-                        + (hello instanceof String));   // ·µ»Ø ture
-                    // Math Óë Object Àà´æÔÚ¼Ì³Ð¹ØÏµ,¿ÉÒÔ½øÐÐ instanceof ÔËËã, ·µ»Ø false
-                    System.out.println("×Ö·û´®ÊÇ·ñÊÇ Math ÀàµÄÊµÀý:" 
-                        + (hello instanceof Math));   // ·µ»Ø false
-                    // String ÊµÏÖÁË Comparable ½Ó¿Ú, ËùÒÔ·µ»Ø true
-                    System.out.println("×Ö·û´®ÊÇ·ñÊÇ Comparable ½Ó¿ÚµÄÊµÀý:" 
-                        + (hello instanceof Comparable));   // ·µ»Ø ture
+                    System.out.println("å­—ç¬¦ä¸²æ˜¯å¦æ˜¯ String ç±»çš„å®žä¾‹:" 
+                        + (hello instanceof String));   // è¿”å›ž ture
+                    // Math ä¸Ž Object ç±»å­˜åœ¨ç»§æ‰¿å…³ç³»,å¯ä»¥è¿›è¡Œ instanceof è¿ç®—, è¿”å›ž false
+                    System.out.println("å­—ç¬¦ä¸²æ˜¯å¦æ˜¯ Math ç±»çš„å®žä¾‹:" 
+                        + (hello instanceof Math));   // è¿”å›ž false
+                    // String å®žçŽ°äº† Comparable æŽ¥å£, æ‰€ä»¥è¿”å›ž true
+                    System.out.println("å­—ç¬¦ä¸²æ˜¯å¦æ˜¯ Comparable æŽ¥å£çš„å®žä¾‹:" 
+                        + (hello instanceof Comparable));   // è¿”å›ž ture
                     String a = "hello";
-                    // String ÀàºÍ Math ÀàÃ»ÓÐ¼Ì³Ð¹ØÏµ, ËùÒÔÏÂÃæµÄ´úÂë±àÒëÎÞ·¨Í¨¹ý
-                    System.out.println("×Ö·û´®ÊÇ·ñÊÇ Math ÀàµÄÊµÀý:" 
-                        + (hello instanceof Math ));  // ±àÒë±¨´í
+                    // String ç±»å’Œ Math ç±»æ²¡æœ‰ç»§æ‰¿å…³ç³», æ‰€ä»¥ä¸‹é¢çš„ä»£ç ç¼–è¯‘æ— æ³•é€šè¿‡
+                    System.out.println("å­—ç¬¦ä¸²æ˜¯å¦æ˜¯ Math ç±»çš„å®žä¾‹:" 
+                        + (hello instanceof Math ));  // ç¼–è¯‘æŠ¥é”™
                 }
             }
 
 
-8. ¼Ì³ÐÓë×éºÏ
-    8.1 Ê¹ÓÃ¼Ì³ÐµÄ×¢Òâµã
-        ËµÃ÷:
-            1. ×ÓÀàÀ©Õ¹¸¸ÀàÒÔºó,Èç¹û·ÃÎÊÈ¨ÏÞÔÊÐí,×ÓÀà¿ÉÒÔÖ±½Ó·ÃÎÊ¸¸ÀàµÄ³ÉÔ±±äÁ¿ºÍ·½·¨, Ïàµ±ÓÚ×ÓÀà¿É
-                ÒÔÖ±½Ó·þÓÃ¸¸Àà³ÉÔ±±äÁ¿ºÍ·½·¨
-            2. ¼Ì³ÐÑÏÖØÆÆ»µÁË¸¸ÀàµÄ·â×°ÐÔ
+8. ç»§æ‰¿ä¸Žç»„åˆ
+    8.1 ä½¿ç”¨ç»§æ‰¿çš„æ³¨æ„ç‚¹
+        è¯´æ˜Ž:
+            1. å­ç±»æ‰©å±•çˆ¶ç±»ä»¥åŽ,å¦‚æžœè®¿é—®æƒé™å…è®¸,å­ç±»å¯ä»¥ç›´æŽ¥è®¿é—®çˆ¶ç±»çš„æˆå‘˜å˜é‡å’Œæ–¹æ³•, ç›¸å½“äºŽå­ç±»å¯
+                ä»¥ç›´æŽ¥æœç”¨çˆ¶ç±»æˆå‘˜å˜é‡å’Œæ–¹æ³•
+            2. ç»§æ‰¿ä¸¥é‡ç ´åäº†çˆ¶ç±»çš„å°è£…æ€§
 
-        Éè¼Æ¸¸ÀàµÄÔ­Ôò:
-            1. ¾¡Á¿Òþ²Ø¸¸ÀàµÄÄÚ²¿Êý¾Ý,¾¡Á¿°Ñ¸¸ÀàµÄËùÓÐ³ÉÔ±±äÁ¿ÉèÖÃ³É private ·ÃÎÊÀàÐÍ, ²»ÒªÈÃ×ÓÀàÖ±
-                ½Ó·ÃÎÊ¸¸ÀàµÄ³ÉÔ±±äÁ¿
-            2. ²»ÒªÈÃ×ÓÀà¿ÉÒÔËæÒâ·ÃÎÊ, ÐÞ¸Ä¸¸ÀàµÄ·½·¨. Èç¹û¸¸ÀàÖÐµÄ·½·¨ÐèÒª±»Íâ²¿Ààµ÷ÓÃ,Ôò±ØÐëÊ¹ÓÃ
-                public ÐÞÊÎ, µ«ÓÖ²»Ï£Íû×ÓÀàÖØÐ´¸Ã·½·¨, ¿ÉÒÔÊ¹ÓÃ final ÐÞÊÎ·ûÀ´ÐÞÊÎ; Èç¹ûÏ£Íû¸¸ÀàµÄ
-                Ä³¸ö·½·¨±»×ÓÀàÖØÐ´, µ«²»Ï£Íû±»ÆäËûÀà×ÔÓÉ·ÃÎÊ, ÔòÊ¹ÓÃ protected À´ÐÞÊÎ¸Ã·½·¨ 
-            3. ¾¡Á¿²»ÒªÔÚ¸¸Àà¹¹ÔìÆ÷ÖÐ´øÅ¶ÓÃ½«Òª±»×ÓÀàÖØÐ´µÄ·½·¨; Ê¹ÓÃ private ÐÞÊÎµÄ¸¸ÀàµÄ¹¹ÔìÆ÷,
-                ×ÓÀàÎÞ·¨µ÷ÓÃ¸¸ÀàµÄ¹¹ÔìÆ÷,Ò²¾ÍÎÞ·¨¼Ì³Ð¸ÃÀà
+        è®¾è®¡çˆ¶ç±»çš„åŽŸåˆ™:
+            1. å°½é‡éšè—çˆ¶ç±»çš„å†…éƒ¨æ•°æ®,å°½é‡æŠŠçˆ¶ç±»çš„æ‰€æœ‰æˆå‘˜å˜é‡è®¾ç½®æˆ private è®¿é—®ç±»åž‹, ä¸è¦è®©å­ç±»ç›´
+                æŽ¥è®¿é—®çˆ¶ç±»çš„æˆå‘˜å˜é‡
+            2. ä¸è¦è®©å­ç±»å¯ä»¥éšæ„è®¿é—®, ä¿®æ”¹çˆ¶ç±»çš„æ–¹æ³•. å¦‚æžœçˆ¶ç±»ä¸­çš„æ–¹æ³•éœ€è¦è¢«å¤–éƒ¨ç±»è°ƒç”¨,åˆ™å¿…é¡»ä½¿ç”¨
+                public ä¿®é¥°, ä½†åˆä¸å¸Œæœ›å­ç±»é‡å†™è¯¥æ–¹æ³•, å¯ä»¥ä½¿ç”¨ final ä¿®é¥°ç¬¦æ¥ä¿®é¥°; å¦‚æžœå¸Œæœ›çˆ¶ç±»çš„
+                æŸä¸ªæ–¹æ³•è¢«å­ç±»é‡å†™, ä½†ä¸å¸Œæœ›è¢«å…¶ä»–ç±»è‡ªç”±è®¿é—®, åˆ™ä½¿ç”¨ protected æ¥ä¿®é¥°è¯¥æ–¹æ³• 
+            3. å°½é‡ä¸è¦åœ¨çˆ¶ç±»æž„é€ å™¨ä¸­å¸¦å“¦ç”¨å°†è¦è¢«å­ç±»é‡å†™çš„æ–¹æ³•; ä½¿ç”¨ private ä¿®é¥°çš„çˆ¶ç±»çš„æž„é€ å™¨,
+                å­ç±»æ— æ³•è°ƒç”¨çˆ¶ç±»çš„æž„é€ å™¨,ä¹Ÿå°±æ— æ³•ç»§æ‰¿è¯¥ç±»
         
-        ÅÉÉú×ÓÀàµÄÌõ¼þ
-            1. ×ÓÀàÐèÒª¶îÍâÔö¼ÓÊôÐÔ, ¶ø²»½ö½öÊÇÊôÐÔÖµµÄ¸Ä±ä
-                ÀýÈç: 
-            2. ×ÓÀàÐèÒªÔö¼Ó×Ô¼º¶ÀÓÐµÄÐÐÎÄ·½Ê½(°üÀ¨Ôö¼ÓÐÂµÄ·½·¨»òÖØÐ´¸¸ÀàµÄ·½·¨)
+        æ´¾ç”Ÿå­ç±»çš„æ¡ä»¶
+            1. å­ç±»éœ€è¦é¢å¤–å¢žåŠ å±žæ€§, è€Œä¸ä»…ä»…æ˜¯å±žæ€§å€¼çš„æ”¹å˜
+                ä¾‹å¦‚: 
+            2. å­ç±»éœ€è¦å¢žåŠ è‡ªå·±ç‹¬æœ‰çš„è¡Œæ–‡æ–¹å¼(åŒ…æ‹¬å¢žåŠ æ–°çš„æ–¹æ³•æˆ–é‡å†™çˆ¶ç±»çš„æ–¹æ³•)
             
-        Àý×Ó:
+        ä¾‹å­:
             class Base 
             {
                 public Base()
                 {
                     test();
                 }
-                public void test()        // ¢Ù ºÅ test() ·½·¨
+                public void test()        // â‘  å· test() æ–¹æ³•
                 {
-                    System.out.println("½«±»×ÓÀàÖØÐ´µÄ·½·¨");
+                    System.out.println("å°†è¢«å­ç±»é‡å†™çš„æ–¹æ³•");
                 }
             }
             public class Sub extends Base
             {
                 private String name;
-                public void test()         // ¢Ú ºÅ test() ·½·¨
+                public void test()         // â‘¡ å· test() æ–¹æ³•
                 {
-                    System.out.println("×ÓÀàÖØÐ´¸¸ÀàµÄ·½·¨," 
-                        + "Æäname×Ö·û´®³¤¶ÈÎª" + name.length());
+                    System.out.println("å­ç±»é‡å†™çˆ¶ç±»çš„æ–¹æ³•," 
+                        + "å…¶nameå­—ç¬¦ä¸²é•¿åº¦ä¸º" + name.length());
                 }
                 public static void main(String[] args)
                 {
-                    // ÏÂÃæ´úÂë½«»áÒý·¢¿ÕÖ¸ÕëÒì³£
+                    // ä¸‹é¢ä»£ç å°†ä¼šå¼•å‘ç©ºæŒ‡é’ˆå¼‚å¸¸
                     Sub s = new Sub();
                 }
             }
-                ³ÌÐòËµÃ÷: 
-                    1. µ±ÏµÍ³ÊÔÍ¼´´½¨ Sub ¶ÔÏóÊ±,Í¬Ñù»áÏÈÖ´ÐÐÆä¸¸Àà¹¹ÔìÆ÷, Èç¹û¸¸Àà¹¹ÔìÆ÷µ÷ÓÃÁË±»
-                        Æä×ÓÁÐÖØÐ´µÄ·½·¨, Ôò±ä³Éµ÷ÓÃ±»×ÓÀàÖØÐ´ºóµÄ·½·¨. 
-                    2. µ±´´½¨ Sub ¶ÔÏóÊ±, »áÏÈÖ´ÐÐ Base ÀàÖÐµÄ Base ¹¹ÔìÆ÷, ¶ø Base ¹¹ÔìÆ÷ÖÐµ÷ÓÃÁË
-                        test() ·½·¨----²¢²»ÊÇµ÷ÓÃ¢ÙºÅ test() ·½·¨, ¶øÊÇµ÷ÓÃ¢ÚºÅ test() ·½·¨, ´ËÊ± 
-                        Sub ¶ÔÏóµÄ name ÊµÀý±äÁ¿Ê± null, Òò´Ë½«Òý·¢¿ÕÖ¸ÕëÒì³£
+                ç¨‹åºè¯´æ˜Ž: 
+                    1. å½“ç³»ç»Ÿè¯•å›¾åˆ›å»º Sub å¯¹è±¡æ—¶,åŒæ ·ä¼šå…ˆæ‰§è¡Œå…¶çˆ¶ç±»æž„é€ å™¨, å¦‚æžœçˆ¶ç±»æž„é€ å™¨è°ƒç”¨äº†è¢«
+                        å…¶å­åˆ—é‡å†™çš„æ–¹æ³•, åˆ™å˜æˆè°ƒç”¨è¢«å­ç±»é‡å†™åŽçš„æ–¹æ³•. 
+                    2. å½“åˆ›å»º Sub å¯¹è±¡æ—¶, ä¼šå…ˆæ‰§è¡Œ Base ç±»ä¸­çš„ Base æž„é€ å™¨, è€Œ Base æž„é€ å™¨ä¸­è°ƒç”¨äº†
+                        test() æ–¹æ³•----å¹¶ä¸æ˜¯è°ƒç”¨â‘ å· test() æ–¹æ³•, è€Œæ˜¯è°ƒç”¨â‘¡å· test() æ–¹æ³•, æ­¤æ—¶ 
+                        Sub å¯¹è±¡çš„ name å®žä¾‹å˜é‡æ—¶ null, å› æ­¤å°†å¼•å‘ç©ºæŒ‡é’ˆå¼‚å¸¸
                      
-    8.2 ÀûÓÃ×éºÏÊµÏÖ¸´ÓÃ
-        ËµÃ÷:
-            1. Èç¹ûÐèÒª¸´ÓÃÒ»¸öÀà, ³ýÁË°ÑÕâ¸öÀàµ±×÷»ùÀàÀ´¼Ì³ÐÖ®Íâ,»¹¿ÉÒÔ°Ñ¸ÃÀàµ±³ÉÁíÒ»¸öÀàµÄ×éºÏ
-                ³É·Ö, ´Ó¶øÔÊÐíÐÂÀàÖ±½Ó¸´ÓÃ¸ÃÀàµÄ public ·½·¨. ²»¹ÜÊÇ¼Ì³Ð»¹ÊÇ×éºÏ, ¶¼ÔÊÐíÔÚÐÂÀà(
-                ¶ÔÓÚ¼Ì³Ð¾ÍÊÇ×ÓÀà)ÖÐÖ±½Ó¸´ÓÃ¾ÉÀàµÄ·½·¨
-            2. ×éºÏÊÇ°Ñ¾ÉÀà¶ÔÏó×÷ÎªÐÂÀàµÄ³ÉÔ±±äÁ¿×éºÏ½øÀ´, ÓÃÒÔÊµÏÖÐÂÀàµÄ¹¦ÄÜ,ÓÃ»§¿´µ½µÄÊÇÐÂÀàµÄ
-                ·½·¨, ¶ø²»ÄÜ¿´µ½±»×éºÏ¶ÔÏóµÄ·½·¨
-            3. ×ÓÀàºÍ×éºÏ¹ØÏµÀïµÄÕûÌåÀà, ¶¼¿ÉÒÔ¸´ÓÃÔ­ÓÐÀàµÄ·½·¨, ÓÃÓÚÊµÏÖ×ÔÉíµÄ¹¦ÄÜ
-            4. ¼Ì³ÐÒª±í´ïµÄÊÇÒ»ÖÖ"ÊÇ(is-a)"µÄ¹ØÏµ, ¶ø×éºÏ±í´ïµÄÊÇ"ÓÐ(has-a)"µÄ¹ØÏµ 
+    8.2 åˆ©ç”¨ç»„åˆå®žçŽ°å¤ç”¨
+        è¯´æ˜Ž:
+            1. å¦‚æžœéœ€è¦å¤ç”¨ä¸€ä¸ªç±», é™¤äº†æŠŠè¿™ä¸ªç±»å½“ä½œåŸºç±»æ¥ç»§æ‰¿ä¹‹å¤–,è¿˜å¯ä»¥æŠŠè¯¥ç±»å½“æˆå¦ä¸€ä¸ªç±»çš„ç»„åˆ
+                æˆåˆ†, ä»Žè€Œå…è®¸æ–°ç±»ç›´æŽ¥å¤ç”¨è¯¥ç±»çš„ public æ–¹æ³•. ä¸ç®¡æ˜¯ç»§æ‰¿è¿˜æ˜¯ç»„åˆ, éƒ½å…è®¸åœ¨æ–°ç±»(
+                å¯¹äºŽç»§æ‰¿å°±æ˜¯å­ç±»)ä¸­ç›´æŽ¥å¤ç”¨æ—§ç±»çš„æ–¹æ³•
+            2. ç»„åˆæ˜¯æŠŠæ—§ç±»å¯¹è±¡ä½œä¸ºæ–°ç±»çš„æˆå‘˜å˜é‡ç»„åˆè¿›æ¥, ç”¨ä»¥å®žçŽ°æ–°ç±»çš„åŠŸèƒ½,ç”¨æˆ·çœ‹åˆ°çš„æ˜¯æ–°ç±»çš„
+                æ–¹æ³•, è€Œä¸èƒ½çœ‹åˆ°è¢«ç»„åˆå¯¹è±¡çš„æ–¹æ³•
+            3. å­ç±»å’Œç»„åˆå…³ç³»é‡Œçš„æ•´ä½“ç±», éƒ½å¯ä»¥å¤ç”¨åŽŸæœ‰ç±»çš„æ–¹æ³•, ç”¨äºŽå®žçŽ°è‡ªèº«çš„åŠŸèƒ½
+            4. ç»§æ‰¿è¦è¡¨è¾¾çš„æ˜¯ä¸€ç§"æ˜¯(is-a)"çš„å…³ç³», è€Œç»„åˆè¡¨è¾¾çš„æ˜¯"æœ‰(has-a)"çš„å…³ç³» 
             
-        Àý×Ó1:
-            // ¼Ì³Ð¹ØÏµµÄÈý¸öÀà
+        ä¾‹å­1:
+            // ç»§æ‰¿å…³ç³»çš„ä¸‰ä¸ªç±»
             class Animal 
             {   
-                // private ÐÞÊÎµÄ·½·¨×ÓÀàÎÞ·¨¼Ì³Ð
+                // private ä¿®é¥°çš„æ–¹æ³•å­ç±»æ— æ³•ç»§æ‰¿
                 private void beat()
                 {
-                    System.out.println("àÅ! ÐÄÔà»¹ÔÚÌø¶¯....");
+                    System.out.println("å—¯! å¿ƒè„è¿˜åœ¨è·³åŠ¨....");
                 }
                 public void breath()
                 {
                     beat();
-                    System.out.println("ÎüÒ»¿ÚÆø, ºôÒ»¿ÚÆø, ºôÎüÖÐ.....");
+                    System.out.println("å¸ä¸€å£æ°”, å‘¼ä¸€å£æ°”, å‘¼å¸ä¸­.....");
                 }
             }
-            // ¼Ì³ÐAnimal,Ö±½Ó¸´ÓÃ¸¸ÀàµÄ breath()·½·¨
+            // ç»§æ‰¿Animal,ç›´æŽ¥å¤ç”¨çˆ¶ç±»çš„ breath()æ–¹æ³•
             class Bird extends Animal
             {
                 public void fly()
                 {
-                    System.out.println("ÎÒÊÇ¿ÉÒÔÔÚÌì¿ÕÖÐ·ÉÏèµÄ....");    
+                    System.out.println("æˆ‘æ˜¯å¯ä»¥åœ¨å¤©ç©ºä¸­é£žç¿”çš„....");    
                 }
             }
-            // ¼Ì³ÐAnimal,Ö±½Ó¸´ÓÃ¸¸ÀàµÄ breath()·½·¨
+            // ç»§æ‰¿Animal,ç›´æŽ¥å¤ç”¨çˆ¶ç±»çš„ breath()æ–¹æ³•
             class Wolf extends Animal 
             {
                 public void run()
                 {
-                    System.out.println("ÎÒÊÇÔÚÂ½µØÉÏÅÜµÄÄÇ¸öÀÇ....");   
+                    System.out.println("æˆ‘æ˜¯åœ¨é™†åœ°ä¸Šè·‘çš„é‚£ä¸ªç‹¼....");   
                 }
             }
             public class InheriTest
@@ -1740,69 +1740,69 @@
                 }
             }
 
-         Àý×Ó2:
-            // ×éºÏ¹ØÏµµÄÈý¸öÀà
+         ä¾‹å­2:
+            // ç»„åˆå…³ç³»çš„ä¸‰ä¸ªç±»
             class Animal
             {
-                // private ÐÞÊÎµÄ·½·¨×ÓÀàÎÞ·¨¼Ì³Ð
+                // private ä¿®é¥°çš„æ–¹æ³•å­ç±»æ— æ³•ç»§æ‰¿
                 private void beat()
                 {
-                    System.out.println("àÅ! ÐÄÔà»¹ÔÚÌø¶¯....");
+                    System.out.println("å—¯! å¿ƒè„è¿˜åœ¨è·³åŠ¨....");
                 }
                 public void breath()
                 {
                     beat();
-                    System.out.println("ÎüÒ»¿ÚÆø, ºôÒ»¿ÚÆø, ºôÎüÖÐ.....");
+                    System.out.println("å¸ä¸€å£æ°”, å‘¼ä¸€å£æ°”, å‘¼å¸ä¸­.....");
                 }
             }
             class Brid 
             {
-                // ½«Ô­À´µÄ¸¸Àà×éºÏµ½Ô­À´µÄ×ÓÀà, ×÷Îª×ÓÀàµÄÒ»¸ö×éºÏ³É·Ö
+                // å°†åŽŸæ¥çš„çˆ¶ç±»ç»„åˆåˆ°åŽŸæ¥çš„å­ç±», ä½œä¸ºå­ç±»çš„ä¸€ä¸ªç»„åˆæˆåˆ†
                 private Animal a;
                 public Bird(Animal a)
                 {
                     this.a = a;
                 }
-                // ÖØÐÂ¶¨ÒåÒ»¸ö×Ô¼ºµÄbreath()·½·¨
+                // é‡æ–°å®šä¹‰ä¸€ä¸ªè‡ªå·±çš„breath()æ–¹æ³•
                 public void breath()
                 {
-                    // Ö±½Ó·þÓÃAnimalÌá¹©µÄbreath()·½·¨À´ÊµÏÖBirdµÄbreath()·½·¨ 
+                    // ç›´æŽ¥æœç”¨Animalæä¾›çš„breath()æ–¹æ³•æ¥å®žçŽ°Birdçš„breath()æ–¹æ³• 
                     a.breath();
                 }
                 public void fly()
                 {
-                    System.out.println("ÎÒÊÇ¿ÉÒÔÔÚÌì¿ÕÖÐ·ÉÏèµÄ....");    
+                    System.out.println("æˆ‘æ˜¯å¯ä»¥åœ¨å¤©ç©ºä¸­é£žç¿”çš„....");    
                 }
             }
             class Wolf 
             {
-                // ½«Ô­À´µÄ¸¸Àà×éºÏµ½Ô­À´µÄ×ÓÀà,×÷Îª×ÓÀàµÄÒ»¸ö×éºÏ³É·Ö 
+                // å°†åŽŸæ¥çš„çˆ¶ç±»ç»„åˆåˆ°åŽŸæ¥çš„å­ç±»,ä½œä¸ºå­ç±»çš„ä¸€ä¸ªç»„åˆæˆåˆ† 
                 private Animal a;
                 public Wolf(Animal a)
                 {
                     this.a = a;
                 }
-                // ÖØÐÂ¶¨ÒåÒ»¸ö×Ô¼ºµÄbreath()·½·¨
+                // é‡æ–°å®šä¹‰ä¸€ä¸ªè‡ªå·±çš„breath()æ–¹æ³•
                 public void breath()
                 {
-                    // Ö±½Ó·þÓÃAnimalÌá¹©µÄbreath()·½·¨À´ÊµÏÖWolfµÄbreath()·½·¨ 
+                    // ç›´æŽ¥æœç”¨Animalæä¾›çš„breath()æ–¹æ³•æ¥å®žçŽ°Wolfçš„breath()æ–¹æ³• 
                     a.breath();
                 }
                 public void run()
                 {
-                    System.out.println("ÎÒÊÇÔÚÂ½µØÉÏÅÜµÄÄÇ¸öÀÇ....");   
+                    System.out.println("æˆ‘æ˜¯åœ¨é™†åœ°ä¸Šè·‘çš„é‚£ä¸ªç‹¼....");   
                 }
             }
             public class CompositeTest
             {
                 public static void main(String[] args)
                 {
-                   // ´ËÊ±ÐèÒªÏÔÊ½´´½¨±»×éºÏ¶ÔÏó
+                   // æ­¤æ—¶éœ€è¦æ˜¾å¼åˆ›å»ºè¢«ç»„åˆå¯¹è±¡
                    Animal a1 = new Animal();
                    Bird b = new Bird(a1);
                    b.breath();
                    b.fly();
-                   // ´ËÊ±ÐèÒªÏÔÊ½´´½¨±»×éºÏ¶ÔÏó
+                   // æ­¤æ—¶éœ€è¦æ˜¾å¼åˆ›å»ºè¢«ç»„åˆå¯¹è±¡
                    Animal a2 = new Animal();
                    Wolf w new Wolf(a2);
                    w.breath();
@@ -1811,150 +1811,150 @@
             }
 
 
-9. ³õÊ¼»¯¿é
-    9.1 Ê¹ÓÃ³õÊ¼»¯¿é
-        ËµÃ÷:
-            1. ³õÊ¼»¯¿éÊÇJavaÀàÀï¿ÉÄÜ³öÏÖµÄµÚ4ÖÖ³ÉÔ±(Ç°ÃæÑ§µÄ³ÉÔ±±äÁ¿,·½·¨ºÍ¹¹ÔìÆ÷), Ò»¸öÀàÀï¿ÉÒÔÓÐ
-                ¶à¸ö³õÊ¼»¯¿é,ÏàÍ¬ÀàÐÍµÄ³õÊ¼»¯¿éÖ®¼äÅ¼ÓöË³Ðò: Ç°Ãæ¶¨ÒåµÄ³õÊ¼»¯¿éÏÈÖ´ÐÐ,ºóÃæ¶¨ÒåµÄ³õ
-                Ê¼»¯¿éºóÖ´ÐÐ
-            2. ³õÊ¼»¯¿éµÄÐÞÊÎ·ûÖ»ÄÜÊÇ staitc , Ê¹ÓÃ static ÐÞÊÎµÄ³õÊ¼»¯¿é±»³ÆÖ®Îª¾²Ì¬³õÊ¼»¯¿é. 
-            3. ³õÊ¼»¯¿éÀïµÄ´úÂë¿ÉÒÔ°üº¬ÈÏ¿É¿ÉÖ´ÐÐÐÔÓï¾ä, °üÀ¨¶¨Òå¾Ö²¿±äÁ¿, µ÷ÓÃÆäËû¶ÔÏóµÄ·½·¨, ÒÔ¼°
-                Ê¹ÓÃ·ÖÖ§Óï¾ä, Ñ­»·Óï¾ä
-            4. ³õÊ¼»¯¿éºÍ¹¹ÔìÆ÷µÄ×÷ÓÃ·Ç³£ÏàËÆ, ËûÃÇ¶¼ÓÃÓÚ¶ÔJava¶ÔÏóÖ´ÐÐÖ¸¶¨µÄ³õÊ¼»°²Ù×÷; µ«ÊÇ¶þÕßÖ®
-                ¼ä»¹ÊÇÓÐÒ»¶¨µÄ²îÒì: ÆÕÍ¨³õÊ¼»¯¿é,ÉùÃ÷ÊµÀý±äÁ¿Ö¸¶¨µÄÄ¬ÈÏÖµ¶¼¿ÉÈÏÎªÊÇ¶ÔÏóµÄ³õÊ¼»¯´úÂë
-                ËûÃÇµÄÖ´ÐÐË³ÐòÓëÔ´ÂëÖÐÅÅÁÐµÄË³ÐòÏàÍ¬
+9. åˆå§‹åŒ–å—
+    9.1 ä½¿ç”¨åˆå§‹åŒ–å—
+        è¯´æ˜Ž:
+            1. åˆå§‹åŒ–å—æ˜¯Javaç±»é‡Œå¯èƒ½å‡ºçŽ°çš„ç¬¬4ç§æˆå‘˜(å‰é¢å­¦çš„æˆå‘˜å˜é‡,æ–¹æ³•å’Œæž„é€ å™¨), ä¸€ä¸ªç±»é‡Œå¯ä»¥æœ‰
+                å¤šä¸ªåˆå§‹åŒ–å—,ç›¸åŒç±»åž‹çš„åˆå§‹åŒ–å—ä¹‹é—´å¶é‡é¡ºåº: å‰é¢å®šä¹‰çš„åˆå§‹åŒ–å—å…ˆæ‰§è¡Œ,åŽé¢å®šä¹‰çš„åˆ
+                å§‹åŒ–å—åŽæ‰§è¡Œ
+            2. åˆå§‹åŒ–å—çš„ä¿®é¥°ç¬¦åªèƒ½æ˜¯ staitc , ä½¿ç”¨ static ä¿®é¥°çš„åˆå§‹åŒ–å—è¢«ç§°ä¹‹ä¸ºé™æ€åˆå§‹åŒ–å—. 
+            3. åˆå§‹åŒ–å—é‡Œçš„ä»£ç å¯ä»¥åŒ…å«è®¤å¯å¯æ‰§è¡Œæ€§è¯­å¥, åŒ…æ‹¬å®šä¹‰å±€éƒ¨å˜é‡, è°ƒç”¨å…¶ä»–å¯¹è±¡çš„æ–¹æ³•, ä»¥åŠ
+                ä½¿ç”¨åˆ†æ”¯è¯­å¥, å¾ªçŽ¯è¯­å¥
+            4. åˆå§‹åŒ–å—å’Œæž„é€ å™¨çš„ä½œç”¨éžå¸¸ç›¸ä¼¼, ä»–ä»¬éƒ½ç”¨äºŽå¯¹Javaå¯¹è±¡æ‰§è¡ŒæŒ‡å®šçš„åˆå§‹è¯æ“ä½œ; ä½†æ˜¯äºŒè€…ä¹‹
+                é—´è¿˜æ˜¯æœ‰ä¸€å®šçš„å·®å¼‚: æ™®é€šåˆå§‹åŒ–å—,å£°æ˜Žå®žä¾‹å˜é‡æŒ‡å®šçš„é»˜è®¤å€¼éƒ½å¯è®¤ä¸ºæ˜¯å¯¹è±¡çš„åˆå§‹åŒ–ä»£ç 
+                ä»–ä»¬çš„æ‰§è¡Œé¡ºåºä¸Žæºç ä¸­æŽ’åˆ—çš„é¡ºåºç›¸åŒ
                 
-        ³õÊ¼»¯¿éÓï·¨:
-            [ÐÞÊÎ·û]{
-                // ³õÊ¼»¯¿éµÄ¿ÉÖ´ÐÐÐÔ´úÂë
+        åˆå§‹åŒ–å—è¯­æ³•:
+            [ä¿®é¥°ç¬¦]{
+                // åˆå§‹åŒ–å—çš„å¯æ‰§è¡Œæ€§ä»£ç 
                 ...
             }
     
-        Àý×Ó1:
+        ä¾‹å­1:
             // Person.java
             public class Person
             {
-                // ¶¨ÒåÒ»¸ö³õÊ¼»¯¿é
+                // å®šä¹‰ä¸€ä¸ªåˆå§‹åŒ–å—
                 {
                     int a = 6;
                     if (a > 4)
                     {
-                        System.out.println("Person³õÊ¼»¯¿é: a = " + a + " ¾Ö²¿±äÁ¿aµÄÖµ´óÓÚ4");
+                        System.out.println("Personåˆå§‹åŒ–å—: a = " + a + " å±€éƒ¨å˜é‡açš„å€¼å¤§äºŽ4");
                     }
-                    System.out.println("Person µÄµÚÒ»¸ö³õÊ¼»¯¿é");
+                    System.out.println("Person çš„ç¬¬ä¸€ä¸ªåˆå§‹åŒ–å—");
                 }
-                // ¶¨ÒåµÚ¶þ¸ö³õÊ¼»¯¿é
+                // å®šä¹‰ç¬¬äºŒä¸ªåˆå§‹åŒ–å—
                 {
-                    System.out.println("PersonµÄµÚ¶þ¸ö³õÊ¼»¯¿é");
+                    System.out.println("Personçš„ç¬¬äºŒä¸ªåˆå§‹åŒ–å—");
                 }
-                // ¶¨ÒåÒ»¸öÎÞ²ÎÊýµÄ¹¹ÔìÆ÷
+                // å®šä¹‰ä¸€ä¸ªæ— å‚æ•°çš„æž„é€ å™¨
                 public Person()
                 {
-                    System.out.println("Person ÀàµÄÎÞ²ÎÊý¹¹ÔìÆ÷ ");
+                    System.out.println("Person ç±»çš„æ— å‚æ•°æž„é€ å™¨ ");
                 }
                 public static void main(String[] args)
                 {
                     new Person();
                 }
             }
-            ³ÌÐòËµÃ÷:
-                1. µ±´´½¨ Java ¶ÔÏóÊ±, ÏµÍ³×ÜÊÇÏÈµ÷ÓÃ¸ÃÀàÀï¶¨ÒåµÄ³õÊ¼»¯¿é, Èç¹ûÒ»¸öÀàÀï¶¨ÒåÁË2¸öÆÕÍ¨
-                    ³õÊ¼»¯¿é, ÔòÇ°Ãæ¶¨ÒåµÄ³õÊ¼»¯¿éÏÈÖ´ÐÐ, ºóÃæ¶¨ÒåµÄ³õÊ¼»¯¿éºóÖ´ÐÐ
-                2. ³õÊ¼»¯¿éËäÈ»ÊÇ Java ÀàµÄÒ»ÖÖ³ÉÔ±, µ«ËüÃ»ÓÐÃû×Ö, Ò²¾ÍÃ»ÓÐ±êÊ¶, Òò´ËÎÞ·¨Í¬Àà, ¶ÔÏó
-                    À´µ÷ÓÃ³õÊ¼»¯¿é. 
-                3. ³õÊ¼»¯¿éÖ»ÔÚ´´½¨ Java ¶ÔÏóÊ±ÒþÊ½Ö´ÐÐ,×ÜÊÇÈ«²¿Ö´ÐÐ(ËùÒÔ¿ÉÒÔ°Ñ¶à¸ö³õÊ¼»¯¿éºÏ²¢³ÉÒ»
-                    ¸ö³õÊ¼»¯¿é, ÈÃ´úÂë¸ü¼ò½à), ¶øÇÒÔÚÖ´ÐÐ¹¹ÔìÆ÷Ö®Ç°Ö´ÐÐ
+            ç¨‹åºè¯´æ˜Ž:
+                1. å½“åˆ›å»º Java å¯¹è±¡æ—¶, ç³»ç»Ÿæ€»æ˜¯å…ˆè°ƒç”¨è¯¥ç±»é‡Œå®šä¹‰çš„åˆå§‹åŒ–å—, å¦‚æžœä¸€ä¸ªç±»é‡Œå®šä¹‰äº†2ä¸ªæ™®é€š
+                    åˆå§‹åŒ–å—, åˆ™å‰é¢å®šä¹‰çš„åˆå§‹åŒ–å—å…ˆæ‰§è¡Œ, åŽé¢å®šä¹‰çš„åˆå§‹åŒ–å—åŽæ‰§è¡Œ
+                2. åˆå§‹åŒ–å—è™½ç„¶æ˜¯ Java ç±»çš„ä¸€ç§æˆå‘˜, ä½†å®ƒæ²¡æœ‰åå­—, ä¹Ÿå°±æ²¡æœ‰æ ‡è¯†, å› æ­¤æ— æ³•åŒç±», å¯¹è±¡
+                    æ¥è°ƒç”¨åˆå§‹åŒ–å—. 
+                3. åˆå§‹åŒ–å—åªåœ¨åˆ›å»º Java å¯¹è±¡æ—¶éšå¼æ‰§è¡Œ,æ€»æ˜¯å…¨éƒ¨æ‰§è¡Œ(æ‰€ä»¥å¯ä»¥æŠŠå¤šä¸ªåˆå§‹åŒ–å—åˆå¹¶æˆä¸€
+                    ä¸ªåˆå§‹åŒ–å—, è®©ä»£ç æ›´ç®€æ´), è€Œä¸”åœ¨æ‰§è¡Œæž„é€ å™¨ä¹‹å‰æ‰§è¡Œ
                 
-        Àý×Ó2:
+        ä¾‹å­2:
             // InstanceInitTest.java
             public class InstanceInitTest
             {
-                // ÏÈÖ´ÐÐ³õÊ¼»¯¿é½«±äÁ¿ a ÊµÀý±äÁ¿¸³ÖµÎª6
+                // å…ˆæ‰§è¡Œåˆå§‹åŒ–å—å°†å˜é‡ a å®žä¾‹å˜é‡èµ‹å€¼ä¸º6
                 {
                     int a = 6;
                 }
-                // ÔÙÖ´ÐÐ½« a Ë­±äÁ¿¸³ÖµÎª 9
+                // å†æ‰§è¡Œå°† a è°å˜é‡èµ‹å€¼ä¸º 9
                 int a = 9;
                 pbulic static void main(String[] args)
                 {
-                    // ÏÂÃæµÄ´úÂë½«Êä³ö9
+                    // ä¸‹é¢çš„ä»£ç å°†è¾“å‡º9
                     System.out.println(new InstanceInitTest().a);
                 }
             }
-            ³ÌÐòËµÃ÷:
-                1. µ±Java´´½¨Ò»¸ö¶ÔÏóÊ±, ÏµÍ³ÏÈÎª¸Ã¶ÔÏóµÄËùÓÐÊµÀý±äÁ¿·ÖÅäÄÚ´æ(Ç°ÌáÊÇ¸ÃÀàÒÑ¾­¼ÓÔØ¹ýÁË)
-                    ½Ó×Å³ÌÐò¿ªÊ¼¶ÔÕâÐ©ÊµÀý±äÁ¿Ö´ÐÐ³õÊ¼»¯
-                2. ³õÊ¼»¯µÄË³ÐòÊÇ: ÏÈÖ´ÐÐ³õÊ¼»¯¿é»òÉùÃ÷ÊµÀý±äÁ¿Ê±Ö¸¶¨µÄ³õÊ¼Öµ(ÕâÁ½¸öµØ·½Ö¸¶¨µÄÖ´ÐÐÔÊ
-                    ÐíÓëËûÃÇÔÚÔ´´úÂëÖÐÅÅÐòÏàÍ¬µÄË³Ðò), ÔÚÖ´ÐÐ¹¹ÔìÆ÷ÀïÖ¸¶¨µÄ³õÊ¼Öµ
+            ç¨‹åºè¯´æ˜Ž:
+                1. å½“Javaåˆ›å»ºä¸€ä¸ªå¯¹è±¡æ—¶, ç³»ç»Ÿå…ˆä¸ºè¯¥å¯¹è±¡çš„æ‰€æœ‰å®žä¾‹å˜é‡åˆ†é…å†…å­˜(å‰ææ˜¯è¯¥ç±»å·²ç»åŠ è½½è¿‡äº†)
+                    æŽ¥ç€ç¨‹åºå¼€å§‹å¯¹è¿™äº›å®žä¾‹å˜é‡æ‰§è¡Œåˆå§‹åŒ–
+                2. åˆå§‹åŒ–çš„é¡ºåºæ˜¯: å…ˆæ‰§è¡Œåˆå§‹åŒ–å—æˆ–å£°æ˜Žå®žä¾‹å˜é‡æ—¶æŒ‡å®šçš„åˆå§‹å€¼(è¿™ä¸¤ä¸ªåœ°æ–¹æŒ‡å®šçš„æ‰§è¡Œå…
+                    è®¸ä¸Žä»–ä»¬åœ¨æºä»£ç ä¸­æŽ’åºç›¸åŒçš„é¡ºåº), åœ¨æ‰§è¡Œæž„é€ å™¨é‡ŒæŒ‡å®šçš„åˆå§‹å€¼
                     
                     
-    9.2 ³õÊ¼»¯¿éºÍ¹¹ÔìÆ÷
-        ËµÃ÷:
-            1. Ò²¿ÉÒÔ½², ³õÊ¼»¯¿éÊÇ¹¹ÔìÆ÷µÄ²¹³ä,³õÊ¼»¯¿é×ÜÊÇÔÚ¹¹ÔìÆ÷Ö´ÐÐÖ®Ç°Ö´ÐÐ
-            2. ³õÊ¼»¯¿é²»½ÓÊÜ²ÎÊý, ËùÒÔ³õÊ¼»¯¿é¶ÔÍ¬Ò»¸öÀàµÄËùÓÐ¶ÔÏóËù½øÐÐµÄ³õÊ¼»¯´¦ÀíÍêÈ«ÏàÍ¬
-            3. »ùÓÚÉÏÃæÁ½µã,¾Í¿ÉÒÔ°Ñ²»½ÓÊÜÈÎºÎ²ÎÊý,³õÊ¼»¯´¦Àí¶ÔËùÓÐ¶ÔÏóÍêÈ«ÏàÍ¬µÄ´úÂëÌáÈ¡Îª³õÊ¼»¯¿é
-            4. ¼ÙÏó: Êµ¼ÊÉÏ³õÊ¼»¯¿éÊÇÒ»¸ö¼ÙÏó, Ê¹ÓÃ javac ÃüÃû±àÒë java Ààºó, ¸Ã JavaÀàÖÐµÄ³õÊ¼»¯¿é
-                »áÏûÊ§ --- ³õÊ¼»¯¿éÖÐ´úÂë»á±»"»¹Ô­"µ½Ã¿¸ö¹¹ÔìÆ÷ÖÐ, ÇÒÎ»ÓÚ¹¹ÔìÆ÷ËùÓÐ´úÂëµÄÇ°Ãæ
+    9.2 åˆå§‹åŒ–å—å’Œæž„é€ å™¨
+        è¯´æ˜Ž:
+            1. ä¹Ÿå¯ä»¥è®², åˆå§‹åŒ–å—æ˜¯æž„é€ å™¨çš„è¡¥å……,åˆå§‹åŒ–å—æ€»æ˜¯åœ¨æž„é€ å™¨æ‰§è¡Œä¹‹å‰æ‰§è¡Œ
+            2. åˆå§‹åŒ–å—ä¸æŽ¥å—å‚æ•°, æ‰€ä»¥åˆå§‹åŒ–å—å¯¹åŒä¸€ä¸ªç±»çš„æ‰€æœ‰å¯¹è±¡æ‰€è¿›è¡Œçš„åˆå§‹åŒ–å¤„ç†å®Œå…¨ç›¸åŒ
+            3. åŸºäºŽä¸Šé¢ä¸¤ç‚¹,å°±å¯ä»¥æŠŠä¸æŽ¥å—ä»»ä½•å‚æ•°,åˆå§‹åŒ–å¤„ç†å¯¹æ‰€æœ‰å¯¹è±¡å®Œå…¨ç›¸åŒçš„ä»£ç æå–ä¸ºåˆå§‹åŒ–å—
+            4. å‡è±¡: å®žé™…ä¸Šåˆå§‹åŒ–å—æ˜¯ä¸€ä¸ªå‡è±¡, ä½¿ç”¨ javac å‘½åç¼–è¯‘ java ç±»åŽ, è¯¥ Javaç±»ä¸­çš„åˆå§‹åŒ–å—
+                ä¼šæ¶ˆå¤± --- åˆå§‹åŒ–å—ä¸­ä»£ç ä¼šè¢«"è¿˜åŽŸ"åˆ°æ¯ä¸ªæž„é€ å™¨ä¸­, ä¸”ä½äºŽæž„é€ å™¨æ‰€æœ‰ä»£ç çš„å‰é¢
 
-    9.3 ¾²Ì¬³õÊ¼»¯¿é
-        ËµÃ÷:
-            1. Ê¹ÓÃstaticÐÞÊÎ³õÊ¼»¯¿é, ±»³ÆÖ®Îª¾²Ì¬³õÊ¼»¯¿é, Ò²±»³ÆÖ®ÎªÀà³õÊ¼»¯¿é(ÆÕÍ¨³õÊ¼»¯¿é¸ºÔð
-                ¶Ô¶ÔÏóÖ´ÐÐ³õÊ¼»¯, Àà³õÊ¼»¯¿é¸ºÔð¶ÔÀà½øÐÐ³õÊ¼»¯)
-            2. ÏµÍ³½«ÔÚÀà³õÊ¼»¯½×¶ÎÖ´ÐÐ³õÊ¼»¯¿é,¶ø²»ÊÇÔÚ´´½¨¶ÔÏóÊ±²ÅÖ´ÐÐ
-            3. ¾²Ì¬³õÊ¼»¯¿é×ÜÊÇ±ÈÆÕÍ¨³õÊ¼»¯¿éÏÈÖ´ÐÐ
-            4. ¾²Ì¬³õÊ¼»¯¿éÍ¨³£ÓÃÓÚ¶ÔÀà±äÁ¿Ö´ÐÐ³õÊ¼»¯, ¾²Ì¬³õÊ¼»¯¿é²»ÄÜ¶ÔÊµÀý±äÁ¿½øÐÐ³õÊ¼»¯´¦Àí(¾²Ì¬
-                ³õÊ¼»¯¿é²»ÄÜ·ÃÎÊ·Ç¾²Ì¬³ÉÔ±,°üÀ¨²»ÄÜ·ÃÎÊÊµÀý±äÁ¿ºÍÊµÀý·½·¨)
-            5. JavaÏµÍ³¼ÓÔØ²¢³õÊ¼»¯Ä³¸öÀàÊ±, ×ÜÊÇ±£Ö¤¸ÃÀàµÄËùÓÐ¸¸Àà(°üÀ¨Ö±½Ó¸¸ÀàºÍ¼ä½Ó¸¸Àà)È«²¿¼ÓÔØ
-                ²¢³õÊ¼»¯
+    9.3 é™æ€åˆå§‹åŒ–å—
+        è¯´æ˜Ž:
+            1. ä½¿ç”¨staticä¿®é¥°åˆå§‹åŒ–å—, è¢«ç§°ä¹‹ä¸ºé™æ€åˆå§‹åŒ–å—, ä¹Ÿè¢«ç§°ä¹‹ä¸ºç±»åˆå§‹åŒ–å—(æ™®é€šåˆå§‹åŒ–å—è´Ÿè´£
+                å¯¹å¯¹è±¡æ‰§è¡Œåˆå§‹åŒ–, ç±»åˆå§‹åŒ–å—è´Ÿè´£å¯¹ç±»è¿›è¡Œåˆå§‹åŒ–)
+            2. ç³»ç»Ÿå°†åœ¨ç±»åˆå§‹åŒ–é˜¶æ®µæ‰§è¡Œåˆå§‹åŒ–å—,è€Œä¸æ˜¯åœ¨åˆ›å»ºå¯¹è±¡æ—¶æ‰æ‰§è¡Œ
+            3. é™æ€åˆå§‹åŒ–å—æ€»æ˜¯æ¯”æ™®é€šåˆå§‹åŒ–å—å…ˆæ‰§è¡Œ
+            4. é™æ€åˆå§‹åŒ–å—é€šå¸¸ç”¨äºŽå¯¹ç±»å˜é‡æ‰§è¡Œåˆå§‹åŒ–, é™æ€åˆå§‹åŒ–å—ä¸èƒ½å¯¹å®žä¾‹å˜é‡è¿›è¡Œåˆå§‹åŒ–å¤„ç†(é™æ€
+                åˆå§‹åŒ–å—ä¸èƒ½è®¿é—®éžé™æ€æˆå‘˜,åŒ…æ‹¬ä¸èƒ½è®¿é—®å®žä¾‹å˜é‡å’Œå®žä¾‹æ–¹æ³•)
+            5. Javaç³»ç»ŸåŠ è½½å¹¶åˆå§‹åŒ–æŸä¸ªç±»æ—¶, æ€»æ˜¯ä¿è¯è¯¥ç±»çš„æ‰€æœ‰çˆ¶ç±»(åŒ…æ‹¬ç›´æŽ¥çˆ¶ç±»å’Œé—´æŽ¥çˆ¶ç±»)å…¨éƒ¨åŠ è½½
+                å¹¶åˆå§‹åŒ–
         
-        Àý×Ó:
-            // ´´½¨Èý¸öÀà(¶¼Ìá¹©¾²Ì¬³õÊ¼»¯¿éºÍÆÕÍ¨³õÊ¼»¯¿é)
+        ä¾‹å­:
+            // åˆ›å»ºä¸‰ä¸ªç±»(éƒ½æä¾›é™æ€åˆå§‹åŒ–å—å’Œæ™®é€šåˆå§‹åŒ–å—)
             class Root
             {
                 static{
-                    System.out.println("RootµÄ ¾²Ì¬ ³õÊ¼»¯¿é");
+                    System.out.println("Rootçš„ é™æ€ åˆå§‹åŒ–å—");
                 }
                 {
-                    System.out.println("RootµÄ ÆÕÍ¨ ³õÊ¼»¯¿é");
+                    System.out.println("Rootçš„ æ™®é€š åˆå§‹åŒ–å—");
                 }
                 public Root()
                 {
-                    System.out.println("RootµÄÎÞ²ÎÊýµÄ¹¹ÔìÆ÷");
+                    System.out.println("Rootçš„æ— å‚æ•°çš„æž„é€ å™¨");
                 }
             }
             class Mid extends Root 
             {
                 static{
-                    System.out.println("Mid µÄ ¾²Ì¬ ³õÊ¼»¯¿é");
+                    System.out.println("Mid çš„ é™æ€ åˆå§‹åŒ–å—");
                 }
                 {
-                    System.out.println("Mid µÄ ÆÕÍ¨ ³õÊ¼»¯¿é");
+                    System.out.println("Mid çš„ æ™®é€š åˆå§‹åŒ–å—");
                 }
                 public Mid()
                 {
-                    System.out.println("Mid µÄÎÞ²ÎÊýµÄ¹¹ÔìÆ÷");
+                    System.out.println("Mid çš„æ— å‚æ•°çš„æž„é€ å™¨");
                 }
                 public Mid(String msg)
                 {
-                    // Í¨¹ý this µ÷ÓÃÍ¬Ò»ÀàÖÐÖØÔØµÄ¹¹ÔìÆ÷
+                    // é€šè¿‡ this è°ƒç”¨åŒä¸€ç±»ä¸­é‡è½½çš„æž„é€ å™¨
                     this();
-                    System.out.println("Mid µÄ´ø²ÎÊýµÄ¹¹ÔìÆ÷, Æä²ÎÊýÖµ: "
+                    System.out.println("Mid çš„å¸¦å‚æ•°çš„æž„é€ å™¨, å…¶å‚æ•°å€¼: "
                         + msg);
                 }
             }
             class Leaf extends Mid
             {
                 static{
-                    System.out.println("Leaf µÄ¾²Ì¬³õÊ¼»¯¿é");
+                    System.out.println("Leaf çš„é™æ€åˆå§‹åŒ–å—");
                 }
                 {
-                    System.out.println("Leaf µÄÆÕÍ¨³õÊ¼»¯¿é");
+                    System.out.println("Leaf çš„æ™®é€šåˆå§‹åŒ–å—");
                 }
                 public Leaf()
                 {
-                    // Í¨¹ý super µ÷ÓÃ¸¸ÀàÖÐÓÐÒ»¸ö×Ö·û´®²ÎÊýµÄ¹¹ÔìÆ÷
-                    super("·è¿ñJAVA½²Òå");
-                    System.out.println("Ö´ÐÐ Leaf µÄ¹¹ÔìÆ÷");
+                    // é€šè¿‡ super è°ƒç”¨çˆ¶ç±»ä¸­æœ‰ä¸€ä¸ªå­—ç¬¦ä¸²å‚æ•°çš„æž„é€ å™¨
+                    super("ç–¯ç‹‚JAVAè®²ä¹‰");
+                    System.out.println("æ‰§è¡Œ Leaf çš„æž„é€ å™¨");
                 }
             }
             public class Test
@@ -1965,38 +1965,38 @@
                     new Leaf();
                 }
             }
-            ³ÌÐòËµÃ÷:
-                1. µÚÒ»´Î´´½¨Ò»¸ö Leaf ¶ÔÏóÊ±, ÒòÎªÏµÍ³ÖÐ»¹²»´æÔÚ Leaf Àà, Òò´ËÐèÒªÏÈ¼ÓÔØ²¢³õÊ¼»¯ 
-                    Leaf Àà, ³õÊ¼»¯ Leaf ÀàÊ±»áÏÈÖ´ÐÐÆä¶¥²ã¸¸ÀàµÄ¾²Ì¬³õÊ¼»¯¿é, ÔÙÖ´ÐÐÆäÖ±½Ó¸¸ÀàµÄ
-                    ¾²Ì¬³õÊ¼»¯¿é, ×îºó²ÅÖ´ÐÐ Leaf ±¾ÉíµÄ¾²Ì¬³õÊ¼»¯¿é
-                2. Ò»µ© Leaf Àà³õÊ¼»¯³É¹¦ºó, Leaf ÀàÔÚ¸ÃÐéÄâ»úÀï½«Ò»Ö±´æÔÚ, Òò´Ëµ±µÚ¶þ´Î´´½¨ Leaf 
-                    ÊµÀýÊ±ÎÞÐëÔÙ´Î¶Ô Leaf Àà½øÐÐ³õÊ¼»¯ 
-                3. Ã¿Ò»´Î´´½¨Ò»¸ö Leaf ¶ÔÏóÊ±, ¶¼ÐèÒªÏÈÖ´ÐÐ×î¶¥²ã¸¸ÀàµÄ³õÊ¼»¯¿é, ¹¹ÔìÆ÷, È»ºóÖ´ÐÐÆä
-                    ¸¸ÀàµÄ³õÊ¼»¯¿é, ¹¹ÔìÆ÷.....×îºó²ÅÖ´ÐÐLeafÀàµÄ³õÊ¼»¯¿éºÍ¹¹ÔìÆ÷
-                4. ¾²Ì¬³õÊ¼»¯¿éºÍÉùÃ÷¾²Ì¬³ÉÔ±±äÁ¿Ê±ËùÖ¸¶¨µÄ³õÊ¼Öµ¶¼ÊÇ¸ÃÀàµÄ³õÊ¼»¯´úÂë, ËûÃÇµÄÖ´ÐÐ
-                    Ë³ÐòÓëÔ´ÂëÖÐÅÅÁÐË³ÐòÏàÍ¬. ÈçÏÂÃæÀý×Ó2
+            ç¨‹åºè¯´æ˜Ž:
+                1. ç¬¬ä¸€æ¬¡åˆ›å»ºä¸€ä¸ª Leaf å¯¹è±¡æ—¶, å› ä¸ºç³»ç»Ÿä¸­è¿˜ä¸å­˜åœ¨ Leaf ç±», å› æ­¤éœ€è¦å…ˆåŠ è½½å¹¶åˆå§‹åŒ– 
+                    Leaf ç±», åˆå§‹åŒ– Leaf ç±»æ—¶ä¼šå…ˆæ‰§è¡Œå…¶é¡¶å±‚çˆ¶ç±»çš„é™æ€åˆå§‹åŒ–å—, å†æ‰§è¡Œå…¶ç›´æŽ¥çˆ¶ç±»çš„
+                    é™æ€åˆå§‹åŒ–å—, æœ€åŽæ‰æ‰§è¡Œ Leaf æœ¬èº«çš„é™æ€åˆå§‹åŒ–å—
+                2. ä¸€æ—¦ Leaf ç±»åˆå§‹åŒ–æˆåŠŸåŽ, Leaf ç±»åœ¨è¯¥è™šæ‹Ÿæœºé‡Œå°†ä¸€ç›´å­˜åœ¨, å› æ­¤å½“ç¬¬äºŒæ¬¡åˆ›å»º Leaf 
+                    å®žä¾‹æ—¶æ— é¡»å†æ¬¡å¯¹ Leaf ç±»è¿›è¡Œåˆå§‹åŒ– 
+                3. æ¯ä¸€æ¬¡åˆ›å»ºä¸€ä¸ª Leaf å¯¹è±¡æ—¶, éƒ½éœ€è¦å…ˆæ‰§è¡Œæœ€é¡¶å±‚çˆ¶ç±»çš„åˆå§‹åŒ–å—, æž„é€ å™¨, ç„¶åŽæ‰§è¡Œå…¶
+                    çˆ¶ç±»çš„åˆå§‹åŒ–å—, æž„é€ å™¨.....æœ€åŽæ‰æ‰§è¡ŒLeafç±»çš„åˆå§‹åŒ–å—å’Œæž„é€ å™¨
+                4. é™æ€åˆå§‹åŒ–å—å’Œå£°æ˜Žé™æ€æˆå‘˜å˜é‡æ—¶æ‰€æŒ‡å®šçš„åˆå§‹å€¼éƒ½æ˜¯è¯¥ç±»çš„åˆå§‹åŒ–ä»£ç , ä»–ä»¬çš„æ‰§è¡Œ
+                    é¡ºåºä¸Žæºç ä¸­æŽ’åˆ—é¡ºåºç›¸åŒ. å¦‚ä¸‹é¢ä¾‹å­2
 
-        Àý×Ó2:
+        ä¾‹å­2:
             // StaticInitTest.java
             public class StaticInitTest{
-                // ÏÈÖ´ÐÐ¾²Ì¬³õÊ¼»¯¿é½« a ¾²Ì¬³ÉÔ±±äÁ¿¸³ÖµÎª 6 
+                // å…ˆæ‰§è¡Œé™æ€åˆå§‹åŒ–å—å°† a é™æ€æˆå‘˜å˜é‡èµ‹å€¼ä¸º 6 
                 static{
                     a = 6;
                 }
-                // ÔÙ½« a ¾²Ì¬³ÉÔ±±äÁ¿¸³ÖµÎª 9 
+                // å†å°† a é™æ€æˆå‘˜å˜é‡èµ‹å€¼ä¸º 9 
                 static int a = 9;
                 public static void main(String[] args){
-                    // ÏÂÃæµÄ´úÂëÊä³ö 9 
+                    // ä¸‹é¢çš„ä»£ç è¾“å‡º 9 
                     System.out.println(StaticInitTest.a);
                 }
                 
             }
-            ³ÌÐòËµÃ÷:
-                1. ÉÏÃæ³ÌÐòÁ½´Î¶Ô a ¾²Ì¬³ÉÔ±±äÁ¿½øÐÐ¸³Öµ, Ö´ÐÐ½á¹ûÊÇ a ÖµÊÇ9,Õâ±íÃ÷ static int a = 9;
-                    ÕâÐÐ´úÂëÎ»ÓÚ¾²Ì¬³õÊ¼»¯¿éÖ®ºóÖ´ÐÐ. 
-                2. µ± JVM µÚÒ»´ÎÖ÷¶¯Ê¹ÓÃÄ³¸öÀàÊ±, ÏµÍ³»áÔÚÀà×¼±¸½×¶ÎÎª¸ÃÀàµÄËùÓÐ¾²Ì¬³ÉÔ±±äÁ¿·ÖÀàÄÚ´æ,
-                    ÔÚ³õÊ¼»¯½Ò¶ÌÔò¸ºÔð³õÊ¼»¯ÕâÐ©¾²Ì¬³ÉÔ±±äÁ¿, ³õÊ¼»¯¾²Ì¬³ÉÔ±±äÁ¿¾ÍÊÇÖ´ÐÐÀà³õÊ¼»¯´úÂë
-                    »òÕßÉùÃ÷Àà³ÉÔ±±äÁ¿Ê±Ö¸¶¨µÄ³õÊ¼Öµ, ËûÃÇµÄÖ´ÐÐË³ÐòÓëÔ´ÂëÖÐÅÅÁÐµÄË³ÐòÏàÍ¬
+            ç¨‹åºè¯´æ˜Ž:
+                1. ä¸Šé¢ç¨‹åºä¸¤æ¬¡å¯¹ a é™æ€æˆå‘˜å˜é‡è¿›è¡Œèµ‹å€¼, æ‰§è¡Œç»“æžœæ˜¯ a å€¼æ˜¯9,è¿™è¡¨æ˜Ž static int a = 9;
+                    è¿™è¡Œä»£ç ä½äºŽé™æ€åˆå§‹åŒ–å—ä¹‹åŽæ‰§è¡Œ. 
+                2. å½“ JVM ç¬¬ä¸€æ¬¡ä¸»åŠ¨ä½¿ç”¨æŸä¸ªç±»æ—¶, ç³»ç»Ÿä¼šåœ¨ç±»å‡†å¤‡é˜¶æ®µä¸ºè¯¥ç±»çš„æ‰€æœ‰é™æ€æˆå‘˜å˜é‡åˆ†ç±»å†…å­˜,
+                    åœ¨åˆå§‹åŒ–æ­çŸ­åˆ™è´Ÿè´£åˆå§‹åŒ–è¿™äº›é™æ€æˆå‘˜å˜é‡, åˆå§‹åŒ–é™æ€æˆå‘˜å˜é‡å°±æ˜¯æ‰§è¡Œç±»åˆå§‹åŒ–ä»£ç 
+                    æˆ–è€…å£°æ˜Žç±»æˆå‘˜å˜é‡æ—¶æŒ‡å®šçš„åˆå§‹å€¼, ä»–ä»¬çš„æ‰§è¡Œé¡ºåºä¸Žæºç ä¸­æŽ’åˆ—çš„é¡ºåºç›¸åŒ
 
 
 
