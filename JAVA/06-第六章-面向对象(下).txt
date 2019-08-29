@@ -1,0 +1,106 @@
+0. 概述
+    1. Java 为 8 个基本类型提供了对用的包装类, 通过这些包装类可以把8个基本类型的值包装成对象使用;
+    2. JDK1.5 提供自动装箱和自动拆箱功能, 允许把基本类型值直接赋给对应的包装类引用变量, 也允许把包装类
+        对象直接赋给对应的基本类型变量
+    3. final 关键字用来修饰变量, 方法和类, 系统不允许为 final 修饰的变量重新赋值, 子类不允许覆盖父类的
+        final 修饰的方法, final 类不能派生子类. 即: 通过 final 关键字, 允许 Java 实现不可变类
+    4. abstract 和 interface 两个关键字分别用于定义抽象和接口, 抽象类和接口都是从多个子类中抽象出来的
+        共同特征, 但抽象类主要作为多个类的模版, 而接口则定义了多类应该遵守的规范
+    5. enum 关键字用于创建枚举类, 枚举类是一种不能自由创建对象的类, 美剧类在定义的时已经固定下来
+
+1. Java 8 增强的包装类
+    1.1 基本数据类型的包装类
+        说明:
+            1. 为了解决 8 中基本数据类型的变量不能当成 Object 类型变量使用的问题, 才出现了包装类(Wrapper
+                Class)的概念, 为 8 中基本类型的数据分别定义了相应的引用类型
+            2. 熟记下面的对应关系, 着重记住 int---Integer 和 char---Character 这两种比较特殊的对应关系
+
+        基本数据类型和引用数据类型
+            <基本数据类型>       <引用数据类型>
+                byte                byte
+                short               Short 
+                int                 Integer
+                long                Long 
+                char                Character 
+                float               Float 
+                double              Double 
+                boolean             Boolean 
+
+    1.2 自动装箱和自动拆箱
+        说明:
+            1. 自动装箱(Autoboxing): 就是可以把一个基本类型变量直接赋给对应的包装类变量, 或者赋给 Object 
+                变量(Object 是所有类的父类, 子类对象可以直接赋给父类变量)
+            
+            2. 自动拆箱(AutoUnboxing): 把包装类对象直接赋给一个对应的基本类型变量
+           
+            3. 进行自动装箱和自动拆箱时必须注意类型匹配, 如: Integer 只能自动拆箱成 int 类型变量, 不能拆
+                成别的类型; 同样, int 类型变量只能自动装箱成 Integer 对象 (例子1)
+            
+            4. 目的: 通过自动装箱和自动拆箱功能, 开发这可以把基本类型的变量 "近似" 地当成对象使用, 同样, 
+                也可以把包装类的实例近似地当成基本类型的变量使用
+            
+            5. 包装类还可实现基本类型变量和字符串之间的转换, 如将字符串类型的值转为基本类型的值的方法:(例子2)
+                5.1 利用包装类提供的 parseXxx(String s) 静态方法 (Character 包装类没有这个方法)
+                5.2 利用包装类提供的 Xxx(String s) 的构造器
+            
+            6. String 类提供了多个重载的 valueOf() 方法, 用于将基本类型变量转换成字符串(例子2)
+                6.1 基本类型变量-->String 对象: 通过 String.valueOf(ptimitive) 转换
+                6.2 String 对象-->基本类型变量: 通过 WrapperClass.parseXxx() 方法, 或利用包装类的构造器
+                6.3 利用 基本类型变量和"" 进行连接运算, 也可将基本类型变量快速转换为字符串(例子3)
+ 
+        例子1:
+            // 自动装箱和自动拆箱
+            public class AutoboxingUnboxing{
+                public static void main(String[] args){
+                    // 直接把一个基本类型变量赋给 Integer 对象
+                    Integer inObj = 5;
+                    // 直接把一个 boolean 类型的变量赋给一个 Object 类型的变量
+                    Object boolObj = true;
+                    // 直接把一个 Integet 对象赋给 int 类型的变量
+                    int it = inObj;
+                    if (boolObj instanceof Boolean){
+                        // 先把 Object 对象强制类型转换为 Boolean 类型, 在赋给 boolean 变量 
+                        boolean b = (Boolean)boolObj;
+                        System.out.println(b);   // out: true
+                    }
+                }
+            }
+            程序说明:
+                1. 基本类型转引用数据类型: 直接将基本类型的值赋值给引用数据类型的变量
+                2. 引用数据类型转基本类型: 直接将引用类型值赋值给基本数据类型的变量
+        例子2:
+            // 字符串和基本类型的转换
+            public class Primitive2String{
+                public static void main(String[] args){
+                    String intStr = "123";
+                    // 把一个特定的字符串转换为 int 变量
+                    int it1 = Integer.parseInt(intStr);
+                    int it2 = new Integer(intStr);
+                    System.out.println(it2);   // out: 123
+                    String floatStr = "3.14";
+                    // 把一个特定的字符串转换成 float 变量 
+                    float ft1 = Float.parseFloat(floatStr);
+                    float ft2 = new Float(floatStr);
+                    System.out.println(ft2);   // out: 3.14
+                    // 把一个float 变量转换成 String 变量 
+                    String ftStr = String.valueOf(3.1415926F);
+                    System.out.println(ftStr);   // out: 3.1415925
+                    // 把一个 double 变量转换成 String 变量 
+                    String dbStr = String.valueOf(6.25789);
+                    System.out.println(dbStr);   // out: 3.25789
+                    // 把一个 boolean 变量转换成 String 变量
+                    String boolStr = String.valueOf(true);
+                    System.out.println(boolStr.toUpperCase());   // out: TRUE
+                }
+            }
+            程序说明:
+                1. 字符串转基本类型: 将"引用数据类型.parse基本数据类型(字符串类型的值)" 的值赋值给基本数据类型
+                2. 基本类型转字符串: 将 "String.valueOf(基本类型的值)" 的值赋值给 String 类型的变量
+        例子3:
+            // 通过简单的方法将基本类型转为字符串
+            public class Primitive2String1{
+                public static void main(String[] args){
+                    // intStr 的值为"5" 转换为字符串
+                    String intStr = 5 + "";
+                }
+            }
