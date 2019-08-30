@@ -20,7 +20,7 @@
 
         基本数据类型和引用数据类型
             <基本数据类型>       <引用数据类型>
-                byte                byte
+                byte                Byte
                 short               Short 
                 int                 Integer
                 long                Long 
@@ -30,7 +30,7 @@
                 boolean             Boolean 
 
     1.2 自动装箱和自动拆箱
-        说明:
+        说明:(基本类型和包装类之间的转换自动/手动)
             1. 自动装箱(Autoboxing): 就是可以把一个基本类型变量直接赋给对应的包装类变量, 或者赋给 Object 
                 变量(Object 是所有类的父类, 子类对象可以直接赋给父类变量)；装箱时调用valueOf()方法实现，
                 例如：Integer.valueOf(100);
@@ -49,15 +49,15 @@
             4. 目的: 通过自动装箱和自动拆箱功能, 开发者可以把基本类型的变量 "近似" 地当成对象使用, 同样, 
                 也可以把包装类的实例近似地当成基本类型的变量使用
             
-            5. 包装类还可实现基本类型变量和字符串之间的转换, 如将字符串类型的值转为基本类型的值的方法:(例子2)
-                5.1 利用包装类提供的 parseXxx(String s) 静态方法 (Character 包装类没有这个方法)
-                5.2 利用包装类提供的 Xxx(String s) 的构造器
-            
-            6. String 类提供了多个重载的 valueOf() 方法, 用于将基本类型变量转换成字符串(例子2)
-                6.1 基本类型变量-->String 对象: 通过 String.valueOf(ptimitive) 转换
-                6.2 String 对象-->基本类型变量: 通过 WrapperClass.parseXxx() 方法, 或利用包装类的构造器
-                6.3 利用 基本类型变量和"" 进行连接运算, 也可将基本类型变量快速转换为字符串(例子3)
- 
+        基本类型和字符串之间的转换:(例子2)
+            基本类型转换为字符串：
+                1. 通过String类的 String.valueOf(primitive) 方法 
+                2. 使用包装类的 toString()方法，WrapperClass.toString() 方法
+                3. 使用基本类型加上一个空字符串方法： 基本类型 + ""  
+            字符串转换为基本类型：
+                1. 通过 WrapperClass.parseXxx() 方法
+                2. 调用包装类的 WrapperClass.valueOf()方法，会自动拆箱 
+             
         例子1:
             // 自动装箱和自动拆箱
             public class AutoboxingUnboxing{
@@ -79,23 +79,30 @@
             程序说明:
                 1. 基本类型转引用数据类型: 直接将基本类型的值赋值给引用数据类型的变量
                 2. 引用数据类型转基本类型: 直接将引用类型值赋值给基本数据类型的变量
+
         例子2:
-            // 字符串和基本类型的转换
+            // 字符串和基本类型之间的转换
             public class Primitive2String{
                 public static void main(String[] args){
                     String intStr = "123";
                     // 把一个特定的字符串转换为 int 变量
                     int it1 = Integer.parseInt(intStr);
-                    // int it2 = new Integer(intStr);
+                    int it2 = Integer.valueOf(intStr);
                     System.out.println(it1);   // out: 123
+                    System.out.println(it2);   // out: 123
                     String floatStr = "3.14";
                     // 把一个特定的字符串转换成 float 变量 
                     float ft1 = Float.parseFloat(floatStr);
-                    // float ft2 = new Float(floatStr);
+                    float ft2 = Float.valueOf(floatStr);
+                    System.out.println(ft1);   // out: 3.14
                     System.out.println(ft2);   // out: 3.14
                     // 把一个float 变量转换成 String 变量 
-                    String ftStr = String.valueOf(3.1415926F);
-                    System.out.println(ftStr);   // out: 3.1415925
+                    String ftStr1 = String.valueOf(3.1415926F);
+                    String ftStr2 = Float.toString(3.1415926F);
+                    String ftStr3 = 3.1415926F + "";
+                    System.out.println(ftStr1);   // out: 3.1415925
+                    System.out.println(ftStr2);   // out: 3.1415925
+                    System.out.println(ftStr3);   // out: 3.1415925
                     // 把一个 double 变量转换成 String 变量 
                     String dbStr = String.valueOf(6.25789);
                     System.out.println(dbStr);   // out: 3.25789
@@ -104,17 +111,7 @@
                     System.out.println(boolStr.toUpperCase());   // out: TRUE
                 }
             }
-            程序说明:
-                1. 字符串转基本类型: 将"引用数据类型.parse基本数据类型(字符串类型的值)" 的值赋值给基本数据类型
-                2. 基本类型转字符串: 将 "String.valueOf(基本类型的值)" 的值赋值给 String 类型的变量
-        例子3:
-            // 通过简单的方法将基本类型转为字符串
-            public class Primitive2String1{
-                public static void main(String[] args){
-                    // intStr 的值为"5" 转换为字符串
-                    String intStr = 5 + "";
-                }
-            }
+ 
 
     1.3 包装类和数值类型的比较
         说明:
@@ -148,7 +145,7 @@
                 类是Long时,xxx代表long
 
         例子1:
-            System.out.println("比较2个包装类的实例是否相等:" + (newInteger(2) == new Integer(2)));  // out: false
+            System.out.println("比较2个包装类的实例是否相等:" + (new Integer(2) == new Integer(2)));  //out:false
             Integer a = 6; 
             System.out.println("6的包装类是否大于5.0: " + (a > 5.0));  // out: true
             说明:
@@ -203,18 +200,19 @@
                     
 
 2. 处理对象
-    2.1 打印对象和 toString 方法
+    2.1 打印对象 和 toString 方法
         说明:
             1. Java对象都是Object 类的实例, 都可直接调用该类中定义的方法, 如: 所有的Java类都具有toString()方法
             2. 所有的Java对象都可以和字符串进行连接运算, 当Java对象和字符串进行连接运算时, 系统自动调用Java对象
                 的 toString()方法的返回值和字符串进行连接运算(例子1)
             3. toString() 方法是一个"自我描述"方法, 通常用于实现这样的功能: 当程序员直接打印该对象时, 系统将会
                 输出该对象的 "自我描述" 信息, 用于告诉外界该对象具有的状态信息
-            4. Object 类提供的 toString()方法总是返回该对象实现类的"类名 + @ + hashCode" 值, 这个返回值并不能
+            4. Object 类提供的 toString()方法总是返回该对象实现类的 "类名 + @ + hashCode" 值, 这个返回值并不能
                 真正实现"自我描述"的功能, 但是可以通过重新Object类的toString()方法者自定义"自我描述"的功能(例子2)
             5.  重写toString()方法定义返回值格式:(例子3) 类名[field1=值1, Field2=值2,...]
         
         例子1:
+            // 打印对象
             class Person{
                 private String name;
                 public Person(String name){
@@ -224,15 +222,15 @@
             public class PrintObject{
                 public static void main(String[] args) {
                     // 创建一个 Person 对象, 赋值给 p 变量
-                Person p = new Person("shuidaojinshi");
-                // 打印 P 引用的 Person 对象 
-                System.out.println(p);   // out: Person@3b192d32
-                System.out.println(p.toString());   // out: Person@3b192d32
-                String pStr = p + "";
-                System.out.println(pStr); 
-                String pStr1 = p.toString() + "";
-                System.out.println(pStr1);    // out: Person@3b192d32
-                // System.out.println(p.name);  // 编译错误的原因是private修饰的只能在当前类使
+                    Person p = new Person("shuidaojinshi");
+                    // 打印 P 引用的 Person 对象 
+                    System.out.println(p);   // out: Person@3b192d32
+                    System.out.println(p.toString());   // out: Person@3b192d32
+                    String pStr = p + "";
+                    System.out.println(pStr);     // out: Person@3b192d32
+                    String pStr1 = p.toString() + "";
+                    System.out.println(pStr1);    // out: Person@3b192d32
+                    // System.out.println(p.name);  // 编译错误的原因是private修饰的只能在当前类使
                 }
             }
         例子2:
@@ -268,7 +266,9 @@
             }
             public class ToStringTest{
                 public static void main(String[] args){
+                    // 调用的无参构造器
                     Apple a = new Apple();
+                    //  通过setter方法来赋值
                     a.setColor("RED");
                     a.setWeight(5.68);
                     System.out.println(a); // out: this is a apple, color is: RED, weight is: 5.68
@@ -311,18 +311,119 @@
                     System.out.println("65和65.0f是否相等? " + (it == f1));
 
                     char ch = 'A';
-                    // 将输出 true
+                    // 将输出 true， 因为 == 运算符比较基本类型时比较的时二者的值
                     System.out.println("65和'A'是否相等? " + (it == ch));
 
                     String str1 = new String("hello");
                     String str2 = new String("hello");
+                    String str3 = str1;
                     // 将输出false
                     System.out.println("str1和str2是否相等? " + (str1 == str2));
+                    // 将输出true, 因为 == 运算符比较引用类型时比较的时二者的引用地址
+                    System.out.println("str1和str3是否相等? " + (str1 == str3));
 
-                    // 将输出true
+                    // 将输出true， 因为 equals()方法比较引用类型比较的时二者的引用地址
                     System.out.println("str1 是否 equals str2? " + (str1.equals(str2)));
                     // 由于 java.lang.string 与 EqualTest类没有继承关系
                     // 所以下面的语句将导致编译错误
                     // System.out.println("hello" == new EqualTest());
                 }
             }
+            程序说明:
+                1. Java程序直接使用如"Hello"这种字符串直接量(包括可以在编译时就计算出来的字符值)时，JVM将会使用
+                    常量池来管理这些字符串
+                2. 当使用 new String("hello"); 时，JVM会先使用常量池来管理"hello"直接量，在调用String类的构造器
+                    来创建一个新的 String 对象，新创建的 String 对象被保存在堆内存中，所以，new String("hello");
+                    这句代码一共产生了两个字符串对象
+                3. 常量池(constant pool) 专门用于管理在编译时被确定并被保存在已编译的.class文件中的一些数据，它还
+                    包括了关于类，方法， 接口中常量，还包括字符串常量。
+        例子2：
+            // JVM使用常量池管理字符串直接量的情形
+            public class StringCompareTest{
+                public static void main(String[] args) {
+                    //s1直接引用常量池中的 "你好 世界！"
+                    String s1 = "你好世界";
+                    String s2 = "你好";
+                    String s3 = "世界";
+
+                    // s4 后面的字符串值可以直接在编译时就确定下来
+                    // s4 直接引用常量池中的 "你好 世界！"
+                    String s4 = "你好" + "世界";
+                    
+                    // s5 后面的字符串值可以直接在编译时就确定下来
+                    // s5 直接引用常量池中的 "你好 世界！"
+                    String s5 ="你" + "好" + "世" + "界";
+
+                    // s6 后面的字符串不能在编译时候就确定值
+                    // 所以 s6 不能引用常量池的字符串
+                    String s6 = s2 + s3;
+
+                    // 使用 new 调用构造器将会创建一个新的 String 对象
+                    // s7 引用堆内存中新创建的 String 对象
+                    String s7 = new String("你好 世界");
+
+                    System.out.println(s1 == s4);   // out: true
+                    System.out.println(s1 == s5);   // out: true
+                    System.out.println(s1 == s6);   // out: false
+                    System.out.println(s1 == s7);   // out: false
+                }
+            }
+            程序说明:
+                1. JVM常量池保证相同的字符串直接量只有一个，不会产生多个副本。例子中 s1, s4, s5所引用的字符串
+                    可以在编译期就确定下来，因此他们都将引用常量池中同一个字符串的对象
+                2. 使用 new String()创建的字符串对象时运行时创建出来的，它被保存在堆内存中，不会放入常量池
+        例子3：
+            // 重写euqals()方法
+             class Person{
+                private String name;
+                private String idStr;
+                public Person(){}
+                public Person(String name, String idStr){
+                    this.name = name;
+                    this.idStr = idStr;
+                }
+                public void setName(String name){
+                    this.name = name;
+                }
+                public String getName(){
+                    return this.name;
+                }
+                public void setIdStr(String idStr){
+                    this.idStr = idStr;
+                }
+                public String getIdStr(){
+                    return this.idStr;
+                }
+                // 重写 equals()方法， 提供自定义的相等标准
+                public boolean equals(Object obj){
+                    // 如果两个对象为同一个对象
+                    if(this == obj)
+                        return true;
+                    // 只有当 obj 是 Person 对象
+                    // obj.getClass() == Person.class 判断obj是否是Person类的实例
+                    if (obj != null && obj.getClass() == Person.class){
+                        Person personObj = (Person)obj;
+                        // 并且当前对象的 idStr 与 对象的 idStr 相等时才可以判断两个对象相等
+                        if (this.getIdStr().equals(personObj.getIdStr())){
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+            public class OverrideEqualsRight{
+                public static void main(String[] args) {
+                    Person p1 = new Person("孙悟空", "123456789");
+                    Person p2 = new Person("孙行者", "123456789");
+                    Person p3 = new Person("孙悟饭", "1010001010");
+                    // p1 和 p2 的 idStr 相等， 所以输出true
+                    System.out.println("p1和p2是否相等： " + p1.equals(p2));
+                    // p2 和 p3 的 idStr 不相等， 所以输出 false
+                    System.out.println("p2和p3是否相等： " + p2.equals(p3));
+                }
+            }    
+            程序说明：
+                1. 用于比较的equals() 方法时可以重写的，可以加上自己需要的判断规则
+                2. Person类重写了equals()方法，指定了 Person 对象和其他对象相等的标准(equals方法体代码)：另一个
+                    对象必须是Person类的实例，且两个 Person 对象的 idStr 相等，即可判断两个 Person 对象相等；在
+                    这种判断标准下，就是只要两个 Person 对象的身份证字符串相等，即可判断相等
