@@ -33,14 +33,14 @@
         说明:
             1. 自动装箱(Autoboxing): 就是可以把一个基本类型变量直接赋给对应的包装类变量, 或者赋给 Object 
                 变量(Object 是所有类的父类, 子类对象可以直接赋给父类变量)；装箱时调用valueOf()方法实现，
-                例如：Integet.valueOf(100);
-                自动装箱比如： Integet i = 100;
-                手动装箱比如:  Integet i = Tnteget.valueOf(100); 
+                例如：Integer.valueOf(100);
+                自动装箱比如： Integer i = 100;
+                手动装箱比如:  Integer i = Tnteget.valueOf(100); 
             
             2. 自动拆箱(AutoUnboxing): 把包装类对象直接赋给一个对应的基本类型变量; 拆箱时调用对应的
                 XxxValue() 方法实现， 比如：intValue() 方法
                 自动拆箱比如： Integer i = 100; 
-                              int t1 = i;
+                              int t1 = i;   // 自动拆箱
                 手动拆箱比如： int t2 = i.intValue();
            
             3. 进行自动装箱和自动拆箱时必须注意类型匹配, 如: Integer 只能自动拆箱成 int 类型变量, 不能拆
@@ -66,8 +66,9 @@
                     Integer inObj = 5;
                     // 直接把一个 boolean 类型的变量赋给一个 Object 类型的变量(自动装箱)
                     Object boolObj = true;
-                    // 直接把一个 Integet 对象赋给 int 类型的变量(自动拆箱)
+                    // 直接把一个 Integer 对象赋给 int 类型的变量(自动拆箱)
                     int it = inObj;
+                    System.out.println(it);  out: 5
                     if (boolObj instanceof Boolean){
                         // 先把 Object 对象强制类型转换为 Boolean 类型, 在赋给 boolean 变量 
                         boolean b = (Boolean)boolObj;
@@ -85,12 +86,12 @@
                     String intStr = "123";
                     // 把一个特定的字符串转换为 int 变量
                     int it1 = Integer.parseInt(intStr);
-                    int it2 = new Integer(intStr);
-                    System.out.println(it2);   // out: 123
+                    // int it2 = new Integer(intStr);
+                    System.out.println(it1);   // out: 123
                     String floatStr = "3.14";
                     // 把一个特定的字符串转换成 float 变量 
                     float ft1 = Float.parseFloat(floatStr);
-                    float ft2 = new Float(floatStr);
+                    // float ft2 = new Float(floatStr);
                     System.out.println(ft2);   // out: 3.14
                     // 把一个float 变量转换成 String 变量 
                     String ftStr = String.valueOf(3.1415926F);
@@ -112,5 +113,216 @@
                 public static void main(String[] args){
                     // intStr 的值为"5" 转换为字符串
                     String intStr = 5 + "";
+                }
+            }
+
+    1.3 包装类和数值类型的比较
+        说明:
+            1. 包装类的实例可以与数值类型的值进行比较, 这种比较是直接取出包装类实例所包装的数值来进行比较,因为包
+                装类的实例实际上是引用类型, 只有两个包装类引用指向同一个对象时返回true (例子1)
+            2. 注意: 系统把一个 -128~127 之间的整数自动装箱成 Integer实例, 并放入了一个名为 cache 的数组中缓存
+                了起来; 所以将 -128~127 之间的整数自然数自动装箱成一个 Integer 实例时, 实际上是直接指向对象的
+                数组元素, 因此 -128~127 之间的同一个整数自动装箱成 Integer 实例时, 都是引用 cache 数组的同一个
+                数组元素, 所以他们全部相等(例子2)
+            3. Java7 为所有的包装类提供了一个静态的 compare(xxx val1, xxx val2)方法, 用来比较两个基本类值的大小,
+                (两个boolean 类型的值比较的时候, true > false) (例子3)
+
+        Java8 增强的包装类方法(例子4)
+            1. static String toUnsignedString(int/long i)
+                该方法将指定 int 或 long 型整数转换为无符号整数对应的字符串
+            2. static String toUnsignedString(int/long i, int radix)
+                该方法将指定 int 或 long 型的整数转换为指定进制的无符号整数对应的字符串
+            3. static xxx parseUnsignedString(String s)
+                该方法将指定字符串解析成无符号整数, 当调用类为 Integer时, xxx代表int; 当调用类是Long时, xxx代表long
+            4. static xxx parseUnsignedString(String s, int radix)
+                该方法将指定字符串按指定的进制解析成无符号整数, 当调用类为 Integer时, xxx代表int; 当调用类是Long时, 
+                xxx代表long
+            5. static int compareUnsigned(xxx x, xxx y)
+                该方法将 x, y两个整数转换为无符号整数后比较大小, 当调用类为 Integer时, xxx代表int; 当调用类是Long时, 
+                xxx代表long
+            6. static long divideUnsigned(long divided, long divisor)
+                该方法将x, y 两个整数转换为无符号整数后计算他们相除的商, 当调用类为 Integer时, xxx代表int; 当调用类 
+                是Long时,xxx代表long
+            7. static long remainderUnsigned(long divided, long divisor)
+                该方法将x, y 两个整数转换为无符号整数后计算他们相除的余数, 当调用类为 Integer时, xxx代表int; 当调用 
+                类是Long时,xxx代表long
+
+        例子1:
+            System.out.println("比较2个包装类的实例是否相等:" + (newInteger(2) == new Integer(2)));  // out: false
+            Integer a = 6; 
+            System.out.println("6的包装类是否大于5.0: " + (a > 5.0));  // out: true
+            说明:
+                1. "==" 作用于基本类型的变量:则直接比较存储的 "值" 是否相等; 
+                        作用于引用数据类型的变量: 则比较的是所指向的对象的地址
+                2. "equals" 不能作用于基本数据类型的变量
+                        如果没有重写equals方法: 则比较的是引用类型的变量所指向的对象的地址
+                        如果String, Date类对 equals 方法重写了的话,比较的是所指向的对象的内容
+
+        例子2:
+            // 通过自动装箱, 允许把基本类型的值赋给包装类实例
+            Integer ina = 2;
+            Integer inb = 2;
+            System.out.println("两个2自动装箱后是否相等:" + (ina == inb));  // out:true
+            Integer biga = 128;
+            Integer binb = 128;
+            System.out.println("两个128自动装箱后是否相等:" + (biga == bigb));  // out:false
+
+        例子3:
+            // java7 提供的 compare(xxx val1, xxx val2); 方法
+            System.out.println(Boolean.cpmpare(ture, false));   // out: 1
+            System.out.println(Boolean.cpmpare(ture, ture));    // out: 0
+            System.out.println(Boolean.cpmpare(false, ture));   // out: -1
+            System.out.println(Integer.compare(11, 22));   // out: -1
+            System.out.println(Integer.compare(11, 2));    // out: 1
+
+        例子4:
+            // Java8 增强包装类的无符号算术运算
+            public class UnsignedTest{
+                public static void main(String[] args){
+                    byte b = -3;
+                    // 将 byte 类型的 -3 转换为无符号整数
+                    System.out.println("byte类型的-3对应的无符号整数:" 
+                        + Byte.toUnsignedInt(b)); // out: 253
+                    // 指定使用十六进制解析无符号整数
+                    int va1 = Integer.parseUnsignedInt("ab", 16);
+                    System.out.println(va1);   // out: 171
+                    // 将 -12转换为无符号 int 类型, 然后转换为十六进制的字符串
+                    System.out.println(Integer.toUnsignedString(-12, 16)); // out: fffffff4
+                    // 将两个数转换为无符号整数后相除
+                    System.out.println(Integer.divideUnsigned(-2, 3));   // out: 1431655764
+                    // 将两个数转换为无符号整数后相除后求余
+                    System.out.println(Integer.remainderUnsigned(-2, 7));  // out: 2
+                }
+            }
+            程序说明:
+                1. 无符号整数最大的特点是最高位不再被当成符号位, 因此无符号整数不支持负数, 其最小值为 0
+                2. 理解例子4的关键是先把操作数转换为无符号整数, 然后在进行计算
+                3. 如: byte 类型的 -3, 其原码为:10000011(最高位的1代表负数), 其反码为:11111100, 补码
+                    为: 11111101; 将该数当成无符号整数处理, 最高位的1不再代表符号位, 也就是数值位, 该
+                    数对应为 253
+                    
+
+2. 处理对象
+    2.1 打印对象和 toString 方法
+        说明:
+            1. Java对象都是Object 类的实例, 都可直接调用该类中定义的方法, 如: 所有的Java类都具有toString()方法
+            2. 所有的Java对象都可以和字符串进行连接运算, 当Java对象和字符串进行连接运算时, 系统自动调用Java对象
+                的 toString()方法的返回值和字符串进行连接运算(例子1)
+            3. toString() 方法是一个"自我描述"方法, 通常用于实现这样的功能: 当程序员直接打印该对象时, 系统将会
+                输出该对象的 "自我描述" 信息, 用于告诉外界该对象具有的状态信息
+            4. Object 类提供的 toString()方法总是返回该对象实现类的"类名 + @ + hashCode" 值, 这个返回值并不能
+                真正实现"自我描述"的功能, 但是可以通过重新Object类的toString()方法者自定义"自我描述"的功能(例子2)
+            5.  重写toString()方法定义返回值格式:(例子3) 类名[field1=值1, Field2=值2,...]
+        
+        例子1:
+            class Person{
+                private String name;
+                public Person(String name){
+                    this.name = name;
+                }
+            }
+            public class PrintObject{
+                public static void main(String[] args) {
+                    // 创建一个 Person 对象, 赋值给 p 变量
+                Person p = new Person("shuidaojinshi");
+                // 打印 P 引用的 Person 对象 
+                System.out.println(p);   // out: Person@3b192d32
+                System.out.println(p.toString());   // out: Person@3b192d32
+                String pStr = p + "";
+                System.out.println(pStr); 
+                String pStr1 = p.toString() + "";
+                System.out.println(pStr1);    // out: Person@3b192d32
+                // System.out.println(p.name);  // 编译错误的原因是private修饰的只能在当前类使
+                }
+            }
+        例子2:
+            // 自定义toString()方法的返回值(通过重写Object类下的toString()方法)
+            class Apple{
+                private String color;
+                private double weight;
+                // 无参数构造器
+                public Apple(){ }
+                // 提供拥有参数的构造器
+                public Apple(String color, double weight){
+                    this.color = color;
+                    this.weight = weight;
+                }
+                // setColor getColor方法
+                public void setColor(String color){
+                    this.color = color;
+                }
+                public String getColor(){
+                    return this.color;
+                }
+                // serWeight getWeight 方法
+                public void setWeight(double weight){
+                    this.weight = weight;
+                }
+                public double getWeight(){
+                    return this.weight;
+                }
+                // 重写 toString()方法, 用于实现 Apple 对象的"自我描述"
+                public String toString(){
+                    return "this is a apple, it's color is : " + getColor() + ", weight is: " + getWeight();   
+                }
+            }
+            public class ToStringTest{
+                public static void main(String[] args){
+                    Apple a = new Apple();
+                    a.setColor("RED");
+                    a.setWeight(5.68);
+                    System.out.println(a); // out: this is a apple, color is: RED, weight is: 5.68
+                    System.out.println(a.toString()); // out: this is a apple, color is: RED, weight is: 5.68
+                }
+            }
+        例子3:
+            // 改写格式化的 Apple类的 toString()方法的返回值
+            public String toString(){
+                return "Apple[color = " + color + ", weight = " + weight + "]"; 
+            }
+
+    2.2 == 和 equals 方法 
+        说明:
+            1. == 运算符 和 equals() 方法都是用来测试两个变量是否相等的两种方法
+            2. == 运算符:(例子1)
+                2.1 当两个变量都是基本类型(都是数值类型)时: 则只要两个变量的 值 相等, 才返回 true
+                2.2 当两个都是引用类型的变量时: 只有它们指向同一个对象时, == 判断才返回true, 
+                2.3 == 运算符不可用来比较类型上没有父子关系的两个对象 
+            3. equals() 方法是Object类提供的一个实例方法, 所有类都可以调用, equals()方法要求两个引用变量指向同一个对象
+                才会返回true, 即Object类的equals()方法比较的结果与==运算符比较的结果完全相等
+            4. String() 重写了Object类的equals()方法:String()的equals()方法判断两个字符串相等的标准是: 只要两个字符串
+                包含的字符序列相同, 通过equals()比较将返回true, 否则将返回 false
+
+        正确重新 equals() 方法的条件:
+            1. 自反性: 对任意x, x.equals(x) 一定返回 true 
+            2. 对称性: 对任意的 x 和 y, 如果 y.equals(x) 返回true, 则 x.equals(y) 也返回true 
+            3. 传递性: 对任意的x, y, z, 如果 x.euqals(y)返回ture, y.equals(z)返回true, 则 x.equals(z) 也返回true
+            4. 一致性: 对任意的x, y, 如果对象中用于等价比较傲的信息没有改变, 那么无论调用 x.equals(y)多少次, 返回的
+                结果应该保持一致性, 要么一直是true, 要么一直是false 
+            5. 对任意的不是null的x, x.equals(null)一定返回false
+
+        例子1:
+           // == 来判断两中类型变量是否相等
+            public class EqualTest{
+                public static void main(String[] args){
+                    int it = 65;
+                    float f1 = 65.0f;
+                    // 将输出 true
+                    System.out.println("65和65.0f是否相等? " + (it == f1));
+
+                    char ch = 'A';
+                    // 将输出 true
+                    System.out.println("65和'A'是否相等? " + (it == ch));
+
+                    String str1 = new String("hello");
+                    String str2 = new String("hello");
+                    // 将输出false
+                    System.out.println("str1和str2是否相等? " + (str1 == str2));
+
+                    // 将输出true
+                    System.out.println("str1 是否 equals str2? " + (str1.equals(str2)));
+                    // 由于 java.lang.string 与 EqualTest类没有继承关系
+                    // 所以下面的语句将导致编译错误
+                    // System.out.println("hello" == new EqualTest());
                 }
             }
