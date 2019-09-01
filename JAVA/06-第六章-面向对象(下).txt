@@ -683,4 +683,100 @@
 
     4.4 可执行 "宏替换" 的 final 变量 
         说明：
-            1. 
+            1. 对于一个final 变量来说，不管它是类变量，实例变量，还是局部变量，只要该变量满足下面三个条件，那么这个 final 变量就不再是一个
+                变量，而是相当于一个直接量（例子1）
+                1.1 使用 final 修饰符修饰
+                1.2 在定义该 final 变量时指定了初始值
+                1.3 该初始值可以在编译时就被确定下来
+            2. final修饰符的一个重要用途就是定义"宏变量"。当定义 final 变量时就为该变量指定了初始值，而且该初始值可以在编译时就确定下来，那么
+                这个 final 变量本质上就是一个 "宏变量"，编译器会把程序中所有用到该变量的地方直接替换成该变量的值
+            3. 对于 final 实例变量而言，只有定义该变量时指定了初始值才会有 "宏变量" 的效果
+            4. Java会使用常量池来管理曾经用到过的字符串直接量，例如执行：String a = "Java"; 语句之后，常量池中就会缓存一个字符串"Java"；如果
+                程序再次执行String b = "Java"; 系统就会让 b 直接指向常量池中的 "Java" 字符串， 因此 a == b 将会返回 True (例子2)
+        例子1： 
+            // 满足说明1的final修饰的变量相当于一个直接量
+            public class FinalLocalTest{
+                public static void mian(String[] args){
+                    // 定义一个普通的局部变量
+                    final int a = 5;
+                    System.out.println(a);
+                }
+            }
+            程序说明：
+                1. 对于上面的程序，变量 a 其实根本不存在，当程序执行System.out.println(a);代码时，实际转换为执行System.out.println(a5;
+        
+        例子2：
+            public class FinalABTest{
+                public static void main(String[] args){
+                    final String a = "Java";
+                    final String b = "Java";
+                    System.out.println("a == b :" + (a == b));   // out: a == b :true
+                    System.out.println("a.equals(b): " + a.equals(b));   // out: a.equals(b): true
+                }
+            }
+        例子3：
+            public class StringJoinTest{
+                public static void main(String[] args) {
+                    String s1 = "学 Java";
+                    // s2变量引用的字符串可以在编译时就确定下来
+                    // 因此 s2 直接引用常量池已有的 "学 Java" 字符串
+                    String s2 = "学 " + "Java";
+                    System.out.println("s1 == s2: " + (s1 == s2));  // out: s1 == s2: true
+                    // 定义两个字符串直接量
+                    String str1 = "学 ";
+                    String str2 = "Java";
+                    String s3 = str1 + str2;
+                    System.out.println("s1 == s3: " + (s1 == s3));   // out: s1 == s3: false
+                }
+            }
+            程序说明：
+                1. 对于 s1 和 s2 编译器在编译时就可以确定他们的值，所以系统会让 s2 直接指向常量池中缓存的字符串
+                2. 而 s3 的值是由 str1 和 str2 进行连接运算后得到的，由于 str1 和 str2 是普通变量，编译器不会执行 "宏替换"，所以在
+                    编译时 s3 的值时无法确定的，也就无法让 s3 指向常量池中缓存的字符串
+                3. 让 s1 == s3 为 true 很简单，只要使用 final 修饰 str1 和 str2 两个变量就可以执行 "宏替换"，从而在编译时就确定s3
+                    的值，进而让 s3 也指向常量池中缓存的 字符串
+
+    4.5 final 方法
+        说明：
+            1. final 修饰的方法不可被重写，如：Object类里的 getClass()方法，因为Java不希望任何类重写这个方法，所以使用 final 修饰，
+                从而将这个方法密封起来（例子1）
+            2. 对于一个 private 修饰的方法，因为它仅在当前类中可见，其子类无法访问该方法，所以子类无法重写该方法，
+            3. rewiew: 如果子类中定义了一个与父类 private 方法由相同方法名，相同形参列表，相同返回值类型的方法，也不是重写父类的 private                
+                方法，而是子类重新定义了一个新方法。因此：即使使用 final 修饰一个 private 访问权限的方法，依然可以在其子类中定义与该方法
+                具有相同方法名，相同形参列表，相同返回值类型的方法（例子2）
+            4. final 修饰的方法仅仅是不能被重写，并不是不能被重载（例子3）
+        
+        例子1：
+            public class FinalMethodTest{
+                public final void test(){
+                    System.out.println("final 修饰的 Public 访问权限的 test() 方法");
+                }
+            }
+            class sub extends FinalMethodTest{
+                // 下面方法定义将出现编译错误，不能重写父类 final 方法
+                public void test(){}
+            }
+        例子2： 
+            // 子类定义了和父类(被 private 和final 修饰的) 相同方法名，相同形参列表，相同返回值类型的方法，但不是重写父类方法，是子类重新定义
+            public class PrivateFinalMethodTest{
+                private final void test(){}
+            }
+            class sub extends PrivateFinalMethodTest{
+                // 下面的方法定义不会出现问题
+                public void test(){}
+            }
+        例子3： 
+            public class FinalOverload{
+                // final 修饰的方法只是不能被重写，完全可以被重载
+                public final void test(){}
+                public final void test(String args){}
+            }
+
+    4.6 final 类
+        说明：
+            1. final 修饰的类不可以有子类，如java.lang.Math 类就是一个 final 类，它不可以有子类
+            2. 也就是说 final 修饰的类不可以被继承
+        例子： 
+            public final class FinalClass{}
+            // 下面定义的类继承FinalClass类将出现编译错误
+            // class Sub entends FinalClass{}
