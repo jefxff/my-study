@@ -435,7 +435,7 @@
             1. static 关键字修饰的成员就是类成员, 包括: 类变量, 类方法, 静态初始化块, 内部类(包括接口,枚举)
             2. static 关键字不能修饰构造器, static 修饰的类成员属于整个类, 不属于单个实例
             3. static 关键字规则: 类成员(包括方法, 初始化块, 内部类和枚举类)不能访问实例成员(包括成员变量, 方法,
-                初始化块, 内部类和美剧类). 因为类成员是属于类的, 类成员的作用域比实例成员的中用于更大, 完全可能出
+                初始化块, 内部类和枚举类). 因为类成员是属于类的, 类成员的作用域比实例成员的作用域更大, 完全可能出
                 现类成员已经初始化完成, 但实例成员还不曾初始化的情况, 如果允许类成员访问实例成员将会引起大量的错误
 
         类变量:
@@ -445,24 +445,26 @@
             2. 类变量可以通过 类.类变量 或者 类的对象.类变量 的形式来访问. 对象不拥有对应类的类变量, 当通过对象来
                 访问类变量只是一种假象, 实际上依然访问的是该类的类变量. 所以可以理解为: 当通过对象来访问类变量时,
                 系统会在底层转换为通过该类来访问类变量
-            3. 同一个类的所有对象访问类变量时, 实际上访问你的都是该类所持有的变量, 即同一个类的所有实例的类变量共享
-                同一块内存区
+            3. 同一个类的所有对象访问类变量时, 实际上访问的都是该类所持有的变量, 即同一个类的所有实例的类变量共享同
+                一块内存区
 
         类方法:
             1. 类方法也是属于类, 可通过 类.类方法 或 实例.类方法 来调用. 
-            2. 与类变量一样, 使用对象来调用类方法, 起效果也与采用类来调用方法完全一样
+            2. 与类变量一样, 使用对象来调用类方法, 其效果也与采用类来调用方法完全一样
             3. 当使用实例来访问类成员时, 实际上依然是委托该类来访问类成员, 即使某个实例为null, 它也可以访问它所属类
                 的类成员(例子1) 
-            4. 3.的补充: 如果一个null对象访问实例成员(包括实例方法和实例变量), 将引发 NullPointerExamption 异常,
+            4. 3 的补充: 如果一个null对象访问实例成员(包括实例方法和实例变量), 将引发 NullPointerExamption 异常,
                 因为null表明这个实例根本不存在, 所以它的实例变量和实例方法自然也就不存在
 
         静态初化块:
             1. 静态初始化块用于执行类初始化动作, 在类的初始化阶段, 系统会调用该类的静态初始化块来对类进行初始化. 一旦
-                该类的初始化结束后, 静态初始化块将永远不会获得执行的机会
+                该类的初始化结束后, 静态初始化块将永远不会获得执行的机会（静态初始化块就是 static 修饰的初始化块(如：
+                static{代码})，只在第一次加载类的时候只执行一次）
             2. 静态初始化块 非静态初始化块 构造函数等执行顺序
                 2.1 静态初始化块的优先级最高，也就是最先执行，并且仅在类第一次被加载时执行
                 2.1 非静态初始化块和构造函数后执行，并且在每次生成对象时执行一次；
-                2.3 非静态初始化块的代码会在类构造函数之前执行。因此若要使用，应当养成把初始化块写在构造函数之前的习惯，便于调试；
+                2.3 非静态初始化块的代码会在类构造函数之前执行。因此若要使用，应当养成把初始化块写在构造函数之前的习惯，
+                    便于调试；
                 2.4 静态初始化块既可以用于初始化静态成员变量，也可以执行初始化代码；
                 2.5 非静态初始化块可以针对多个重载构造函数进行代码复用。
         例子1:
@@ -474,7 +476,7 @@
                     // 定义一个 NullAccessStatic 变量, 其值为 null
                     NullAccessStatic nas = null;
                     // 使用 null 对象调用所属类的静态方法
-                    nas.test();
+                    nas.test();  // out: "static修饰的类方法!"
                 }
             }
 
@@ -484,7 +486,7 @@
             2. 通过将构造器使用 private 修饰, 从而把该类的所有构造器隐藏起来
             3. 一旦把该类的构造器隐藏起来, 就需要提供一个 public 方法作为该类的访问点, 用于创建该类的对象, 且该方法
                 必须使用 static 修饰, (因为调用该方法之前还不存在对象, 因此调用该方法的不可能是对象, 只能是类)
-            4. 该类还必须缓存已经创建的对象, 否则该类无法知道是否曾经创建过对象, 也就无法保证值创建一个对象. 为此该类
+            4. 该类还必须缓存已经创建的对象, 否则该类无法知道是否曾经创建过对象, 也就无法保证只创建一个对象. 为此该类
                 需要使用一个成员变量来保存曾经创建的对象, 因为该成员变量需要被上面的静态方法访问, 所以成员变量必须使
                 用 static 修饰
         例子1:
@@ -514,5 +516,171 @@
                     Singleton s2 = Singleton.getInstance();
                     System.out.println(s1 == s2);  // out: true
                 }
-            } 
+            }
+            程序说明：
+                1. 上面的例子中通过 private 修饰构造器， 从而隐藏了该类创建对象的渠道
+                2. 通过 public 修饰的 getInstance 方法提供的自定义控制(这也是封装的优势：不允许自由访问类的成员变量和
+                    实现细节，而是通过方法来控制合适的暴露)，从而保证 Singleton 类只能产生一个实例。所以在 Singleton 
+                    类的 main() 方法中，看到两次产生的 Singleton 对象实际上是同一个对象
+ 
 
+4. final 修饰符
+    4.1 final 成员变量
+        说明：
+            1. final 关键字可用于修饰类，变量和方法，用于表示修饰的类，方法和变量不可改变
+            2. final 修饰变量时，表示该变量一旦获得了初始值就不可改变(不能被重新赋值)，final 可修饰成员变量(类变量和实例变量)
+                也可修饰局部变量和形参
+            3. final 修饰的成员变量必须由程序员显式的指定初始值（例子1）
+            4. 类变量：必须在静态初始化块中指定初始值或者在声明该类变量时指定初始值，而且只能在这两个地方的其中之一指定
+            5. 实例变量：必须在非静态初始化块，声明该实例变量或构造器中指定初始值， 而且只能在这三个地方的其中之一指定
+            6. 实例变量不能在静态初始化块中指定初始值，因为静态初始化块时静态成员，不可访问实例变量--非静态成员
+            7. 类变量也不能在普通初始化块中指定初始值，因为类变量在类初始化阶段已经被初始化了， 普通初始化块不能再对其重新赋值
+            8. 如果在构造器或初始化块章对 final 成员变量进行初始化，那么在初始化之前不能访问成员变量的值， 否则报错（例子2）
+        例子1： 
+            // final 修饰成员变量的效果
+            public class FinalVariableTest{
+                // 定义成员变量时指定默认值，合法
+                final int a = 6;
+                // 下面的变量将在构造器或者初始化块中分配初始值
+                final String str;
+                final int c;
+                final static double d;
+                // 既没有指定默认值，有没有在初始化块或构造器中指定初始值
+                // 下面定义的 ch 实例变量不合法
+                // final char ch;
+                // 初始化块， 可对没有指定默认值的实例变量指定初始值
+                {
+                    // 在初始化块中为实例变量指定初始值， 合法
+                    str = "hello";
+                    // 定义a重新赋值， 因此下面的语句非法
+                    // a = 9;
+                    System.out.println("普通初始化块");
+                }
+                // 静态初始化块中为类变量指定初始值， 合法
+                static {
+                    d = 5.6;
+                    System.out.println("静态初始化块");
+                }
+                // 构造器中既可以对没有指定默认值， 有没有在初始化块中指定默认值的实例变量指定初始值
+                public FinalVariableTest(){
+                    // 如果在初始化块中已经为 str 指定了初始值
+                    // 那么在构造器中不能对 final 变量重新赋值，下面的赋值语句非法
+                    // str = "java";
+                    c = 5;
+                    System.out.println("构造器");
+                }
+                public static void main(String[] args) {
+                    FinalVariableTest ft = new FinalVariableTest();
+                    System.out.println(ft.a);
+                    System.out.println(ft.c);
+                    //The static field FinalVariableTest.d should be accessed in a static way
+                    System.out.println(FinalVariableTest.d);
+                }
+            }
+        例子2： 
+            // 在普通初始化块中进行初始化之前访问 final 修饰的实例变量的值，报错
+            public class FinalErrorTest{
+                // 定义一个 final 修饰的实例变量, 定义时未指定值
+                // 系统不会为 final 修饰的成员变量进行默认的初始化
+                final int age;
+                // 普通初始化块
+                {
+                    // age 没有初始化， 所以此处访问age的值报错
+                    // The blank final field age may not have been initialized
+                    // System.out.println(age);
+                    age = 6;
+                    System.out.println(age);
+                }
+                public static void main(String[] args){
+                    new FinalErrorTest();
+                }
+            }
+
+    4.2 final 局部变量
+        说明：
+            1. 系统不会对局部变量进行初始化，局部变量必须由程序员显式初始化
+            2. final 修饰的局部变量，既可在定义时指定默认值(定义时指定，后面的代码中不能再赋值)，也可不指定默认值，在后面的代码中
+                对该 final 变量赋初始值，但只能一次， 不可重复。
+            3. final 修饰形参时，因为形参再调用该方法时，由系统根据传入的参数来完成初始化，因此使用 final 修饰的形参不能被赋值
+
+        例子： 
+            public class FinalLocalVariableTest{
+                public void test(final int a){
+                    // 不能对 final 修饰的形参赋值，下面的语句非法
+                    // a = 5;
+                    System.out.println("不能对 final 修饰的形参赋值, 需由调用时传入参数完成初始化！" + a);
+                }      
+                public static void main(String[] args) {
+                    // 定义 final 局部变量时指定默认值，则 str 变量无法重新赋值
+                    final String str  = "Hello";
+                    // 下面的语句非法
+                    // str = "java";
+                    // 定义局部变量时没有指定默认值，则 d 变量可被赋值一次（仅一次）
+                    final double d;
+                    // 第一次赋值
+                    d = 5.6;
+                    // 对 final 修饰的局部变量第二次赋值，下面语句非法
+                    // d = 3.4;
+                    System.out.println(str + " " + d);
+
+                    FinalLocalVariableTest fl = new FinalLocalVariableTest();
+                    fl.test(100);
+                    fl.test(250);
+                }        
+            }
+
+    4.3 final 修饰基本类型变量和引用类型变量的区别
+        说明：
+            1. 使用 final 修饰基本类型变量时， 不能对基本类型变量重新赋值，因此基本类型变量不能被改变
+            2. 使用 final 修饰引用类型，因为引用类型保存的仅仅是一个引用，final 只保证这个引用类型变量所引用的地址不会改变，即一直
+                引用同一个对象，但这个对象完全可能发生改变
+        
+        例子： 
+            import java.util.Arrays;
+
+            class PersonFinal {
+                private int age;
+                public PersonFinal(){}
+                // 有参数的构造器
+                public PersonFinal(int age){
+                    this.age = age;
+                }
+                // setAge 和 getAge 方法
+                public void setAge(int age){
+                    this.age = age;
+                }
+                public int getAge(){
+                    return this.age;
+                }
+            }
+            public class FinalReferenceTest{
+                public static void main(String[] args) {
+                    // final 修饰数组变量，iArr 是一个引用变量
+                    final int[] iArr = {5, 6, 9, 12, 2, 55, -1};
+                    System.out.println(Arrays.toString(iArr));   // out: [5, 6, 9, 12, 2, 55, -1]
+                    // 对数组元素进行排序， 合法
+                    Arrays.sort(iArr);
+                    System.out.println(Arrays.toString(iArr));   // out: [-1, 2, 5, 6, 9, 12, 55]
+                    // 对数组元素赋值，合法
+                    iArr[2] = -8;
+                    System.out.println(Arrays.toString(iArr));   // out: [-1, 2, -8, 6, 9, 12, 55]
+                    // 下面语句对 iArr 重新赋值，非法
+                    // iArr = null;
+                    // final 修饰 PersonFinal 变量， p 是一个引用变量
+                    final PersonFinal p = new PersonFinal(45);
+                    // 改变 PersonFinal 对象的 age 实例变量，合法
+                    p.setAge(23);
+                    System.out.println(p.getAge());   // out: 23
+                    // 下面的语句对 p 重新赋值，非法
+                    // p = null;
+                }
+            }
+            程序说明：
+                1. 使用 final 修饰的引用类型变量不能被重新赋值，但可以改变引用类型变量所引用对象的内容。 例如上面 iArr 变量所引用的数组
+                    对象， final 修饰后的 iArr 变量不能被重新赋值，但是 iArr 所引用数组的数组元素可以改变。
+                2. p 变量也使用 final 修饰，表明 p 变量不能被重新赋值，但 p 变量所引用的 PersonFinal 对象的成员变量的值可以被改变
+
+
+    4.4 可执行 "宏替换" 的 final 变量 
+        说明：
+            1. 
