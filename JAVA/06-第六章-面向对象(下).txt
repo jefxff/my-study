@@ -809,11 +809,14 @@
             4. 仅为该列的成员变量提供 getter 方法, 不为该类的成员变量提供 setter 方法, 因为普通方法无法修改 final 修饰的
                 成员变量
             5. 在 getter 方法中, 不要直接返回对象本身, 而是克隆对象, 并返回对象的拷贝
+            6. 如果有必要，重写 Object 类的 hashCode() 方法和 equals() 方法，equals()方法根据关键成员变量来作为两个对象
+                相等的标准，除此之外，还应该保证两个用equals()方法判断为相等的对象的hashCode()也相等(例子4)
         
         例子1:
             // 定义一个不可变的 Address 类, 程序把 Address 类的 detail 和 postCode 成员变量都是用 private 隐藏起来, 并 
             // 使用 final 修饰这两个成员变量, 不允许其他方法修改这两个成员变量的值
             public class Address{
+                // 使用 private 和 final 修饰成员变量
                 private final String detail;
                 private final String postCode;
                 // 构造器里初始化两个实例变量
@@ -936,7 +939,19 @@
                     了这个Name对象,将会导致immuablePerson 对象也发生变化), 而是重新创建了一个 Name 对象来赋给 
                     immutablePerson 对象的 name 实例变量. 当 immutablePerson 对象返回 name 变量时, 它并没有直接
                     把name实例变量返回, 直接返回name实例变量的值也可能导致它所引用的Name对象被修改
-        
+        例子4：
+            public class ImmutableStringTest{
+                public static void main(String[] args) {
+                    String str1 = new String("hello");
+                    String str2 = new String("hello");
+                    System.out.println(str1 == str2);  // out: false
+                    System.out.println(str1.equals(str2));  // out: true
+                    // 下面两次输出的hashCode 相同
+                    System.out.println(str1.hashCode());  // out: 99162322
+                    System.out.println(str2.hashCode());  // out: 99162322
+                }
+            }
+
     4.8 缓存实例的不可变类
         说明:
             1. 不可变类的实例状态不可改变,可以很方便的被多个对象所共享; 如果程序经常需要使用相同的不可变类实例,则应该
@@ -1011,3 +1026,136 @@
                 3. CacheImmutale 类能控制系统 CacheImmutale 对象的个数, 需要程序使用该类的 valueof() 方法来得到其
                     对象, 而且程序使用 private 修饰符隐藏该类的构造器, 因此程序只能通过该类提供的 valueof() 方法来
                     获得实例
+
+
+5. 抽象类
+    5.1 抽象方法和抽象类
+        说明：
+            1. 抽象方法只有方法签名，没有方法实现的方法
+            2. 抽象方法和抽象类必须使用 abstract 修饰符来定义，有抽象方法的类只能被定义为抽象类，抽象类里可以没有抽象方法
+            3. 归纳：抽象类可用“有得有失”来描述："得"指的是抽象类多了一个能力：抽象类可包含抽象方法；"失"指定是抽象类失去了
+                一个能力：抽象类不能用于创建实例
+            4. 定义抽象类只需在普通类上增加 abstract 修饰符即可，甚至一个普通类(没有包含抽象方法的类)增加了 abstract 修饰
+                符后也将变成抽象类
+            5. 定义抽象方法只需要在普通方法上增加 abstract 修饰符，并把普通方法的方法体部分去掉，并在方法体后面增加分号即可
+                5.1 如：抽象方法：public abstract void test();  抽象方法，没有方法体(即方法定义后面没有一对花括号)
+                5.2 如：普通方法：public void test(){}   普通方法，定义了方法体，但方法体为空
+ 
+        抽象方法和抽象类的规则：
+            1. 抽象类和抽象方法必须使用abstract修饰符来修饰，抽象方法不能有方法体
+            2. 抽象类不能被实例化，无法使用 new 关键字来调用抽象类的构造器创建抽象类的实例，即使抽象类里不包含抽象方法，
+                这个抽象类也不能创建实例
+            3. 抽象类可以包含成员变量，方法(普通方法和抽象方法都可以)，构造器，初始化块，内部类(接口，枚举类)5部分，抽象类的
+                构造器不能用于创建实例，主要是用于被其子类调用
+            4. 含有抽象方法的类(包括直接定义了一个抽象方法，或者继承了一个抽象父类，但没有完全实现父类包含的抽象方法，或实现
+                了一个接口，但没有完全实现接口包含的抽象方法三种情况)只能被定义为抽象类
+        
+        注意：
+            1. abstract 修饰类时，表明这个类只能被继承； abstract 修饰方法时: 表明这个方法必须有子类提供实现（重写）
+            2. 由于 final 修饰的类不能被继承，final 修饰的方法不能被重写。 所以 final 和 abstract 互斥，不能共存
+            3. abstract 也不能用于修饰成员变量，不能用于修饰局部变量，也不能用于修饰构造器
+            4. static 修饰的方法是类方法，即通过类可调用该方法，但如果该方法被定义哼了抽象方法，则将导致通过该类来调用方法是出现
+                错误(因为调用了一个没有方法体的方法)，所以 static 和 abstract 也互斥(内部类可以共存)，不能同时修饰某个方法
+            5. abstract 关键字修饰的方法必须被其子类重写才有意义，否则这个方法将永远不会有方法体，因此 abstract 方法也不能定义
+                为 private 的访问权限，即 abstract 和 private  关键字也是互斥 
+                abstract 和 final private static 这三个关键字互斥(暂理解)，不能同时使用
+            
+        例子1：
+            // 定义一个 Shape 抽象类
+            public abstract class Shape{
+                {
+                    System.out.println("abstract修饰的抽象类,执行 Shape 的普通初始化块。。。");
+                }
+                private String color;
+                // 定义一个计算周长的抽象方法
+                public abstract double calPerimeter();
+                // 定义一个返回形状的抽象方法
+                public abstract String getType();
+                // 定义 Shape 的构造器，该构造器并不是用于创建 Shape 对象，而是用于被子类调用的
+                public Shape(){}
+                public Shape(String color){
+                    System.out.println("执行 Shape 的构造器。。。");
+                    this.color = color;
+                }
+                // 定义 color 的 getter 和 setter 方法
+                public void setColor(String color){
+                    this.color = color;
+                }
+                public String getColor(){
+                    return this.color;
+                }
+            }
+            程序说明：
+                1. 抽象的 Shape 类中定义了 两个 抽象方法 calPerimeter() 和 getType() 
+                2. Shape 类里既包括了初始化块，也包含了构造器，这些都不是在创建 Shape 对象时被调用的，而是在
+                    创建其子类的实例的时被调用
+
+        例子2： 
+            // 定义一个三角形普通类，继承 Shape 类， 必须实现 Shape 类的所有抽象方法
+            public class Triangle extends Shape{
+                // 定义三角形的三条边
+                private double a;
+                private double b;
+                private double c;
+                public Triangle(String color, double a, double b, double c){
+                    super(color);
+                    this.setSides(a, b, c);
+                }
+                public void setSides(double a, double b, double c){
+                    if (a >= b + c || b >= a + c || c >= a + b){
+                        System.out.println("三角形两边之和必须大于第三边");
+                        return;
+                    }
+                    this.a = a;
+                    this.b = b;
+                    this.c = c;
+                }
+                // 重写 Shape 类的计算周长的抽象方法
+                public double calPerimeter(){
+                    return a + b + c;
+                }
+                // 重写 Shape 类的返回形状的方法
+                public String getType(){
+                    return "三角形";
+                }
+            }
+            程序说明：
+                1. 继承了Shape类，并实现了Shape类的两个抽象方法，是一个普通类，因此可以创建 Triangle 类的实例   
+                    可以让一个 Shape 类型的引用变量指向 Triangle 对象
+
+        例子3： 
+            // 再定义一个 Cricle 普通类，继承 Shape 类
+            public class Circle extends Shape{
+                private double radius;
+                public Circle(String color, double radius){
+                    super(color);
+                    this.radius = radius;
+                }
+                public void setRadius(double radius){
+                    this.radius = radius;
+                }
+                // 重写 Shape 类的计算周长的抽象方法
+                public double calPerimeter(){
+                    return 2 * Math.PI * radius;
+                }
+                // 重写Shape 类的反会形状的抽象方法
+                public String getType(){
+                    return getColor() + " 圆形";
+                }
+                public static void main(String[] args) {
+                    Shape s1 = new Triangle("黑色", 3, 4, 5);
+                    Shape s2 = new Circle("黄色", 3);
+                    System.out.println(s1.getType());
+                    System.out.println(s1.calPerimeter());
+                    System.out.println(s2.getType());
+                    System.out.println(s2.calPerimeter());
+                }
+            }
+            程序说明：
+                1. main() 方法中定义了两个 Shape 类型的引用变量，他们分别指向 Triangle 对象和 Circle 对象
+                2. 由于在 Shape 类中定义了 calPerimeter() 方法和 getType() 方法，所以程序可以直接调用 s1 变量
+                    和 s2 变量的 calPerimeter() 方法和 getType() 方法， 无需强制类型转换为其子类类型 
+
+    5.2 抽象类的作用
+        说明：
+            1. 
