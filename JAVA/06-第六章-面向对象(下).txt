@@ -35,7 +35,7 @@
                 变量(Object 是所有类的父类, 子类对象可以直接赋给父类变量)；装箱时调用valueOf()方法实现，
                 例如：Integer.valueOf(100);
                 自动装箱比如： Integer i = 100;
-                手动装箱比如:  Integer i = Tnteget.valueOf(100); 
+                手动装箱比如:  Integer i = Integer.valueOf(100); 
             
             2. 自动拆箱(AutoUnboxing): 把包装类对象直接赋给一个对应的基本类型变量; 拆箱时调用对应的
                 XxxValue() 方法实现， 比如：intValue() 方法
@@ -69,6 +69,7 @@
                     // 直接把一个 Integer 对象赋给 int 类型的变量(自动拆箱)
                     int it = inObj;
                     System.out.println(it);  out: 5
+                    // instanceof 方法用于测试左边的对象是否是它右边类的实例, 返回的是 boolean 数据类型
                     if (boolObj instanceof Boolean){
                         // 先把 Object 对象强制类型转换为 Boolean 类型, 在赋给 boolean 变量 
                         boolean b = (Boolean)boolObj;
@@ -85,30 +86,38 @@
             public class Primitive2String{
                 public static void main(String[] args){
                     String intStr = "123";
-                    // 把一个特定的字符串转换为 int 变量
+                    // 把一个特定的字符串转换为 int 变量 (2种方法)
                     int it1 = Integer.parseInt(intStr);
                     int it2 = Integer.valueOf(intStr);
                     System.out.println(it1);   // out: 123
                     System.out.println(it2);   // out: 123
                     String floatStr = "3.14";
-                    // 把一个特定的字符串转换成 float 变量 
+                    // 把一个特定的字符串转换成 float 变量  (2种方法)
                     float ft1 = Float.parseFloat(floatStr);
                     float ft2 = Float.valueOf(floatStr);
                     System.out.println(ft1);   // out: 3.14
                     System.out.println(ft2);   // out: 3.14
-                    // 把一个float 变量转换成 String 变量 
+                    // 把一个float 变量转换成 String 变量 (3种方法)
                     String ftStr1 = String.valueOf(3.1415926F);
                     String ftStr2 = Float.toString(3.1415926F);
                     String ftStr3 = 3.1415926F + "";
                     System.out.println(ftStr1);   // out: 3.1415925
                     System.out.println(ftStr2);   // out: 3.1415925
                     System.out.println(ftStr3);   // out: 3.1415925
-                    // 把一个 double 变量转换成 String 变量 
-                    String dbStr = String.valueOf(6.25789);
-                    System.out.println(dbStr);   // out: 3.25789
-                    // 把一个 boolean 变量转换成 String 变量
-                    String boolStr = String.valueOf(true);
-                    System.out.println(boolStr.toUpperCase());   // out: TRUE
+                    // 把一个 double 变量转换成 String 变量 (3种方法)
+                    String dbStr1 = String.valueOf(6.25789);
+                    String dbStr2 = Double.toString(6.257899);
+                    String dbStr3 = 6.2578899 + "";
+                    System.out.println(dbStr1);   // out: 6.25789
+                    System.out.println(dbStr2);   // out: 6.257899
+                    System.out.println(dbStr3);   // out: 6.2578899
+                    // 把一个 boolean 变量转换成 String 变量 (3种方法)
+                    String boolStr1 = String.valueOf(true);
+                    String boolStr2 = Boolean.toString(false);
+                    String boolStr3 = true + "";
+                    System.out.println(boolStr1.toUpperCase());   // out: TRUE
+                    System.out.println(boolStr2.toUpperCase());   // out: FALSE
+                    System.out.println(boolStr3.toUpperCase());   // out: TRUE
                 }
             }
  
@@ -208,7 +217,7 @@
             3. toString() 方法是一个"自我描述"方法, 通常用于实现这样的功能: 当程序员直接打印该对象时, 系统将会
                 输出该对象的 "自我描述" 信息, 用于告诉外界该对象具有的状态信息
             4. Object 类提供的 toString()方法总是返回该对象实现类的 "类名 + @ + hashCode" 值, 这个返回值并不能
-                真正实现"自我描述"的功能, 但是可以通过重新Object类的toString()方法者自定义"自我描述"的功能(例子2)
+                真正实现"自我描述"的功能, 但是可以通过重写Object类的toString()方法来自定义"自我描述"的功能(例子2)
             5.  重写toString()方法定义返回值格式:(例子3) 类名[field1=值1, Field2=值2,...]
         
         例子1:
@@ -308,22 +317,22 @@
                     int it = 65;
                     float f1 = 65.0f;
                     // 将输出 true
-                    System.out.println("65和65.0f是否相等? " + (it == f1));
+                    System.out.println("65和65.0f是否相等? " + (it == f1));  // out: 65和65.0f是否相等? true
 
                     char ch = 'A';
                     // 将输出 true， 因为 == 运算符比较基本类型时比较的时二者的值
-                    System.out.println("65和'A'是否相等? " + (it == ch));
+                    System.out.println("65和'A'是否相等? " + (it == ch));  // out: 65和'A'是否相等? true
 
                     String str1 = new String("hello");
                     String str2 = new String("hello");
                     String str3 = str1;
                     // 将输出false
-                    System.out.println("str1和str2是否相等? " + (str1 == str2));
+                    System.out.println("str1和str2是否相等? " + (str1 == str2));  // out: str1和str2是否相等? false
                     // 将输出true, 因为 == 运算符比较引用类型时比较的时二者的引用地址
-                    System.out.println("str1和str3是否相等? " + (str1 == str3));
+                    System.out.println("str1和str3是否相等? " + (str1 == str3));  // out: str1和str3是否相等? true
 
                     // 将输出true， 因为 equals()方法比较引用类型比较的时二者的引用地址
-                    System.out.println("str1 是否 equals str2? " + (str1.equals(str2)));
+                    System.out.println("str1 是否 equals str2? " + (str1.equals(str2)));  // out: str1 是否 equals str2? true
                     // 由于 java.lang.string 与 EqualTest类没有继承关系
                     // 所以下面的语句将导致编译错误
                     // System.out.println("hello" == new EqualTest());
@@ -341,17 +350,17 @@
             // JVM使用常量池管理字符串直接量的情形
             public class StringCompareTest{
                 public static void main(String[] args) {
-                    //s1直接引用常量池中的 "你好 世界！"
+                    //s1直接引用常量池中的 "你好世界！"
                     String s1 = "你好世界";
                     String s2 = "你好";
                     String s3 = "世界";
 
                     // s4 后面的字符串值可以直接在编译时就确定下来
-                    // s4 直接引用常量池中的 "你好 世界！"
+                    // s4 直接引用常量池中的 "你好世界！"
                     String s4 = "你好" + "世界";
                     
                     // s5 后面的字符串值可以直接在编译时就确定下来
-                    // s5 直接引用常量池中的 "你好 世界！"
+                    // s5 直接引用常量池中的 "你好世界！"
                     String s5 ="你" + "好" + "世" + "界";
 
                     // s6 后面的字符串不能在编译时候就确定值
@@ -360,7 +369,7 @@
 
                     // 使用 new 调用构造器将会创建一个新的 String 对象
                     // s7 引用堆内存中新创建的 String 对象
-                    String s7 = new String("你好 世界");
+                    String s7 = new String("你好世界");
 
                     System.out.println(s1 == s4);   // out: true
                     System.out.println(s1 == s5);   // out: true
@@ -371,7 +380,7 @@
             程序说明:
                 1. JVM常量池保证相同的字符串直接量只有一个，不会产生多个副本。例子中 s1, s4, s5所引用的字符串
                     可以在编译期就确定下来，因此他们都将引用常量池中同一个字符串的对象
-                2. 使用 new String()创建的字符串对象时运行时创建出来的，它被保存在堆内存中，不会放入常量池
+                2. 使用 new String()创建的字符串对象是运行时创建出来的，它被保存在堆内存中，不会放入常量池
         例子3：
             // 重写euqals()方法
              class Person{
@@ -423,7 +432,7 @@
                 }
             }    
             程序说明：
-                1. 用于比较的equals() 方法时可以重写的，可以加上自己需要的判断规则
+                1. 用于比较的 equals() 方法是可以重写的，可以加上自己需要的判断规则
                 2. Person类重写了equals()方法，指定了 Person 对象和其他对象相等的标准(equals方法体代码)：另一个
                     对象必须是Person类的实例，且两个 Person 对象的 idStr 相等，即可判断两个 Person 对象相等；在
                     这种判断标准下，就是只要两个 Person 对象的身份证字符串相等，即可判断相等
@@ -439,7 +448,7 @@
                 现类成员已经初始化完成, 但实例成员还不曾初始化的情况, 如果允许类成员访问实例成员将会引起大量的错误
 
         类变量:
-            1. 类变量属于整个类, 当系统第一次准备使用该类的时, 系统会为该类变量分配内存空间, 类变量开始生效,直到该
+            1. 类变量属于整个类, 当系统第一次准备使用该类时, 系统会为该类变量分配内存空间, 类变量开始生效,直到该
                 类被卸载, 该类变量占用的内存空间才会被系统的垃圾回收机制回收. 类变量的生存范围几乎是等同于该类的生
                 存范围
             2. 类变量可以通过 类.类变量 或者 类的对象.类变量 的形式来访问. 对象不拥有对应类的类变量, 当通过对象来
@@ -535,7 +544,7 @@
             5. 实例变量：必须在非静态初始化块，声明该实例变量或构造器中指定初始值， 而且只能在这三个地方的其中之一指定
             6. 实例变量不能在静态初始化块中指定初始值，因为静态初始化块时静态成员，不可访问实例变量--非静态成员
             7. 类变量也不能在普通初始化块中指定初始值，因为类变量在类初始化阶段已经被初始化了， 普通初始化块不能再对其重新赋值
-            8. 如果在构造器或初始化块章对 final 成员变量进行初始化，那么在初始化之前不能访问成员变量的值， 否则报错（例子2）
+            8. 如果在构造器或初始化块中对 final 成员变量进行初始化，那么在初始化之前不能访问成员变量的值， 否则报错（例子2）
         例子1： 
             // final 修饰成员变量的效果
             public class FinalVariableTest{
@@ -544,8 +553,9 @@
                 // 下面的变量将在构造器或者初始化块中分配初始值
                 final String str;
                 final int c;
+                // 下面的类变量没有指定初始值,只能在静态初始化块中指定初始值
                 final static double d;
-                // 既没有指定默认值，有没有在初始化块或构造器中指定初始值
+                // 既没有指定默认值，又没有在初始化块或构造器中指定初始值
                 // 下面定义的 ch 实例变量不合法
                 // final char ch;
                 // 初始化块， 可对没有指定默认值的实例变量指定初始值
@@ -561,7 +571,7 @@
                     d = 5.6;
                     System.out.println("静态初始化块");
                 }
-                // 构造器中既可以对没有指定默认值， 有没有在初始化块中指定默认值的实例变量指定初始值
+                // 构造器中既可以对没有指定默认值， 又没有在初始化块中指定默认值的实例变量指定初始值
                 public FinalVariableTest(){
                     // 如果在初始化块中已经为 str 指定了初始值
                     // 那么在构造器中不能对 final 变量重新赋值，下面的赋值语句非法
@@ -601,7 +611,7 @@
             1. 系统不会对局部变量进行初始化，局部变量必须由程序员显式初始化
             2. final 修饰的局部变量，既可在定义时指定默认值(定义时指定，后面的代码中不能再赋值)，也可不指定默认值，在后面的代码中
                 对该 final 变量赋初始值，但只能一次， 不可重复。
-            3. final 修饰形参时，因为形参再调用该方法时，由系统根据传入的参数来完成初始化，因此使用 final 修饰的形参不能被赋值
+            3. final 修饰形参时，因为形参在调用该方法时，由系统根据传入的参数来完成初始化，因此使用 final 修饰的形参不能被赋值
 
         例子： 
             public class FinalLocalVariableTest{
@@ -780,3 +790,224 @@
             public final class FinalClass{}
             // 下面定义的类继承FinalClass类将出现编译错误
             // class Sub entends FinalClass{}
+
+    4.7 不可变类
+        说明:
+            1. 不可变(immutable)类的意思是创建该类的实例后, 该实例的实例变量不可变
+            2. Java 的8个包装类和java.lang.String类都是不可变类,当创建他们的实例后, 其实例的实例变量不可改变
+            3. 与不可变类对应的是可变类, 可变类的含义是该类的实例变量是可变的. 大部分时候创建的类都是可变类
+            4. 不可变类的实例在整个生命周期中永远处于初始化状态, 它的实例变量不可改变
+            5. 问题: 当创建不可变类时, 如果它包含成员变量的类型是可变的, 那么其对象的成员变量的值依然是可变的--这个不可变
+                类其实是失败的
+            6. 设计不可变类时, 尤其要注意引用类型的成员变量, 如果引用类型的成员变量的类是可变的,就必须采取必要的措施来保护
+                该成员变量所引用的对象不是被修改,这样才能创建真正的不可变类 (例子2 多看)
+
+        创建自定义不可变类的规则:
+            1. 类添加 final 修饰符, 保证类不被继承
+            2. 使用 private 和 final 修饰符来修饰该类的成员变量
+            3. 提供带参数构造器, 用于根据传入参数来初始化类里的成员变量
+            4. 仅为该列的成员变量提供 getter 方法, 不为该类的成员变量提供 setter 方法, 因为普通方法无法修改 final 修饰的
+                成员变量
+            5. 在 getter 方法中, 不要直接返回对象本身, 而是克隆对象, 并返回对象的拷贝
+        
+        例子1:
+            // 定义一个不可变的 Address 类, 程序把 Address 类的 detail 和 postCode 成员变量都是用 private 隐藏起来, 并 
+            // 使用 final 修饰这两个成员变量, 不允许其他方法修改这两个成员变量的值
+            public class Address{
+                private final String detail;
+                private final String postCode;
+                // 构造器里初始化两个实例变量
+                public Address(){
+                    this.detail = "";
+                    this.postCode = "";
+                }
+                public Address(String detail, String postCode){
+                    this.detail = detail;
+                    this.postCode = postCode;
+                }
+                // 仅为这两个实例变量提供 getter 方法
+                public String getDetail(){
+                    return this.detail;
+                }
+                public String getPostCode(){
+                    return this.postCode;
+                }
+                // 重写 equals() 方法, 判断两个对象是否相等
+                public boolean equals(Object obj){
+                    if (this == obj){
+                        return true;
+                    }
+                    if (obj != null && obj.getClass() == Address.class){
+                        Address ad = (Address)obj;
+                        // 当 detail 和 postCode 相等时, 可认为两个 Address 对象相等
+                        if (this.getDetail().equals(ad.getDetail()) && this.getPostCode().equals(ad.getPostCode())){
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                public int hashCOde(){
+                    return detail.hashCode() + postCode.hashCode() * 31; 
+                }
+            }    
+            程序说明:
+                1. 对于上面的 Address 类, 程序创建了 Address 对象后, 同样无法修改 Address 对象的 detail 和 postCode 
+                    实例变量
+        例子2:
+            class Name{
+                private String firstName;
+                private String lastName;
+                public Name(){}
+                public Name(String firstName, String lastName){
+                    this.firstName = firstName;
+                    this.lastName = lastName;
+                }
+                // firstName 和 laseName 的 setter 和 getter 方法
+                public void setFrisrtName(String firstName){
+                    this.firstName = firstName;
+                }
+                public String getFirstName(){
+                    return this.firstName;
+                }
+                public void setLastName(String lastName){
+                    this.lastName = lastName;
+                }
+                public String getLastName(){
+                    return this.lastName;
+                }
+            }
+            public class immutablePerson{
+                private final Name name;
+                public immutablePerson(Name name){
+                    this.name = name;
+                }
+                public Name getName(){
+                    return name;
+                }
+                public static void main(String[] args){
+                    Name n = new Name("悟空", "孙");
+                    immutablePerson  p = new immutablePerson(n);
+                    // immutablePerson 对象的 name 的 firstName 值为 "悟空"
+                    System.out.println(p.getName().getFirstName());  // out: 悟空
+                    // 改变 immutablePerson 对象的 name 的 finstName 值
+                    n.setFrisrtName("八戒");
+                    // immutablePerson 对象的 name 的 firstName 值被改为"八戒"
+                    System.out.println(p.getName().getFirstName());  // out: 八戒
+                }
+            }
+            程序说明:
+                1. n.setFrisrtName("八戒");这句代码修改了Name对象(可变类的实例)的firstName的值,单由于 immutablePerson
+                    类的 name 实例变量引用了该 Name 对象, 这就会导致 immutablePerson 对象的 name 的 firstName 会改变,
+                    这就破坏了 immutablePerson 类的初衷
+                2. 为了保持immutablePerson 对象的不可变性, 必须保护好 immutablePerson 对象的引用类型的成员变量: name, 
+                    让程序无法访问到 immutablePerson 对象的 name 成员变量, 也就无法利用 name 成员变量的可变性来改变 
+                    immutablePerson 对象了. 如例子3修改immuablePerson类
+        例子3: 
+            // 修改immuablePerson类
+            class Name{
+                // ......
+            }     
+            public class immutablePerson{
+                private final Name name;
+                public immutablePerson(Name name){
+                    // 设置 name 实例变量为临时创建的 Name 对象, 该对象的 firstName 和 lastName 与 
+                    // 传入的 name 参数的 firstName 和 lastName 相同
+                    this.name = new Name(name.getFirstName(), name.getLastName());
+                }
+                public Name getName(){
+                    // 返回一个匿名对象, 该对象的 firstName 和 lastName 与 
+                    // 该对象里的 name 的 firstName 和 lastName 相同
+                    return new Name(name.getFirstName(), name.getLastName());
+                }
+                public static void main(String[] args){
+                    Name n = new Name("悟空", "孙");
+                    immutablePerson  p = new immutablePerson(n);
+                    // immutablePerson 对象的 name 的 firstName 值为 "悟空"
+                    System.out.println(p.getName().getFirstName());  // out: 悟空
+                    // 改变 immutablePerson 对象的 name 的 finstName 值
+                    n.setFrisrtName("八戒");
+                    // immutablePerson 对象的 name 的 firstName 值被改为"八戒"
+                    System.out.println(p.getName().getFirstName());  // out: 悟空
+                }
+            }
+            程序说明:
+                1. 当程序向 immutablePerson 构造器传入一个Name对象时,该构造器创建 immutablePerson 对象时并不是
+                    直接利用已有的 Name 对象(利用已有的 Name 对象有风险,因为这个已有的Name对象是可变的,如果程序改变
+                    了这个Name对象,将会导致immuablePerson 对象也发生变化), 而是重新创建了一个 Name 对象来赋给 
+                    immutablePerson 对象的 name 实例变量. 当 immutablePerson 对象返回 name 变量时, 它并没有直接
+                    把name实例变量返回, 直接返回name实例变量的值也可能导致它所引用的Name对象被修改
+        
+    4.8 缓存实例的不可变类
+        说明:
+            1. 不可变类的实例状态不可改变,可以很方便的被多个对象所共享; 如果程序经常需要使用相同的不可变类实例,则应该
+                考虑缓存这种不可变类的实例
+            2. 缓存是软件设计中的一个非常有用的模式, 缓存的方式有很多种,下面的例子使用数组来作为缓存池,从而实现一个缓存
+                实例的不可变类
+
+        例子:
+            class CacheImmutale{
+                private static int MAX_SIZE = 10;
+                // 使用数组来缓存已有的实例
+                private static CacheImmutale[] cache
+                    = new CacheImmutale[MAX_SIZE];
+                // 记录缓存实例在缓存中的位置, cache[pos-1]是最新缓存的实例
+                private static int pos = 0;
+                private final String name;
+                private CacheImmutale(String name){
+                    this.name = name;
+                }
+                public String getName(){
+                    return this.name;
+                }
+                public static CacheImmutale valueOf(String name){
+                    // 遍历已缓存的对象
+                    for (int i = 0; i < MAX_SIZE; i++){
+                        // 如果已有相同的实例, 则直接返回该缓存的实例
+                        if (cache[i] != null && cache[i].getName().equals(name)){
+                            return cache[i];
+                        }
+                    }
+                    // 如果缓存池已满
+                    if (pos == MAX_SIZE){
+                        // 把缓存的第一个对象覆盖, 即把刚刚生成的对象放在缓存吃的最开始位置
+                        cache[0] = new CacheImmutale(name);
+                        // 把 pos 设为 1
+                        pos = 1;
+                    }
+                    else{
+                        // 把新创建的对象缓存起来, pos 加 1
+                        cache[pos++] = new CacheImmutale(name);
+                    }
+                    return cache[pos - 1];
+                }
+                public boolean equals(Object obj){
+                    if (this == obj){
+                        return true;
+                    }
+                    if (obj != null && obj.getClass() == CacheImmutale.class){
+                        CacheImmutale ci = (CacheImmutale)obj;
+                        return name.equals(ci.getName());
+                    }
+                    return false;
+                }
+                public int hashCode(){
+                    return name.hashCode();
+                }
+            }
+            public class CacheImmutaleTest{
+                public static void main(String[] args) {
+                    CacheImmutale c1 = CacheImmutale.valueOf("hello");
+                    CacheImmutale c2 = CacheImmutale.valueOf("hello");
+                    // 下面的代码将输出true
+                    System.out.println(c1 == c2);  // out: true
+                }
+            }
+            程序说明:
+                1. 上面的 CacheImmutale 类使用一个数组来缓存该类的对象,这个数组的长度是 MAX_SIZE, 即该类共可以缓存
+                    MAX_SIZE个CacheImmutale 对象. 当缓存池已满时, 缓存池采用 "先进先出" 规则来决定那个对象被移出
+                    缓存池
+                2. 当使用 CacheImmutale 类的 valueOf() 方法来生成对象时, 系统会进行判断, 如果该数组中已经缓存了该类
+                    的对象, 系统将不会重新生产对象
+                3. CacheImmutale 类能控制系统 CacheImmutale 对象的个数, 需要程序使用该类的 valueof() 方法来得到其
+                    对象, 而且程序使用 private 修饰符隐藏该类的构造器, 因此程序只能通过该类提供的 valueof() 方法来
+                    获得实例
