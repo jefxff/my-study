@@ -1051,7 +1051,7 @@
                 了一个接口，但没有完全实现接口包含的抽象方法三种情况)只能被定义为抽象类
         
         注意：
-            1. abstract 修饰类时，表明这个类只能被继承； abstract 修饰方法时: 表明这个方法必须有子类提供实现（重写）
+            1. abstract 修饰类时，表明这个类只能被继承； abstract 修饰方法时: 表明这个方法必须由子类提供实现（重写）
             2. 由于 final 修饰的类不能被继承，final 修饰的方法不能被重写。 所以 final 和 abstract 互斥，不能共存
             3. abstract 也不能用于修饰成员变量，不能用于修饰局部变量，也不能用于修饰构造器
             4. static 修饰的方法是类方法，即通过类可调用该方法，但如果该方法被定义哼了抽象方法，则将导致通过该类来调用方法是出现
@@ -1158,4 +1158,347 @@
 
     5.2 抽象类的作用
         说明：
-            1. 
+            1. 抽象类不能创建实例, 只能当成父类来被继承; 抽象类是从多个具体类中抽象出来的父类, 它具有更高层次的抽象
+            2. 抽象类是一种常见的简单的模版模式设计模式之一
+
+        模版模式设计规则:
+            1. 抽象父类可以只定义需要使用的某些方法, 把不能实现的部分抽象成抽象类, 留给其子列去实现
+            2. 父类中可能包含需要使用其他系列方法的方法, 这些被调方法既可以由父类实现, 也可以由其子类实现
+        例子1:
+            // 模版模式的范例
+            public abstract class SpeedMeter{
+                // 定义转速
+                private double turnRate;
+                public SpeedMeter(){
+                }
+                // 把返回车轮半径的方法定义为抽象方法
+                public abstract double getRadius();
+                public void setTurnRate(double turnRate){
+                    this.turnRate = turnRate;
+                }
+                // 定义计算速度的通用公式
+                public double getSpeed(){
+                    // 速度等于车轮半径 * 2 * PI * 转速
+                    return java.lang.Math.PI * 2 * getRadius() * turnRate;
+                }
+            }
+            程序说明:
+                1. 上面程序定义了一个 抽象类 abstract SpeedMeter, 里面定义了两个通用方法, setTurnRate 和 
+                    getSpeed 方法, 还定义了一个抽象方法, getRadius() 
+                2. 抽象类 abstract SpeedMeter,只能被继承, 并且抽象方法 getRadius()必须在子类中实现其方法
+
+        例子2: 
+            public class CarSpeedMeter extends SpeedMeter{
+                public double getRadius(){
+                    return 0.28;
+                }
+                public static void main(String[] args) {
+                    CarSpeedMeter csm = new CarSpeedMeter();
+                    csm.setTurnRate(15);
+                    System.out.println(csm.getSpeed());  // out: 26.389378290154266
+                }
+            }
+            程序说明:
+                1. CarSpeedMeter 类继承了 SpeedMeter这个抽象方法, 并且实现了抽象方法 getRadius, 
+                2. CarSpeedMeter 是一个普通类, 可以创建类的对象, 也可以调用父类的方法实现获取当前速度 
+
+
+6. Java 8 改进的接口
+    6.1 接口的概念
+        说明:
+            1. 接口(interface) 是一种更加特殊的"抽象类"; 接口里不能包含普通方法, 接口里的所有方法都是抽象方法;
+                Java8 允许在接口中定义默认方法, 默认方法可以提供方法实现
+            2. 接口定义了一种规范, 接口定义了某一批类所需要遵守的规范, 接口不关心这些类的内部状态数据, 也不关心这
+                些类里方法的实现细节, 接口只规定这批类里必须提供某些方法, 提供这些方法的类就可以满足实际需要; 而类 
+                是一种具体实现体
+            3. 接口是从多个相似类中抽象出来的规范, 接口不提供任何实现, 接口体现的是规范和实现分离的设计哲学, 是一
+                中松耦合的设计
+            4. 接口定义的是多个类共同的公共行为规范, 这些行为是与外部交流的通道, 这就意味着接口里通常是定义一组公
+                用的方法
+
+    6.2 Java 8 中接口的定义
+        说明:
+            1. 修饰符可以是 public 或者省略, 如果省略了 public 访问控制符, 则默认采用包访问权限访问控制符, 即只有
+                在相同的包结构下才可以访问该接口
+            2. 接口名应与类名采用相同的命名规则, 多个有意义的单词连缀而成,单词首字母大写
+            3. 只有在Java8以上的版本中才允许在接口中定义默认方法, 类方法; 接口中的默认方法, 默认是使用 default 修
+                饰, 该方法不能使用 static 修饰
+            4. 由于接口定义的是一种规范, 因此接口里不能包含构造器和初始化块
+            5. 接口里可包含:成员变量(只能是静态常量), 方法(只能是抽象实例方法, 类方法或默认方法), 内部类(包括内部接
+                口和枚举)
+            6. 接口里的访问权限都是 public 访问权限
+            7. 接口中的成员变量, 不管是否使用 public final static 修饰符,接口里的成员变量总是使用这三个修饰符来修饰
+            8. 因为接口里没有构造器和初始化块, 所以接口里定义的成员变量只能在定义时指定默认值(例子1)
+            9. 接口里的普通方法总是使用 public abstract 来修饰, 接口里的普通方法不能有方法体; 但是类方法, 默认方法
+                都必须有方法体
+            10. 接口里定义的内部类, 内部接口, 内部枚举默认都是采用 public static 修饰符, 不管定义时是否指定这两个修
+                饰符, 系统都是自动使用 public static 对他们进行修饰
+            11. 接口可被当成一个特殊的类, 因此一个 Java 源文件里最多只能有一个 public 接口, 且这个源文件的主文件名
+                必须和 public 接口名相同
+            
+        接口定义的基本语法:(例子2)
+            [修饰符] interface 接口名 extends 父接口1, 父接口2...{
+                零个到多个常量定义...
+                零个到多个抽象方法定义...
+                零个到多个内部类, 接口, 枚举定义...
+                零个到多个默认方法或类方法定义...
+            }    
+
+        例子1:
+            // 系统自动为接口里定义的成员变量增加 public static final 修饰符 
+            int MAX_SIZE = 50;
+            public static final int MAX_SIZ = 50; 
+
+        例子2: 
+            // 定义一个接口
+            public interface Output{
+                // 接口里定义的成员变量只能是常量
+                int MAX_CACHE_LINE = 50;
+
+                // 接口里定义的普通方法只能是抽象方法
+                void out();
+                void getData(Strng msg);
+
+                // 在接口中定义默认方法,需要使用 default 修饰
+                default void print(String... msgs){
+                    for (String msg : msgs){
+                        System.out.println(msg);
+                    }
+                }
+
+                // 在接口中定义默认方法, 需要使用 default 修饰
+                default void test(){
+                    System.out.println("默认的 test() 方法");
+                }
+                
+                // 在接口中定义类方法, 需要使用 static 修饰
+                static String staticTest(){
+                    return "接口里的类方法";
+                }
+            }
+            程序说明:
+                1. 上面程序定义了一个 Output 接口, 包含一个成员变量: MAX_CACHE_LINE, 还定义了两个普通方法, 取
+                    数据的 getData() 方法和表示输出的 out() 方法,
+                2. 如上程序: 定义了 Output 接口的规范: 只要某个类能取的数据, 并可以将数据输出, 那它就是一个输出
+                    设备
+    
+    6.3 接口的继承
+        说明:
+            1. 接口和类的区别就是接口完全支持多继承; 即一个接口可以有多个直接父接口(例子1)
+            2. 和类继承相似, 子接口扩展某个父接口, 将会获得父接口的所有抽象方法和常量
+
+        例子1:
+            interface interfaceA{
+                int PROP_A = 5;
+                void testA();
+            }
+            interface interfaceB{
+                int PROP_B = 6;
+                void testB();
+            }
+            interface interfaceC extends interfaceA, interfaceB{
+                int PROP_C = 7;
+                void testC();
+            }
+            public class InterfaceExtendsTest{
+                public static void main(String[] args) {
+                    System.out.println(interfaceC.PROP_A);
+                    System.out.println(interfaceC.PROP_B);
+                    System.out.println(interfaceC.PROP_C);
+                }
+            }
+            程序说明:
+                1. 程序中 interfaceC 接口继承了 interfaceA 和 interfaceB, 所以 interfaceC 中获得了他们的常量
+                    所以在 main() 方法中可以通过 interfaceC 来访问 PROP_A, PROP_B 和 PROP_C 常量
+            
+        6.4 使用接口
+            说明:
+                1. 接口不能用于创建实例, 但接口可以用于声明引用类型变量
+                2. 使用接口来声明引用类型变量时, 这个引用类型的变量必须引用到其实现类的对象
+                3. 一个类可以实现一个或多个接口, 继承使用 extends 关键字, 实现则用 implements 关键字
+                4. 实现接口方法时, 必须使用 public 访问控制符, 因为接口里的方法都是 public 的, 而子类(相当于实现类)
+                    重写父类方法时访问权限只能更大或者相等, 所以实现类实现接口里的方法只能使用 public 访问权限
+                5. 接口不能显式的继承任何类, 但所有接口类型的引用变量都可以直接赋值给 Object 类型的引用变量
+            
+            接口的用途:
+                1. 定义变量, 也可用于进行强制类型转换
+                2. 调用接口中定义的常量
+                3. 被其他类实现
+            
+            类实现接口的语法:
+                [修饰符] class 类名 extends 父类1 implements 接口1, 接口2...{
+                    // 类体部分
+                }
+                语法说明:
+                    1. 实现接口和继承父类相似,一样可以获得所实现接口里定义的常量(成员变量), 方法(包括抽象方法和
+                        默认方法)
+                    2. 让类实现接口需要类定义后增加 implemrnts 部分, 当需要实现多个接口时, 多个接口之间使用英文逗号
+                        隔开, 
+                    3. 一个类只能继承一个父类, 但可以继承多个接口, implements 部分必须放在 extends 部分之后
+                    4. 一个类实现了一个或多个接口之后, 这个必须完全实现这些接口里所定义的全部抽象方法(也就是重写这些
+                        抽象方法); 否则, 该类将保留从父类接口里继承到的抽象方法, 该类也必须定义成一个抽象类
+            例子:
+                // 定义一个 Product 接口
+                interface Product{
+                    int getProductTime();
+                }
+                // 让 Printer 类实现 Output 和 Product 接口
+                public class Printer implements Output, Product{
+                    private String[] printData = new String[MAX_CACHE_LINE];
+                    // 用以记录当前需打印的作业数
+                    private int dataNum = 0;
+                    public void out(){
+                        // 只要有作业, 就继续打印
+                        while (dataNum > 0){
+                            System.out.println("打印机打印: " + printData[0]);
+                            // 把作业队列整体前移一位, 并将剩下额作业数减 1
+                            System.arraycopy(printData, 1, printData, 0, --dataNum);
+                        }
+                    }
+                    public void getData(String msg){
+                        if (dataNum >= MAX_CACHE_LINE){
+                            System.out.println("输出队列已满, 添加失败");
+                        }
+                        else{
+                            // 把打印数据添加到队列, 已保存数据的数量加1
+                            printData[dataNum++] = msg;
+                        }
+                    }
+                    public int getProductTime(){
+                        return 45;
+                    }
+                    public static void main(String[] args){
+                        // 创建一个 Printer 对象, 当成 Output 使用
+                        Output o = new Printer();
+                        o.getData("轻量级 Java EE 企业应用实战");
+                        o.getData("疯狂 Java 讲义");
+                        o.out();
+                        o.getData("疯狂 Android 讲义");
+                        o.getData("疯狂 Ajux 讲义");
+                        o.out();
+
+                        // 调用 Output 接口中定义的默认方法
+                        o.print("孙悟空", "猪八戒", "白骨精");
+                        o.test();
+
+                        // 创建一个 Printer 对象, 当成 Product 使用 
+                        Product p = new Printer();
+                        System.out.println(p.getProductTime());
+                        // 所有接口类型的引用变量可直接赋给 Object 类型的变量
+                        Object obj = p;
+                        System.out.println(obj);  // out: app.Printer@16f65612
+                        System.out.println(obj.toString());
+                    }
+                }
+
+    6.5 接口和抽象类
+        相同点:
+            1. 接口和抽象类都不能被实例化, 它们都位于继承树的顶端, 用于被其他类实现和继承
+            2. 接口和抽象类都可以包含抽象方法, 实现接口或继承抽象类的普通子类都必须实现这些抽象方法
+
+        不同点:
+            1. 接口作为一种规范和实现分离的设计哲学, 对接口的实现者而言, 接口规定了实现者必须向外提供那些服务(以方
+                法的形式提供); 对 接口的调用这而言, 接口规定了调用者可以调用那些服务, 以及如何调用这些服务(就是如
+                何来调用方法).
+            2. 当一个程序中使用接口时, 接口是多个模块间的耦合标准; 当多个应用程序之间使用接口时, 接口是多个程序
+                之间的通讯标准
+            3. 抽象类是一种模版式设计方式, 抽象类作为多个子类的抽象父类, 可以被当成系统实现过程中的中间产品, 这个
+                中间产品已经实现了系统的部分功能(那些已经实现的方法), 但这个产品依然不呢个当成最终产品, 必须有更
+                进一步的完善, 这种完善可能有几种不同方式
+
+        接口和抽象类在用法上的不同:
+            1. 接口里只能包含抽象方法和默认方法, 不能为普通方法提供方法实现; 抽象类则完全可以包含普通方法
+            2. 接口里不能定义静态方法; 抽象类里可以定义静态方法
+            3. 接口里只能定义静态常量, 不能定义普通成员变量; 抽象类里则既可以定义普通成员变量, 也可以定义静态常量
+            4. 接口里不包含构造器; 抽象类里可以包含构造器, 抽象类里的构造器并不是用于创建对象, 而是让其子类调用这
+                些构造器来完成属于抽象类的初始化操作
+            5. 接口里不包含初始化块; 单抽象类则完全可以包含初始化块
+            6. 一个类最多只能有一个直接父类, 包括抽象类; 但一个类可以直接实现多个接口, 通过实现多个接口可以弥补Java
+                但继承的不足
+
+        
+    6.6 面向接口编程
+        说明:
+            接口体现的是规范和实现分离的设计哲学, 充分利用接口可以极好的降低程序各模块之间的耦合, 从而提高系统的可扩
+            展性和可维护性
+
+        1. 简单工厂模式
+            需求(场景): 假设程序中有个 Computer 类需要组合一个输出设备
+            解决方案: 1.1 直接让 Computer 类组合一个 Printer 
+                     1.2 让 Computer 类组合一个 Output 
+            分析: 工厂模式简易让 Computer 类组合一个 Output 类型的对象, 将 Computer 类与 Printer 类完全分离
+
+            例子:
+            // Computer 类的定义代码
+            public class Computer{
+                private Output out;
+                public Computer(Output out){
+                    this.out = out;
+                }
+                // 定义一个模拟获取字符串输入的方法
+                public void keyIn(String msg){
+                    out.getData(msg);
+                }
+                // 定义一个模拟打印的方法
+                public void print(){
+                    out.out();
+                }
+            }
+            程序说明:
+                1. Computer 类已经完全与 Printer 类分离, 只与 Output 接口耦合. Computer 类不再负责创建 Output 对象,
+                    系统提供一个 Output 工厂来负责生成 Output 对象
+            
+            例子2:
+            // 定义一个 OutputFactory 工厂类
+            public class OutputFactory{
+                public Output getOutput(){
+                    // return new Printer();
+                    return new BetterPrinter();
+                }
+                public static void main(String[] args){
+                    OutputFactory of = new OutputFactory();
+                    Computer c = new Computer(of.getOutput());
+                    c.keyIn("轻量级 Java EE 企业应用实战");
+                    c.keyIn("疯狂 Java 讲义");
+                    c.print();
+                }
+            } 
+            程序说明:
+                1. OutputFactory 类只包含了一个 getOutput() 方法, 该方法返回一个 Output 的实现类的实例, 该方法负责
+                    创建 Output 实例, 具体创建哪一个实现类的对象由该方法决定(具体由该方法中 return 后面的实现类的实例
+                    决定, 也可以增加更复杂逻辑的代码, 能力不够啊 苏沐橙)
+
+            例子3:
+            // 定义一个 BetterPrinter 类
+            public class BetterPrinter implements Output{
+                private String[] printData = new String[MAX_CACHE_LINE * 2];
+                // 用以记录当前需要打印的作业数
+                private int dataNum = 0;
+                public void out(){
+                    // 只要有作业, 就继续打印
+                    while (dataNum > 0){
+                        System.out.println("高速打印机正在打印:" + printData[0]);
+                        // 把作业队列整体前移一位, 并将剩下额作业数减 1
+                        System.arraycopy(printData, 1, printData, 0, --dataNum);
+                    }
+                }
+                public void getData(String msg){
+                    if (dataNum >= MAX_CACHE_LINE * 2){
+                        System.out.println("输出队列已满, 添加失败");
+                    }
+                    else{
+                        // 把打印数据添加到队列里, 已保存数据的数量加1
+                        printData[dataNum++] = msg;
+                    }
+                }
+            }
+            程序说明:
+                1. BetterPrinter 类和 Printer 类一样, 也是实现类 Output 接口的实现类, 因此也可以当成 Output 对象
+                    使用, 
+                2. 通过这种方式, Computer 调用 Output 接口, 而 OutputFactory 则负责调用 Output 的实现类
+                3. 把所有生成 Output 对象的逻辑集中在 OutputFactory 工厂类中管理, 而所有需要使用 Output 对象的类只
+                    需与 Output 接口耦合, 而不是与具体的实现类耦合
+        
+
+
+
