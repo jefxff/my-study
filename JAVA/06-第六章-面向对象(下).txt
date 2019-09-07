@@ -1526,6 +1526,9 @@
                 问，即通过：new InnerClass().varName 或 new InnerClass().method() (例子3)   
             7. 根据静态成员不能访问非静态成员的规则，外部类的静态方法，静态代码块不能访问非静态内部类，包括不能使用非静态
                 内部类定义变量，创建实例等。总之：不允许外部类静态成员中直接使用非静态内部类(例子4)
+            8. 非静态内部类和外部类对象关系: 非静态内部类实例必须寄生在外部类实例里, 而外部类对象则不必一定有非静态内部类
+                对象寄生其中. 即: 如果存在一个非静态内部类对象, 则一定存在一个被它寄生的外部类对象; 但外部类对象存在时,外 
+                部类对象里不一定寄生了非静态内部类对象.
 
         定义语法:
             public class OuterClass{
@@ -1701,7 +1704,7 @@
     
     7.2 静态内部类
         说明：
-            1. 使用 static 修饰的内部类被称为 类内部类，或叫静态内部类；因为static 修饰的内部类属于外部类本身，为不属于外部
+            1. 使用 static 修饰的内部类被称为类内部类，或叫静态内部类；因为 static 修饰的内部类属于外部类本身，而不属于外部
                 类的某个对象
             2. 静态内部类可以包含静态成员，也可以包含非静态成员。根据静态成员不能访问非静态成员的规则，静态内部类不能访问外部
                 类的实例成员，只能访问外部类的类成员。 即使是静态内部类的实例方法也不能访问外部类的实例成员，只能访问外部类的
@@ -1709,12 +1712,16 @@
             3. 静态内部类是外部类的一个静态成员，因此外部类的所有方法，所有初始化块中可以使用静态内部类来定义变量，创建对象
             4. 外部类不能直接访问静态内部类的成员，但可以使用静态内部类的类名作调用者来访问静态内部类的类成员，也可以使用静态
                 内部类对象作为调用者来访问静态内部类的实例成员 (例子2) 
-            5. 也可以在Java接口里定义内部类，接口里定义内部类默认使用 public static 修饰，接口里的内部类都是静态的
+            5. 也可以在Java接口里定义内部类，接口里定义内部类默认使用 public static 修饰，即:接口里的内部类都是静态的
+            6. 静态内部类的实例方法也不能访问外部类的实例属性: 原因: 因为静态呢内部类是外部类的类相关, 而不是外部类的对象相关
+                即:静态内部类对象不是寄生在外部类的实例中, 而是寄生在外部类本身中. 当静态内部类对象存在时, 并不存在一个被它
+                寄生的外部类对象, 静态内部类对象只持有外部类的引用, 没有持有外部类对象的引用.
         
         例子1： 
             public class StaticInnerClassTest{
                 private int prop1 = 5;
                 private static int prop2 = 9;
+                // 定义一个静态内部类
                 static class StaticInnerClass{
                     public void accessOutProp(){
                         // 下面的代码出现错误：静态内部类无法访问外部类的实例变量
@@ -1731,17 +1738,17 @@
                     private int prop2 = 9;
                 }
                 public void accessInnerProp(){
-
+                    // 外部类访问静态内部类类变量
                     // System.out.println(prop1);
                     // 上面的代码出错，应改写为如下形式
                     // 通过类名访问静态内部类的类成员
                     System.out.println(StaticInnerClass.prop1);
 
+                    // 外部类访问静态内部类实例变量
                     // System.out.println(prop2);
                     // 上面的代码出错，应改写为如下形式
                     // 通过类名访问静态内部类的实例成员
                     System.out.println(new StaticInnerClass().prop2);
-
                 }
             }
             程序说明：
@@ -1749,25 +1756,349 @@
                 2. 外部类调用内部类成员：使用内部类名调用类成员，使用内部类的实例调用实例成员
 
     7.3 使用内部类
-        1. 在外部类内部使用内部类
+        7.3.1 在外部类内部使用内部类
             说明：
-                1. 可以直接通过内部类了名来定义变量，或通过 new 调用内部类构造器来创建实例
-                2. 和普通类区别：不要再外部类的静态成员(静态方法和静态初始化块)中使用非静态内部类，因为静态成员不能访问非静态成员 again
+                1. 可以直接通过内部类名来定义变量，或通过 new 调用内部类构造器来创建实例
+                2. 和普通类区别：不要再外部类的静态成员(静态方法和静态初始化块)中使用非静态内部类，因为静态成员不能访问
+                    非静态成员 again
 
-        2. 外部类以外使用非静态内部类
+        7.3.2 外部类以外使用非静态内部类
             说明：
-                1. 如果满足标题所说在外部类以外的地方访问内部类，那么内部类不能使用 private 修饰；省略控制符代表只能被外部类同包的类使用；
-                    protected 控制符的内部类表示；可被与外部类处于同一个包中的其他类和外部类的子类访问；public 控制符的内部类表示：可在
-                    任何地方被访问
+                1. 如果满足标题所说在外部类以外的地方访问内部类，那么内部类不能使用 private 修饰；省略控制符代表只能被外部
+                类同包的类使用；protected 控制符的内部类表示；可被与外部类处于同一个包中的其他类和外部类的子类访问；public 
+                控制符的内部类表示：可在任何地方被访问
 
             外部类以外的地方定义内部类（静态非静态两种）变量的语法：
                 OuterClass.InnerClass varName
                 说明：
-                    在外部类以外的地方使用内部类时，内部类完整的类名应该是 OuterClass.InnerClass， 如果外部类有包名，还应加上包名前缀
+                    在外部类以外的地方使用内部类时，内部类完整的类名应该是 OuterClass.InnerClass， 如果外部类有包名，还应加
+                    上包名前缀
 
             外部类以外的地方创建非静态内部类实例的语法：
                 OuterInstance.new InnerConstrctor()
                 说明：
                     1. 由于非静态内部类的对象必须寄生在外部类的对象里，因此创建非静态内部类对象之前，必须先创建其外部类对象
                     2. 在外部类以外的地方创建非静态内部类实例必须使用外部列实例和new来调用非静态内部类的构造器(例子1)
-                    3. 如果需要在外部类以外的地方创建非静态内部类的子类, 尤其注意:非静态内部类的构造器必须通过外部类的象来调用(例子2)
+                    3. 如果需要在外部类以外的地方创建非静态内部类的子类, 注意:非静态内部类的构造器必须通过外部类的对象来调用(例子2)
+            例子1:
+                class Out{
+                    // 定义一个内部类, 不使用访问控制符(属于默认包访问权限)
+                    class In{
+                        // 内部类的构造器
+                        public In(String msg){
+                            System.out.println(msg);
+                        }
+                    }
+                }
+                public class CreateInnerInstance{
+                    public static void main(String[] args){
+                        // 定义非静态内部类的实例(通过外部类的实例调用)
+                        Out.In in = new Out().new In("测试信息");
+                        /*
+                        * 上面的代码可改为如下三行代码
+                        * 使用 OutterClass.InnerClass 的形式定义内部变量
+                        * Out.In in;
+                        * 创建外部实例, 非静态内部类实例将寄生在该实例中
+                        * Out out = new Out();
+                        * 通过外部类实例和new来调用内部类构造器创建非静态内部类实例
+                        * in = out.new In("测试信息");
+                        */
+                    }
+                }
+                程序说明:
+                    1.非静态内部类的构造器必须使用外部类对象来调用
+            例子2:
+                public class SubClass extends Out.In{
+                    // 显式定义 SubClass 的构造器 
+                    public SubClass(Out out){
+                        // 通过传入的 Out 对象显式调用 In 的构造器
+                        out.super("通过传入的 Out 对象显式调用 In 的构造器");
+                    }
+                }
+                程序说明:
+                    1. 当创建一个子类时, 子类构造器总会调用父类的构造器, 因此在创建非静态内部类的子类时, 必须保证让子类构造器
+                        可以调用非静态内部类的构造器
+                    2. 调用非静态内部类的构造器时, 必须存在一个外部类对象
+                    3. 非静态内部类 In 类的构造器必须使用外部类对象来调用, 代码中 super 代表调用 In 类的构造器, 而 out 则代
+                        表外部类对象; 如果需要创建 SubClass 对象时, 必须先创建一个 Out 对象, 因为 SubClass 是非静态内部类
+                        In 类的子类, 非静态内部类 In 对象里必须有一个对 Out 对象的引用, 其子类 SubClass 对象里也应该持有Out 
+                        对象的引用, 当创建 SubClass 对象时传给该构造器的 Out 对象, 就是 SubClass 对象里 Out 对象引用所指向
+                        的对象
+                    4. 非静态内部类 In 对象和 SubClass 对象都必须持有指向 Out 对象的引用, 区别是创建两种对象时传入的 Out 对象
+                        的方式不同: 当创建非静态内部类 In 类的对象时, 必须通过 Out 对象来调用new关键字; 而当创建 SubClass 对 
+                        象时, 必须使用 Out 对象作为调用者来调用 In 类的构造器 
+                    5. 非静态内部类的子类不一定是内部类,它可以是一个外部类. 但非静态内部类的子类实例一样需要保留一个引用指向父
+                        类所在的外部类对象
+
+        7.3.3 在外部类以外使用静态内部类
+
+            在外部类以外创建静态内部类实例语法:
+                new OuterClass.InnerConstrctor()
+                语法说明:
+                    1. 因为静态内部类是外部类类相关, 因此创建静态内部类对象时无需创建外部类对象
+                    2. 不管是静态内部类还是非静态内部类,他们的声明变量的语法完全一样, 区别在于创建内部类对象时, 静态内部类只需要
+                        使用外部类即可调用构造器; 而非静态内部类必须使用外部类的对象来调用构造器
+
+            创建静态内部类子类的语法:
+                public class StaticSubClass extends StaticOut.StaticIn{}
+
+            例子:
+                class StaticOut{
+                    // 定义一个静态内部类, 不使用访问控制符(默认包访问权限)
+                    static class StaticIn{
+                        public StaticIn{
+                            System.out.println("静态内部类的构造器");
+                        }
+                    }
+                }
+                public class CreateStaticInnerInstance{
+                    public static void main(String[] args){
+                        // 定义一个静态内部类实例
+                        StaticOut.StaticIn in = new StaticOut.StaticIn();
+                        /*
+                        * 上面的代码可改为如下两行代码
+                        * 使用 OutterClass.InnerClass 的形式定义内部变量
+                        * StaticOut.StaticIn in;
+                        * 通过 new 来调用内部类构造器创建静态内部类实例
+                        * in = new StaticOut.StaticIn();
+                        */
+                    }
+                }
+
+        7.3.4 局部内部类(了解就好了, 作用域太小, 很少使用)
+            说明:
+                1. 定义在方法里面的类就是局部内部类, 局部内部类仅在该方法里有效
+                2. 由于局部内部类不能在外部类的方法以外的地方使用, 因此局部内部类也不能使用访问控制符和static修饰符
+                3. 只能在局部内部类方法中进行定义变量, 创建实例或派生子类
+            
+            例子:
+                public class LocalInnerclass{
+                    public static void main(String[] args){
+                        // 定义局部内部类
+                        class InnerBase{
+                            int a;
+                        }
+                        // 定义局部内部类的子类
+                        class InnerSub extends InnerBase{
+                            int b;
+                        }
+                        // 创建局部内部类的对象
+                        InnerSub is = new InnerSub();
+                        is.a = 5;
+                        is.b = 8;
+                        System.out.println("InnerSub对象的 a 和 b 实例变量是: " + is.a + ", " + is.b);
+                    }
+                }
+                程序说明:
+                    1. 局部内部类的class文件的文件名比成员内部类的 class 文件的文件名多了一个数字, 这是因为同一个类里面
+                        不可能有两个同名的成员内部类, 而同一个类里则可能有两个以上同名的局部内部类
+
+        7.3.5 Java 8 改进的匿名内部类
+            说明:
+                1. 匿名内部类适合创建那种只需要一次使用的类, 创建匿名内部类时会立即创建一个该类的实例, 这个类定义立即消失
+                    匿名内部类不能重复使用
+                2. 最常用的创建匿名内部类的方式是需要创建某个接口类型的对象(例子1)
+                3. 当通过实现接口来创建匿名内部类时, 匿名内部类也不能显式的创建构造器, 因此匿名内部类只有一个隐式的无参数
+                    构造器, 所以 new 接口名后面的括号里不能传入参数值
+                4. 如果通过继承父类来创建匿名内部类时, 匿名内部类将拥有金和父类相似的构造器, 相似指的是: 相同形参列表
+                5. 当创建匿名内部类时, 必须实现接口或抽象父类里的所有抽象方法, 也可以重写父类中的普通方法
+
+            匿名内部类定义语法:
+                new 实现接口() | 父类构造器(实参列表){
+                    // 匿名内部类的类体部分
+                }
+
+            定义匿名内部类注意规则:
+                1. 匿名内部类不能是抽象类, 因为系统在创建匿名内部类时, 会立即创建匿名内部类对象, (抽象类不能创建实例)
+                2. 匿名内部类不能定义构造器. 由于匿名内部类没有类名. 所以无法定义构造器, 但匿名内部类可以定义初始化块, 可以
+                    通过实例初始化块来完成构造器需要完成的事情
+
+            例子1:
+                // 最常用的创建匿名内部类的方式是需要创建某个接口类型的对象
+                interface Product{
+                    public double getPrice();
+                    public String getName();
+                }
+                public class AnonymousTest{
+                    public void test(Product p){
+                        System.out.println("购买了一个" + p.getName() + ",花掉了" + p.getName());    
+                    }
+                    public static void main(String[] args){
+                        AnonymousTest ta = new AnonymousTest();
+                        // 调用 test() 方法时, 需要传入一个 Product 参数
+                        // 此处传入其匿名实现类的实例  ①
+                        ta.test(new Product()
+                        // 匿名类类体部分
+                        {
+                            // 实现Product接口类的两个方法
+                            public double getPrice(){
+                                return 567.8;
+                            }
+                            public String getName(){
+                                return "AGP显卡";
+                            }
+                        });
+
+                        // 调用例子2创建的Product接口的独立实现类的实例
+                        // ta.test(new AnonymousProduct());
+                    }
+                }
+                程序说明:
+                    1. AnonymousTest类定义了一个test()方法, 该方法需要一个 Product 对象作为参数, 但 Product 只是一个接口,
+                        无法直接创建对象, 因此这里考虑创建一个 Product 接口实现类的对象传入给test()方法; 如果这个 Product 
+                        接口实现类需要重复使用, 则应该将该实现类定义层一个独立的类(例子2); 如果这个Product 接口实现类只需要
+                        使用一次, 则可以使用匿名内部类的方式(例子1 ①处的代码)
+
+            例子2:
+                class AnonymousProduct implements Product{
+                    // 实现Product接口类的两个方法
+                    public double getPrice(){
+                        return 567.8;
+                    }
+                    public String getName(){
+                        return "AGP显卡";
+                    }
+                }
+
+
+8. Java 8 新增的 Lambda 表达式
+    说明:
+        1. Lambda 表达式支持将代码块作为方法的参数, Lambda 表达式允许使用更简洁的代码来创建只有一个抽象方法的接口(这种
+            接口被称作函数式接口)的实例 
+        2. 所有的 Lambda 的类型都是一个接口, 而 Lambda 表达式本身, 也就是"代码块"需要是这个接口的实现; 即:Lambda 表达
+            式本身就是一个接口的实现
+
+    8.1 Lambda 表达式入门    
+        说明:
+            1. Lambda 表达式的主要作用就是代替匿名内部类的繁琐语法
+            
+        Lambda 表达式组成:
+            1. 形参列表. 形参列表允许省略形参类型. 如果形参列表中只有一个参数, 甚至形参列表的的圆括号也可以省略
+            2. 箭头(->). 必须通过英文中画线号和大于符号组成
+            3. 代码块. 如果代码块只包含一条语句, Lambda 表达式允许省略代码块的花括号, 那么这条语句就不要用花括号表示语句
+                结束. 
+            4. Lambda 代码块只有一条 return 语句, 甚至可以省略 return 关键字
+            5. Lambda 表达式需要返回值, 而它的代码块中仅有一条省略了热return语句, Lambda表达式会自动返回这条语句的值
+        
+        例子1:
+            // Lambda 表达式的初级用法
+            interface Eatable{
+                void taste();
+            }
+            interface Flyable{
+                void fly(String weather);
+            }
+            interface Addable{
+                int add(int a, int b);
+            }
+            public class LambdaQs{
+                // 调用该方法需要 Eatable 对象
+                public void eat(Eatable e){
+                    System.out.println(e);
+                    e.taste();
+                }
+                // 调用该方法需要 Flyable 对象
+                public void drive(Flyable f){
+                    System.out.println("我正在驾驶: " + f);
+                    f.fly("碧空如洗的晴日");
+                }
+                // 调用该方法需要 Addable 对象
+                public void test(Addable add){
+                    System.out.println("5 与 3 的和为: " + add.add(5,3));
+                }
+                public static void main(String[] args) {
+                    LambdaQs lq = new LambdaQs();
+                    // Lambda 表达式的代码块只有一条语句, 可以省略花括号
+                    lq.eat(() -> System.out.println("苹果的味道不错的哈!"));    // ①
+
+                    // lambda表达式的形参列表只有一个形参, 可以省略圆括号
+                    lq.drive(weather -> {                                     // ②
+                        System.out.println("今天天气是: " + weather);
+                        System.out.println("直升机飞行平稳");
+                    });
+                    // lambda 表达式的代码块只有一条语句, 可以省略花括号
+                    // 代码块中只有一天语句, 即使该表达式需要返回值, 也可以省略 return 关键字
+                    lq.test((a, b) -> a + b);                                 // ③
+                }
+            }
+            程序说明:
+                1. ① 处的代码调用eat()方法, 而eat()方法接收一个 Eatable 类型的参数(即 Eatable 接口的实现类), 实际用的是
+                    Lambda 表达式, 也可以使用匿名内部类
+                2. ② 处 ③ 处出的代码同一处的代码说明
+
+    8.2 Lambda 表达式和函数式接口
+        说明:
+            1. Lambda 表达式的目标类型必须是"函数式接口(functional interface)". 函数式接口代表只包含一个抽象方法的接口,
+                函数式接口可以包含多个默认方法, 类方法, 但是只能声明一个抽象方法
+            2. 如果采用匿名内部类语法类创建函数式接口的实例, 则只需要实现一个抽象方法, 在这种情况下即可采用 Lambda 表达式
+                来创建对象, 该表达式创建出来的对象的目标类型就是这个函数式接口
+            3. java8 专门为函数式接口提供 @functionalInterface 注解, 通常放在接口定义前面(类似python的装饰器), 该注解
+                对程序功能没有任何作用, 只要用于告诉编译器执行更严格的检查=--检查该接口必须是函数式接口, 否则报错
+            4. 由于Lambda表达式的结果就是被当成对象, 因此程序中完全可以使用Lambda表达式进行赋值(例子1)
+            5. Lambda 表达式的目标类型完全可能是变化的---唯一要求是: Lambda表达式实现的匿名方法与目标类型(函数式接口)中
+                唯一的抽象方法有相同的形参列表(例子3)
+
+        Lambda 表达式的限制:
+            1. Lambda 表达式的目标类型必须是明确的函数式接口
+            2. Lambda 表达式只能为函数式接口创建对象. Lambda 表达式只能实现一个方法, 因此它只能为只有一个抽象方法的接口(
+                函数式接口) 创建对象
+
+        保证 Lambda 表达式目标类型为函数式接口的方式:
+            1. 将 Lambda 表达式赋值给函数式接口类型的变量(例子1)
+            2. 将 Lambda 表达式作为函数式接口类型的参数传给某个方法
+            3. 使用函数式接口对 Lambda 表达式进行强制类型转换(例子2)
+
+        java8中java.util.function 包下预定义的函数式接口:
+            1. XxxFunction: 
+                这类接口中通常包含一个 apply() 抽象方法, 该方法对参数进行处理,转换(apply()方法的处理逻辑由Lambda表达式
+                来实现), 然后返回一个新的值; 该函数式接口通常用于对指定数据转换处理
+            2. XxxConsumer:
+                这类接口中通常包含一个 accept() 抽象方法, 该方法与 XxxFunction 接口中 apply() 方法基本相似, 也负责对参数
+                进行处理, 只是该方法不会返回处理结果
+            3. XxxPredicate:
+                这类接口中通常包含一个test()抽象方法, 该方法通常用来对参数进行某种判断(test()方法的处理逻辑由Lambda表达式
+                来实现), 然后返回一个boolean 值 
+            4. XxxSupplier:
+                这类接口中通常包含一个 getAsXxx()抽象方法, 该方法不需要输入参数,该方法会按照某种逻辑算法(getAsXxx()方法的
+                处理逻辑由Lambda表达式来实现)返回一个数据
+
+        例子1:
+            // Runnable 接口中只包含一个无参数的方法
+            // Lambda 表达式代表匿名方法实现了 Runnable 接口中唯一的, 无参数的方法
+            // 因此下面的Lambda 表达式创建了一个 Runnable 对象
+            Runnable r = () -> {
+                for (int i = 0; i < 100; i++){
+                    System.out.println(i);
+                }
+            };
+
+        例子2:
+            // 错误的代码将Lambda表达式赋给一个引用类型变量(必须赋给函数式接口类型变量)
+            Object obj = () -> {
+               for (int i = 0; i < 100; i++){
+                    System.out.println(i);
+                } 
+            };
+            // 报错: 不兼容类型: Object 不是函数式接口
+
+            // 通过对 Lambda 表达式执行强制类型转换, 表明该表达式的目标类型为 Runnable 函数式接口
+            Object obj = (Runnable)() -> {
+               for (int i = 0; i < 100; i++){
+                    System.out.println(i);
+                } 
+            };
+
+        例子3:
+            // 函数式接口FKTest中仅定义了一个不带参数的方法, FKTest接口中唯一的抽象方法是不带参数的
+            @functionalInterface
+            interface FKTest{
+                void run();
+            }  
+
+            // 同样的 Lambda 表达式可以被当成不同的目标了类型, 唯一的要求是
+            // Lambda 表达式的形参列表与函数式接口中唯一的抽象方法的形参列表相同
+            object obj2 = (FKTest)() -> {
+                for (int i = 0; i < 100; i++){
+                    System.out.println(i);
+                } 
+            };
