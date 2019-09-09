@@ -2103,10 +2103,213 @@
                 } 
             };
     
-    8.3 方法引用与构造器引用
-      Lambda表达式支持的方法引用和构造器引用
-            种类                   示例                  对应的Lambda表达式                          说明
-        引用类方法               类名::类方法         (a,b,...)-> 类名.类方法(a,b,...)         函数式接口中被实现方法的全部参数传给该类方法作为参数
-        引用特定对象的实例方法    特定对象::实例方法    (a,b,...)-> 特定对象.实例方法(a,b,...)   函数式接口中被实现方法的全部参数传给该方法作为参数 
-        引用某类对象的实例方法    类名::实例方法        (a,b,...)-> a.实例方法(b,...)           函数式接口中被实现方法的第一个参数作为调用者,后面的参数全部传给该方法作为参数
-        引用构造器               类名::new             (a,b,...)->new 类名(a,b,...)           函数式接口中被实现方法的全部参数传给该构造器作为参数
+    8.3 方法引用与构造器引用(这个是真的搞不懂啊 好烦, 找视频看)
+        说明:
+            1. 如果Lambda表达式的代码块只有一条代码, 可以在代码块中使用方法引用和构造器引用
+
+        Lambda表达式支持的方法引用和构造器引用
+                种类                   示例                  对应的Lambda表达式                          说明
+            引用类方法               类名::类方法         (a,b,...)-> 类名.类方法(a,b,...)         函数式接口中被实现方法的全部参数传给该类方法作为参数
+            引用特定对象的实例方法    特定对象::实例方法    (a,b,...)-> 特定对象.实例方法(a,b,...)   函数式接口中被实现方法的全部参数传给该方法作为参数 
+            引用某类对象的实例方法    类名::实例方法        (a,b,...)-> a.实例方法(b,...)           函数式接口中被实现方法的第一个参数作为调用者,后面的参数全部传给该方法作为参数
+            引用构造器               类名::new             (a,b,...)->new 类名(a,b,...)           函数式接口中被实现方法的全部参数传给该构造器作为参数
+
+        8.3.1 引用类方法:
+            例子:
+                @functionalInterface
+                interface Converter{
+                    Integer convert(String from);
+                }    
+                程序说明:
+                    1. 该函数式接口中包含一个convert()抽象方法, 该方法负责将 String 参数转换为 Integer 
+
+            使用Lambda表达式创建一个Converter对象:
+                例子1:
+                // 下面的代码使用 Lambda 表达式创建 Converter 对象
+                Converter converter1 = from -> Integer.valueOf(from);
+
+                例子2:
+                // 调用 converter1 对象的 convert()方法将字符串转换为数字
+                Integer va1 = converter1.convert("99");
+                System.out.println(va1)   // out: 99
+                // 代码调用 converter1 对象的 conver()方法时, 由于 converter1 对象是 Lambda 表达式创建的, convert()
+                // 方法执行体就是Lambda表达式的代码块部分
+
+                例子3:
+                // 上面的Lambda表达式的代码块只有一行调用类方法的代码块, 因此例子2也可以使用例子3的的形式替换
+                // 方法引用代替Lambda表达式: 引用类方法
+                // 函数式接口中被实现方法的全部参数传给类方法作为参数
+                Converter converter1 = Integer::valueOf;
+                程序说明:
+                    1. 对于上面的类方法引用, 也就是调用Integer类的valueOf()类方法来实现Converter函数式接口中唯一的
+                       抽象方法, 当调用 Converter 接口中的唯一的抽象方法时, 调用的参数将会传给 Integer类的valueOf()
+                       类方法
+
+        8.3.2 引用特定对象的实例方法
+            1.使用Lambda表达式创建一个Converter对象
+                // 下面的代码使用 Lambda 表达式创建一个Converter对象
+                Converter converter2 = from -> "fkit.org".indexOf(from);
+                说明:
+                    1. 上面Lambda表达式的代码块只有一条语句, 因此程序省略了该代码块的花括号, 而且表达式所实现的
+                       convert()方法需要返回值, 因此Lambda表达式将会把这条代码的值作为返回值
+            2. 调用 converter1 对象的 convert()方法件字符串转换为整数
+                Integer value = converter2.convert("it");
+                System.out.println(value)   // out: 2
+            3. 使用 Lambda 表达式来替换
+                // 方法引用替换 Lambda 表达式: 引用特定对象的实例方法
+                // 函数式接口中被实现方法的全部参数传给该方法最为参数
+                Converter converter2 = "fkit.org"::indexOf;
+                说明:
+                    1. 调用"fkit.org"对象的 indexOf()实例方法来实现Converter 函数式接口中唯一的抽象方法
+
+        8.3.3 引用某类对象的实例方法
+            1. 看例子来理解
+                例子:
+                // 函数式接口
+                @functionalInterface
+                interface MyTest{
+                    // 抽象方法
+                    String test(String a, int b, int c);
+                }
+
+                // 使用Lambda表达式来创建MyTest对象
+                // 下面的代码使用Lambda表达式来创建MyTest对象
+                MyTest mt = (a, b, c) -> a.substring(b, c);
+
+                // 调用 mt 对象的test()方法
+                String str = mt.test("I Love Java", 2, 9);
+                System.out.println(str);   // out: Love Ja 
+
+                // 使用如下的方法来替换上面的程序
+                // 方法引用代替Lambda表达式:引用某个对象的实例方法
+                // 函数式接口中被实现方法的第一个参数作为调用者
+                // 后面的参数全部传给该方法作为参数
+                MyTest mt = String::substring;
+                说明:
+                    1. 对于上面的实例方法引用, 也就是调用某个String对象的 subdstring()实例方法来实现 MyTest 函数
+                       式接口中的唯一的抽象方法, 当调用 MyTest  接口中的唯一的抽象方法时, 第一个调用参数将作为
+                       subdstring()方法的调用者, 剩下的调用参数会作为 subdstring()实例方法的调用参数
+
+            8.3.4 引用构造器
+            1. 就看例子吧, 反正看不懂
+            例子:
+                // 定义函数式接口
+                @functionalInterface
+                interface YourTest{
+                    JFrame win(String title);
+                } 
+
+                // 使用Lambda表达式创建对象
+                YourTest yt = (String a) -> new JFrame(a);
+
+                // 调用 yt 对象的 win() 方法
+                JFrame jf = yt.win("我的窗口");
+                System.out.println(jf);
+
+                // 构造器引用代替Lambda表达式
+                // 函数式接口中被实现方法的全部参数传给该构造器作为参数
+                YourTest yt = JFrame::new;
+
+    8.4 lambda 表达式与匿名内部类的联系和区别
+        相同点:
+            1. Lambda 表达式与匿名内部类一样, 都可以直接访问 "effectively final" 的局部变量, 以及外部类的成员
+                变量(包括类变量和实例变量)(例子1)
+            2. Lambda 表达式创建的对象与匿名内部类生成的对象一样, 都可以直接调用从接口继承的默认方法
+
+        不同点:
+            1. 匿名内部类可以为任意接口创建实例--不管接口包含多少个抽象方法,只要匿名内部类实现所有的抽象方法即可;
+                但是Lambda表达式只能为函数式接口创建实例
+            2. 匿名内部类可以为抽象类甚至普通类创建实例; 但是Lambda表达式只能为函数式接口创建实例
+            3. 匿名内部类实现的抽象方法的方法体允许调用接口中定义的默认方法; 但是Lambda表达式的代码块不允许调用接口
+                中定义的默认方法
+        例子1:
+            @FunctionalInterface
+            interface Displayable{
+                // 定义一个抽象方法和默认方法
+                void display();
+                default int add(int a, int b){
+                    return a + b;
+                }
+            }     
+            public class LambdaAndInner{
+                private int age = 12;
+                private static String name = "疯狂软件教育中心";
+                public void test(){
+                    String book = "疯狂Java讲义";
+                    Displayable dis = () -> {
+                        // 访问 "effectively final " 的局部变量
+                        System.out.println("book局部变量为:" + book);   // ##
+                        // 访问外部类的实例变量和类变量
+                        System.out.println("外部类的age实例变量为:" + age);   // ##
+                        System.out.println("外部类的 name 类变量为:" + name);   // ##
+                    };
+                    dis.display();
+                    // 调用 dis 对象从接口中继承的 add() 方法
+                    System.out.println(dis.add(3, 5));
+                }
+                public static void main(String[] args) {
+                    LambdaAndInner lambda = new LambdaAndInner();
+                    lambda.test();
+                }   
+            }
+            程序说明:
+                1. 上面程序使用 Lambda 表达式创建了一个Displayable 的对象, Lambda 表达式的代码块中的 ## 代码分别
+                  表示访问了 "effectively final" 的局部变量, 外部类的实例变量好类变量
+                2. 由于Lambda 表达式访问了 book 局部变量, 因此该局部变量相当于有一个隐式的 final 修饰, 因此不允许
+                    对 book 局部变量重新赋值
+                3. 虽然Lambda表达式的目标类型: Displayable 中包含了 add()方法, 但Lambda表达式的代码块不允许调用
+                    这个方法; 如果将上面的Lambda表达式改为匿名内部类的写法, 当匿名内部类实现display()抽象方法时,
+                    则完全可以调用这个 add() 方法
+
+    8.5 使用 Lambda 表达式调用 Arrays 的类方法
+        说明:
+            Arrays 类中的有些方法需要 Comparator, XxxOperator, XxxFunction 等接口的实例, 这些接口都是函数式接口, 因此
+            可以使用Lambda表达式来调用Arrays的方法
+
+        例子:
+            import java.util.Arrays;
+
+            public class LambdaArrays {
+                public static void main(String[] args) {
+                    String[] arr1 = new String[]{"java", "fkava", "fkit", "ios", "android"};
+                    Arrays.parallelSort(arr1, (o1, o2) -> o1.length() - o2.length());
+                    // out: [ios, java, fkit, fkava, android]
+                    System.out.println(Arrays.toString(arr1));
+                    int[] arr2 = new int[]{3, -4, 25, 16, 30, 18};
+                    // left 代表数组中前一个索引处的元素, 计算第一个元素时, left为1
+                    // right 代表数组中当前索引处的元素
+                    Arrays.parallelPrefix(arr2, (left, right) -> left*right);
+                    // out: [3, -12, -300, -4800, -144000, -2592000]
+                    System.out.println(Arrays.toString(arr2));
+                    long[] arr3 = new long[5];
+                    // operand 代表正在计算的元素索引
+                    Arrays.parallelSetAll(arr3, operand -> operand * 5);
+                    // out: [0, 5, 10, 15, 20]
+                    System.out.println(Arrays.toString(arr3));
+                }         
+            }   
+            程序说明:
+                1. (o1, o2) -> o1.length() - o2.length(); 这段Lambda 表达式的目标类型是 Comparator, 该 Comparator
+                    指定了判断字符串大小的标准:字符串越长, 即可认为该字符串越大
+                2. (left, right) -> left*right); 这段 Lambda表达式的目标类型是 IntBinaryOperator, 该对象将会根据
+                    后两个元素来计算当前元素的值
+                3.  operand -> operand * 5; 这段Lambda表达式的目标类型是 IntToLongFunction 该对象将会根据元素的索引
+                    来计算当前元素的值
+
+
+9. 枚举类
+    9.1 手动实现枚举类
+        设计方式:(通过定义类的方式实现)
+            1. 通过 private 将构造器隐藏起来
+            2. 把这个类的所有可能实例都使用 public static final 修饰的类变量来保存
+            3. 如果必要, 可以提供一些静态方法, 允许其他程序根据特定的参数来获取与之匹配的实例
+            4. 使用枚举可以使程程序更加健壮,避免创建对象的随意性
+
+    9.2 枚举类入门
+        说明:
+            1. Java 5 新增了 enum 关键字(与 class interface关键字的地位相同), 用于定义枚举类
+            2. 枚举类作为一种特殊的类, 它一样可以有自己的成员变量, 方法, 可以实现一个或多个接口, 也可以定义自己的构造器
+            3. 一个 Java 源文件当中最多只能定义一个 public 访问权限的枚举类, 且该Java源文件也必须和该枚举类的类名相同
+    
+        
+                
