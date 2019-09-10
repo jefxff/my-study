@@ -1035,7 +1035,7 @@
             2. 抽象方法和抽象类必须使用 abstract 修饰符来定义，有抽象方法的类只能被定义为抽象类，抽象类里可以没有抽象方法
             3. 归纳：抽象类可用“有得有失”来描述："得"指的是抽象类多了一个能力：抽象类可包含抽象方法；"失"指的是抽象类失去了
                 一个能力：抽象类不能用于创建实例
-            4. 定义抽象类只需在普通类上增加 abstract 修饰符即可，甚至一个普通类(没有包含抽象方法的类)增加了 abstract 修饰
+            4. 定义抽象类只需在普通类上增加 abstract 修饰符即可，甚���一个普通类(没有包含抽象方法的类)增加了 abstract 修饰
                 符后也将变成抽象类
             5. 定义抽象方法只需要在普通方法上增加 abstract 修饰符，并把普通方法的方法体部分去掉，并在方法体后面增加分号即可
                 5.1 如：抽象方法：public abstract void test();  抽象方法，没有方法体(即方法定义后面没有一对花括号)
@@ -2029,7 +2029,7 @@
     8.2 Lambda 表达式和函数式接口
         说明:
             1. Lambda 表达式的目标类型必须是"函数式接口(functional interface)". 函数式接口代表只包含一个抽象方法的接口,
-                函数式接口可以包含多个默认方法, 类方法, 但是只能声明一个抽象方法
+                函数式接口可以包含多个默认方法(default 修饰), 类方法, 但是只能声明一个抽象方法
             2. 如果采用匿名内部类语法类创建函数式接口的实例, 则只需要实现一个抽象方法, 在这种情况下即可采用 Lambda 表达式
                 来创建对象, 该表达式创建出来的对象的目标类型就是这个函数式接口
             3. java8 专门为函数式接口提供 @functionalInterface 注解, 通常放在接口定义前面(类似python的装饰器), 该注解
@@ -2105,14 +2105,14 @@
     
     8.3 方法引用与构造器引用(这个是真的搞不懂啊 好烦, 找视频看)
         说明:
-            1. 如果Lambda表达式的代码块只有一条代码, 可以在代码块中使用方法引用和构造器引用
+            1. 如果Lambda表达式的代码块只有一条代码, 可以在代码块中使用方法引���和构造器引用
 
         Lambda表达式支持的方法引用和构造器引用
                 种类                   示例                  对应的Lambda表达式                          说明
-            引用类方法               类名::类方法         (a,b,...)-> 类名.类方法(a,b,...)         函数式接口中被实现方法的全部参数传给该类方法作为参数
-            引用特定对象的实例方法    特定对象::实例方法    (a,b,...)-> 特定对象.实例方法(a,b,...)   函数式接口中被实现方法的全部参数传给该方法作为参数 
-            引用某类对象的实例方法    类名::实例方法        (a,b,...)-> a.实例方法(b,...)           函数式接口中被实现方法的第一个参数作为调用者,后面的参数全部传给该方法作为参数
-            引用构造器               类名::new             (a,b,...)->new 类名(a,b,...)           函数式接口中被实现方法的全部参数传给该构造器作为参数
+            引用类方法               类名::类方法         (a,b,...)-> 类名.类方法(a,b,...)        函数式接口中被实现方法的全部参数传给该类方法作为参数
+            引用特定对象的实例方法    特定对象::实例方法    (a,b,...)-> 特定对象.实例方法(a,b,...)  函数式接口中被实现方法的全部参数传给该方法作为参数 
+            引用某类对象的实例方法    类名::实例方法       (a,b,...)-> a.实例方法(b,...)           函数式接口中被实现方法的第一个参数作为调用者,后面的参数全部传给该方法作为参数
+            引用构造器               类名::new            (a,b,...)-> new 类名(a,b,...)          函数式接口中被实现方法的全部参数传给该构造器作为参数
 
         8.3.1 引用类方法:
             例子:
@@ -2311,5 +2311,367 @@
             2. 枚举类作为一种特殊的类, 它一样可以有自己的成员变量, 方法, 可以实现一个或多个接口, 也可以定义自己的构造器
             3. 一个 Java 源文件当中最多只能定义一个 public 访问权限的枚举类, 且该Java源文件也必须和该枚举类的类名相同
     
+        枚举类和普通类的区别:
+            1. 枚举类可以实现一个或多个接口, 使用 enum 定义的枚举类默认继承了 java.lang.Enum 类, 而不是默认继承 Object 
+                类, 因此枚举类不能显式继承其他父类. 其中 java.lang.Enum 类实现了 java.lang.Serializable 和 
+                java.lang.Comparable 两个接口
+            2. 使用 enum 定义, 非抽象的枚举类默认会使用 final 修饰, 因此枚举类不能派生子类
+            3. 枚举类的构造器只能使用 private 访问控制符, 如果省略了构造器的访问控制符, 则默认使用 private 修饰; 如果
+                强制指定访问控制符, 则只能指定 private 修饰符
+            4. 枚举类的所有实例必须在枚举类的第一行显式列出, 否则这个枚举类永远不能产生实例. 列出这些实例时, 系统会自动
+                添加 public static final 修饰
+            5. 枚举类默认提供了一个 values()的方法, 用于遍历所有的枚举值
+            6. 通过 EnumClass.variable 的形式使用某个枚举类的实例
+
+        例子1:
+            // SeasonEnum.java 
+            // 定义一个枚举类
+            public enum SeasonEnum{
+                // 在第一行列出4个枚举实例
+                // 注意: 实例之间用逗号 (,) 隔开, 最后一个实例分号 (;) 结尾
+                SPRING, SUMMER, FALL, WINTER;
+            }
+        例子2:
+            // EnumTest.java
+            // 定义一个普通类使用上面的枚举类实例
+            public class EunmTest{
+                public void judge(SeasonEnum s){
+                    switch (s){
+                        case SPRING:
+                            System.out.println("Spring is comming, I can see it!");
+                            break;
+                        case SUMMER:
+                            System.out.println("Summer is comming, I want to Swimming!");
+                            break;
+                        case FALL:
+                            System.out.println("Fall is comming, I can felling it!");
+                            break;
+                        case WINTER:
+                            System.out.println("WInter is comming");
+                            break;
+                    }
+                }
+                public static void main(String[] args){
+                    // 枚举类默认有一个 values()方法, 返回该枚举类的所有实例
+                    for (SeasonEnum s: SeasonEnum.values()){
+                        System.out.println(s);
+                    }
+                    // 使用枚举实例时, 可通过Enumclass.variable 形式来访问
+                    new EnumTest().judge(SeasonEnum.SPRING);
+                }
+            }
+
+        java.lang.Enum 类中的一些方法:
+            1. int compareTo(E o)
+                说明: 
+                    该方法用于指定枚举对象比较顺序, 同一个枚举实例只能与相同类型的枚举实例进行比较; 如果该枚举对象位于
+                    指定枚举对象之后, 则返回正整数; 如果该枚举对象位于指定枚举对象之前, 则返回负整数, 否则返回零
+            2. String name()
+                说明: 
+                    返回次枚举实例的名称, 这个名称就是定义枚举类时列出的所有枚举值之一. 与次方法相比, 大多数程序员应该
+                    优先考虑使用 toString() 方法, 因为 toSring() 方法返回更加用户友好的名称
+            3. int ordinal()
+                说明: 
+                    返回枚举值在枚举类中的索引值(就是枚举值在枚举声明中的位置, 第一个枚举值的索引为零)
+            4. String toString()
+                说明:
+                    返回枚举常量的名称, 与name方法此相似, 但 toString()方法更常用
+            5. public static <T extends Enum<T>>T valueOf(Class<T>enumType, String name)
+                说明:
+                    这是一个静态方法, 用于返回指定枚举类中指定名称的枚举值. 名称必须与该枚举类中声明枚举值时所用的标识
+                    符完全匹配, 不允许使用额外的空白字符
+
+
+    9.3 枚举类的成员变量, 方法和构造器
+        说明:
+            1. 枚举类也是一种特殊的类, 因此它一样可以定义成员变量, 方法和构造器 
+            2. 枚举类的实例只能是枚举值, 而不是随意地通过new来创建枚举类对象
+            3. 枚举类通常应该设计成不可变类, 即: 它的成员变量值不应该允许改变; 因此 枚举类的成员变量都应该使用 private 
+                final 修饰
+            4. 如果将所有的成员变量都是用了 final 修饰符来修饰, 就必须在构造器里为这些成员变量指定初始值(或者在定义成员
+                变量的时指定默认值, 或者在初始化块中指定初始值)
+            5. 一旦为枚举类显式定义了带有参数的构造器, 列出枚举值时就必须对应地传入参数
         
+        例子:
+            // Gender.java
+            public enum Gender{
+                // 定义枚举的实例
+                MALE, FEMALE;
+
+                // 定义一个 public 修饰的实例变量
+                public String name;
+            }
+
+            // GenderTest.java
+            // 这个程序的不好之处在于, 直接为枚举值赋值
+            public class GenderTest{
+                public static void main(String[] args){
+                    // 通过 Enum 的 valueOf()方法来获取指定枚举类的枚举值
+                    Gender g = Enum.valueOf(Gender.class, "FEMALE");
+                    // 直接为枚举值的 name 实例变量赋值
+                    g.name = "女";
+                    // 直接访问枚举值的name实例变量
+                    System.out.println(g + " 代表: " + g.name);
+                }
+            }
+
+            // Gender.java
+            // 重构Gender.java程序, 设置private访问权限的实例变量, 并未变量设置 setter 和 getter 方法
+            public enum Gender{
+                MALE，FEMALE;
+
+                // 定义private访问权限的实例变量
+                private String name;
+
+                // 定义 setter 和 getter 方法
+                public void setName(String name){
+                    switch (this){
+                        case MALE:
+                            if (name.equals("男")){
+                                this.name = name;
+                            }
+                            else{
+                                System.out.println("参数错误!");
+                                return;
+                            }
+                            break;
+                        case FEMALE:
+                            if (name.equals("女")){
+                                this.name = name;
+                            }
+                            else{
+                                System.out.println("参数错误!");
+                                return;
+                            }
+                            break;
+                    }
+                }
+                public String getName(){
+                    return this.name;
+                }
+            }
+
+            // GenderTest.java
+            // 重写 GenderTest.java 程序, 
+            public class GenderTest{
+                public static void main(String[] args){
+                    Gender g = Gender.valueOf("FEMALE");
+                    g.setName("女");
+                    System.out.println(g + " 代表: " + g.getName());
+                    // 此时设置name值时将会提示参数错误
+                    // g.setName("男");
+                    System.out.println(g + " 代表: " + g.getName());
+                }
+            } 
+
+            // Gender.java
+            // 重写Gender.java 代码, enum 的实例是带参数的
+            public enum Gender{
+                // 此处的枚举值必须调用对应的构造器来创建
+                MALE("男"), FEMALE("女");
+                private final String name;
+
+                // 枚举类的构造器只能使用 private 修饰
+                private Gender(String name){
+                    this.name = name;
+                }
+                public String getName(){
+                    return this.name;
+                }
+            }
+            程序说明:
+                1. 当为Gender枚举类创建一个Gender(String name)构造器之后, 列出枚举值就应该采用  MALE("男"), FEMALE("女");
+                这种代码来完成. 也就是说, 在枚举类列出枚举值时, 实际上就是调用构造器创建枚举类对象, 只是这里无须使用 new 关键
+                字, 也无须显式调用构造器, 前面列出枚举值时无需传入参数, 甚至无需使用括号, 仅仅是因为前面的枚举类包含无参数的
+                构造器 
+
+    9.4 实现接口的枚举类
+        说明:
+            1. 枚举类也可以实现一个或多个接口, 与普通类实现一个或多个借口完全一样, 枚举类实现一个或多个接口时, 也需要实现
+                该接口所包含的所有方法(使用 implements )(例子1)
+            2. 由枚举类实现接口里的方法, 则每个枚举值在调用该方法时都有相同的行为方式(因为方法体一样)
+            3. 如果需要让每个枚举值在调用该方法时呈现出不同的行为方式, 则可以让每个枚举值分别来实现该方法, 每个枚举值提供
+                不同的实现方式, 从而让不同的枚举值调用该方法是具有不同的行为方式(例子2)
+            4. 并不是所有的枚举类都是用 final 修饰, 非常想的枚举类才默认使用 final 修饰, 对于一个抽象的枚举类而言 -- 只要
+                它包含了抽象方法, 他就是抽象枚举类, 系统会默认使用 abstract 修饰, 而不是final修饰
+        例子1:
+            // 定义一个接口(是函数式接口)
+            // GenderDesc.java
+            public interface GenderDesc{
+                // 定义一个抽象方法
+                void info();
+            }
+
+            public enum Gender implements GenderDesc{
+                // 此处的枚举值必须调用对应的构造器来创建
+                MALE("男"), FEMALE("女");
+                private final String name;
+
+                // 枚举类的构造器只能使用 private 修饰
+                private Gender(String name){
+                    this.name = name;
+                }
+                public String getName(){
+                    return this.name;
+                }
+                // 增加下面的 info()方法, 实现GenderDesc接口必须实现的方法
+                public void info(){
+                    System.out.println("这是一个用于定义性别的枚举类");
+                }
+            }
+        例子2:
+            // 实现GenderDesc接口的类对与不同的枚举值调用不同的方法
+            public class Gender implements GenderDesc{
+                // 此处的枚举值必须调用对用的构造器来创建
+                MALE("男"){
+                    // 花括号这部分实际上是一个类体部分
+                    public void info(){
+                        System.out.println("这个枚举值代表男性");
+                    }
+                };
+                FEMALE("女"){
+                    public void info(){
+                        System.out.println("这个枚举值代表女性");
+                    }
+                },  // 这里记住是逗号 因为本质上还是枚举类的实例, 只是提供了info()方法
+                private final String name;
+
+                // 枚举类的构造器只能使用 private 修饰
+                private Gender(String name){
+                    this.name = name;
+                }
+                public String getName(){
+                    return this.name;
+                }
+            }
+            程序说明:
+                1. 当创建 MALE 和 FEMALE 两个枚举值时, 后面又紧跟了一对花括号, 这对花括号里面包含了一个 info()方法定义,
+                2. 花括号部分实际上就是一个类体部分, 这种情况下, 当创建 MALE, FEMALE枚举值时, 并不是直接创建Gender枚举
+                    类的实例, 而是相当于创建Gender的匿名子类的实例.
+                3. MALE 和 FEMALE 以及后面的花括号部分实际上是匿名内部类的类体部分, 所以这个部分的代码语法与前面学的匿名
+                    内部类语法大致相似, 只是它依然是枚举类的匿名内部子类
+    
+    9.5 包含抽象方法的枚举类
+        说明:
+            1. 枚举类里定义抽象方法时不能使用 abstract 关键字将枚举类定义成抽象类(因为系统自动会添加 abstract 关键字),
+                但因为枚举类需要显式创建枚举值, 而不是作为父类, 所以定义每个枚举值时必须为抽象方法提供实现, 否则将出现
+                编译错误
+
+        例子:
+            // Operation.java
+            public enum Operation{
+                PLUS{
+                    public double eval(double x, double y){
+                        return x + y;
+                    },
+                }
+                MINUS{
+                    public double eval(double x, double y){
+                        return x - y;
+                    }
+                },
+                TIMES{
+                    public double eval(double x, double y){
+                        return x * y;
+                    }
+                },
+                DIVIDE{
+                    public double eval(double x, double y){
+                        return x / y;
+                    }
+                };
                 
+                // 为枚举类定义一个抽象方法
+                // 这个抽象方法有不同的枚举值提供不同的实现
+                public abstract double eval(double x, double y);
+
+                public static void main(String[] args){
+                    System.out.println(Operation.PLUS.eval(3, 4));
+                    System.out.println(Operation.MINUS.eval(5, 4));
+                    System.out.println(Operation.TIMES.eval(5, 4));
+                    System.out.println(Operation.DIVIDE.eval(5, 4));
+                }
+            }
+
+
+10 对象与垃圾回收
+    垃圾回收机制的特征:
+        1. 垃圾回收机制只负责回收堆内存中的对象, 不会回收任何物理资源(例如:数据库连接, 网络IO等资源)
+        2. 程序无法精确控制垃圾回收的运行, 垃圾回收会在合适的时候运行, 当对象永久性地失去引用后, 系统就会在合适的时候
+            回收它所占的内存
+        3. 在垃圾回收机制回收任何变量之前, 总会先调用它的 finalize()方法, 该方法可能使该对象重新复活(让一个引用变量
+            重新引用该变量), 从而导致垃圾回收机制取消回收
+        4. 一个对象可以被一个方法的局部变量引用, 也可以被其他类的类变量引用, 或被其他对象的实例变量引用; 当某个对象被
+            其他类的类变量引用时, 只有该类被销毁后, 该对象才会进入可恢复状态; 当某个对象被其他对象的实例变量引用时, 
+            只有当该对象被销毁后, 该对象才会进入可恢复状态
+        
+    10.1 对象在内存中的状态
+        状态分类:
+            (当一个对象在堆内存中运行时, 根据它被引用变量所引用的状态分类:)
+            1. 可达状态: 当一个对象被创建后, 若有一个以上的引用变量引用它, 则这个对象在程序中处于可达状态, 程序可通过
+                引用变量来调用该对象的实例变量和方法
+            2. 可恢复状态: 如果程序中某个对象不再有任何引用变量引用它, 它就进入可恢复状态. 在这种状态下, 系统的垃圾回
+                收机制准备回收该对象占用的内存, 在回收该对象之前, 系统会调用所有可恢复状态对象的 finalize() 方法进行
+                资源清理. 否则该对象将进入不可达状态
+            3. 不可达状态: 当对象与所有引用变量的关联都被切断, 且系统已经调用所有对象的 finalize() 方法后依然没有使
+                该对象变成可达状态时, 系统才是真正回收该对象所占用的资源
+    
+    10.2 强制垃圾回收
+        强制系统垃圾回收的两种方式:
+            1. 调用 System 类的 gc() 静态方法: System.gc()
+            2. 调用 RUntime 对象的 gc() 实例方法: Runtime.getRuntime().gc()
+
+        例子:
+            public class GcTest{
+                public static void main(String[] args){
+                    for (int i = 0; i < 4; i++){
+                        new GcTest();
+                        // 下面两行代码的作用完全相同, 强制系统进行垃圾回收
+                        // System.gc();
+                        Runtime.getRuntime().gc();
+                    }
+                }
+                public void finalize(){
+                    System.out.println("系统正在清理GcTest对象资源...");
+                }
+            }    
+            程序说明:
+                1. 编译后, 使用 java -verbose:gc GcTest 命令运行程序
+                2. -verbose:gc 这条命令可以看到每次垃圾回收后的提示信息
+                3. 垃圾回收机制会在收到通知后, 尽快进行垃圾回收
+
+    10.3 finalize 方法
+        说明:
+            1. 在垃圾回收机制回收某个对象所占用的内存之前, 通常要求程序调用适当的方法来清理资源, 在没有明确指定清理资源的
+                情况下, java提供了默认机制来清理该对象的资源, 这个机制就是 finalize() 方法
+
+        finalize() 方法的特点:
+            1. 永远不要主动调用某个对象的 finalize()方法, 该方法应交给垃圾回收机制调用
+            2. finalize() 方法何时被调用, 是否被调用具有不确定性, 不要把 finalize()方法当成一定会被执行的方法
+            3. 当JVM执行可恢复对象的finalize()方法时, 可能使该对象或系统中其他对象重新变成可达状态
+            4. 当JVM执行 finalize()方法时出现异常时, 垃圾回收机制不会报告异常, 程序继续执行
+
+    10.4 对象的软, 弱和虚引用
+        1. 强引用 (StrongReference)
+            说明: 这是Java程序最常见的引用方式, 程序创建一个对象, 并把这个对象赋值给一个引用变量, 程序通过该引用变量来操作
+                实际对象, 前面学的对象和数组否都采用了这种枪饮用的方式
+        2. 软引用 (SoftReference)
+            说明: 软引用需要通过 SoftReference 类来实现, 当一个对象只有软引用时, 他有可能被垃圾回收机制回收.  对于只有
+            软饮用的对象而言, 当系统内存空间足够时, 它不会被系统回收, 程序也可使用该对象, 当系统内存空间不足时, 系统可能
+            会回收它. 软饮用通常用于对内存敏感的程序中
+        3. 弱引用 (WeakReference)
+            说明: 弱引用通过 WeakReference 类来实现, 弱引用和软引用很像, 但弱引用的引用级别更低. 对于只有弱引用的对象而
+            言, 当系统垃圾回收机制运行时, 不管系统内存是否足够, 总会回收该对象所占用的内存. 
+        4. 虚引用 (phantomReference)
+            说明: 虚引用通过 phantomReference 类来实现, 虚引用完全类似于没有引用, 虚引用对对象本身没有太大影响, 对象 
+            甚至但觉不到虚引用的存在
+        
+        说明:
+            1. 软引用 弱引用和虚引用都包含了一个 get() 方法, 用于获取被他们所引用的对象
+            2. 软引用 弱引用可以单独使用, 虚引用必须好引用队列(ReferenceQueue)联合使用才有意义
+
+
+11 修饰符的使用范围
+    1. 记住P233页的表
+    2. strictfp 关键字: 含义: FP-strict 也就是精确浮点的意思. strictfp修饰的类,接口或方法可以让浮点运算更加精确
+    3. native 关键字: 主要用于修饰一个方法, 使用native修饰的方法类似于一个抽象方法, 
