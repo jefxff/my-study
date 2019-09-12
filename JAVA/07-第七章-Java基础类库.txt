@@ -1,0 +1,514 @@
+1. 与用户互动
+1.1 使用Scanner获取键盘输入
+    说明:
+        1. Scanner类是一个基于正则表达式的文本扫描器, 可以从文件,输入流, 字符串中解析出基本类型值和字符串值
+        2. Scanner默认使用空白(包含空格, Tab空白, 回车)作为多个输入项之间的分隔符; 但是可为Scanner指定分割
+            符, 通过使用: useDelimiter(String prtten)方法指定, patten 参数是一个正则表达式
+        3. Scanner的读取操作可能被堵塞(当前执行顺序流暂停)来等待信息输入. 如果输入源没有结束, Scanner又读取
+            不到更多的输入项时(尤其在键盘输入时比较常见), Scanner 的 hasNext() 和 next() 方法都有可能阻塞, 
+            hasNext() 方法是否阻塞与气象馆的 next() 方法是否阻塞无关
+    
+    Scanner 两个扫描输入方法:(例子1)
+        1. hasNextXxx(): 是否还有下一个输入项, 其中Xxx可以是Int,Long等基本数据类型的字符串; 如果只是判断是
+            否包含下一项字符串, 则直接使用hasNext()
+        2. nextXxx(): 获取下一个输入项, Xxx的含义与前一个方法中Xxx相同
+
+    Scanner 逐行读取的方法:(例子2)
+        1. boolean hasNextLine(): 返回输入源中是否还有下一行
+        2. String nextLine(): 返回输入源中下一行的字符串
+    
+    例子1:
+        // ScannerKeyBoardTest.java 
+        // 获取到键盘标准输入, 然后将输入的内容输出到屏幕
+        import java.util.*;
+
+        public class ScannerKeyBoardTest {
+            public static void main(String[] args) {
+                // System.in 代表标准输入, 就是键盘输入
+                Scanner sc = new Scanner(System.in);
+                // 下面代码将只把回车作为换行符
+                sc.useDelimiter("\n");
+                // 判断是否还有下一个输入项
+                while (sc.hasNext()){
+                    System.out.println("Input is: " + sc.next());
+                }
+                sc.close();
+            }
+        }
+    
+    例子2:
+        import java.io.File;
+        import java.util.*;
+
+        public class ScannerFileTest{
+            public static void main(String[] args) throws Exception {
+                // 将一个File对象作为Scanner的构造器的参数, Scanner读取到文件内容
+                Scanner sc = new Scanner(new File(
+                    "C:\\Users\\Administrator\\Desktop\\studyfile\\java\\src\\chapter06\\
+                    ScannerKeyBoardTest.java"));
+                System.out.println("扫描到的文件内容如下: ");
+                // 判断是否还有下一行
+                while (sc.hasNextLine()){
+                    // 输出文件中的下一行
+                    System.out.println(sc.nextLine());
+                }
+                sc.close();
+            }
+        }
+
+
+2. 系统相关
+2.1 System 类
+    说明:
+        1. System类代表当前Java程序的运行平台, 程序不能创建System的对象, System类提供了一些类变量和类方法, 
+            允许直接通过System类来调用这些类变量和类方法
+        2. System 类提供了代表标准输入, 标准输出和错误输出的类变量, 并提供了一些静态方法用于访问环境变量, 系
+            统变量的方法, 还提供了加载文件和动态链接库的方法, 加载文件和动态连接库主要对 native 方法有用, 对
+            于一些特殊的功能(如访问操作系统底层硬件设备等)Java无法实现, 必须借助C语言来完成 (例子1)
+        3. System类的 in, out和err分别代表系统的标准输入(通常是键盘), 标准输出(通常是显示器)和错误输出流,
+            还有 setIn(), setOut()和setErr()方法来改变系统的标准输入, 标准输出和标准错误流输出
+        4. System类提供 gc() 方法进行垃圾回收, runFinalization() 方法进行资源清理
+    
+    
+    例子1:
+        import java.io.FileOutputStream;
+        import java.util.Map;
+        import java.util.Properties;
+
+        public class SystemTest {
+            public static void main(String[] args) throws Exception {
+                // 获取系统所有的环境变量
+                Map<String, String> env = System.getenv();
+                for (String name : env.keySet()){
+                    System.out.println(name + "--->" + env.get(name));
+                }
+                // 获取指定环境变量的值
+                System.out.println(System.getenv("JAVA_HOME"));
+                // 获取所有系统属性
+                Properties props = System.getProperties();
+                // 将所有的系统属性保存到 prop.txt文件中
+                props.store(new FileOutputStream("props.txt"), "System Properties");
+                // 输出特定的系统属性
+                System.out.println(System.getProperty("os.name"));
+            }
+        }
+
+    identifyHashCode(object x) 方法:
+        1. 该方法返回对象的精确hashCode值, 也就是根据该对象的地址计算得到的 hashCode 值, 
+        2. 当某个类的hashCode()方法被重写后, 该类实例的 hashCode()方法就不能唯一标识该对象; 但通过
+            identifyHashCode()方法返回的hashCode 值, 依然是根据该对象的地址计算得到的 hashCode 值
+        3. 如果两个对象的 identifyHashCode 值相同, 则两个对象绝对是同一个对象
+
+    例子:
+        public class IdentifyHashCodeTest{
+            public static void main(String[] args){
+                // 下面程序中 s1 和 s2 是两个不同的对象
+                String s1 = new String("Hello");
+                String s2 = new String("Hello");
+                // String 重写了 hashCode()方法---改为根据字符串序列计算hashCode值
+                // 因为 s1 和 s2 的字符序列相同, 所以他们的hashCode()方法返回值相同
+                System.out.println(s1.hashCode() + "----" + s2.hashCode());
+                // s1 和 s2 是不同的字符串对象, 所以他们的 IdentifyHashCode 值不同
+                System.out.println(System.identifyHashCode(s1) + "---"
+                     + System.identifyHashCode(s2));
+                String s3 = "java";
+                String s4 = "java";
+                // s3 和 s4 是相同的字符串对象, 所以他们的 identifyHashCode值相同
+                System.out.println(System.identifyHashCode(s3) + "---"
+                     + System.identifyHashCode(s4));
+            }
+        }
+
+
+2.2 Runtime 类  
+    说明:
+        1. Runtime类代表了Java程序的运行时环境, 每个Java程序都有一个与之对应的Runtime实例, 应用程序通过该
+            对象与其运行时环境相连, 应用程序不能创建自己的Runtime实例,但可通过 getRuntime()方法获取与之关
+            联的 Runtime 对象
+        2. Runtime 类 也提供 gc() 方法进行垃圾回收, runFinalization() 方法进行资源清理; 并提供了
+            load(String filename) 和 loadLibrary(String libname) 方法来加载文件和动态连接库
+        3. Runtime 类代表了Java程序的运行时环境, 可以访问JVM的相关信息(例子1)
+        4. Runtime 提供了一系列 exex()方法来运行操作系统命令(例子2)
+
+    例子1:
+        // RuntimeTest.java
+        // 获取JVM运行时环境
+        public class RuntimeTest{
+            public static void main(String[] args) {
+                // 获取Java程序关联的运行时对象
+                Runtime rt = Runtime.getRuntime();
+                System.out.println("处理器数量: " + rt.availableProcessors());
+                System.out.println("空闲内存数: " + rt.freeMemory());
+                System.out.println("总内存数: " + rt.totalMemory());
+                System.out.println("可用最大内存数: " + rt.maxMemory());
+            }
+        }
+    例子2:
+        // ExecTest.java
+        // 通过Java程序调用Runtime类的 getRuntime方法获取关联的Runtime对象, 调用 exec()方法运行记事本
+        public class ExecTest{
+            public static void main(String[] args) throws Exception{
+                Runtime rt = Runtime.getRuntime();
+                // 运行记事本程序
+                rt.exec("notepad.exe");
+            }
+        }
+
+3. 常用类
+3.1 Object类
+    说明: 
+        1. Object 类是所有类, 数组, 枚举类(继承Enum类, Enum类又继承Object类)的父类, 即Java允许把任何类型
+            的对象赋给 Object类型的变量; 所以任何Java对象都可以调用 Object类的方法
+
+    Object类的常用方法:
+        1. boolean equals(Object obj)
+            说明:
+                1. 判断指定对象与该对象是否相等;(此处的相等标准是: 两个对象是同一个对象)
+
+        2. protected void finalize()
+            说明:
+                1. 当系统中没有引用变量引用到该对象时, 垃圾回收器调用此方法来清理对象的资源
+
+        3. Class<?> getClass()
+            说明:
+                1. 返回该对象的运行时类
+
+        4. int hashCode()
+            说明:
+                1. 返回该对象的hashCode值, 在默认情况下, Object类的hashCode()方法根据该对象的地址计算
+                    (即与System.identifyHashCode(Object x)方法计算的结果相同),但很多类重写了hashCode方法
+                
+        5. String toString()
+            说明:
+                1. 这个方法前一章学过了, toString()方法返回该对象的字符串表示
+
+        6. wait() notify() notifyAll() 
+            说明:
+                1. 这几个方法可以控制县城的暂停和运行
+
+
+3.2 Java7 新增的 Objects类
+    说明:
+        1. Objects类是一个工具类, 它提供了一些工具方法来操作对象, 这些工具方法大多数"空指针"安全的(例子1)
+
+    例子1:
+        public class ObjectsTest{
+            // 定义一个ojb变量, 它的默认值是null
+            Static ObjectsTest obj;
+            public static void main(String[] args){
+                // 输出一个null对象的hashCode值, 输出0
+                System.out.println(Objects.hashCode(obj));
+                // 输出一个null对象的toString, 输出 null
+                System.out.println(Objects.toString(obj));
+                // 要求 obj 不能为 null, 如果obj为null则引发异常
+                 System.out.println(Objects.requireNonNull(obj));
+            }
+        }
+        程序说明:
+            1. Objects提供的requireNonNull()方法, 当传入的参数不为null时, 该方法返回参数本身; 否则将会引
+                发, NullPointerException 异常, 该方法主要用来对方法形参进行输入校验, 如例子2
+        例子2:
+            public Foo(Bar bar){
+                // 校验 bar 参数, 如果 bar 参数为null将会引发异常, 否则this.bar被赋值为bar参数
+                this.bar = Objects.requireNonNull(bar);
+            }
+
+3.3 String, StringBuffer 和 StringBuilder 类
+    String 类 
+        1. String 类是不可变类, 即一旦一个String对象被创建以后, 包含在这个对象中的字符序列是不可改变的, 直
+            至这个对象被销毁
+
+        2. String()
+            说明: 创建一个包含0个字符串序列的String对象(并不是返回null)
+
+        3. String(byte[] bytes, Charset charset)
+            说明: 使用指定的字符集将指定的byte[]数组解码成一个新的String对象
+
+        4. String(byte[] bytes, int offset, int length)
+            说明: 使用平台的默认字符集将指定的 byte[] 数组从 offset开始, 长度为length的子数组解码成一个新
+                的String对象
+
+        5. String(byte[] bytes, int offset, String charsetName)
+            说明: 使用指定的字符集将指定的byte[] 数组从 offset 开始, 长度为length 的子数组解码成一个新的
+                的String对象
+        
+        6. String(byte[] bytes, String charsetName)
+            说明: 使用指定的字符集将指定的byte[]数组解码成一个新的String对象
+
+        7. String(char[] value, int offset, int count)
+            说明: 将指定的字符数字从offset开始, 长度为count的字符元素连缀成字符串
+
+        8. String(String original)
+            说明: 根据字符串直接量来创建一个String对象, 也就是说, 新创建的String对象是该参数字符串的副本 
+
+        9. String(StringBuffer buffer)
+            说明: 根据StringBuffer对象来创建对应的String对象
+
+        10. String(StringBuilder builder)
+            说明: 根据StringBuilder 对象里创建对应的String对象
+
+    String类操作字符串对象的方法:
+        1. char charAt(int index)
+            说明: 获取字符串中指定位置的字符, 其中index指的是字符串的序数(序数从0开始到length()-1)
+
+        2. int compareTo(String anotherString)
+            说明: 比较两个字符串的大小, 如果两个字符串的字符序列相等, 则返回0; 不相等时, 从两个字符串第0个
+                字符开始比较, 返回第一个不相等的字符差; 另一种情况, 较长字符串的前面部分恰巧是较短的字符串,
+                则返回他们的长度差
+
+        3. String concat(String str)
+            说明: 将该String对象与str连接一起, 与Java提供的字符串连接运算符"+"的功能相同
+
+        4. boolean contentEquals(StringNuffer sb)
+            说明: 将该String对象与Stringbuffer 对象sb进行比较, 当它们包含的字符序列相同时返回true
+
+        5. 等等等等 记住书上P250-P251页的内容
+
+    StringBuffer 类 
+        1. StringBuffer 对象则代表一个字符序列可变的字符串, 当一个StringBuffer被创建以后, 通过StringBuffer
+            提供的 append(), insert(), reverse(), setCharAt(), setLength()等方法可以改变这个字符串对象
+            的字符序列,
+        2. 一旦通过StringBuffer生成了最终想要的字符串, 就可以调用它的toString()方法将其转换为一个String类
+            型的对象
+
+
+    StringBuilder 类
+        1. StringBuilder类也代表字符串对象, 构造器和方法和StringBuffer类似, 区别是: StringBuffer是线程
+            安全的, 而StringBuilder 则没有实现线程安全功能, 所以性能略高
+        2. 通常情况下, 如果需要创建一个内容可变的字符串对象, 则应该优先考虑使用StringBuilder类
+        3. String, StringBuffer, StringBuilder 都实现了 CharSequence接口, 因此CharSequence可认为是一个
+            字符串的协议接口 
+        4. StringBuilder, StringBuffer 有两个属性: length和capacity, 其中length属性表示其包含的字符序列
+            的长度, 与String对象的length不同的是, Stringbuffer, StringBuilder 的length是可以改变的, 可
+            以通过 length(), setLength(int len)方法来访问和修改其字符串序列的长度; capacity属性表示
+            StringBuilder 的容量, capacity 通过比length 大, 了解了解把
+
+    例子:
+    // StringBuilderTest.java 
+        public class StringBuilderTest {
+            public static void main(String[] args) {
+
+                StringBuilder sb = new StringBuilder();
+                // 追加字符串
+                sb.append("java"); // sb = "java"
+                System.out.println(sb);
+                // 插入
+                sb.insert(0, "hello ");  // sb = "hello java"
+                System.out.println(sb);
+                // 替换
+                sb.replace(5, 6, ",");   // sb = "hello,java"
+                System.out.println(sb);
+                // 删除
+                sb.delete(5, 6);  // sb = "hellojava"
+                System.out.println(sb);
+                // 反转
+                sb.reverse();  // sb = "avajolleh"
+                // 再反转回来
+                sb.reverse();
+                System.out.println(sb);
+                System.out.println(sb.length());  // 输出9
+                System.out.println(sb.capacity());  // 输出16
+                // 改变StringBuilder的长度, 将只保留前面部分
+                sb.setLength(5);
+                System.out.println(sb);
+            }
+        }  
+    
+3.4 Math 类 
+    说明: 
+        1. 通过例子来了解Math提供的方法
+        2. Java提供了Math工具类来完成这些复杂的运算, Math类是一个工具类, 他的构造器是private访问权限, 因此
+            无法创建Math类的对象,Math类的所有方法都是类方法, 可以直接通过类名(Math)来调用他们
+        3. Math类还有两个类变量: PI和E 他们的值等于π和e
+
+    例子:
+       // MathTest.java
+       public class MathTest{
+            public static void main(String[] args) {
+                /*--------下面是三角运算------*/
+                // 将弧度转换为角度
+                System.out.println("Math.toDegrees(1.57): " + Math.toDegrees(1.57));
+                // 将角度转换为弧度
+                System.out.println("Math.toRadians(90): " + Math.toRadians(90));
+                // 计算反余弦, 返回的角度范围在0.0 到 pi 之间
+                System.out.println("Math.acos(1.2): " + Math.acos(1.2));
+                // 计算反正弦, 返回的角度范围在 -pi/2 到 pi/2 之间
+                System.out.println("Math.asin(0.8): " + Math.asin(0.8));
+                // 计算反正切, 返回的角度范围在 -pi/2 到 pi/2 之间
+                System.out.println("Math.atan(2.3): " + Math.atan(2.3));
+                // 计算三角余弦
+                System.out.println("Math.cos(1.57): " + Math.cos(1.57));
+                // 计算双曲余弦
+                System.out.println("Math.cosh(1.2): " + Math.cosh(1.2));
+                // 计算正弦
+                System.out.println("Math.sin(1.2): " + Math.sin(1.2));
+                // 计算双曲正弦
+                System.out.println("Math.sinh(0.8): " + Math.sinh(0.8));
+                // 计算三角正切
+                System.out.println("Math.tan(0.8): " + Math.tan(0.8));
+                // 计算双曲正切
+                System.out.println("Math.tanh(2.1): " + Math.tanh(2.1));
+                // 将矩形坐标(x, y)转换成极坐标(r, thet)
+                System.out.println("Math.atan2(0.1, 0.2): " + Math.atan2(0.1, 0.2));
+
+                /*--------下面是取整运算------*/
+                // 取整, 返回小于目标数的最大整数
+                System.out.println("Math.floor(1.2): " + Math.floor(1.2));
+                // 取整, 返回大于目标数的最小整数
+                System.out.println("Math.ceil(1.2): " + Math.ceil(1.2));
+                // 四舍五入取整
+                System.out.println("Math.round(2.3): " + Math.round(2.3));
+
+                /*--------下面是乘方, 开方,指数运算------*/
+                // 计算平方根
+                System.out.println("Math.sqrt(2.3): " + Math.sqrt(2.3));
+                // 计算立方根
+                System.out.println("Math.cbrt(9): " + Math.cbrt(9));
+                // 返回欧拉数 e 的 n 次幂
+                System.out.println("Math.exp(2): " + Math.exp(2));
+                // 返回sqrt(x2 + y2), 没有中间溢出或下溢
+                System.out.println("Math.hypot(4, 4): " + Math.hypot(4, 4));
+                // 按照IEEE 754标准的规定, 对两个参数进行余数运算
+                System.out.println("Math.IEEEremainder(5, 2): " + Math.IEEEremainder(5, 2));
+                // 计算乘方
+                System.out.println("Math.pow(3, 2): " + Math.pow(3, 2));
+                // 计算自然对数
+                System.out.print("Math.log(12): " + Math.log(12));
+                // 计算底数为10的对数
+                System.out.print("Math.log10(12): " + Math.log10(12));
+                // 返回参数与1之和的自然对数
+                System.out.print("Math.log1p(12): " + Math.log1p(12));
+
+                /*--------下面是符号相关的运算------*/
+                // 计算绝对值
+                System.out.println("Math.abs(-4.5): " + Math.abs(-4.5));
+                // 符号赋值, 返回带有第二个浮点数符号的第一个浮点参数
+                System.out.println("Math.copySign(1.2, -1.0): " + Math.copySign(1.2, -1.0));
+                // 符号函数, 如果参数为0, 则返回0, 如果参数大于0
+                // 则返回1.0; 如果参数小数0, 则返回-1.0
+                System.out.println("Math.signum(2.3): " + Math.signum(2.3));
+
+                /*--------下面是大小相关的运算------*/
+                // 找出最大值
+                System.out.println("Math.max(2.3, 4.5): "+ Math.max(2.3, 4.5));
+                // 计算最小值
+                System.out.println("Math.min(2.3, 4.5): "+ Math.min(2.3, 4.5));
+                // 返回第一个参数和第二个参数之间与第一个参数相邻的浮点数
+                System.out.println("Math.nextAfter(1.2, 1.0): "+ Math.nextAfter(1.2, 1.0));
+                // 返回比目标数略大的浮点数
+                System.out.println("Math.nextUp(1.2): " + Math.nextUp(1.2));
+                // 返回一个伪随机数, 该值大于等于0.0 且小于 1.0 
+                System.out.println("Math.random(): " + Math.random());
+                System.out.println("Math.PI : " + Math.PI);
+                System.out.println("Math.E : " + Math.E);
+            }
+        } 
+
+3.5 Java7 的 ThreadLocalRandon 和 Random 
+    说明: 
+        1. Random类专门用于生成一个伪随机数, 他有两个构造器: 一个构造器使用默认的种子(以当前时间作为种子), 
+            另一个构造器需要程序员显式传入一个long型整数的种子
+        2. ThreadLocalRandon 是Java7新增的, 是Random的增强版; 在并发访问的环境下, 使用ThreadLocalRandon
+            来代替Random可以减少多线程资源的竞争, 最终保证系统具有更好的线程安全性
+        3. ThreadLocalRandon 类用法类似与Random, 提供一个静态的 current()方法来获取ThreadLocalRandon对
+            象, 获取该对象之后即可调用各种nextXxx()方法来获取伪随机数
+        4. Random产生的数字并不是真正随机的, 而是一种伪随机, 可能产生两个Random对象产生相同的数字序列, 通常
+            通过使用当前时间作为Random对象的种子, 如: 
+            Random rand = new Random(System.currentTimeMillis());    
+        5. ThreadLocalRandon 与 Random 都比Math类提供的Random()方法提供更多的方式来生成各种伪随机数, 可以
+            生成浮点数类型的伪随机数, 也可以生成整数类型的伪随机数, 还可以指定生成随机数的范围
+
+    例子1:
+        // 生成伪随机数的demo
+        // RandomTest.java
+        import java.util.Arrays;
+        import java.util.Random;
+
+        public class RandomTest {
+            public static void main(String[] args) {
+                Random rand = new Random();
+                System.out.println("rand.nextBoolean(): " + rand.nextBoolean());
+                byte[] buffer = new byte[16];
+                rand.nextBytes(buffer);
+                System.out.println(Arrays.toString(buffer));
+                // 生成 0.0~1.0之间的伪随机double数
+                System.out.println("rand.nextDouble(): " + rand.nextDouble());
+                // 生成 0.0~1.0之间的伪随机float数
+                System.out.println("rand.nextFloat(): " + rand.nextFloat());
+                // 生成平均值是0.0, 标准差是1.0的伪高斯数
+                System.out.println("rand.nextGaussian(): " + rand.nextGaussian());
+                // 生成一个处于int整形取值范围的伪随机数
+                System.out.println("rand.nextInt(): " + rand.nextInt());
+                // 生成一个0~26之间的伪随机整数
+                System.out.println("rand.nextInt(26): " + rand.nextInt(26));
+                // 生成一个处于long整数取值范围的伪随机整数
+                System.out.println("rand.nextLong(): " + rand.nextLong());
+            }
+        }
+    例子2:
+        // ThreadLocalRandon 生成伪随机的用法
+        ThreadLocalRandon rand = new ThreadLocalRandon.current();
+        // 生成一个4-20之间的伪随机整数
+        int val1 = rand.nextInt(4, 20);
+        // 生成一个2.0-10.0之间的伪随机浮点数
+        int val2 = rand.nextDouble(2.0, 10.0);
+
+
+3.6 BigDecimal 类
+    说明:
+        1. float, double两种基本浮点数容易引起精度丢失, 尤其在进行算术运算时更容易发生(例子1)
+        2. BigDecimal 类提供了大量构造器用于创建BigDecimal对象, 包括把所有的基本数值型变量转换成一个 
+            BigDecimal对象, 也包括利用数字字符串, 数字字符数组来创建BigDecimal对象
+        3. BigDecimal 类不推荐使用BigDecimal(double val);因为使用该构造器时有一定的不可预知性
+        4. 使用 BigDecimal(String val) 构造器的结果是可预知的, 写入一个 new BigDecimal("0.1")将创建一个
+            BigDecimal, 它正好等于预期的 0.1; 所以优先使用基于String的构造器
+        5. 如果必须使用double浮点数作为BigDecimal构造器的参数, 不要直接将该double浮点数作为构造器的参数来
+            创建BigDecimal对象, 而是通过 BigDecimal.valueOf(double value)静态方法来创建BigDecimal对象
+        6. BigDecimal类提供了add(), subtract(), multiply(), pow()等方法对精确浮点数进行常规算术运算(例2)
+
+    例子1:
+        // DoubleTest.java 
+        public class DoubleTest{
+            public static void main(String[] args){
+                System.out.println("0.05 + 0.01 = " + (0.05 + 0.01));
+                System.out.println("1.0 - 0.42 = " + (1.0 - 0.42));
+                System.out.println("4.015 * 100 = " + (4.015 * 100));
+                System.out.println("123.3 / 100 = " + (123.3 / 100));
+            }
+        }
+    例子2:
+        // BigDecimalTest.java
+        import java.math.BigDecimal;
+
+        public class BigDecimalTest {
+            public static void main(String[] args) {
+                BigDecimal f1 = new BigDecimal("0.05");
+                BigDecimal f2 = BigDecimal.valueOf(0.01);
+                BigDecimal f3 = new BigDecimal(0.05);
+                System.out.println("使用String作为BigDecimal构造器参数:");
+                System.out.println("0.05 + 0.01 = " + f1.add(f2));
+                System.out.println("0.05 - 0.01 = " + f1.subtract(f2));
+                System.out.println("0.05 * 0.01 = " + f1.multiply(f2));
+                System.out.println("0.05 / 0.01 = " + f1.divide(f2));
+                System.out.println("使用double作为BigDecimal构造器参数:");
+                System.out.println("0.05 + 0.01 = " + f3.add(f2));
+                System.out.println("0.05 - 0.01 = " + f3.subtract(f2));
+                System.out.println("0.05 * 0.01 = " + f3.multiply(f2));
+                System.out.println("0.05 / 0.01 = " + f3.divide(f2));
+            }
+        }
+        输出:
+            使用String作为BigDecimal构造器参数:
+            0.05 + 0.01 = 0.06
+            0.05 - 0.01 = 0.04
+            0.05 * 0.01 = 0.0005
+            0.05 / 0.01 = 5
+            使用double作为BigDecimal构造器参数:
+            0.05 + 0.01 = 0.06000000000000000277555756156289135105907917022705078125
+            0.05 - 0.01 = 0.04000000000000000277555756156289135105907917022705078125
+            0.05 * 0.01 = 0.0005000000000000000277555756156289135105907917022705078125
+            0.05 / 0.01 = 5.000000000000000277555756156289135105907917022705078125
+        说明:
+            1. 从运行结果看出BigDecimal进行算数运算时, 一定要使用String对象作为构造器的参数, 而不是直接使用
+                double类型的数字
+                
