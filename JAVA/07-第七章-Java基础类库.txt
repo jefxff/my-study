@@ -1022,3 +1022,114 @@
                 说明: 返回整个目标字符串与Pattern是否匹配
             7. reset()
                 说明: 将现有的 Matcher 对象应用于一个新的字符序列
+
+        例子1:
+            // 最经典的正则表达式调用顺序
+            // 将一个字符串编译成 Patern 对象, 这个 Pattern 对象可以重复使用
+            Pattern p = Pattern.compile("a*b");
+            // 使用 Pattern 对象创建 Matcher 对象
+            Matcher m = p.matcher("aaaaaab");
+            boolean b = m.matches();  // out: true
+            // 如果不需要重复使用, 即这个正则表达式只使用一次, 可使用Pattern类的静态方法matches()
+            boolean b = Pattern.matches("a*b", "aaaaab");  // out: true 
+        
+
+        例子2:
+            // FindGroup.java
+            // 从大段的字符串中找出电话号码
+            import java.util.regex.Matcher;
+            import java.util.regex.Pattern;
+
+            public class FindGroup{
+
+                public static void main(String[] args) {
+                    // 使用字符串模拟从网路上得到的网页源码
+                    String str = "我想求购一本<疯狂 Java 讲义>, 尽快联系我 12345678912" 
+                        + "交朋友, 电话号码: 12934568715"
+                        + "出售二手电脑, 电话号码: 12456783324";
+                    // 创建一个 Pattern 对象, 并用它建立一个Matcher对象
+                    // 该正则表达式中抓取12开头的手机号码
+                    // 可根据需求改变匹配规则
+                    Matcher m = Pattern.compile("12\\d{9}").matcher(str);
+                    while (m.find()){
+                        System.out.println(m.group());
+                    }
+                }
+            }
+        
+        例子3:
+            // StartaEnd.java
+            // start() 和 end() 方法确定字串在目标字符串中出现的位置
+            import java.util.regex.Matcher;
+            import java.util.regex.Pattern;
+
+            public class StartEnd{
+                public static void main(String[] args) {
+                    // 创建一个 Pattern 对象, 并用它建立一个 Matcher 对象
+                    String regStr = "Java is very easy! I think Not";
+                    System.out.println("目标字符串是: " + regStr);
+                    Matcher m = Pattern.compile("\\w+").matcher(regStr);
+                    while(m.find()){
+                        System.out.println(m.group() + " 字串的起始位置: " 
+                            + m.start() + ";  字串的结束位置: " + m.end() 
+                            + "; 字符长度为:" + (m.end() - m.start()));
+                    }
+                }
+            }
+
+        例子4:
+            // MatchesTest.java
+            // matches() 和 lookingAt() 方法有点类似, 只是 matches() 方法要求整个字符串和Pattern完全匹配
+            // 时才返回true, 而 lookingAt() 只要字符串以 pattern 开头就会返回 true
+            // reset()方法可将现有的Matcher对象应用于新的字符序列
+            public class MatchesTest{
+                public static void main(String[] args) {
+                    String[] mails = {
+                        "kongeni@163.com",
+                        "jefxff@outlook.com",
+                        "jerry@gmail.com",
+                        "waaw@abc.xx",
+                        "aaa@wwwwwwww.gov"
+                    };
+                    String mailRegEx = "\\w{2,8}@\\w{2,5}\\.(com|xx|gov)";
+                    Pattern mailPattern = Pattern.compile(mailRegEx);
+                    Matcher matcher = null;
+                    for(String mail : mails){
+                        if(matcher == null){
+                            matcher = mailPattern.matcher(mail);
+                        }
+                        else{
+                            matcher.reset(mail);
+                        }
+                        String result = mail + (matcher.matches() ? " 是" : " 不是") 
+                            + "一个有效的地址!";
+                        System.out.println(result);
+                    }
+                }
+            }
+        例子5:
+            // ReplaceTest.java
+            // 利用正则表达式对目标字符串进行分割, 查找, 替换等操作
+            import java.util.regex.Matcher;
+            import java.util.regex.Pattern;
+
+            public class ReplaceTest {
+                public static void main(String[] args) {
+                    String[] msgs = {
+                        "java has regular expressions in 1.4",
+                        "regular expressions noe expressing in java",
+                        "java represses oracular expressions"
+                    };
+                    Pattern p = Pattern.compile("re\\w*");
+                    Matcher matcher = null;
+                    for (int i = 0; i < msgs.length; i++){
+                        if (matcher == null){
+                            matcher = p.matcher(msgs[i]);
+                        }
+                        else{
+                            matcher.reset(msgs[i]);
+                        }
+                        System.out.println(matcher.replaceAll("哈哈"));
+                    }
+                }
+            }
