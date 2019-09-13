@@ -572,4 +572,453 @@
                 System.out.println("123.3 / 100 = " + Arith.div(123.3, 100));
                 System.out.println("123.3 / 99 = " + Arith.div(123.3, 99));
             }
-        }        
+        }  
+
+
+4. Java 8 的日期, 时间类
+    4.1 Date 类(了解, Java官网都不推荐使用)
+        说明:
+            1. Date类的大部分构造器, 方法都已经过时, 了解剩下的能用的两个
+        
+        剩下的两个构造器:
+            1. Date()
+                说明: 生成一个代表当前日期时间的Date对象, 该构造器在底层调用System.cunnentTimeMillis()获
+                    得 long 整数作为日期参数
+            2. Date(long date)
+                说明: 根据指定的long型整数来生成一个Date对象; 该构造器的参数表示创建的Date对象和 GMT 1970
+                    年1月1日00:00:00之间的时间差, 以毫秒作为计时单位
+
+        Date对象的方法:
+            1. Boolean after(Date when)
+                说明: 测试该日期是否在指定日期when之后
+            2. boolean before(Date when)
+                说明: 测试该日期是否在指定日期when之前
+            3. long getTime()
+                说明: 返回long型整数, 即从 GMT 1970年1月1日00:00:00之间的时间差, 以毫秒作为计时单位
+            4. void setTime(long time)
+                说明: 设置该Date对象的时间
+
+    4.2 Calendar 类
+        说明: 
+            1. Calendar 类是一个抽象类, 更好地处理日期和时间
+            2. 因为是一个抽象类, 所以不能使用构造器来创建 Calendar 对象, 但是可通过 getInstance()方法来获
+                取 Calendar 对象, 
+            3. Calendar 与 Date 都是表示日期的工具类, 他们之间可以自由转换
+
+        Calendar 类常用方法:
+            1. void add(int field, int amount)
+                说明: 根据日历的规则, 为给定的日历字段添加或减去指定的时间量
+            2. int get(int field)
+                说明: 返回指定日历字段的值
+            3. int getActualMaximum(int field)
+                说明: 返回指定日历字段可能拥有的最大值, 月最大值为11
+            4. int getActualMinimum(int field)
+                说明: 返回指定日历字段可能拥有的最小值, 月最小值为0
+            5. void roll(int field, int amount)
+                说明: 与 add()方法类似, 区别在于加上amount后超过了该字段所能表示的最大范围时, 也不会向上
+                    一个字段进位 
+            6. void set(int field, int value)
+                说明: 将给定的日历字段设置为给定值
+            7. void set(int year, int month, int date)
+                说明: 设置 Calendar 对象的年, 月, 日三个字段值
+            8. void set(int year, int month, int date, int hourOfDay, int minute, int second)
+                说明: 设置 Calendar 对象的年, 月, 日, 时, 分, 秒6个字段值
+            注意:
+                1. 上面的很多方法都需要一个int类型的field参数, field是Calendar类的类变量,如Calendar.YEAR 
+                    Calendar.MONTH 等分别代表了年月日小时分钟秒等时间字段
+                2. Calendar.MONTH 的字段是从0开始的
+
+        例子1:
+            public calss CalendarTest{
+                public static void main(String[] args){
+                    Calendar c = Calendar.getInstance();
+                    // 取出年
+                    System.out.println(c.get(YEAR));
+                    // 取出月份
+                    System.out.println(c.get(MONTH));
+                    // 取出日
+                    System.out.println(c.get(DATE));
+                    // 分别设置年, 月, 日, 时, 分, 秒 
+                    c.set(2020, 09, 07, 20, 00, 00);
+                    System.out.println(c.getTime());
+                    // 将Calendar 的年前推一年
+                    c.add(YEAR, -1);
+                    System.out.println(c.getTime());
+                    // 将Calendar的月份前推8个月
+                    c.roll(MONTH, -8);
+                    System.out.println(c.getTime());
+                }
+            }        
+
+        add() 和 roll() 方法的区别:
+            说明:
+                1. add(int field, int amount)的功能非常强大, add 主要的用于改变 Calendar的特定字段的值, 
+                    如果需要增加某字段值, 则让amount为正数, 如果需要减少某字段的值, 则让amount为附负数即可
+                2. 当被修改的字段超出允许的范围时, 会发生进位, 即上一级字段也会增大(例子1)
+                3. 如果下一级字段也需要改变, 那么该字段会修正到变化最小的值(例子2)
+                4. roll()的规则与add()的处理规则不同: 当被修改的字段超出它允许的范围时, 上一级字段不会增大(
+                    例子3)
+                5. 下一级字段的处理规则与add()相似(例子4)
+            例子1:
+                Calendar cal1 = Calendar.getInstance();
+                cal1.set(2003, 7, 23, 0, 0, 0);  // 2003-8-23
+                cal1.add(MONTH, 6);   // 2003-2-23
+            例子2:
+                Calendar cal2 = Calendar.getInstance();
+                cal2.set(2003, 7, 31, 0, 0, 0);  // 2003-8-31
+                // 因为进位后月份改为2月, 2月没有31日, 自动变成29日
+                cal2.add(MONTH, 6);   // 2003-8-21 => 2004-2-29
+            例子3:
+                Calendar cal3 = Calendar.getInstance();
+                cal3.set(2003, 7, 23, 0, 0, 0);  // 2003-8-23
+                // MONTH 字段 "进位", 但YEAR字段并没有增加
+                cal3.roll(MONTH, 6); // 2003-8-23 => 2003-2-23
+            例子4:
+                Calendar cal4 = Calendar.getInstance();
+                cal4.set(2003, 7, 31, 0, 0, 0);  // 2003-8-31
+                // MONTH 字段 "进位"后变成2, 2月没有31日
+                // YEAR 字段不会改变, 2003年的2月份只有28天
+                cal4.roll(MONTH, 6);  // 2003-8-31 => 2003-2-28
+
+        设置 Calendar 的容错性
+            说明: 
+                1. 因为 Calendar 对象的 set() 方法来改变指定时间字段的值时, 有可能传入一个不合法的参数, 
+                    所以需要通过容错性来指定是否检查输入的值符合规定
+                2. Calendar 通过setLenient()方法来设置它的容错性, Calendar 默认支持较好的容错性, 可通过
+                    setLenient(false) 关闭 Calendar 的容错性, 让它进行更严格的参数检查
+                3. Calendar 由两种解释日历字段的模式: lenient 模式和 non_lenient 模式:
+                    lenient 模式时每个时间字段可接受超出它允许范围的值;
+                    non_lenient 模式时如果为某个时间字段设置的值超出程序允许范围时, 程序将抛出异常
+
+            例子:
+                public class LenientTest{
+                    public static void main(String[] args){
+                        Calendar cal = Calendar.getInstance();
+                        // 结果是 YEAR 字段加1, MONTH字段为1(2月)
+                        cal.set(MONTH, 13); 
+                        System.out.println(cal.getTime());
+                        // 关闭容错性
+                        cal.setLenient(false);
+                        // 导致运行时异常, 因为关闭容错性, 执行更严格的时间参数检查
+                        cal.set(MONTH, 13); 
+                        System.out.println(cal.getTime());
+                    }
+                }   
+
+        set()方法的延迟修改:
+            说明:
+                1. 含义: set(f, value)方法将日历字段f更改为value, 此外他还设置了一个内部成员变量, 以指示
+                    日历字段f已经被更改; 尽管日历字段f是立即更改的, 但该Calendar所代表的时间却不会立即修改
+                    直到下次调用get(), getTime(), getTimeMillis(), add()或roll()时才会重新计算日历时间,
+                    这被称之为 set()方法的延迟修改 
+                    即: 调用 set(f, value) 方法后不会立即修改, 直到调用获取时间的方法时才修改
+                2. 优势: 延迟修改的优势是多次调用set()不会触发多次不必要的计算(需要计算出一个代表实际时间的
+                    long型整数) 
+            例子:
+                ublic class LazyTest{
+                    public static void main(String[] args){
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(2003, 7, 31);  // 2003-8-31
+                        // 将月份设置为9, 但9月31不存在
+                        // 如果立即修改, 系统将会把cal自动调整为10月1日
+                        cal.set(MONTH, 8);
+                        // 下面的代码输出10月1日
+                        System.out.prntln(cal.getTime());    // ①
+                        // 设置 DATE 字段为 5 
+                        cal.set(DATE, 5);     // ②
+                        System.out.prntln(cal.getTime());    // ③
+                    } 
+                }       
+                程序说明:
+                    1. 上面程序中创建了代表2003-8-31的Calendar对象, 当把这个对象的MONTH字段加1后得到
+                        2003-10-1(因为9月没有31日), 如果程序在①处代码输出当前Calendar里的日期, 也会看到
+                        输出的是2003-10-1, ③处的代码将输出2003-10-5
+                    2. 如果将①处的代码注释起来, 因为Calendar的set()方法具有延迟修改的特性, 即调用set()方
+                        法后Calendar实际上并未计算真实的日期, 他只是使用内部成员变量表记录MONTH字段被修改
+                        为8, 接着程序设置DATE字段的值为5, 程序内部再次记录DATE字段为5---也就是9月5日, 因
+                        次这是的③处将输出 2003-9-5
+
+    Java8新增的日期, 时间包
+        说明:
+            1. Java8新增的 java.time包, 结合类方法即例子记住
+        
+        java.time 包常用的类及方法:
+            1. Clock:
+                说明: 该类用于获取指定时区的当前日期, 时间; 可代替 System类的 currentTimeMillis()方法, 而 
+                    且提供了更多的方法来获取当前日期, 时间, 该类提供了大量的静态方法来获取Clock对象
+                    
+            2. Duration:
+                说明: 该类代表持续时间, 可以很方便的获取一段时间
+            
+            3. Instant:
+                说明: 代表一个具体的时刻, 可以精确到纳秒. 该类提供 now() 方法用来获取当前时刻; 也提供了静态
+                    的 now(Clock clock) 方法来获取 clock 对应的时刻; 还提供了 minusXxx()方法在当前时刻的
+                    基础上减去一段时间; 也提供了 plusXxx()方法在当前时刻的基础上加上一段时间
+            
+            4. LocalDate:
+                说明: 该类代表不带时区的日期:如2019-10-01; 提供静态 now() 方法获取当前日期; 提供静态的
+                now(Clock clock) 方法来获取clock对应的日期; 提供 minusXxx()方法在当前年份基础上减去几年
+                几月几周或几日; 提供 plusXxx() 方法在当前年份的基础是加上几年几月几周或几日
+
+            5. LocalTime:
+                说明: 该类代表了不带时区的时间:如 10:15:30; 提供静态 now() 方法获取当前时间; 提供静态的
+                    now(Clock clock) 方法来获取clock对应的时间; 提供 minusXxx() 方法在当前年份基础上减去
+                    几小时,几分,几秒; 提供 plusXxx() 方法在当前年份基础上加上及小时, 几分, 几秒
+
+            6. LocalDateTime:
+                说明: 该类代表不带时区的日期, 时间, 如 2017-12-03T10:15:33; 也提供了 now(), now(Clock 
+                clock), minusXxx(), plusXxx() 等方法
+
+            7. MonthDay:
+                说明: 该类代表月日, 如04-12; 提供now()方法获取当前月日, 也提供静态的now(Clock clock)方法
+                    来获取 clock 对应的月日
+
+            8. Year:
+                说明: 该类仅代表年. 如2014; 提供 now(), now(Clock clock), minusXxx(), plusXxx() 等方法 
+
+            9 YearMonth:
+                说明: 该类仅代表年月, 如2014-08; 提供 now(), now(Clock clock), minusXxx(), plusXxx() 
+                    等方法 
+
+            10. ZonedDateTime:
+                说明: 该类代表一个时区化的日期, 时间
+
+            11. Zoneld:
+                说明: 该类代表一个时区
+            
+            12. DayOfWeek:
+                说明: 这是一个枚举类, 顶一颗周日到周六的枚举值
+
+            13. Month:
+                说明: 这也是一个枚举类, 定义了一月到十二月的枚举值
+
+        例子: 
+            // NewDatePackageTest.java
+            import java.time.Clock;
+            import java.time.Duration;
+            import java.time.Instant;
+            import java.time.LocalDate;
+            import java.time.LocalDateTime;
+            import java.time.LocalTime;
+            import java.time.Month;
+            import java.time.MonthDay;
+            import java.time.Year;
+            import java.time.YearMonth;
+
+            public class NewDatePackageTest {
+
+                public static void main(String[] args) {
+                
+                    System.out.println("----下面是关于Clock的用法----");
+                    // ----下面是关于Clock的用法----
+                    // 获取当前Clock
+                    Clock clock = Clock.systemUTC();
+                    // 通过 Clock 获取当前时刻
+                    System.out.println("当前时刻为: " + clock.instant());
+                    // 获取 clock 对应的毫秒数, 与 System.currentTimeMillis()输出相同
+                    System.out.println(clock.millis());
+                    System.out.println(System.currentTimeMillis());
+
+                    System.out.println("----下面是关于Duration的用法----");
+                    // ----下面是关于Duration的用法----
+                    Duration d = Duration.ofSeconds(6000);
+                    System.out.println("6000秒相当于 " + d.toMinutes() + " 分钟");
+                    System.out.println("6000秒相当于 " + d.toHours() + " 小时");
+                    System.out.println("6000秒相当于 " + d.toDays() + " 天");
+                    // 在 clock 基础上增加 6000 秒, 返回新的 Clock
+                    Clock clock2 = Clock.offset(clock, d);
+                    // 可以看到clock2和clock相差1小时40分
+                    System.out.println("当前时刻加6000秒为: " + clock2.instant());
+
+                    System.out.println("----下面是关于Instant的用法----");
+                    // ----下面是关于Instant的用法----
+                    // 获取当前时间
+                    Instant instant = Instant.now();
+                    System.out.println(instant);
+                    // instant 添加6000秒(100分钟), 返回新的Instant
+                    Instant instant2 = instant.plusSeconds(6000);
+                    System.out.println(instant2);
+                    // 根据字符串解析Instant对象
+                    Instant instant3 = Instant.parse("2014-02-23T10:12:35.342Z");
+                    System.out.println(instant3);
+                    // 在instant3的基础上添加5小时4分钟
+                    Instant instant4 = instant3.plus(Duration.ofHours(5).plusMinutes(4));
+                    System.out.println(instant4);
+                    // 获取 instant4 的5天以前的时刻
+                    Instant instant5 = instant4.minus(Duration.ofDays(5));
+                    System.out.println(instant5);
+
+                    System.out.println("---下面是关于LocalDate的用法----");
+                    // ----下面是关于LocalDate的用法----
+                    LocalDate localDate = LocalDate.now();
+                    System.out.println(localDate);
+                    // 获取2014年的第146天
+                    localDate = LocalDate.ofYearDay(2014, 146);
+                    System.out.println(localDate); // 201-05-26
+                    // 设置为 2014年5月21日, 月份调用MONTH的枚举实例
+                    localDate = LocalDate.of(2014, Month.MAY, 21);
+                    System.out.println(localDate);  // 2014-05-21
+
+                    System.out.println("----下面是关于LocalTime的用法----");
+                    // ----下面是关于LocalTime的用法----
+                    // 获取当前时间
+                    LocalTime localTime = LocalTime.now();
+                    // 设置时间为 22点33分
+                    localTime = LocalTime.of(22, 33);
+                    System.out.println(localTime);  // 22:33
+                    // 返回一天中的9070秒
+                    localTime = LocalTime.ofSecondOfDay(9070);
+                    System.out.println("一天中的9070秒是: " + localTime);
+
+                    System.out.println("-----下面是LocalDateTime的用法----");
+                    // ----下面是LocalDateTime的用法----
+                    // 获取当前的日期时间
+                    LocalDateTime localDateTime = LocalDateTime.now();
+                    // 当前的日期, 时间加上25小时3分钟
+                    LocalDateTime future = localDateTime.plusHours(25).plusMinutes(3);
+                    System.out.println("当前的日期,时间的25小时3分钟之后是: " + future);
+
+                    System.out.println("----下面是关于Year, YearMonth, MonthDay的用法----");
+                    // ----下面是关于Year, YearMonth, MonthDay的用法----
+                    // 获取当前的年份
+                    Year year = Year.now();  
+                    System.out.println("当前年份是: " + year);
+                    // 当前的年份再加5年
+                    year = year.plusYears(5);
+                    System.out.println("当前年份再过5年s: " + year);
+                    // 根据指定月份获取YearMonth
+                    YearMonth ym = year.atMonth(10);
+                    System.out.println("year年的10月: " + ym);
+                    // 当前的年份再加5年, 减去3个月
+                    ym = ym.plusYears(5).minusMonths(3);
+                    System.out.println("year年10月再加5年,减去3个月是: " + ym);
+                    MonthDay md = MonthDay.now();
+                    System.out.println("当前月日: " + md);
+                    // 设置为5月23日
+                    MonthDay md2 = md.with(Month.MAY).withDayOfMonth(23);
+                    System.out.println("5月23日为: " + md2);
+                }
+            }
+
+
+5. 正则表达式
+    String 类中正则的几个方法
+        1. boolean matches(String regex)
+            说明: 判断该字符串是否匹配指定的正则表达式
+        
+        2. String replaceAll(String regex, String replacement)
+            说明: 将该字符串中所有匹配 regex 的字串替换成 replacement
+        
+        3. String replaceFirst(String regex, String replacement)
+            说明: 将该字符串中第一个匹配 regex 的字串替换成 replacement
+        
+        4. String[] split(String regex)
+            说明: 以regex作为分隔符, 把该字符串分割成多个字串
+
+    创建正则表达式
+        1. 正则表达式支持的合法字符(学过了,也再学一遍)
+            字符                解释
+            x               字符x(x可以是任何合法的字符)
+            \0mnn           八进制数0mnn所表示的字符
+            \xhh            十六进制 0xhh 所表示的字符
+            \uhhh           十六进制 0xhhh 所表示的 Unicode 字符
+            \t              制表符("\u0009")
+            \n              换行(新行)符 ("\u000A")
+            \r              回车符 ("\u000D")
+            \f              换页符 ("\u000C")
+            \a              报警(bell)符 ("\u0007")
+            \e              Escape符 ("\u001B")
+            \cx             x 对应的控制符, 例如: \cM 匹配 Ctrl+M; x的值必须是A~Z或a~z之一
+
+        2. 正则表达式中的特殊字符
+            字符                解释
+            $               匹配一行的行尾, 要匹配 $ 字符本身, 使用 \$
+            ^               匹配一行的开头. 要匹配 ^ 字符本身, 使用 \^
+            ()              标记自表达式的开始和结束位置, 要匹配这些字符, 使用 \( 和 \)
+            []              用于确定中括号表达式的开始和结束位置, 要匹配字符本身, 使用 \[ 和 \]
+            {}              用于标记前面子表达式出现的频度, 要匹配字符本身, 使用 \{和 \}
+            *               指定前面的子表达式可以出现0次或多次, 要匹配*字符本身, 使用 \*
+            +               指定前面的自表达式可以出现1次或多次, 要匹配+字符本身, 使用 \+
+            ?               指定前面的自表达式可以出现0次或1次, 要匹配?字符本身, 使用 \?
+            .               匹配处换行符("\n")之外的任何单个字符, 要匹配 . 本身, 使用 \.
+            \               用于转义下一个字符, 或指定八进制, 十六进制字符, 要匹配 \ 本身. 使用 \\ 
+            |               指定两项之间任选一项, 如果要匹配 | 本身, 使用 \|
+
+        3. 预定义字符
+            字符                解释
+            .               可以匹配任何单个字符
+            \d              匹配 0~9 的所有数字
+            \D              匹配非数字
+            \s              匹配所有的空白符, 包括空格, 制表符, 回车符, 换页符, 换行符等
+            \S              匹配所有的非空白字符
+            \w              匹配所有的单词字符, 包括 0~9 所有数字, 26个英文字母和下划线(_)
+            \W              匹配所有的非单词字符    
+
+        4. 方括号表达式
+            方括号表达式            解释
+            表示枚举            例如[abc],表示a,b,c其中任意一个字符; [gz], 表示g, z其中任意一个字符
+            表示范围 ~          [a~cx~z],表示a~c, x~z范围内的任意字符
+            表示求否 ^          例如[^abc], 表示非 a,b,c的任意字符; [^a~f],表示不是a~f范围内的任意字符
+            表示"与"运算 &&     例如 [a-z&&[def]], 求 a~z 和[def]的交集, 表示d, e 或 f 
+                                    [a-z&&[^bc]], a~z 范围内除了b和c之外的字符, 即 [ad-z]
+                                    [a-z&&[^m-p]], a~z范围内除去m~p范围的所有字符 即[a-lq-z]
+            表示"并"运算        并运算与前面的枚举类似, 例如[a-d[m-p]] 等价于 [a-dm-p]
+
+        5. 边界匹配符
+            边界匹配符            解释
+            ^               行的开头
+            $               行的结尾
+            \b              单词的边界
+            \B              非单词的边界
+            \A              输入的开头
+            \G              前一个匹配的结尾
+            \Z              输入的行尾, 仅用于最后的结束符
+            \z              输入的行尾 
+
+        6. 正则表达式数量标识符的几种魔兽
+            Greedy(贪婪模式):
+                说明:
+                    1. 数量标识符默认采用贪婪模式, 除非另有表示
+                    2. 贪婪模式的表达式会一直匹配下去, 直到无法匹配为止
+
+            Reluctant(勉强模式):
+                说明:
+                    1. 用问号后缀(?)表示, 他只会匹配最少的字符, 也称为最小匹配模式
+
+            possessive(占有模式):
+                说明:
+                    1. 占有模式目前只有Java支持
+                    2. 用加号后缀(+)表示, 通常比较少用
+
+            三种模式的数量表示符
+            贪婪模式        勉强模式          占有模式              说明
+            X?             X??               X??                  X表达式出现0次或1次
+            X*             X*?               X*?                  X表达式出现0次或多次
+            X+             X+?               X+?                  X表达式出现1次或多次
+            X{n}           X{n}?             X{n}?                X表达式出现n次
+            X{n,}          X{n,}?            X{n,}?               X表达式最少出现n次
+            X{n,m}         X{n,m}?           X{n,m}?              X表达式最少出现n次, 最多出现m次 
+
+    使用正则表达式:
+        说明:
+            1. 熟悉 Pattern 和 Matcher 类
+            2. Pattern 对象是正则表达式编译后再内存中的表示形式, 因此正则表达式字符串必须先被编译为 Pattern
+                对象, 然后再利用该Pattern对象创建对应的Matcher对象. 执行匹配所涉及的状态保留再Mather对象
+                中, 多个Matcher对象可以共享他同一个Pattern对象
+            3. pattern 类是不可变类, 可供多个并发的线程安全使用
+        
+        Matcher类的几个常用方法:
+            1. find()
+                说明: 返回目标字符串中是否包含与Pattern匹配的字串
+            2. group()
+                说明: 返回上一次与Pattern匹配的字串
+            3. start()
+                说明: 返回上一次与Pattern匹配的字串在目标字符串中的开始位置
+            4. end()
+                说明: 返回上一次与Pattern匹配的字串在目标字符串中的结束位置加1
+            5. lookingAt()
+                说明: 返回目标字符串前面部分与Pattern是否匹配
+            6. matches()
+                说明: 返回整个目标字符串与Pattern是否匹配
+            7. reset()
+                说明: 将现有的 Matcher 对象应用于一个新的字符序列
