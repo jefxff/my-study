@@ -472,7 +472,7 @@
             创建BigDecimal对象, 而是通过 BigDecimal.valueOf(double value)静态方法来创建BigDecimal对象
         6. BigDecimal类提供了add(), subtract(), multiply(), pow()等方法对精确浮点数进行常规算术运算(例2)
         7. 如果程序中要求对double浮点数进行加, 减, 乘, 除基本运算, 则需要先将double类型的数值包装成
-            BigDecimal 对象, 调用 BigDecimal 对象的方法执行算数运算后再将结果转换成double型变量, (如例子2
+            BigDecimal 对象, 调用 BigDecimal 对象的方法执行算数运算后再将结果转换成double型变量, (如例子3
             , 以 BigDecimal 为基础定义一个 Arith 工具类,)
 
     例子1:
@@ -854,7 +854,7 @@
                     System.out.println(localDate);
                     // 获取2014年的第146天
                     localDate = LocalDate.ofYearDay(2014, 146);
-                    System.out.println(localDate); // 201-05-26
+                    System.out.println(localDate); // 2014-05-26
                     // 设置为 2014年5月21日, 月份调用MONTH的枚举实例
                     localDate = LocalDate.of(2014, Month.MAY, 21);
                     System.out.println(localDate);  // 2014-05-21
@@ -885,7 +885,7 @@
                     System.out.println("当前年份是: " + year);
                     // 当前的年份再加5年
                     year = year.plusYears(5);
-                    System.out.println("当前年份再过5年s: " + year);
+                    System.out.println("当前年份再过5年是: " + year);
                     // 根据指定月份获取YearMonth
                     YearMonth ym = year.atMonth(10);
                     System.out.println("year年的10月: " + ym);
@@ -940,7 +940,7 @@
             *               指定前面的子表达式可以出现0次或多次, 要匹配*字符本身, 使用 \*
             +               指定前面的自表达式可以出现1次或多次, 要匹配+字符本身, 使用 \+
             ?               指定前面的自表达式可以出现0次或1次, 要匹配?字符本身, 使用 \?
-            .               匹配处换行符("\n")之外的任何单个字符, 要匹配 . 本身, 使用 \.
+            .               匹配除换行符("\n")之外的任何单个字符, 要匹配 . 本身, 使用 \.
             \               用于转义下一个字符, 或指定八进制, 十六进制字符, 要匹配 \ 本身. 使用 \\ 
             |               指定两项之间任选一项, 如果要匹配 | 本身, 使用 \|
 
@@ -1031,6 +1031,7 @@
             Matcher m = p.matcher("aaaaaab");
             boolean b = m.matches();  // out: true
             // 如果不需要重复使用, 即这个正则表达式只使用一次, 可使用Pattern类的静态方法matches()
+            // 此方法自动把指定字符串编译v黑人女孩匿名的Pattern对象, 并执行匹配
             boolean b = Pattern.matches("a*b", "aaaaab");  // out: true 
         
 
@@ -1133,3 +1134,23 @@
                     }
                 }
             }
+        例子6:
+            // StringReg.java
+            // String 类中提供的 replaceAll(), replaceFirst(), split() 等方法应用
+            import java.util.Arrays;
+
+            public class StringReg {
+                public static void main(String[] args) {
+                    String[] msgs = {
+                        "java has regular expressions in 1.4",
+                        "regular expressions noe expressing in java",
+                        "java represses oracular expressions"
+                    };
+                    for (String msg : msgs){
+                        System.out.println(msg.replaceFirst("re\\w*", "哈哈:)"));
+                        System.out.println(Arrays.toString(msg.split(" ")));
+                    }
+                }
+            }
+
+
