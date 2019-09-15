@@ -1,0 +1,100 @@
+1. Java集合概述
+    说明: 
+        1. Java集合类是一种特别有用的工具类, 可用于存储数量不等的对象, 并可以实现常用数据结构, 如队列,栈;
+            集合类都在 java.util 包下, Java5后, 在java.util.concurrent 包下提供支持线程的集合类
+        2. Java集合还可用于保存具有映射关系的关联数组
+        3. Java集合分四种: Set(无序, 不可重复的集合), List(有序的, 重复的集合), Map(代表具有映射关系的集
+            合), Queue(代表一种队列集合实现)
+        4. Java的集合类主要由两个接口派生而出: Collection 和 Map , 他们是Java集合框架的根接口, 这两个接口
+            包含一些子接口和实现类; Set和List和Queue接口是Collection接口派生的子接口
+        5. 所有的Map实现类用于保存具有映射关系的数据(也就是关联数组), Map的实现类保存的都是 key-value 对, 
+            也就是由 key 和 value 两个值组成, key 不可以重复, 而 value 可以重复
+        6. 集合和数组的区别: 数组元素既可以是基本类型的值, 也可以是对象(实际上保存的是对象的引用变量); 而集
+            合只能保存对象(实际上只是保存的对象的引用变量--记住)
+    
+    四种集合最常用的实现类;
+        HashSet, TreeSet, ArrayList, ArrayDeque, LinkedList, HashMap, treeMap
+
+    访问集合的元素:
+        1. List集合元素直接通过索引来访问; 因为List是有序的集合
+        2. Map集合的元素通过每项元素的key来访问其value; 因为Map集合的key值是不可重复的
+        3. Set集合中的元素只能根据元素本身来访问; 因为Set集合的元素无序可重复
+
+2. Collection 和 Iterator 接口
+    说明:
+        1. 由于 Collection 接口是 Set, List, Queue接口的付接口, 所以 Collection 接口定义的方法可用于操作
+            Set, List, Queue集合
+        2. 记住: 集合就像容器, 实现生活中容器的功能, 可添加对象, 删除对象, 清空对象, 判断容器是否为空等, 集
+            合类就为这些功能提供了对应的方法
+
+    Collection 接口定义的方法:
+        1. boolean add(Object o)
+            说明: 该方法用于向集合里添加一个元素, 如果集合对象被添加操作改变了(也就是添加成功), 就返回true 
+        2. boolean addAll(Collection c)
+            说明: 该方法把集合c里所有的元素添加到指定的集合里, 如果集合对象被添加操作该变了, 就返回true
+        3. void clear()
+            说明: 清空集合里的所有元素, 将集合的长度变为0
+        4. boolean contains(Object o)
+            说明: 返回集合里是否包含指定元素
+        5. boolean ContainsAll(Collection c)
+            说明: 返回集合里是否包含集合c里的所有元素
+        6. boolean isEmpty()
+            说明: 返回集合是否为空, 当集合长度为0时, 返回true, 否则返回false
+        7. Iterator iterator()
+            说明: 返回一个 Iterator对象, 用于遍历集合里的元素
+        8. boolean remove(Object o)
+            说明: 删除集合中指定元素o, 当集合中包含了一个或多个元素o时, 该方法只删除第一个符合条件的元素, 该
+                方法将返回true
+        9. boolean removeAll(Collection c)
+            说明: 从集合中删除集合c里包含的所有元素(相当于调用该方法的结合减集合c), 如果删除了一个或一个以上
+                的元素, 则该方法返回true
+        10. boolean retainAll(Collection c)
+            说明: 从集合中删除集合c里不包含的元素(相当于把调用该方法的集合变成该集合和集合c的交集), 如果操作
+                改变了调用方法的集合, 则该方法返回true
+        11. int size()
+            说明: 该方法返回集合里的元素个数
+        12. Object[] toArry()
+            说明: 该方法把集合转换成一个数数组, 所有的集合元素变成对应的数组元素
+
+    例子:
+        // CollectionTest.java
+        import java.util.ArrayList;
+        import java.util.Collection;
+        import java.util.HashSet;
+
+        public class CollectionTest{
+            public static void main(String[] args) {
+                Collection c = new ArrayList();
+                // 添加元素
+                c.add("孙悟空");
+                // 虽然集合里不能放基本类型, 但Java支持自动装箱
+                c.add(6);
+                System.out.println("c集合的元素个数为: " + c.size());
+                // 删除指定元素
+                c.remove(6);
+                System.out.println("c集合的元素个数为: " + c.size());
+                // 判断是否包含指定的字符串
+                System.out.println("c集合是否包含\"孙悟空\"字符串: " + c.contains("孙悟空"));
+                c.add("轻量级 Java EE 企业级应用实战");
+                System.out.println("c集合的元素: " + c);
+
+                Collection books = new HashSet();
+                books.add("轻量级 Java EE 企业级应用实战");
+                books.add("疯狂 Java 讲义");
+                System.out.println("c集合是否包含books集合? " + c.containsAll(books));
+                // 用c集合减去books集合的元素
+                c.removeAll(books);
+                System.out.println("c集合的元素: " + c);
+                // 删除c集合的所有元素
+                c.clear();
+                System.out.println("c集合的元素: " + c);
+                // 控制books集合里只剩下c集合里也包含的元素
+                books.retainAll(c);
+                System.out.println("books集合的元素: " + books);
+            }
+        }
+        程序说明:
+            1. 程序未使用泛型来限制集合里元素的种类, 编译会报警告
+            2. 所有的 Collection 实现类都重写了 toString() 方法, 该方法可以一次性地输出集合中的所有元素
+
+2.1 使用 Lambda 表达式遍历集合
