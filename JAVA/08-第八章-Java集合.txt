@@ -36,7 +36,7 @@
             说明: 清空集合里的所有元素, 将集合的长度变为0
         4. boolean contains(Object o)
             说明: 返回集合里是否包含指定元素
-        5. boolean ContainsAll(Collection c)
+        5. boolean containsAll(Collection c)
             说明: 返回集合里是否包含集合c里的所有元素
         6. boolean isEmpty()
             说明: 返回集合是否为空, 当集合长度为0时, 返回true, 否则返回false
@@ -53,7 +53,7 @@
                 改变了调用方法的集合, 则该方法返回true
         11. int size()
             说明: 该方法返回集合里的元素个数
-        12. Object[] toArry()
+        12. Object[] toArray()
             说明: 该方法把集合转换成一个数数组, 所有的集合元素变成对应的数组元素
 
     例子:
@@ -170,14 +170,14 @@
             }
         }
         程序说明:
-            1. Iterator 仅用于遍历集合. Iterator 本身并不提供盛装对象的能力, 如果需要创建 Iterator 对象, 
-                则必须有一个被迭代的集合, 没有集合的 Iterator 没有存在的价值
-            2. Iterator 必须依附与 Collection 对象, 若有一个 Iterator 对象, 则必然有一个与之关联的 Collection
+            1. Iterator 仅用于遍历集合. Iterator 本身并不提供盛装对象的能力, 如果需要创建 Iterator 对象
+            (程序中的 it), 则必须有一个被迭代的集合(程序中的books), 没有集合的 Iterator 没有存在的价值
+            2. Iterator必须依附与Collection对象, 若有一个Iterator对象, 则必然有一个与之关联的 Collection
                 对象, Iterator 提供了两个方法来迭代访问 Collection 集合里的元素, 并可通过 remove() 方法来
                 删除集合中上一次next()方法放回的集合元素
-            3. ①出的代码并没有改变books集合中的元素, 当使用Iterator 对集合元素进行迭代时, Iterator 并不是
-                把集合元素本身传给了迭代变量, 而是把集合元素的值传给了迭代变量, 所以修改迭代变量的值对集合
-                元素本身没有影响
+            3. ①处的代码并没有改变books集合中的元素, 当使用Iterator 对集合元素进行迭代时, Iterator 并不是
+                把集合元素本身(集合元素时引用变量)传给了迭代变量, 而是把集合元素的值(引用变量指向的堆内存的
+                值)传给了迭代变量, 所以修改迭代变量的值对集合元素本身没有影响
             4. 当使用 Iterator 迭代访问 Collection 集合元素时, Collection 集合里的元素不能被改变, 只有通
                 过 Iterator 的 remove() 方法删除上一次 next() 方法返回的集合元素才可以, 否则将引发异常
 
@@ -253,7 +253,7 @@
                 books.removeIf(ele -> ((String)ele).length() > 12);
                 System.out.println(books);   // out: [java Note, Python Note, Css Note]
                 // 统计书名中包含"Python"子串的图书数量
-                System.out.println(calAll(books, ele -> ((String)ele).contains("Python")));  // out: 1
+                System.out.println(calAll(books, ele -> ((String)ele).contains("Python"))); //out: 1
                 // 统计书名中包含"Css"子串的图书数量
                 System.out.println(calAll(books, ele -> ((String)ele).contains("Css")));  // out: 1
                 // 统计书名字符串长度大于10的图书数量
@@ -275,3 +275,132 @@
             1. 上述程序先定义了一个calAll()方法, 该方法将会使用 Predicate 判断每个集合元素是否符合特定条件
                 该条件将通过 Predicate 参数动态传入, 上述四行输出行代码传入了四个Lambda表达式(目标类型都
                 是Predicate), 这样 calAll()方法就只会统计满足Predicate条件的图书
+
+
+2.6 使用java8新增的 Stream 操作集合
+    说明:
+        1. Java8 还新增了 Stream, IntStream, LongStream, DoubleStream 等流式API, 这些API代表多个支持串
+            行和并行聚集操作的元素; Stream 是一个通用的流接口, 而IntStream, LongStream, DoubleStream则是
+            代表元素类型为 int, long, double 的流
+        2. Java8 还为上面的每个流API提供了对应的 Biulder, 如: Stream.Builder, IntStream.Builder, 
+            LongStream.Builder, DoubleStream.Builder, 可通过这些Builder 来创建对应的流
+        3. Java8 允许使用流失API来操作集合, Collection接口提供了一个 stream()默认方法, 该方法可返回该集合
+        对应的流, 接下来可通过流式API来操作集合元素, Stream可对集合元素进行整机的聚集操作
+
+    独立使用 Stream 的步骤:
+        1. 使用 Stream 或 XxxStream 的 builder() 类方法创建该 Stream 对应的 Builder 
+        2. 重复调用 Builder 的 add() 方法向该流中添加元素
+        3. 调用 Builder 的 build()方法获取对应的 Stream 
+        4. 调用 Stream 的聚集方法
+
+    中间方法, 末端方法, 有状态方法, 短路方法:
+        1. 中间方法: 中间操作允许流保持打开状态, 并允许直接调用后续方法. 下面程序中的map()方法
+        2. 末端方法: 末端方法是对流的最终操作; 当某个Stream执行末端方法后, 该流将会被"消耗"且不可再用; 下面
+            程序中的sum(), count(), average() 方法都是末端方法
+        3. 有状态方法: 这种方法会给流增加一些新的属性, 比如元素的唯一性, 元素的最大数量, 保证元素以排序的方
+            式被处理等, 有状态方法往往需要更大的性能开销
+        4. 短路方法: 短路方法可以尽早结束对流的操作, 不必检查所有的元素
+
+    Stream 常用的中间方法:
+        1. filter(Predicate predicate) 
+            说明: 过滤Stream 中不符合 predicate 的元素
+        2. mapToXxx(ToXxxFunction mapper)
+            说明: 使用 ToXxxFunction 对流中的元素执行一对一的转换, 该方法返回的新流中包含了 ToXxxFunction
+                转换生成的所有元素
+        3. peek(COnsumer action)
+            说明: 依次对每个元素执行一些操作, 该方法返回的流与原有流包含相同的元素, 主要用于调试
+        4. distinct()
+            说明: 该方法用于排序流中所有重复的元素(判断元素重复的标准是使用equals()比较返回true), 这是一个
+                有状态的方法
+        5. sorted()
+            说明: 用于保证流中的元素在后续的访问中 处于有序状态, 是一个有状态的方法
+        6. limit(long maxSize)
+            说明: 用于保证对该流的后续访问中最大允许访问的元素个数. 有状态的,短路方法
+        
+    Stream 常用的末端方法:
+        1. forEach(Consumer action)
+            说明: 遍历流中的元素, 对每个元素执行action
+        2. toArray()
+            说明: 将流中的所有元素转换为数组
+        3. reduce()
+            说明: 该方法有三个重载版本: 都用于通过某种操作来合并流中的元素
+        4. min()
+            说明: 返回流中所有元素的最小值
+        5. max()
+            说明: 返回流中所有元素的最大值
+        6. count()
+            说明: 返回流中所有元素的数量
+        7. anyMatch(Prerdicate predicate)
+            说明: 判断流中是否至少包含一个元素符合Predicate条件
+        8. allMatch(Predicate predicate)
+            说明: 判断流中是否每个元素都符合Predicate条件
+        9. noneMatch(Predicate predicate)
+            说明: 判断流中没有一个元素符合Predicate条件
+        10. findFirst()
+            说明: 返回流中的第一个元素
+        11. findAny()
+            说明: 返回流中的任意一个元素
+
+    例子1:
+        public class IntStreamTest{
+            public static void main(String[] args){
+                IntStream is = IntStream.builder()
+                    .add(20)
+                    .add(13)
+                    .add(-2)
+                    .add(18)
+                    .build();
+
+                // 下面调用聚集方法的代码每次执行执行一行
+                System.out.println("is 所有元素的最大值: " + is.max().getAsInt());
+                System.out.println("is 所有元素的最小值: " + is.min().getAsInt());
+                System.out.println("is 所有元素的总和: " + is.sum());
+                System.out.println("is 所有元素的总数: " + is.count());
+                System.out.println("is 所有元素的平均值: " + is.average());
+                System.out.println("is 所有元素的平方是否都大于20: " 
+                    + is.allMatch(ele -> ele * ele > 20) );
+                System.out.println("is 是否包含任何元素的平方大于20: " 
+                    + is.anyMatch(ele -> ele * ele > 20) );
+                // 将 is 映射成一个新的 Stream, 新的 Stream 的每个元素是原 Stream 元素的 2倍加1
+                IntStream newIs = is.map(ele -> ele * 2 + 1);
+                // 使用方法引用的方式来遍历集合元素 ============== 19/09/16 的晚上我已经忘了方法引用~~~
+                newIs.forEach(System.out::println);  // out: 41 27 -3 37 
+            }
+        }
+        
+    例子2: 
+        import java.util.Collection;
+        import java.util.HashSet;
+
+        public class CollectionStream {
+            public static void main(String[] args) {
+                // 创建一个集合
+                Collection books = new HashSet();
+                books.add("java Note");
+                books.add("Python Note");
+                books.add("JavaScript Note");
+                books.add("Css Note");
+
+                //统计书名包含 Note 子串的图书
+                System.out.println(books.stream()
+                    .filter(ele -> ((String)ele).contains("Note")).count());  // out: 4
+                //统计书名包含 Java 子串的图书
+                System.out.println(books.stream()
+                    .filter(ele -> ((String)ele).contains("Java")).count());  // out: 1 
+                // 统计书名字符串长度大于10的图书数量
+                System.out.println(books.stream()
+                    .filter(ele -> ((String)ele).length() > 10).count());  // out: 2
+                // 先调用 Collection 对象的 stream()方法将集合转换为Stream
+                // 在调用 Stream 的 mapToInt() 方法获取原有Stream对应的 IntStream
+                books.stream().mapToInt(ele -> ((String)ele).length())
+                    // 调用 forEach() 方法遍历 IntStream 中每个元素
+                    .forEach(System.out::print);  // out: 9 15 11 8
+            }
+        }
+        程序说明:
+            1. 程序只要调用 Collection 的 stream() 方法即可返回该集合对应的Stream, 接下来就可以通过Stream
+                提供的方法对所有的集合元素进行处理, 可以简化代码
+            2. 上面程序最后一条输出语句, 先调用Collection 对象的 stream() 方法(即: books.stream())将集合
+                转换为 Stream对象, 然后调用 Stream对象的mapToInt() 方法将其转换为 IntStream; 这个过程中
+                mapToInt() 方法就是一个中间方法, 因此程序可以继续调用 IntStream 的 forEach 方法来遍历流
+                中的元素
