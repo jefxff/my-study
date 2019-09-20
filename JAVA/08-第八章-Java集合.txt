@@ -586,6 +586,11 @@
 3.3 TreeSet 类
     说明:
         1. TreeSet是SortedSet接口的实现类, TreeSet可以确保集合元素处于排序状态
+        2. TreeSet采用红黑树的数据结构来存储集合元素, TreeSet支持两种排序方式, 自然排序和定制排序,默认情况
+            下,TreeSet采用自然排序
+        3. 因为TreeSet中的元素是有序的, 所以增加了访问第一个, 前一个, 后一个, 最后一个元素的方法, 和三个从
+            TreeSet中截取子TreeSet的方法
+        4. TreeSet 并不是根据插入的元素顺序来进行排序, 而是根据元素实际值的大小来进行排序
     
     TreeSet 提供的方法:
         1. Comparator comparator()
@@ -595,4 +600,201 @@
             说明: 返回集合中的第一个元素
         3. Object last()
             说明: 返回集合中的最后一个元素
-        
+        4. Object lower(Object e)
+            说明: 返回集合中位于指定元素之前的元素(即小于指定元素的最大元素, 参考元素不需要是TreeSet集合里
+                的元素)
+        5. Object higher(Object e)
+            说明: 返回集合中位于指定元素之后的元素(即大于指定元素的最小元素, 参考元素不需要是TreeSet集合里
+                的元素)
+        6. SortedSet subSet(Object fromElement, Object toElement)
+            说明: 返回此Set的子集合,范围从fromElement(包含)到toElement(不包含)
+        7. SortedSet headSet(Object toElement)
+            说明: 返回此Set的子集, 由小于toElement的元素组成
+        8. SortedSet tailSet(Object fromElement)
+            说明: 返回此Set集合的子集, 由大于或等于fromElement的元素组成
+
+    例子:
+        // TreeSet 方法应用
+        import java.util.TreeSet;
+
+        public class TreeSetTest{
+            public static void main(String[] args){
+                TreeSet nums = new TreeSet();
+                // 向nums添加四个Integer对象
+                nums.add(5);
+                nums.add(2);
+                nums.add(10);
+                nums.add(-9);
+                // 输出集合元素看到集合元素已经排序
+                System.out.println(nums);     // out: [-9, 2, 5, 10]
+                // 输出集合里的第一个元素
+                System.out.println(nums.first());     // out: -9
+                // 输出集合里的最后一位元素
+                System.out.println(nums.last());     // out: 10
+                // 返回小于4的子集, 不包含4
+                System.out.println(nums.headSet(4));     // out: [-9, 2]
+                // 返回大于等于5的子集
+                System.out.println(nums.tailSet(5));     // out: [5, 10]
+                // 返回大于等于-3 小于4的子集
+                System.out.println(nums.subSet(-3, 4));     // out: [2]
+            }
+        }
+
+    自然排序:
+        说明:
+            1. 原理: treeSet调用集合元素的 compareTo(Object obj)方法来比较元素之间的大小关系, 然后将集合
+                元素按升序排列, 这种方式就是自然排序
+            2. 向TreeSet集合中添加元素时, 只有第一个元素无需实现Comparable接口, 后面添加的所有元素都必须实
+                现Comparable接口; 但是这样的话, 当试图从TreeSet中取出元素时, 依然会引发ClassCastException
+                异常(例子1)
+            3. 所以注意: 大部分类在实现compareTo(Object obj)方法时, 都需要将被比较对象 obj 强制转换成相同
+                的类型, 因为只有两个相同类的两个实例才会比较大小; 当试图把一个对象添加到TreeSet集合时, 
+                TreeSet会调用该对象的 compareTo(Object obj)方法与集合中的其他元素进行比较, 这就要求集合中
+                的其他元素与该元素是同一个类的实例, 也就是说, 向TreeSet中添加的应该是同一个类的对象, 否则会
+                引发ClassCastException异常 (例子2)
+            4. 总结: TreeSet正常运作的前提就是, TreeSet只能添加同一种类型的对象
+            5. TreeSet集合判断两个对象是否相等的唯一标准是: 两个对象通过compareTo(Object obj)方法比较是否
+                返回0; 返回0则相等,否则不相等
+            6. 如果向TreeSet中添加了一个可变对象, 并且后面程序修改了该可变对象的实例变量, 这将导致它与其他
+                对象的大小顺序发生了改变, 但TreeSet不会再次调整他们的顺序, 甚至可能导致TreeSet中保存的这两
+                个对象通过compareTo(Object obj)方法比较返回0, (例子4)
+            
+        关于 Comparable接口:
+            1. 该接口里定义了compareTo(Object obj)方法, 该方法返回一个整数值, 实现该接口的类必须是实现该
+                方法, 实现了该接口的类的对象就可以比较大小
+            2. 当一个对象调用该方法与另一个对象比价大小的时候, 例如 obj1.compareTo(obj2), 如果该方法返回0,
+                则表明两个对象相等, 如果返回一个正整数, 则表明obj1大于obj2, 返回一个负整数, 则说明obj1小于
+                obj2(例子3)
+
+        Comparable接口的一些常用实现类:
+            1. BigDecimal, BigInteger 以及所有的数值型对应的包装类: 
+                说明: 按他们对应的数值大小进行比较
+            2. Character 
+                说明: 按字符的 UNICODE 值进行比较
+            3. Boolean 
+                说明: true对应的包装类实例大于false对应的包装类实例
+            4. String 
+                说明: 按字符串中字符的 UNICODE 值进行比较
+            5. Date, Time
+                说明: 后面的时间, 日期比前面的时间日期大
+
+        例子1:
+            // 试图将一个对象添加到TreeSet时, 没实现Comparable接口, 第二次添加时, 报错
+            class Err{}
+            public class TreeSetErrTest{
+                public static void main(String[] args){
+                    TreeSet ts = new TreeSet();
+                    // 向TreeSet集合中添加两个Err对象
+                    ts.add(new Err());
+                    ts.add(new Err());  // 在第二次添加时会报错
+                }
+            }
+
+        例子2:
+            public class TreeSetErrTest2{
+                public static void main(String[] args){
+                    TreeSet ts = new TreeSet();
+                    // 向TreeSet集合中添加两个Err对象
+                    ts.add(new String("Python"));
+                    ts.add(new Date());   // 这行代码引发异常, 因为两个对象是不同类型
+                }
+            }
+
+        例子3:
+            import java.util.TreeSet;
+
+            // Z 类实现Comparable接口
+            class Z implements Comparable{
+                int age;
+                //构造器
+                public Z (int age){
+                    this.age = age;
+                }
+                //重写equals()方法, 总是返回True
+                public boolean equals(Object obj){
+                    return true;
+                }
+                // 重写 compareTo(Object obj)方法, 总是返回1
+                public int compareTo(Object obj){
+                    return 1;
+                }
+            }
+            public class TreeSetTest2{
+                public static void main(String[] args){
+                    TreeSet set = new TreeSet();
+                    Z z1 = new Z(6);
+                    set.add(z1);
+                    // 第二次添加同一个对象, 输出true, 表明添加成功
+                    System.out.println(set.add(z1));
+                    // 下面输出set集合, 将输出两个元素
+                    System.out.println(set);   // out: [chapter08.Z@2f333739, chapter08.Z@2f333739]
+                    // 修改set集合的第一个元素的age变量
+                    ((Z)(set.first())).age = 9;
+                    // 输出set集合的最后一个元素的age变量,将看到也变成了9
+                    System.out.println(((Z)(set.last())).age);    // out: 9
+                }
+            }
+            程序说明:
+                1. 注意: 如果两个对象通过equals()方法比较返回true时,这两个对象通过compareTo(Object obj)
+                    方法比较应该返回0(返回0表示相等)
+
+        例子4:
+            // R 类实现Comparable接口
+            class R implements Comparable{
+                int count;
+                //构造器
+                puublic R(int count){
+                    this.count = count;
+                }
+                public String toString(){
+                    return "R[count: " + count + " ]";
+                }
+                // 重写equals()方法,通过count来判断是否相等
+                public boolean equals(Object obj){
+                    if (this == obj){
+                        return true;
+                    }
+                    if (obj != null && obj.getClass() == R.class){
+                        R r = (R)obj;
+                        return r.count == this.count;
+                    }
+                    return false;
+                }
+                // 重写 compareTo(Object obj)方法, 根据count来比较大小
+                public int compareTo(Object obj){
+                    R r = (R)obj;
+                    return count > r.count ? 1: count < r.count ? -1 : 0;
+                }
+            }
+            public class TreeSetTest3{
+                public static void main(String[] args){
+                    TreeSet ts = new TreeSet();
+                    ts.add(new R(5));
+                    ts.add(new R(-3));
+                    ts.add(new R(9));
+                    ts.add(new R(-2));
+                    // 打印TreeSet集合, 集合元素是有序排列的
+                    System.out.println(ts);
+                    // 取出第一个元素
+                    R first = (R)ts.first();
+                    // 对第一个元素的count赋值
+                    first.count = 20;
+                    // 取出最后一个元素
+                    R  last = (R)ts.last();
+                    // 对最后一个元素的count赋值, 与第二个元素的count相同
+                    last.count = -2;
+                    // 再次输出将看到 TreeSet 里的元素处于无序状态, 且由重复的元素
+                    System.out.println(ts);
+                    // 删除实例变量被改变的元素, 删除失败
+                    System.out.println(ts.remove(new R(-2)));
+                    System.out.println(ts);
+                    // 删除实例变量没有被改变的元素, 删除成功
+                    System.out.println(ts.remove(new R(5)));
+                    System.out.println(ts);
+                }    
+            }
+            程序说明:
+                1. 与 HashSet 类似的是, TreeSet中包含可=可可变对象, 当可变对象的实例变量被修改时, TreeSet
+                    在处理这些对象时非常复杂, 而且容易错, 
+                2. 为了程序更加健壮, 尽量不要修改放入HashSet和TreeSet集合中元素的关键实例变量 
+                
