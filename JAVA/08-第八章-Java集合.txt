@@ -22,7 +22,7 @@
 
 2. Collection 和 Iterator 接口
     说明:
-        1. 由于 Collection 接口是 Set, List, Queue接口的付接口, 所以 Collection 接口定义的方法可用于操作
+        1. 由于 Collection 接口是 Set, List, Queue接口的父接口, 所以 Collection 接口定义的方法可用于操作
             Set, List, Queue集合
         2. 记住: 集合就像容器, 实现生活中容器的功能, 可添加对象, 删除对象, 清空对象, 判断容器是否为空等, 集
             合类就为这些功能提供了对应的方法
@@ -404,3 +404,195 @@
                 转换为 Stream对象, 然后调用 Stream对象的mapToInt() 方法将其转换为 IntStream; 这个过程中
                 mapToInt() 方法就是一个中间方法, 因此程序可以继续调用 IntStream 的 forEach 方法来遍历流
                 中的元素
+
+
+3. Set集合
+    说明:
+        1. Set集合不允许包含相同的元素, 如果试图把两个相同的元素加入同一个Set集合中, 则添加操作失败, add() 
+            方法返回false, 且新元素不会被加入
+        2. 着重学习Set接口的三个实现类: HashSet, TreeSet, EnumSet
+
+3.1 HashSet 类 
+    说明:
+        1. HashSet是set接口的典型实现类, HashSet按Hash算法来存储集合中的元素
+        2. 当向 HashSet 集合存一个元素时, Hashset 会调用该对象的 hashCode() 方法来获取该对象的HashCode值,
+            然后根据该hashCode值决定该对象在 HashSet 中的存储位置
+        3. 如果两个元素通过 equals()方法比较返回 true, 但他们的 hashCode()方法返回值不相等, HashSet 将会
+            把他们存储在不同的位置, 依然可以添加成功; 即 HashSet 集合判断两个元素相等的标准是两个对象通过
+            equals()方法比较相等, 并且两个对象的hashCode()方法的返回值也相等
+            
+    HashSet特点:
+        1. HashSet 不能保证元素的排列顺序, 顺序可能与添加顺序不同, 顺序也有可能发生变化
+        2. HashSet 不是同步的, 如果多个线程同时访问一个Hashset, 假设有两个或两个以上线程同时修改了 Hashset 
+            集合时, 则必须通过代码来保证其同步
+        3. HashSet 集合的元素可以是 null 
+     
+    例子:
+        // 通过类A,B,C, 他们分别重写了equals(),hashCode()两个方法的一个或全部, 通过这个例子:理解HashSet
+        //   集合判断两个元素相同的标准(equals()和hashCode()都相等)
+        // 类 A 的equals()方法总是返回true, 没有重写hashCode()方法
+        class A{
+            public boolean equals(){
+                return ture;
+            }
+        }
+        // 类 B 的hashCode() 方法总是返回1, 但是没有重写euqals()方法
+        class B {
+            public int hashCode(){
+                return 1;
+            }
+        }
+        // 类 C 的 hashCode()方法总是返回2, 且equals()方法总是返回true
+        class C {
+            public boolean equals(){
+                return true;
+            }
+            public int hashCode(){
+                return 2;
+            }
+        }
+        public class HashSetTest{
+            public static void main(String[] args){
+                HashSet books = new HashSet();
+                // 分别向books添加两个A对象, 两个B对象, 两个C对象
+                books.add(new A());
+                books.add(new A());
+                books.add(new B());
+                books.add(new B());
+                books.add(new C());
+                books.add(new C());
+                System.out.println(books);
+            }
+        }
+        程序说明:
+            1. 由于C类重写了equals()方法总是返回true, hashCode()方法总是返回2, 将导致HashSet把两个C对象
+                当成同一个对象
+            2. 即使连个A对象通过equals()方法返回true,但HashSet依然把他们当成两个对象, 即使两个B对象的
+                hashCode返回相同值, 但HashSet依然把他们当成两个对象
+            3. 注意: 如果两个对象通过equals()方法总是返回true,这两个对象的hashCode值也应该相等
+            4. 类B的equals()返回true,但是hashCode不同;这将会导致HashSet会把两个对象保存在Hash表的不同位置
+                从而是两个对象都可以添加成功, 这就与Set集合的规则起冲突了
+            5. HashSet中每个能存储元素的"槽位"(slot)通常称为"桶"(bucket), 如果有多个元素的hashCode值相同
+                但他们通过equals()方法比较返回false, 就需要在一个"桶"里放多个元素, 这样导致性能下降
+            6. 如果向 HashSet 中添加一个可变对象后, 后面程序修改了该可变对象的实例变量, 则可能导致它与集合
+                中的其他元素相同(即两个对象通过equals()方法比较返回true,两个对象的hashCode值也相等),这就
+                有可能导致 HashSet 中包含两个相同的对象(下面例子1)
+
+    重写hashCode()方法的基本规则:
+        1. 在程序运行过程中, 同一个对象多次调用HashCode()方法应该返回相同的值
+        2. 当两个对象通过equals()方法比较返回true时, 这两个对象的hashCode值也应该相等
+        3. 对象中用作equals()方法比较标准的实例变量, 都应该用于计算hashCode值
+
+    hashCode 值的计算方式:  
+        实例变量类型                          计算方式
+        boolean                             hashCode = (f?0:1);
+        整数类型(byet,short,char,int)        hashCode = int(f);
+        long                                hashCode = (int)(f^(f>>>32));
+        float                               hashCode = Float.flaotToIntBits(f);
+        double                              long i = Double.doubleToLongBits(f);
+                                            hashCode = (int)(i^(i>>>32));
+        引用类型                             hashCode = f.hashCode();
+
+    重写hashCode()方法的步骤:
+        1. 把对象内每个有意义的实例变量(即每个参与equals()方法比较标准的实例变量)计算出一个int类型的
+            hashCode值
+        2. 用第一步计算出的多个hashCode值组合计算出一个hashCode值返回, 为避免直接相加产生偶然相等,可以通过
+            为各实例变量的hashCode值乘以任意一个质数后再相加,如:
+            return f1.hashCode() * 19 + (int)f2 * 32;
+
+    例子1:
+        import java.util.HashSet;
+        import java.util.Iterator;
+
+        class R {
+            int count;
+            public R(int count){
+                this.count = count;
+            }
+            public String toString(){
+                return "R[count: " + count + " ]";
+            }
+            public boolean equals(Object obj){
+                if(this == obj){
+                    return true;
+                }
+                if(obj != null && obj.getClass() == R.class){
+                    R r = (R)obj;
+                    return this.count == r.count;
+                }
+                return false;
+            }
+            public int hashCode(){
+                return this.count;
+            }
+        }
+        public class HashSetTest2{
+            public static void main(String[] args){
+                HashSet hs = new HashSet();
+                hs.add(new R(5));
+                hs.add(new R(-3));
+                hs.add(new R(9));
+                hs.add(new R(-2));
+                // 打印HashSet集合, 集合元素没有重复
+                System.out.println(hs);
+                // 取出第一个元素
+                Iterator it = hs.iterator();
+                R first = (R)it.next();
+                // 为第一个元素count实例变量赋值
+                first.count = -3;   // ①
+                // 再次输出 HashSet 集合, 集合元素有重复元素
+                System.out.println(hs);
+                // 删除count为-3的R对象
+                hs.remove(new R(-3));    // ②
+                // 可以看到被删除了一个R元素
+                System.out.println(hs);
+                System.out.println("hs是否包含count为-3的R对象?"
+                    + hs.contains(new R(-3))); // 输出 false 
+                System.out.println("hs是否包含count为-2的R对象?"
+                    + hs.contains(new R(-2))); // 输出 false
+            }
+        }
+        程序说明:
+            1. 当向HashSet中添加可变对象时, 如果修改HashSet集合中的对象, 有可能导致该对象与集合中的其他对象
+                相等, 从而导致HashSet无法准确访问该对象
+
+3.2 LinkedHashSet 类 
+    说明:
+        1. LinkedHashSet 集合也是根据元素的hashCode值来决定元素的存储位置, 但它同时使用链表维护元素的次序,
+            这样使得元素看起来是以插入的顺序保存的; 即:当遍历 LinkedHashSet 集合里的元素时, LinkedHashSet
+            将会按元素的添加顺序来访问集合里的元素(但它依然是HashSet,不允许集合元素重复)
+        2. LinkedHashSet 需要维护元素的插入顺序, 因此性能略低于 HashSet 的性能, 但在迭代访问 Set 里的全部
+            元素时将有很好的性能, 因此它以链表来维护内部顺序
+        3. 一句话: LinkedHashSet 集合的元素,访问元素的顺序和添加元素的顺序一致
+    
+    例子:
+        import java.util.LinkedHashSet;
+
+        public class LinkedHashSetTest {
+            public static void main(String[] args){
+                LinkedHashSet books = new LinkedHashSet();
+                books.add("python");
+                books.add("Java");
+                System.out.println(books);    // out: [python, Java]
+                // 删除 python 
+                books.remove("python");
+                // 重新添加 python 
+                books.add("python");
+                System.out.println(books);    // out: [Java, python]
+            }
+        }
+
+
+3.3 TreeSet 类
+    说明:
+        1. TreeSet是SortedSet接口的实现类, TreeSet可以确保集合元素处于排序状态
+    
+    TreeSet 提供的方法:
+        1. Comparator comparator()
+            说明: 如果 TreeSet 采用了定制排序, 则该方法返回定制排序所使用的 Comparator; 如果 TreeSet 采用
+                了自然排序, 则返回null
+        2. Object first()
+            说明: 返回集合中的第一个元素
+        3. Object last()
+            说明: 返回集合中的最后一个元素
+        
