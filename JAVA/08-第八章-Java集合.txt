@@ -797,4 +797,333 @@
                 1. 与 HashSet 类似的是, TreeSet中包含可=可可变对象, 当可变对象的实例变量被修改时, TreeSet
                     在处理这些对象时非常复杂, 而且容易错, 
                 2. 为了程序更加健壮, 尽量不要修改放入HashSet和TreeSet集合中元素的关键实例变量 
-                
+
+    定制排序:
+        说明:
+            1. 通过Comparator接口实现定制排序, 该接口包含一个 int compare(T o1, T o2)方法, 该方法用于比较
+                o1和o2的大小: 如果该方法返回正整数, 则表明o1大于o2, 如果该方法返回0,则表明o1等于o2; 如果该
+                方法返回负整数, 则表明o1小于o2
+            2. 要实现定制排序, 则需要在创建TreeSet集合对象时, 提供一个 Comparable 对象与该 TreeSet集合关联
+                由该 Comparable 对象负责集合元素的排序逻辑; 由于 Comparable 是一个函数式接口, 可使用Lambda
+                表达式来代替Comparator对象(例子1)
+            3. 当通过 Comparator 对象(或lambda表达式)来实现TreeSet的定制排序时, 依然不可以向TreeSet中添加
+                类型不同的对象, 否则也会引发ClassCastExxeption异常
+            4. 使用定制排序时, TreeSet对集合元素排序不管集合元素本身的大小, 而是由 Comparator对象(或lambda
+                表达式)负责集合元素的排序规则. TreeSet判断两个集合元素相等的标准是: 通过 Comparator (或者
+                Lambda表达式)比较两个元素返回了0, 这样TreeSet不会把第二个元素添加到集合中
+            
+        例子1:
+            class M{
+                int age;
+                public M(int age){
+                    this.age = age;
+                }
+                public String toString(){
+                    return "M[age: " + age + " ]";
+                }
+            } 
+            public class TreeSetTest4{
+                 public static void main(String[] args){
+                    // 此处 Lambda 表达式的目标类型是 Comparator
+                    TreeSet ts = new TreeSet((o1, o2) -> {
+                        M m1 = (M)o1;
+                        M m2 = (M)o2;
+                        // 根据M对象的 age 属性来决定大小, age 越大, M对象反而越小
+                        return m1.age > m2.age ? -1 : m1.age < m2.age ? 1 : 0;
+                    });
+                    ts.add(new M(5));
+                    ts.add(new M(-3));
+                    ts.add(new M(9));
+                    ts.add(new M(-10));
+                    ts.add(new M(0));
+                    // out: [M[age: 9 ], M[age: 5 ], M[age: 0 ], M[age: -3 ], M[age: -10 ]]
+                    System.out.println(ts);
+                 }    
+            }
+            程序说明:
+                1. 上述例子中的Lambda表达式部分使用了目标类型为Comparator, 它负责ts集合的排序
+                2. 当把M对象添加到ts集合中时, 无须M类实现Comparable接口, 因此此时TreeSet无须通过M对象本身
+                    来比较大小, 而是由与TreeSet关联的Lambda表达式来负责集合元素的排序
+
+3.4 EnumSet 类 
+    说明:
+        1. EnumSet是一个专为枚举类设计的集合类, EnumSet中所有元素都必须是指定枚举类型的枚举值, 该枚举类型在
+            创建EnumSet时显式或隐式的指定
+        2. EnumSet 的集合元素也是有序的, EnumSet以枚举值在Enum类内的定义顺序来决定集合元素的顺序
+        3. EnumSet 在内部以位向量的形式存储, 这种存储形式非常紧凑, 高效, EnumSet对象占用内存很小, 而且运行
+            效率很高; 尤其是进行批量操作(如调用containsAll()和retainAll()方法)时, 如果参数只是EnumSet集合,
+            则该批量操作的执行速度也非常快
+        4. EnumSet集合不允许加入null元素, 如果试图插入null元素, 则会报NullPointerException异常; 判断
+            EnumSet是否包含null元素和试图删除null元素都不会抛出异常(删除操作返回false)
+        5. EnumSet类没有提供构造器来创建该类的实例, 程序应该通过它提供的类方法来创建EnumSet对象
+    
+    EnumSet类创建EnumSet对象的方法:
+        1. EnumSet allOf(Class elementType) 
+            说明: 创建一个包含指定枚举类里所有枚举值的EnumSet集合
+        2. EnumSet complementOf(EnumSet s)
+            说明: 创建一个其元素类型与指定EnumSet里元素类型相同的EnumSet集合, 新EnumSet集合包含原EnumSet集
+                合所不包含的, 此枚举类剩下的枚举值(即新EnumSet集合和原EnumSet集合的集合元素加起来就是该枚举
+                类的所有枚举值)
+        3. EnumSet copyOf(Collection c)
+            说明: 使用一个普通集合来创建EnumSet集合(当复制Collection集合中的所有元素来创建新的EnumSet集合时
+                要求Collection集合中的所有元素必须是同一个枚举类的枚举值)(例子2)
+        4. EnumSet copyOf(EnumSet s)
+            说明: 创建一个与指定 EnumSet 具有相同元素类型, 相同集合元素的EnumSet集合
+        5. EnumSet noneOf(class elementType)
+            说明: 创建一个元素类型为指定枚举类型的空EnumSet
+        6. EnumSet of(E first, E... rest)
+            说明: 创建一个包含一个或多个枚举值的EnumSet集合, 传入的多个枚举值必须属于同一个枚举类
+        7. EnumSet range(E from, E to)
+            说明: 创建一个包含从 from 到 to 枚举值范围内所有枚举值的EnumSet集合 
+        
+    例子1:
+        // 如何使用EnumSet来保存枚举类的多个枚举值
+        import java.util.EnumSet;
+
+        enum Season {
+            SPRING, SUMMER, FALL, WINTER
+        }
+        public class EnumSetTest{
+            public static void main(String[] args){
+                // 创建一个EnumSet集合, 集合元素就是Season枚举类的全部枚举值
+                EnumSet es1 = EnumSet.allOf(Season.class);
+                System.out.println(es1); // 输出[SPRING, SUMMER, FALL, WINTER]
+                // 创建一个EnumSet空集合, 指定其集合元素是Season类的枚举类
+                EnumSet es2 = EnumSet.noneOf(Season.class);
+                System.out.println(es2); // 输出[]
+                // 手动添加两个元素
+                es2.add(Season.WINTER);
+                es2.add(Season.SPRING);
+                System.out.println(es2); // 输出 [SPRING, WINTER]
+                // 以指定枚举值创建EnumSet集合
+                EnumSet es3 = EnumSet.of(Season.SUMMER, Season.WINTER);
+                System.out.println(es3); // 输出[SUMMER, WINTER]
+                EnumSet es4 = EnumSet.range(Season.SUMMER, Season.WINTER);
+                System.out.println(es4); // 输出[SUMMER, FALL, WINTER]
+                // 新创建的EnumSet集合元素和es4集合元素有相同的类型
+                // es5集合元素 + es4集合元素 = Season雷剧类的全部枚举值
+                EnumSet es5 = EnumSet.complementOf(es4);
+                System.out.println(es5); // 输出[SPRING]
+            }
+        }
+    
+    例子2:
+        public class EnumSetTest2{
+            public static void main(String[] args){
+                Collection c = new HashSet();
+                // 清空集合元素
+                c.clear();
+                c.add(Season.FALL);
+                c.add(Season.SPRING);
+                // 复制Collection集合中的所有元素来创建EnumSet集合
+                EnumSet es = EnumSet.copyOf(c);
+                System.out.println(es); // 输出[SPRING, FALL]
+                c.add("Python");
+                c.add("Love Java");
+                // 下面的代码出现异常: 因为c集合里的元素不是全部都为枚举值
+                es = EnumSet.copyOf(c);
+            }
+        }
+3.5 各 Set 实现类的性能分析
+    1. HashSet 的性能总是比TreeSet好(特别是最常用的添加, 查询元素等操作), 因为TreeSet需要额外的红黑树算法来
+        维护集合元素的次序
+    2. 只有当需要一个保持排序的Set时, 才应该使用TreeSet, 否则都应该使用 HashSet
+    3. LinkedHashSet 对于普通的插入, 删除操作, LinkedHashSet 比 HashSet 要略微慢一点, 这是由于维护链表所
+        带来的额外开销造成的, 但由于链表, 遍历LinkedHashSet会更快
+    4. EnumSet 是所有的Set实现类中性能最好的, 但它只能保存同一个枚举类的枚举值作为集合元素
+    5. 注意: Set 的三个实现类 HashSet, TreeSet, EnumSet都是线程不安全的, 多线程的情况下需要在创建时通过
+        Collections工具类的 SynchronizedSortedSet方法来"包装"该Set集合, 以防止对Set集合的意外非同步访问
+        如: SortedSet s = Collections.SynchronizedSortedSet(new TreeSet(...));
+
+
+
+4. List 集合
+    说明: 
+        1. List集合代表的一个元素有序, 可重复的集合, 契合中每个元素都有其对应的顺序索引
+        2. List 集合允许使用重复元素, 可以通过索引来访问指定位置的集合元素, List集合默认按照元素的添加顺序
+            设置元素的索引
+        3. List集合可以使用普通的for循环来遍历集合元素
+        4. List 集合判断两个对象相等只要通过equals方法比较返回true即可(例子2)
+
+4.1 Java8改进的List接口和ListIterator接口(例子1)
+    List根据索引来访问元素的方法:
+        1. void add(int index, Object element)
+            说明: 将元素element插入到List集合的index索引处
+        2. boolean addAll(int index, Collection c)
+            说明: 将集合c包含的所有元素都插入到List集合的index索引处
+        3. Object get(int index)
+            说明: 返回List集合index索引处的元素
+        4. int indexOf(Object o)
+            说明: 返回对象 o 在List集合中第一次出现的位置索引
+        5. int lastIndexOf(object o)
+            说明: 返回对象o在List集合中最后一次出现的位置索引
+        6. Object remove(int index)
+            说明: 删除并返回index索引处的元素
+        7. Object set(int index, Object element)
+            说明: 将index所引出的元素替换成element对象, 返回被替换的旧元素(使用该方法时, 指定的索引必须是
+                List集合的有效索引; 该方法并不会改变List集合的长度)
+        8. List subList(int fromIndex, int toIndex)
+            说明: 返回从索引fromIndex(包含)到索引toIndex(不包含)处所有集合元素组成的子集合
+        9. void replaceAll(UnaryOperator operator)
+            说明: 根据operator指定的计算规则重新设置List集合的所有元素(例子3)
+        10. void sort(Comparator c)
+            说明: 根据Comparator参数对List集合的元素排序(例子3)
+
+    例子1:
+        import java.util.ArrayList;
+        import java.util.List;
+
+        // List集合根据索引来访问元素的方法
+        public class LsitTest{
+            public static void main(String[] args) {
+                List books = new ArrayList();
+                // 向books集合中添加三个元素
+                books.add(new String("You Love Python"));
+                books.add(new String("Yes I Love Java"));
+                books.add(new String("Do U Want A Python Note"));
+                System.out.println(books);
+                // 将新字符串对象插入在第二个位置
+                books.add(1, new String("Crazy Java Note"));
+                for (int i = 0; i < books.size(); i++){
+                    System.out.println(books.get(i));
+                }
+                // 删除第三个元素
+                books.remove(2);
+                System.out.println(books);
+                // 判断指定元素在List集合中的位置
+                System.out.println(books.indexOf(new String("Crazy Java Note")));
+                // 将第二个元素替换成新的字符串对象
+                books.set(1, new String("Hello world"));
+                System.out.println(books);
+                // 将books集合的第二个元素(包括)
+                // 到第三个元素(不包括)截取成子集合
+                System.out.println(books.subList(1, 2));
+            }
+        }
+    例子2:
+        import java.util.ArrayList;
+        import java.util.List;
+
+        class A {
+            public boolean equals(Object obj){
+                return true;
+            }
+        }
+        public class ListTest2{
+            public static void main(String[] args){
+                List books = new ArrayList();
+                // 向books集合中添加三个元素
+                books.add(new String("You Love Python"));
+                books.add(new String("Yes I Love Java"));
+                books.add(new String("Do U Want A Python Note"));
+                System.out.println(books);
+                // 删除集合中的A对象, 将导致第一个元素被删除
+                books.remove(new A());    // ①
+                System.out.println(books);
+                // 删除集合中的A对象, 再次删除集合中的第一个元素
+                books.remove(new A());     // ② 
+                System.out.println(books);
+            }
+        }
+        程序说明:
+            1. 执行①处的代码时, 程序试图删除一个A对象, List将会调用该A对象的equals()方法依次与该集合元素进
+                行比较, 如果该equals()方法以某个集合元素作为参数时返回true, List将会删除该元素, A类重写了
+                equals()方法, 该方法总是返回true, 所以每次从List集合中删除A对象时, 总是删除List集合中的第
+                一个元素
+
+    例子3:
+        import java.util.ArrayList;
+        import java.util.List;
+
+        public class ListTest3 {
+            public static void main(String[] args){
+                List books = new ArrayList();
+                // 向books集合中添加四个元素
+                books.add(new String("Python"));
+                books.add(new String("Java"));
+                books.add(new String("JavaScript"));
+                books.add(new String("Linux"));
+                // 使用目标类型为comparator的Lambda表达式对List集合排序
+                books.sort((o1, o2) -> ((String)o1).length() - ((String)o2).length());   // ①
+                System.out.println(books);  // out: [Java, Linux, Python, JavaScript]
+                // 使用目标类型为UnaryOperator的Lambda表达式来替换集合中所有元素
+                // 该lambda表达式控制使用每个字符传的长度作为新的集合元素
+                books.replaceAll(ele -> ((String)ele).length());    // ②
+                System.out.println(books);  // out: [4, 5, 6, 10]
+            }
+            程序说明:
+                1. ①处的代码控制对List集合进行排序, 传给sort()方法的Lambda表达式指定的排序规则是: 字符串长  
+                    度越长, 字符串越大, 因此①处的代码执行完之后, List集合中的字符串会按由短到长的顺序排序
+                2. ②处的代码传给replaceAll()方法的Lambda表达式指定了替换集合元素的规则: 直接用集合元素(字
+                    符串)的长度作为新的集合元素.
+    
+    List集合的listIterator()方法:
+        说明: 1. 该方法返回一个ListIterator对象, ListIterator接口继承了Iterator接口, 提供了专门的操作List
+                的方法
+            2. 使用 ListIterator 迭代List集合时, 开始也需要采用正向迭代, 即先使用next()方法进行迭代, 在迭
+                代过程中可以使用add()方法向上一次迭代元素的后面添加一个新元素
+
+        ListIterator接口在Iterotor接口基础上增加的方法:(例子1)
+            1.  boolean hasPrevious()
+                说明: 返回该迭代器关联的集合是否还有上一个元素
+            2. Object previous()
+                说明: 返回该迭代器的上一个元素
+            3. void add(Object o)
+                说明: 在指定位置插入一个元素
+
+        ListIterator 和 Iterator 的区别:
+            1. ListIterator增加了向前迭代的功能(Iterator只能向后迭代), 而且ListIterator还可通过add()方法
+                向List集合中添加元素(Iterator只能删除元素)
+
+        例子1:
+            import java.util.ArrayList;
+            import java.util.List;
+            import java.util.ListIterator;
+
+            public class ListIteratorTest {
+                public static void main(String[] args){
+                    String[] books = new String[]{
+                        "Python", "Java", "JavScript", "Linux"
+                    };
+                    List bookList = new ArrayList();
+                    for (int i = 0; i < books.length; i++){
+                        bookList.add(books[i]);
+                    }
+                    ListIterator lit = bookList.listIterator();
+                    while(lit.hasNext()){
+                        System.out.println(lit.next());
+                        lit.add("----------分隔符-----------");
+                    }
+                    System.out.println("======下面开始反向迭代======");
+                    while(lit.hasPrevious()){
+                        System.out.println(lit.previous());
+                    }
+                }
+            }
+
+4.2 ArrayList 和 Vector 实现类
+    说明:
+        1. ArrayList 和 Vector 是 List的实现类, 支持List接口的全部功能
+        2. ArrayList 和 Vector 类都是基于数组实现的List类, 所以ArrayList 和 Vector类封装了一个动态的, 允
+            许再分配的Object[] 数组
+        3. ArrayList 或 Vector 对象使用 initialCapacity参数来设置该数组的长度, 当向ArrayList 或 Vector
+            中添加大量元素时, 可使用 ensureCapacity(int minCapacity)方法一次性地增加 initialCapacity,
+            这可以减少重分配的次数, 从而提高性能
+        4. 如果知道 ArrayList 或 Vector 集合需要保存多少个元素, 则可以在创建他们时就指定 initialCapacity
+            的大小; 如果创建空的 ArrayList 或 Vector 集合时不指定 initialCapacity参数, 则 Object[]数组的
+            长度默认为10
+        
+    ArrayList 和 Vector 重分配 Object[]数组的方法:
+        1. void ensureCapacity(int minCapacity)
+            说明: 将 ArrayList 或 Vector 集合的 Object[] 数组长度增加大于或等于 minCapacity 值 
+        2. void trimToSize()
+            说明: 调整 ArrayList 或 Vector 集合的 Object[] 数组长度为当前元素的个数, 调用该方法可减少
+                ArrayList 或 Vector 集合对象占用的存储空间
+
+    ArrayList 和 Vector 的区别:
+        1. ArrayList 是线程不安全的, 当多个线程访问同一个 ArrayList 集合时, 如果有超过一个线程修改了 
+            ArrayList 集合, 则程序必须手动保证该集合的同步性;
+        2. Vector 集合则是线程安全的, 无须程序保证集合的同步性; 因为 Vector 是线程安全的, 所以性能略低与
+            ArrayList集合
+        3. 不推荐使用 Vector 的实现类
+    
