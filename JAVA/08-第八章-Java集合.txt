@@ -1126,4 +1126,87 @@
         2. Vector 集合则是线程安全的, 无须程序保证集合的同步性; 因为 Vector 是线程安全的, 所以性能略低与
             ArrayList集合
         3. 不推荐使用 Vector 的实现类
+        4. Vector 提供一个 Stack子类, 用于模拟"栈"这种数据结构, "栈"通常是"后进先出"(LIFO)的容器; 不使用
+        5. ArrayDeque 也是 List 的实现类, ArrayDeque 既实现了List接口, 也实现了Deque接口, 因此也可以作为
+            栈来使用; 因为 ArrayDeque 底层是基于数组的实现, 所以性能也较好.
+
+4.3 固定长度的 List 
+   说明:
+        1. 操作数组的工具类: Arrays, 提供一个 asList(Object... a)方法, 可以把一个数组或指定个数的对象转换
+            成一个List集合, 这个List集合既不是ArrayList实现类的实例, 也不是Vector实现类的实例, 而是Arrays
+            的内部类ArrayList的实例
+        2. Arrays.ArrayList 是一个固定长度的List集合, 程序只能遍历访问该集合里的元素, 不能增加, 删除该集合
+            里的元素
+    例子:
+        import java.util.Arrays;
+        import java.util.List;
+
+        public class FixedSizeList {
+            public static void main(String[] args){
+                List fixedList = Arrays.asList("python", "java", "C");
+                // 获取fixedList的实现类, 将输出 java.util.Arrays$ArrayList
+                System.out.println(fixedList.getClass());
+                // 使用方法引用遍历集合元素
+                fixedList.forEach(System.out::println);
+                // 试图增加, 删除元素都会引发 UnsupportedOperationException 异常
+                // fixedList.add("New Python");
+                // fixedList.remove("python");
+            }
+        }
+
+
+5. Queue 集合
+    说明:
+        1. Queue 用于模拟队列这种数据结构, 队列通常指"先进先出"(FIFO)的容器, 队列的头部保存在队列中存放时间
+            最长的元素, 队列的尾部保存在队列中存放时间最短的元素
+        2. 新元素插入(offer)到队列的尾部,访问元素(poll)操作返回队列头部的元素; 通常队列不允许随机访问队列中
+            的元素
+        3. Queue 接口有一个 PriorityQueue 实现类, 也有一个 Deque 接口, Deque 接口代表一个"双端队列", 双端 
+            队列可以同时从两端来添加, 删除元素, 因此 Deque 的实现类既可当成队列使用, 也可当成栈使用
+        4. Deque 接口提供 ArrayDeque 和 LinkedList 两个实现类 
+
+    Queue 接口中定义的方法:
+        1. void add(Object e)
+            说明: 将指定元素加入此队列的尾部
+        2. Object element()
+            说明: 获取队列头部的元素, 但是不删除该元素
+        3. boolean offer(Object e)
+            说明: 将指定元素加入此队列的尾部, 当使用有容量限制的队列时, 此方法通常比 add(Object e)方法更好
+        4. Object peek()
+            说明: 获取队列头部的元素, 但是不删除该元素, 如果此队列为空, 则返回null 
+        5. Object poll()
+            说明: 获取队列头部的元素, 并删除该元素,如果此队列为空, 则返回null 
+        6. Object remove()
+            说明: 获取队列头部的元素, 并删除该元素
+
+5.1 PriorityQueue 实现类      
+    说明:
+        1. PriorityQueue 是一个比较标准的队列实现类, 因为PriorityQueue保存队列元素的顺序并不是按加入队列的
+            顺序, 而是按照队列元素的大小进行重新排序
+        2. 当调用 peek()方法或者poll()方法取出队列中的元素时, 并不是取出最先进入队列的元素, 而是取出队列中
+            最小的元素
+        3. PriorityQueue 不允许插入null 元素
     
+    PriorityQueue 的元素的两种排序方式:
+        1. 自然排序: 采用自然顺序的 PriorityQueue 集合中的元素必须实现 Comparable 接口, 而且应该是同一个类
+            的多个实例, 否则可能导致ClassCastException异常
+        2. 定制排序: 创建 PriorityQueue 队列时, 传入一个 Comparator 对象, 该对象负责对队列中的所有元素进行
+            排序; 采用定制排序时不要求队列元素实现 Comparable 接口 
+    
+    例子:
+        import java.util.PriorityQueue;
+        public class PriorityQueueTest{
+            public static void main(String[] args){
+                PriorityQueue pq = new PriorityQueue();
+                // 下面的代码依次向pq中加入4个元素
+                pq.offer(6);
+                pq.offer(-3);
+                pq.offer(20);
+                pq.offer(18);
+                // 输出pq队列, 并不是按元素的加入顺序排序
+                System.out.println(pq);
+                // 访问队列中的第一个元素, 就是队列中最小的元素
+                System.out.println(pq.poll());
+
+            }
+        }
