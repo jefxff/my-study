@@ -660,7 +660,7 @@
                 个对象通过compareTo(Object obj)方法比较返回0, (例子4)
             
         关于 Comparable接口:
-            1. 该接口里定义了compareTo(Object obj)方法, 该方法返回一个整数值, 实现该接口的类必须是实现该
+            1. 该接口里定义了compareTo(Object obj)方法, 该方法返回一个整数值, 实现该接口的类必须实现该
                 方法, 实现了该接口的类的对象就可以比较大小
             2. 当一个对象调用该方法与另一个对象比价大小的时候, 例如 obj1.compareTo(obj2), 如果该方法返回0,
                 则表明两个对象相等, 如果返回一个正整数, 则表明obj1大于obj2, 返回一个负整数, 则说明obj1小于
@@ -1210,3 +1210,267 @@
 
             }
         }
+
+5.2 Deque 接口与 ArrayDeque 实现类
+    说明:
+        1. Deque 接口是Queue 接口的子接口, 它代表一个双端队列, Deque 接口里定义了一些双端队列的方法, 这些方
+            法允许从两端来操作队列的元素
+        2. 通过 Deque 提供的 opo() 和 push() 方法, 还可以将双端队列当成一个栈来使用(例子1)
+        3. ArrayDeque 是 Deque 的实现类, 是一个基于数组实现的双端队列, 创建 Deque 时同样可以指定一个
+            numElements 参数, 该参数用于指定 Objcet[] 数组的长度; 如果不指定 numElements 参数的长度, 
+            Deque 底层数组的长度是 16  
+        4. ArrayList 和 ArrayDeque 两个集合类的实现机制基本相似, 他们底层都采用一个动态的, 可重分配的 
+            Object[] 数组来存储集合元素, 当集合元素超出了该数组的容量时, 系统会在底层重新分配一个 Object[]
+            数组来存储集合元素
+        5. ArrayDeque 既可作为 "栈" 来使用, 也可以作为队列来使用, 当需要使用 "栈" 这种数据结构时, 优先使用
+            ArrayDeque;
+
+    Deque 接口里定义的方法:
+        1. void addFirst(Object obj)
+            说明: 将指定元素插入到该双端队列的开头
+        2. void addLast(Object obj)
+            说明: 将指定元素插入到该双端队列的末尾
+        3. Iterator descendingIterator()
+            说明: 返回该双端队列对应的迭代器, 该迭代器将以逆向顺序来迭代队列中的元素
+        4. Object getFirst()
+            说明: 获取但不删除双端队列的第一个元素
+        5. Object getLast()
+            说明: 获取但不删除双端队列的最后一个元素
+        6. boolean offerFirst(Object e)
+            说明: 将指定元素插入到该双端队列的开头 
+        7. boolean offerLast(Object e)
+            说明: 将指定元素插入到该双端队列的末尾
+        8. Object peekFirst()
+            说明: 获取但不删除该双端队列的第一个元素; 如果此双端队列为空, 则返回null
+        9. Object peekLast()
+            说明: 获取但不删除该双端队列的最后一个元素; 如果此双端队列为空, 则返回null
+        10. Object pollFirst()
+            说明: 获取并删除该双端队列的第一个元素; 如果此双端队列为空, 则返回null
+        11. Object pollLast()
+            说明: 获取并删除该双端队列的最后一个元素; 如果此双端队列为空, 则返回null
+        12. Object pop()
+            说明: (栈方法) pop 出该双端队列所表示的栈的栈顶元素, 相当于 removeFirst()
+        13. void push(Object e)
+            说明: (栈方法) 将一个元素 push 进该双端队列所表示的栈的栈顶, 相当于 addFirst(e)
+        14. Object removeFirst()
+            说明: 获取并删除该双端队列的第一个元素
+        15. Objcet removeFirstOccurrence(Object o)
+            说明: 删除该双端队列的最后一次出现的元素 o 
+        16. Objcet removeLast()
+            说明: 获取并删除该双端队列的最后一个元素
+        17. boolean removeLastOccurrence(Object o)
+            说明: 删除该双端队列的最后一次出现的元素 o 
+        
+    例子1:
+        import java.util.ArrayDeque;
+
+        // 把 ArrayDeque 当成一个 "栈" 来使用 
+        public class ArrayDequeStack{
+            public static void main(String[] args){
+                ArrayDeque stack = new ArrayDeque();
+                // 一次将三个元素 push 入 "栈"
+                stack.push("Python");
+                stack.push("Java");
+                stack.push("JavaScript");
+                System.out.println(stack);   // out: [JavaScript, Java, Python]
+                // 访问第一个元素, 但并不将其pop出"栈", 输出: Python 
+                System.out.println(stack.peek());   // out: JavaScript
+                System.out.println(stack);   // out: [JavaScript, Java, Python]
+                System.out.println(stack.pop());   // out: JavaScript
+                System.out.println(stack);   // out: [Java, Python]
+            }
+        }
+    
+    例子2:
+        import java.util.ArrayDeque;
+
+        // 把 ArrayDeque 当成一个 "队列" 来使用 ("先进先出")
+        public class ArrayDequeQueue{
+            public static void main(String[] args) {
+                ArrayDeque queue = new ArrayDeque();
+                queue.push("Python");
+                queue.push("Java");
+                queue.push("JavaScript");
+                System.out.println(queue);   // out: [JavaScript, Java, Python]
+                // 访问队列头部的元素, 但并不讲其 poll 出队列 "栈"
+                System.out.println(queue.peek());  // out: JavaScript
+                System.out.println(queue);   // out: [JavaScript, Java, Python]
+                // poll 出第一个元素
+                System.out.println(queue.poll());  // out: JavaScript
+                System.out.println(queue);    // out: [Java, Python]
+            }
+        }
+
+5.3 LinkedList 实现类 
+    说明:
+        1. LinkedList 是 List 接口的实现类, 是一个List集合, 可以根据索引来随机访问集合中的元素
+        2. LinkedList 也实现了Deque接口, 可以被当成双端队列来使用, 所以也可以被当作 "栈" 来使用, 也可以被
+            当成队列来使用 (例子1)
+        3. LinkedList 和 ArrayList, ArrayDeque 的实现机制完全不同, ArrayList, ArrayDeque 内部以数组的形
+            式来保存集合中的元素, 因此随机访问集合元素时有较好的性能; 而 LinkedList 内部以链表的形式来保存
+            集合中的元素, 因此随机访问集合元素时性能较差, 但是在插入, 删除元素时性能比较好(只需改变指针所指
+            的地址即可). 虽然 Vector 也是以数组的形式来存储集合元素的, 但因为它实现了线程同步的功能(实现机制
+            也不好), 所以各方面性能都比较差
+        4. 对于所有内部基于数组的集合实现, 如 ArrayList, ArrayDeque 等, 使用随机访问的性能都比使用 Iterator
+            迭代访问的性能要好, 因为随机访问会被映射成对数组元素的访问
+
+    例子1:
+        import java.util.LinkedList;
+
+        public class LinkedListTest {
+            public static void main(String[] args) {
+                LinkedList books = new LinkedList();
+                // 将字符串元素加入队列的尾部
+                books.offer("Python");
+                // 将一个字符串元素加入栈的顶部
+                books.push("Java");
+                System.out.println(books);
+                // 将字符串元素添加到队列的头部(相当于栈的栈顶)
+                books.offerFirst("JavaScript");
+                // 以List的方式(按索引访问的方式)来遍历集合元素
+                for (int i = 0; i < books.size(); i++){
+                    System.out.println("遍历中: " + books.get(i));
+                }
+                // 访问并不删除栈顶的元素
+                System.out.println(books.peekFirst());
+                // 访问并不删除队列的最后一个元素
+                System.out.println(books.peekLast());
+                // 将栈顶的元素弹出 "栈"
+                System.out.println(books.pop());
+                // 下面的输出将看到第一个元素被删除
+                System.out.println(books);
+                // 访问并删除队列的最后一个元素
+                System.out.println(books.pollLast());
+                System.out.println(books);
+            }
+        }
+
+
+5.4 各种线性表的性能分析
+    说明:
+        1. List 就是一个线性表接口, 而 LinkedList 和 ArrayList 是基于数组的线性表和基于链的线性表的两种典
+            型实现; Queue 代表了队列, Deque 代表了双端队列(既可作为队列使用, 也可以作为栈使用)
+        2. LinkedList 集合不仅提供了List的功能, 也提供了双端队列, 栈的功能
+        3. ArrayList 的性能比 LinkedList 的性能要好
+    
+    使用List集合注意点:
+        1. 如果需要遍历List集合元素, 对于ArrayList, Vector 集合, 应该使用随机访问方法(get)来遍历集合元素, 
+            这样性能更好; 对于LinkedList 集合, 则应该采用迭代器(Iterator)来遍历集合元素
+        2. 如果需要经常执行插入, 删除操作来改变包含大量数据的 List 集合的大小, 可考虑使用 LinkedList 集合, 
+            因为使用 ArrayList 和 Vector 集合可能需要经常重新分配内部数组的大小, 效果可能较差
+        3. 如果有多个线程需要同时访问List集合中的元素, 可以考虑使用Collections将集合包装成线程安全的集合 
+
+
+
+6. Java 8 增强的 Map 集合
+    说明:
+        1. Map 用于保存具有映射关系的数据, 因此Map集合里保存着两组值, 一组值用于保存Map里的Key, 另外一组值
+            用于保存Map里的value
+        2. Key 和 value 都可以是引用数据类型, key不允许重复(即同一个Map对象的任何两个key通过equals方法比较
+            总是返回false)
+        3. Map中的key和value之间存在单向的一对一关系, 即通过指定的key,总能找到唯一的, 确定的value; 从Map中
+            取出数据时, 只要给出指定的key,你可以取出对应的value
+        4. 如果把Map里的所有key放在一起来看, 他们就组成了一个Set集合(所有的key没有顺序, key和key之间不能重
+            复), 所以Map包含了一个 keySet()方法, 用于返回Map里所有key组成的Set集合
+        5. Map接口中有 HashMap, LinkedHashMap, SortedMap(接口), TreeMap, EnumMap等子接口和实现类 
+        6. 如果将Map中的所有value放在一起来看, 他们非常类似与一个List(元素与元素之间可以重复, 每个元素可以
+            根据索引来查找), 只是Map中索引不再使用整数值, 而是以另外一个对象作为索引
+        7. Map最典型的用法: 就是成对的添加, 删除key-value对, 接下来即可判断该Map中是否包含指定的key, 是否
+            包含指定的value, 也可以通过Map提供的keySet()方法获取所有key组成的集合, 进而遍历Map中所有的
+            key-value 对 (例子1)
+    
+    Map接口中定义的方法:
+        1. void clear()
+            说明: 删除该Map对象中所有的key-value对
+        2. boolean containsKey(Object Key)
+            说明: 查询Map中是否包含指定的key, 如果包含则返回true
+        3. boolean containsValue(Object value)
+            说明: 查询Map中是否包含一个或多个value, 如果包含则返回true
+        4. Set entrySet()
+            说明: 返回Map中包含的 key-value 对所组成的Set集合, 每个集合元素都是 Map.Entry (Entry是Map的
+                内部类)对象
+        5. Object get(Object key)
+            说明: 返回指定key所对应的value; 如果此Map中不包含该key, 则返回null
+        6. boolean isEmpty()
+            说明: 查询该Map是否为空(即不包含任何Key-value对), 如果为空则返回true
+        7. Set KetSet()
+            说明: 返回该Map中所有key组成的Set集合
+        8. Object put(Object key, Object value)
+            说明: t添加一个key-value 对, 如果当前Map中已有一个与该key相等的key-value对, 则新的 key-value
+                对会覆盖原来的 key-value 对 
+        9. void putAll(Map m)
+            说明: 将指定的Map中的key-value对复制到本Map中 
+        10. Object remove(Object key)
+            说明: 删除指定key所对应的key-value对, 返回被删除key所关联的value, 如果key不存在, 则返回null 
+        11. boolean remove(Object key, Objcet value)
+            说明: Java8增强的方法, 删除指定key,value所对应的key-value对, 如果从该Map中成功删除该key-value
+                对, 该方法返回true, 否则返回false
+        12. int size()
+            说明: 返回该Map里的key-value对的个数
+        13. Collection values()
+            说明: 返回该Map里所有value组成的 Collection
+        
+    Entry类包含的方法(Entry是一个内部类, 该类封装了一个key-value对):
+        1. Objcet getKey()
+            说明: 返回该Entry 里包含的key值
+        2. Object getValue()
+            说明: 返回该Entry里包含的value值
+        3. Object SetValue(V value)
+            说明: 设置该 Entry 里包含的value值, 并返回新设置的value值
+        
+    例子1:
+        import java.util.HashMap;
+        import java.util.Map;
+
+        public class MapTest{
+            public static void main(String[] args) {
+                Map map = new HashMap();
+                // 成对的添加多个 key-value对
+                map.put("Python", 50);
+                map.put("Java", 30);
+                map.put("JavaScript", 10);
+                // 多次放入的 key-value 对中value可以重复
+                map.put("Linux", 30);
+                // 如果放入重复的key, 则新的value会覆盖原有的value
+                // 如果新的value覆盖了原有的value, 该方法返回被覆盖的原有的value
+                System.out.println(map.put("Python", 55));
+                System.out.println(map);  // out:{Java=30, Linux=30, JavaScript=10, Python=55}
+                // 判断是否包含指定的key
+                System.out.println("是否包含 Python 的key: " + map.containsKey("Python"));
+                // 判断是否包含指定的value
+                System.out.println("是否包含 55 的value: " + map.containsValue(55));
+                // 获取Map集合的所有key组成的集合, 通过遍历key来实现遍历所有的key-value对
+                for (Object key : map.keySet()){
+                    // map.get(key)方法获取指定key对应的value
+                    System.out.println(key + " ---> " + map.get(key));
+                }
+                // 根据key来删除key-value对
+                map.remove("Java"); 
+                System.out.println(map);
+            }
+        }
+        程序说明:
+            1. 添加key-value时Map中已有重复的key, 那么新添加的value会覆盖该key原来对应的value,并将返回原来
+                被覆盖的value
+            2. HashMap 重写了toString()方法, 实际上所有的Map实现类都重写了toString()方法, 调用Map对象的
+                toString()方法总是返回固定格式的字符串: {key1=value1, hey2=value2...}
+        
+
+6.1 Java 8 为 Map 新增的方法
+    1. Objcet compute(Object key, BiFunction remappingFunction)
+        说明: 该方法使用 remappingFunction 根据原 key-value 对计算一个新 value; 只要新 value 不为 null, 
+            就使用新 value 覆盖原 value; 如果原value不为 null, 但新 value 为 null, 则删除原key-value对;
+            如果原value,新value同时为null, 那么该方法不改变任何key-value对, 直接返回null 
+    2. Object computeIfAbsent(Object key, Function mappingFunction)
+        说明: 如果传给该方法的key参数在Map中对应的value为null, 则使用 mappingFunction 根据key计算一个新的
+            计算结果, 如果计算结果不为null, 则用计算结果覆盖原有的value; 如果原Map远离啊不包含该key, 那么该
+            方法可能会添加一组key-value对
+    3. Object computeIfPresent(Object key, BiFunction remappingFunction)    
+        说明: 如果传给该方法的key参数在Map中对应的value不为null, 该方法使用 remappingFunction 根据原 key,
+            value计算一个新的结果, 如果计算结果不为null, 则使用该结果覆盖原来的value, 如果计算结果为null,
+            删除原 key-value 对
+    4. void forEach(BiConsumer action)
+        说明: java8新增的, 可以更简洁的遍历Map的key-value对
+    5. Object getOrDefault(Object key, V defaultValue)
+        说明: 获取指定key对应的value,如果该key不存在, 则返回 defaultValue
+    
