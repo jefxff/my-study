@@ -1538,7 +1538,7 @@
         3. 由于HashMap里的key不能重复, 所以HashMap里最多只有一个key-value对的key为null, 但可以有无数多个
             key-value对的value为null (例子1)
         4. 虽然HashMap线程不安全, 但是可以通过Collections工具类把HashMap变成线程安全
-        5. HashMap 和 Hashtable 中包含一个containsValue()的方法,用于判断是否包含指定的value()
+        5. HashMap 和 Hashtable 中包含一个 containsValue() 的方法,用于判断是否包含指定的value()
         6. HashMap 和 Hashtable 判断两个value相等的标准是: 两个对象通过equals()方法比较返回true (例子2)
 
     例子1:
@@ -1660,3 +1660,36 @@
                 System.out.println(ht.get(new A(60000)));
             }
         }
+
+6.3 LinkedHashMap 实现类 
+    说明: 
+        1. LinkedHashMap 使用双向链表来维护key-value对次序(其实只需要考虑key的次序), 该链表负责维护Map的迭
+            代顺序, 迭代顺序与key-value的插入顺序保持一致
+        2. LinkedHashMap 可以避免对 HashMap, Hashtable里的 key-value对进行排序(只要插入key-value对时保持
+            顺序即可), 同时又可避免使用TreeMap 所增加的成本
+        3. LinkedHashMap 需要维护元素的插入顺序, 因此性能略低于HashMap的性能, 但因为它以链表来维护内部顺序, 
+            所以在迭代访问Map里的元素时将由较好的性能(例子1)
+    
+    例子1:
+        public class LinkedHashMapTest{
+            public static void main(String[] args){
+                LinkedHashMap scores = new LinkedHashMap();
+                scores.put("语文", 80);
+                scores.put("英语", 82);
+                scores.put("数学", 76);
+                // 调用 forEach() 方法遍历scores里的所有key-value对
+                scores.forEach((key, value) -> System.out.println(key + " --> " + value));
+            }
+        }
+
+
+6.4 使用 Properties 读写属性文件
+    说明:
+        1. Properties 类是 Hashtable 类的子类, 在处理属性文件是特别方便(如win平台的ini文件就是属性文件),
+        2. Properties 类可以把Map对象和属性文件关联起来, 从而可以把Map对象中的key-value对写入属性文件中,也
+            可以把属性文件中的 "属性名=属性值"加载到Map对象中
+        3. Properties 类相当于一个key, value都是String类型的Map
+
+    Properties 类提供的三个方法:
+        1. String getProperty(String key)
+            说明:  获取 Properties 中指定属性名
