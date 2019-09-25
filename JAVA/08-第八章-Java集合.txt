@@ -1161,7 +1161,7 @@
             最长的元素, 队列的尾部保存在队列中存放时间最短的元素
         2. 新元素插入(offer)到队列的尾部,访问元素(poll)操作返回队列头部的元素; 通常队列不允许随机访问队列中
             的元素
-        3. Queue 接口有一个 PriorityQueue 实现类, 也有一个 Deque 接口, Deque 接口代表一个"双端队列", 双端 
+        3. Queue 接口有一个 PriorityQueue 实现类; 也有一个 Deque 接口, Deque 接口代表一个"双端队列", 双端 
             队列可以同时从两端来添加, 删除元素, 因此 Deque 的实现类既可当成队列使用, 也可当成栈使用
         4. Deque 接口提供 ArrayDeque 和 LinkedList 两个实现类 
 
@@ -1215,7 +1215,7 @@
     说明:
         1. Deque 接口是Queue 接口的子接口, 它代表一个双端队列, Deque 接口里定义了一些双端队列的方法, 这些方
             法允许从两端来操作队列的元素
-        2. 通过 Deque 提供的 opo() 和 push() 方法, 还可以将双端队列当成一个栈来使用(例子1)
+        2. 通过 Deque 提供的 pop() 和 push() 方法, 还可以将双端队列当成一个栈来使用(例子1)
         3. ArrayDeque 是 Deque 的实现类, 是一个基于数组实现的双端队列, 创建 Deque 时同样可以指定一个
             numElements 参数, 该参数用于指定 Objcet[] 数组的长度; 如果不指定 numElements 参数的长度, 
             Deque 底层数组的长度是 16  
@@ -1473,4 +1473,190 @@
         说明: java8新增的, 可以更简洁的遍历Map的key-value对
     5. Object getOrDefault(Object key, V defaultValue)
         说明: 获取指定key对应的value,如果该key不存在, 则返回 defaultValue
-    
+    6. Object merge(Object key, Object value, BiFunction remappingFunction)
+        说明: 该方法会先根据key参数获取该Map中对应的value; 如果获取的value为null, 则直接用传入的value覆盖
+            原有的value(在这种情况下, 可能要添加一组key-value对); 如果获取的 value 为 null, 则使用 
+            remappingFunction 函数根据原value, 新 value计算一个新的结果, 并用得到的结果去覆盖原有的value
+    7. Object putIfAbsent(Object key, Object value)
+        说明: 该方法自动检测指定key对应的value是否为null, 如果key对应的value为null, 该方法将会用新的value
+            代替原来的null值
+    8. Object replace(Object key, Object value)
+        说明: 将Map中指定key对应的value替换成新value, 与传统的put()方法不同的是, 该方法不可能添加新的
+            key-value 对, 如果尝试途欢的key在原Map中不存在, 该方法不是添加key-value对, 而是返回null 
+    9. replaceAll(BiFunction function)
+        说明: 该方法使用 BiFunction 对原 key-value 对执行计算, 并将计算结果作为该 key-value 对的value值
+
+    例子:
+        import java.util.HashMap;
+        import java.util.Map;
+
+        public class MapTest2 {
+            public static void main(String[] args) {
+                Map map = new HashMap();
+                // 成对的添加多个key-value对
+                map.put("Python", 50);
+                map.put("Java", 30);
+                map.put("JavaScript", 10);
+                // 尝试替换key为 "newPython"的value, 由于原Map中没有对应的key
+                // 因此Map没有改变, 不会添加新的key-value对
+                map.replace("newPython", 55);
+                System.out.println(map);  // out: {Java=30, JavaScript=10, Python=50}
+                // 使用原value与传入参数计算出来的结果覆盖原有的value
+                map.merge("Python", 50, (oldVal, param) -> (Integer)oldVal + (Integer)param);
+                // Python 的值比原来增加了10
+                System.out.println(map); // out: {Java=30, JavaScript=10, Python=100}
+                // 当key为 "Java" 对应的value为null(或不存在)时, 使用计算的结果作为新value
+                map.computeIfAbsent("newJava", (key) -> ((String)key).length());
+                // map中添加了newJava=4这组key-value对
+                System.out.println(map); // out: {Java=30, newJava=7, JavaScript=10, Python=100}
+                // 当key为 "newJava"对应的vlaue存在时,使用计算的结果作为新value
+                map.computeIfPresent("newJava", (key, value) -> (Integer)value * (Integer)value);
+                // map 中newJava=4 变成 newJava=16
+                System.out.println(map); // out: {Java=30, newJava=49, JavaScript=10, Python=100}
+            }
+        }
+
+6.2 Java8 改进的 HashMap 和 Hashtable 实现类
+    说明:
+        1. HashMap 和 Hashtable 都是 Map 接口的典型实现类, 他们之间的关系类似于 ArrayList 和 Vector的关系
+        2. Hashtable是一个古老的Map实现类, 它包含两个 elements()(类似于Map接口中定义的values()方法)和
+            keys()(类似于Map接口中定义的keySet()方法), 现在很少使用这两个方法
+        3. 为了成功地在 HashMap, Hashtable中存储, 获取对象, 用作key的对象必须实现hashCode()方法和equals()
+            方法;
+        4. HashMap, Hashtable, HashSet判断两个key相等的标准也是: 两个key通过equals()方法比较返回true, 两 
+            个key的 hashCode值也相等(例子2)
+        5. 当使用自定义类作为 HashMap, Hashtable的key时, 如果重写该类的equals(Object obj)和hashCode()方
+            法, 则应该保证两个方法的判断标准一致:当两个 key 通过 equals() 方法比较返回 true 时, 两个key的
+            hashCode()返回值也应该相同
+        6. 与HashSet类似的是, 如果使用可变对象作为HashMap, Hashtable的key, 并且程序修改了作为key的可变对象
+            则也可能出现与HashSet类似的情形: 程序再也无法准确访问到Map中被修改过的key(例子3)   
+    HashMap 和 Hashtable 的区别:
+        1. Hashtable 是一个线程安全的 Map 实现, 但HashMap是线程不安全的实现, 所以HashMap比Hashtable的性能
+            高一点; 但如果有多个线程访问同一个Map对象时, 使用Hashtable实现类会更好; 
+        2. Hashtable不允许使用null作为key和value, 如果试图把null值放进Hashtable中, 将会引发
+            NullPointerException异常; 但是HashMap可以使用null作为key或value
+        3. 由于HashMap里的key不能重复, 所以HashMap里最多只有一个key-value对的key为null, 但可以有无数多个
+            key-value对的value为null (例子1)
+        4. 虽然HashMap线程不安全, 但是可以通过Collections工具类把HashMap变成线程安全
+        5. HashMap 和 Hashtable 中包含一个containsValue()的方法,用于判断是否包含指定的value()
+        6. HashMap 和 Hashtable 判断两个value相等的标准是: 两个对象通过equals()方法比较返回true (例子2)
+
+    例子1:
+        public class NullInHashMap{
+            public static void main(String[] args){
+                HashMap hm = new HashMap();
+                // 试图将两个key为null值的key-value对放入HashMap中
+                hm.put(null, null);
+                // hm.put(null, null);
+                // 将一个 value 为 null 值的 key-value 对放入 HashMap中 
+                hm.put("a", null);
+                // 输出Map对象
+                System.out.println(hm);
+            }
+        }
+
+    例子2:
+        import java.util.Hashtable;
+
+        class A {
+            int count;
+            public A(int count){
+                this.count = count;
+            }
+            // 根据 count 的值来判断两个对象是否相等
+            public boolean equals(Object obj){
+                if (obj == this){
+                    return true;
+                }
+                if (obj != null && obj.getClass() == A.class){
+                    A a = (A)obj;
+                    return this.count == a.count;
+                }
+                return false;
+            }
+            // 根据count计算hashCode值
+            public int hashCode(){
+                return this.count;
+            }
+        }
+        class B{
+            // 重写equals()方法, B对象与任何对象通过equals()方法比较都返回true
+            public boolean equals(Object obj){
+                return true;
+            }
+        }
+        public class HashtableTest{
+            public static void main(String[] args){
+                Hashtable ht = new Hashtable();
+                ht.put(new A(6000), "疯狂Java讲义");
+                ht.put(new A(87563), "轻量级Java EE 企业应用实战");
+                ht.put(new A(1232), new B());
+                System.out.println(ht);
+                // 只要两个对象通过equals()方法比较返回true
+                // Hashtable就认为他们是相等的value
+                // 由于hashtable中有一个B对象
+                // 它与任何对象通过equals()方法比较都想等, 所以下面输出true
+                System.out.println(ht.containsValue("测试字符串"));   // out: ①
+                // 只要两个A对象的count相等, 他们通过equals()方法比较返回ture, 且hashCode值相等
+                // Hashtable即认为他们是相同的key, 所以下面输出true
+                System.out.println(ht.containsKey(87563)); // out:②
+                // 下面语句可以删除最后一对 key-value 对
+                ht.remove(new A(1232));
+                System.out.println(ht);
+            }
+        }
+        程序说明:
+            1. A 类判断两个A对象相等的标准是equals()方法比较返回true即可, 上面程序中的ht对象中包含了一个B
+                对象, 他与任何对象通过equals()方法比较总是返回true, 所以在①处代码处返回true, 在这种情况下
+                不管传给ht对象的 containsValue()方法参数是什么, 程序总是返回true
+            2. 根据Hashtable判断两个key相等的标准, 程序在②处也将输出true,因为两个A对象虽然不是同一个对象, 
+                但他们通过equals()方法比较返回true, 且hashCode值相等, Hashtable即认为他们是同一个可以
+
+    例子3:
+        import java.util.HashMap;
+        import java.util.Iterator;
+
+        class A {
+            int count;
+
+            public A(int count) {
+                this.count = count;
+            }
+
+            // 根据 count 的值来判断两个对象是否相等
+            public boolean equals(Object obj) {
+                if (obj == this) {
+                    return true;
+                }
+                if (obj != null && obj.getClass() == A.class) {
+                    A a = (A) obj;
+                    return this.count == a.count;
+                }
+                return false;
+            }
+
+            // 根据count计算hashCode值
+            public int hashCode() {
+                return this.count;
+            }
+        }
+
+        public class HashMapErrorTest {
+            public static void main(String[] args) {
+                HashMap ht = new HashMap();
+                ht.put(new A(6000), "疯狂Java讲义");
+                ht.put(new A(87563), "轻量级Java EE 企业应用实战");
+                // 获得Hashtable的key Set集合对应的 Iterator迭代器
+                Iterator it = ht.keySet().iterator();
+                // 取出Map中第一个key,并修改它的count值
+                A first = (A)it.next();
+                first.count = 87653; // out: ①
+                System.out.println(ht);
+                // 只能删除没有被修改过的key所对应的key-value对
+                ht.remove(new A(87563));
+                System.out.println(ht);
+                // 无法获取剩下的value, 下面的两行代码都将输出 null 
+                System.out.println(ht.get(new A(87563)));
+                System.out.println(ht.get(new A(60000)));
+            }
+        }
