@@ -1685,11 +1685,211 @@
 
 6.4 使用 Properties 读写属性文件
     说明:
-        1. Properties 类是 Hashtable 类的子类, 在处理属性文件是特别方便(如win平台的ini文件就是属性文件),
+        1. Properties 类是 Hashtable 类的子类, 在处理属性文件时特别方便(如win平台的ini文件就是属性文件),
         2. Properties 类可以把Map对象和属性文件关联起来, 从而可以把Map对象中的key-value对写入属性文件中,也
             可以把属性文件中的 "属性名=属性值"加载到Map对象中
         3. Properties 类相当于一个key, value都是String类型的Map
 
     Properties 类提供的三个方法:
         1. String getProperty(String key)
-            说明:  获取 Properties 中指定属性名
+            说明:  获取 Properties 中指定属性名对应的属性值, 类似于Map的get(Object key)方法
+        2. String getProperty(String key, String defaultValue)
+            说明: 该方法与前一个方法基本相似, 该方法多一个功能, 如果Properties中不存在指定的key时, 则该方法
+                指定默认值
+        3. Objcet setProperty(String key, String value)
+            说明: 设置属性值, 类似于Hashtable的put()方法
+        4. void load(InputStream inStream)
+            说明: 从属性文件(以输入流表示)中加载key-value对, 把加载到的key-value对追加到Properties里(
+                Properties 是Hashtable的子类, 它不保证key-value对之间的次序)
+        5. void store(OuputStream out, String comments)
+            说明: 将 Properties 中的 key-value 对输出到指定的属性文件(以输出流表示)中 
+
+    例子:
+        import java.io.*;
+        import java.util.Properties;
+
+        public class PropertiesTest {
+            public static void main(String[] args) throws Exception{
+                Properties props = new Properties();
+                // 向 Properties 中添加属性
+                props.setProperty("username", "jefxff");
+                props.setProperty("password", "jefxff");
+                // 将Properties中的key-value对保存到a.ini文件中
+                props.store(new FileOutputStream("a.ini"), "comment line");
+                // 新建一个Properties对象
+                Properties props2 = new Properties();
+                // 向Properties中添加属性
+                props2.setProperty("gender", "male");
+                // 将a.ini文件汇总的key-value对追加到props2中
+                props2.load(new FileInputStream("a.ini"));
+                System.out.println(props2);
+            }
+        }
+
+6.5 SortedMap 接口和 TreeMap 实现类 
+    说明:
+        1. treeMap 就是一个红黑树数据结构, 每个 key-value 即作为红黑树的一个节点; 
+        2. TreeMap 存储key-value对(节点)时, 需要根据key对节点进行排序; TreeMap可以保证所有的key-value对
+            处于有序状态
+        3. TreeMap判断两个key相等的标准: 两个key通过compareTo()方法返回0
+        4. 如果使用自定义类作为TreeMap的key, 则应该保证: 两个key通过equals()方法比较返回true时, 他们通过
+            CompareTo()方法比较应该返回0
+
+    TreeMap 两种排序方式:
+        1. 自然排序: Treemap的所有key必须实现Comparable接口, 而且所有的key应该是同一类的对象, 否则将会抛出
+            ClassCastException异常
+        2. 定制排序: 创建 TreeMap 时, 传入一个 Comparator 对象, 该对象负责对 TreeMap中所有key进行排序, 采
+            用定制排序时不要求Map的key实现Comparable接口
+        
+    TreeMap类中的方法:
+        1. Map.Entry firstEntry()
+            说明: 返回该Map中最小的key所对应的key-value对, 如果Map为空, 则返回null 
+        2. Object firstKey()
+            说明: 返回该Map中的最小的key值, 如果该Map为空, 则返回null 
+        3.  Map.Entry lastntry()
+            说明: 返回该Map中最大的key所对应的key-value对, 如果Map为空或不存在这样的key-value, 则返回null 
+        4. Object lastEntry()
+            说明: 返回该Map中的最大的key值, 如果该Map为空或不存在这样的key, 则返回null 
+        5. Map.Entry higherEntry(Object key)
+            说明: 返回该Map中位于key后一位的key-value对(即大于指定key的最小key所对应的key-value对), 如果
+                该Map为空, 则返回null 
+        6. Object lowerEntry(Object key) 
+            说明: 返回该Map中位于key前一位的key值(即小于指定key的最大key值), 如果该Map为空或不存在这样的key
+                则都返回null 
+        7. NavigableMap subMap(Objcet fromKey, boolean fromInclusive, Object toKey, boolean toInclusive)
+            说明: 返回该Map的子Map, 其key的范围是从fromKey(是否包括取决于第二个参数)到toKey(是否包括取决于
+                第四个参数)
+        8. SortedMap subMap(Object fromKey, Object toKey)
+            说明: 返回该Map的子Map, 其key的范围是从fromKey(包括)到toKey(不包括)
+        9. SortedMap tailMap(Object fromKey)
+            说明: 返回该Map的子Map, 其key的范围是大于fromKey(包括)的所有key
+        10. NavigableMap tailMap(Object fromKey, boolean inclusive)
+            说明: 返回该Map的子Map, 其key的范围是大于fromkey(是否包括取决于第二个参数)的所有key
+        11. SortedMap headMap(Object toKey)
+            说明: 返回该Map的子Map, 其key的范围是小于toKey(不包括)的所有key
+        12. NavigableMap headMap(Object fromKey, boolean inclusive)
+            说明: 返回该Map的子Map, 其key的范围是小于toKey(是否包括取决于第二个参数)的所有key
+
+    例子:
+        import java.util.TreeMap;
+
+        class R implements Comparable {
+            int count;
+            public R(int count){
+                this.count = count;
+            }
+            public String toString(){
+                return "R[count: " + count + " ]";
+            }
+            // 根据count来判断两个对象是否相等
+            public boolean equals(Object obj){
+                if (this == obj){
+                    return true;
+                }
+                if (obj != null && obj.getClass() == R.class){
+                    R r = (R)obj;
+                    return r.count == this.count;
+                }
+                return false;
+            }
+            // 根据count属性值来判断两个对象的大小
+            public int compareTo(Object obj){
+                R r = (R)obj;
+                return count > r.count ? 1: count < r.count ? -1 : 0;
+            }
+        }        
+        public class TreeMapTest{
+            public static void main(String[] args){
+                TreeMap tm = new TreeMap();
+                tm.put(new R(3), "Python");
+                tm.put(new R(-5), "Java");
+                tm.put(new R(9), "Linux");
+                System.out.println(tm);
+                // 返回该TreeMap的第一个Entry对象
+                System.out.println(tm.firstEntry());
+                // 返回该TreeMap的最后一个key值
+                System.out.println(tm.lastKey());
+                // 返回该TreeMap的比New R(2) 大的最小key值
+                System.out.println(tm.higherEntry(new R(2)));
+                // 返回该TreeMap的比New R(2)小的最大的key-value 对 
+                System.out.println(tm.lowerEntry(new R(2)));
+                // 返回该 TreeMap 的子Map
+                System.out.println(tm.subMap(new R(-1), new R(4)));
+            }
+        }
+
+6.6 WeakHashMap 实现类 
+    说明:
+        1. WeakHashMap 和 HashMap 的区别在于, HashMap 的 key保留了对实际对象的强引用, 这意味着只要该Hashmap
+            对象不被销毁, 该HashMap的所有key所引用的对象就不会被垃圾回收, HashMap 也不会自动删除这些key所
+            对应的key-value对; WeakHashMap 中的每个key对象只持有对实际对象的弱引用, 因此, 当垃圾回收了该
+            key所对应的实际对象之后, WeakHashMap 会自动删除该key对应的 key-value 对 
+
+    例子:
+        public class WeakHashMapTest{
+            public static void main(String[] args){
+                WeakHashMap whm = new WeakHashMap();
+                // 向 WeakHashMap 中添加三个 key-value对
+                // 三个 key 都是匿名字符串对象(没有其他引用)
+                whm.put(new String("语文"), new String("良好"));
+                whm.put(new String("数学"), new String("及格"));
+                whm.put(new String("英语"), new String("中等"));
+                // 向 WeakHashMap 中添加一个 key-value 对 
+                // 该 key 是一个系统缓存的字符串对象
+                whm.put("java", new String("中等"));
+                System.out.println(whm);
+                // 通知系统回收垃圾
+                System.gc();
+                System.runFinalization();
+                System.out.println(whm);
+            }
+        }   
+        程序说明:
+            1. 添加前三个key-value对时, 这三个key都是匿名的字符串对象, WeakHashMap 只保留了他们的弱引用, 
+                这样垃圾回收时会自动的删除这三个 key-value对 
+            2. 第四句put代码因为key时一个字符串直接量(系统会自动保留对该字符串对象的强引用), 所以垃圾回收时
+                不会回收它
+
+
+6.7 IdentityHashMap 实现类       
+    说明:
+        1. HashMap只要两个key通过equals()返回true,即可判定两个key相等, 而 IdentityHashMap 执行严格的相等
+            (key1 == key2)时, 才认为两个key相等
+        2. IdentityHashMap 提供了与 HashMap基本相似的方法, 也允许使用null作为key和value; 与 HashMap相似:
+            IdentityHashMap 也不保证key-value对之间的顺序, 更不能保证他们的顺序随时间的退役保持不变
+
+    例子:
+        public class IdentityHashMapTest{
+            public static void main(String[] args){
+                IdentityHashMap ihm = new IdentityHashMap();
+                // 下面两对key-value通过 == 比较不相等, 所以不是相同的key, 两个都可以添加
+                ihm.put(new String("语文", 89));
+                ihm.put(new String("语文", 78));
+                // 下面的key是直接量, 所以通过 == 比较相等, 所以是相同的key, 只会添加一对key-value 
+                ihm.put("java", 96));
+                ihm.put("java", 89));
+                System.out.println(ihm);
+            }
+        } 
+
+
+6.8 EnumMap 实现类
+    说明:
+        1. EnumMap中的所有key都必须是单个枚举类的枚举值, 创建EnumMap时必须显式或隐式的指定它对应的枚举类
+        2. EnumMap 在内部以数组的形式保存, 所以这种实现形式非常紧凑, 高效
+        3. EnumMap 根据 key 的自然顺序(即枚举值在枚举类中的定义顺序)来维护key-value对之间的顺序
+        4. EnumMap 不允许使用null作为key, 但允许使用null作为value
+
+    例子:
+        enum Season{
+            SPRING, SUMMER, FALL, WINTER
+        }
+        public class EnumMapTest{
+            public static void main(String[] args){
+                // 创建 EnumMap 对象, 该 EnumMap 的所有key都是 Season 枚举类的枚举值
+                EnumMap em = new EnumMap(Season.class);
+                em.put(Season.SUMMER, "夏日炎炎");
+                em.put(Season.SPRING, "春暖花开");
+                System.out.println(em);
+            }
+        }
