@@ -1746,28 +1746,34 @@
             说明: 返回该Map中最小的key所对应的key-value对, 如果Map为空, 则返回null 
         2. Object firstKey()
             说明: 返回该Map中的最小的key值, 如果该Map为空, 则返回null 
-        3.  Map.Entry lastntry()
+        3.  Map.Entry lastEntry()
             说明: 返回该Map中最大的key所对应的key-value对, 如果Map为空或不存在这样的key-value, 则返回null 
-        4. Object lastEntry()
+        4. Object lastKey()
             说明: 返回该Map中的最大的key值, 如果该Map为空或不存在这样的key, 则返回null 
         5. Map.Entry higherEntry(Object key)
             说明: 返回该Map中位于key后一位的key-value对(即大于指定key的最小key所对应的key-value对), 如果
                 该Map为空, 则返回null 
-        6. Object lowerEntry(Object key) 
-            说明: 返回该Map中位于key前一位的key值(即小于指定key的最大key值), 如果该Map为空或不存在这样的key
-                则都返回null 
-        7. NavigableMap subMap(Objcet fromKey, boolean fromInclusive, Object toKey, boolean toInclusive)
+        6. Object higherKey(Objcet ibj)
+            说明: 返回该Map中位于key后一位的key值(即大于指定key的最小key值), 如果该Map为空或不存在这样的 
+                key-value对, 则都返回null 
+        7. Object lowerEntry(Object key) 
+            说明: 返回该Map中位于key前一位的key-value对(即小于指定key的最大key值所对应的key-value对), 如果
+            该Map为空或不存在这样的key-value对, 则都返回null 
+        8. Objcet lowerKey(Object obj)
+            说明: 返回该Map中位于key前一位的key值(即小于指定key的最大key值), 如果该Map为空或不存在这样的 
+                key值, 则都返回null 
+        9. NavigableMap subMap(Objcet fromKey, boolean fromInclusive, Object toKey, boolean toInclusive)
             说明: 返回该Map的子Map, 其key的范围是从fromKey(是否包括取决于第二个参数)到toKey(是否包括取决于
                 第四个参数)
-        8. SortedMap subMap(Object fromKey, Object toKey)
+        10. SortedMap subMap(Object fromKey, Object toKey)
             说明: 返回该Map的子Map, 其key的范围是从fromKey(包括)到toKey(不包括)
-        9. SortedMap tailMap(Object fromKey)
+        11. SortedMap tailMap(Object fromKey)
             说明: 返回该Map的子Map, 其key的范围是大于fromKey(包括)的所有key
-        10. NavigableMap tailMap(Object fromKey, boolean inclusive)
+        12. NavigableMap tailMap(Object fromKey, boolean inclusive)
             说明: 返回该Map的子Map, 其key的范围是大于fromkey(是否包括取决于第二个参数)的所有key
-        11. SortedMap headMap(Object toKey)
+        13. SortedMap headMap(Object toKey)
             说明: 返回该Map的子Map, 其key的范围是小于toKey(不包括)的所有key
-        12. NavigableMap headMap(Object fromKey, boolean inclusive)
+        14. NavigableMap headMap(Object fromKey, boolean inclusive)
             说明: 返回该Map的子Map, 其key的范围是小于toKey(是否包括取决于第二个参数)的所有key
 
     例子:
@@ -1891,5 +1897,246 @@
                 em.put(Season.SUMMER, "夏日炎炎");
                 em.put(Season.SPRING, "春暖花开");
                 System.out.println(em);
+            }
+        }
+
+
+6.9 各Map实现类的性能分析
+    说明:
+        1. HashMap 和 Hashtable 的实现机制几乎一样, 但是Hashtable比较古老,集成了线程安全, 因此 HashMap 通
+            常比 Hashtable 快 
+        2. 由于TreeMap采用红黑树来管理key-value对, 所以TreeMap要比HashMap 和 Hashtable慢(尤其是插入, 删除
+            key-value对时)
+        3. TreeMap一个好处就是其中的key-value对总是处于排序状态; 应用场景: 当TreeMap被填充之后, 调用keySet()
+            取得key组成的Set, 再使用 toArray()方法生成key的数组, 接下来使用Arrays()的 binarySearch()方法
+            在已排序的数组中快速的查询对象
+        4. 一般的应用场景应该多使用HashMap, 因为其底层也是通过数组来存储key-value对的; 如果程序需要一个排好
+            序的Map时, 则可以使用TreeMap
+        5. LinkedHashMap 比 HashMap 要慢, 因为 LinkedHashMap 需要维护链表来保持Map中key-value的添加顺序
+        6. EnumMap 的性能最好, 但是它只能使用同一个枚举类的枚举值作为key
+
+
+7. 操作集合的工具类 Collections 
+
+7.1 List集合元素的排序操作
+    1. void reverse(List list)
+        说明: 反转指定List集合中元素的顺序("倒序")
+    2. void shuffle(List list)
+        说明: 对List集合元素进行随机排序(shuffle 方法模拟了 "洗牌" 动作)
+    3. void sort(List list)
+        说明: 根据元素的自然顺序对指定List的集合元素按升序进行排序
+    4. void sort(List list, Comparator c)
+        说明: 根据指定 Comparator 产生的顺序对List集合进行排序
+    5. void swap(List list, int i, int j)
+        说明: 将指定List集合中i处元素和j处元素进行交换
+    6. void rotate(List list, int distance)
+        说明: 当 distance 为正数时, 将list集合的后 distance 个元素"整体"移到前面; 当 distance 为负数时, 
+            将list集合的前 distance 个元素"整体"移到后面, 该方法不会改变集合的长度
+    
+    例子:
+        import java.util.ArrayList;
+        import java.util.Collections;
+
+        public class SortTest {
+            public static void main(String[] args){
+                ArrayList nums = new ArrayList();
+                nums.add(2);
+                nums.add(3);
+                nums.add(12);
+                nums.add(-2);
+                nums.add(99);
+                nums.add(0);
+                System.out.println(nums);  // out: [2, 3, 12, -2, 99, 0]
+                // 反转
+                Collections.reverse(nums);
+                System.out.println(nums);  // out: [0, 99, -2, 12, 3, 2]
+                // 自然排序
+                Collections.sort(nums);
+                System.out.println(nums);  // out: [-2, 0, 2, 3, 12, 99]
+                // 洗牌
+                Collections.shuffle(nums);
+                System.out.println(nums);  // out: [0, 12, 2, -2, 99, 3]
+            }
+        }
+
+    例子2:
+        import java.util.Collections;
+        import java.util.LinkedList;
+        import java.util.List;
+
+
+        // 梭哈游戏
+        public class ShowHand{
+            // 定义该游戏最多支持多少个玩家
+            private final int PLAY_NUM = 5;
+            // 定义扑克牌的所有花色和数值
+            private String[] types = {"方块", "草花", "红心", "黑桃"};
+            private String[] values = {"2", "3", "4", "5", 
+                "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+            // cards 是一局游戏中剩下的扑克牌
+            private List<String> cards = new LinkedList<String>();
+            // 定义所有的玩家
+            private String[] players = new String[PLAY_NUM];
+            // 定义所有玩家手上的扑克牌
+            private List<String>[] playerCards = new List[PLAY_NUM];
+            /**
+            * 初始化扑克牌, 放入52张牌
+            * 并且使用shuffle方法模拟洗牌
+            */
+            public void initCards(){
+                for (int i = 0; i < types.length; i++){
+                    for (int j = 0; j < values.length; j++){
+                        cards.add(types[i] + values[j]);
+                    }
+                }
+                // 随机排列
+                Collections.shuffle(cards);
+            }
+            /**
+            *  初始化玩家为每个玩家分配用户名
+            */
+            public void initPlayer(String... names){
+                if (names.length > PLAY_NUM || names.length < 2){
+                    // 检验玩家数量
+                    System.out.println("玩家数量不对!");
+                }
+                else{
+                    // 初始化玩家用户名
+                    for (int i = 0; i < names.length; i ++){
+                        players[i] = names[i];
+                    }
+                }
+            }
+            /**
+            * 初始化玩家手上的牌, 开始游戏时每个玩家手上的扑克牌为空
+            *  程序使用一个长度为0的LinkedList来表示
+            */
+            public void initPlayerCards(){
+                for (int i = 0; i < players.length; i++){
+                    if (players[i] != null && !players[i].equals("")){
+                        playerCards[i] = new LinkedList<String>();
+                    }
+                }
+            }
+            /**
+            * 输出全部扑克牌, 测试
+            */
+            public void showAllCards(){
+                for (String card : cards){
+                    System.out.println(card);
+                }
+            }
+            /**
+            * 派扑克牌
+            * @param first 最先派给谁
+            */
+            public void deliverCard(String first){
+                // 调用ArrayUtils 工具类的search方法
+                // 查询处指定元素在数组中的索引
+                int firstPos = ArrayUtils.search(players, first);
+                for (int i = firstPos; i < PLAY_NUM; i++){
+                    if (players[i] != null){
+                        playerCards[i].add(cards.get(0));
+                        cards.remove(0);
+                    }
+                }
+                // 依次给位于该指定玩家之前的每位玩家派发扑克
+                for (int i = 0; i < firstPos; i++){
+                    if (players[i] != null){
+                        playerCards[i].add(cards.get(0));
+                        cards.remove(0);
+                    }
+                }
+            }
+            /**
+            * 输出玩家手上的扑克牌
+            * 实现该方法时, 应该控制每个玩家看不到别人的第一张牌, 没实现
+            */
+            public void showPlayerCards(){
+                for (int i = 0; i < PLAY_NUM; i++){
+                    //当玩家不为空时
+                    if (players[i] != null){
+                        // 输出玩家
+                        System.out.println(players[i] + ": ");
+                        // 遍历玩家手上的扑克牌
+                        for (String card : playerCards[i]){
+                            System.out.println(card + "\t");
+                        }
+                    }
+                    System.out.println("\n");
+                }
+            }
+            public static void main(String[] args) {
+                ShowHand sh = new ShowHand();
+                sh.initPlayer("电脑玩家", "孙悟空");
+                sh.initCards();
+                sh.initPlayerCards();
+                // 测试所偶遇扑克牌
+                sh.showAllCards();
+                System.out.println("---------------------------");
+                // 下面从孙悟空开始派牌
+                sh.deliverCard("孙悟空");
+                sh.showPlayerCards();
+                /**
+                * 需要补充的内容:
+                *     1. 牌面最大的玩家下注
+                *     2. 其他玩家是否跟注
+                *     3. 游戏是否只剩下一个玩家? 如果是, 则他胜利
+                *     4. 如果已经是最后一张扑克牌, 则需要比较剩下玩家的牌面大小
+                */
+                // 再次从 "电脑玩家" 开始派牌
+                sh.deliverCard("电脑玩家");
+                sh.showPlayerCards();
+                
+            }
+        }
+
+
+7.2 用于查找, 替换操作集合元素的类方法
+    1. int binarySearch(List list, Object key)
+        说明: 使用二分搜索发搜索指定List集合, 以获得指定对象在List集合中的索引; 前提是List必须是有序的
+    2. Object max(Collection coll)
+        说明: 根据元素的自然顺序, 返回给定集合中的最大元素
+    3. Object max(Collection coll, Comparator comp)
+        说明: 根据 Comparator 指定的顺序, 返回给定集合中的最大元素
+    4. Object min(Collection coll)
+        说明: 根据元素的自然顺序, 返回给定集合中的最小元素
+    5. Object min(Collection coll, Comparator comp)
+        说明: 根据 Comparator 指定的顺序, 返回给定集合中的最小元素
+    6. void fill(List list, Object obj)
+        说明: 使用指定元素obj替换指定List集合中的所有元素
+    7. int frequency(Collection c, Object o)
+        说明: 返回指定集合中指定元素出现的次数
+    8. int indexOfSubList(List source, List target)
+        说明: 返回子List对象在父List对象中第一次出现出现的位置索引, 如果父List没有出现这样的List,则返回-1
+    9. int lastIndexOfSubList(List source, List target)
+        说明: 返回子List对象在父List对象中最以一次出现出现的位置索引, 如果父List没有出现这样的List,则返回-1
+    10. boolean replaceAll(List list, Object oldVar, Objcet newVar)
+        说明: 使用一个新值newVar替换List对象的所有旧值oldVar
+    
+    例子:
+        import java.util.ArrayList;
+        import java.util.Collections;
+
+        public class SearchTest {
+            public static void main(String[] args){
+                ArrayList nums = new ArrayList();
+                nums.add(2);
+                nums.add(3);
+                nums.add(12);
+                nums.add(-2);
+                nums.add(99);
+                nums.add(0);
+                System.out.println(nums);  // out: [2, 3, 12, -2, 99, 0]
+                System.out.println(Collections.max(nums));  // out: 99
+                System.out.println(Collections.min(nums));  // out: -2
+                //使用55来代替nums中的0
+                Collections.replaceAll(nums, 0, 55);
+                System.out.println(nums);  // out: [2, 3, 12, -2, 99, 55]
+                // 判断-2在List集合中出现的次数
+                System.out.println(Collections.frequency(nums, -2));  // out: [-2, 2, 3, 12, 55, 99]
+                Collections.sort(nums);  // out:
+                System.out.println(nums);
+                System.out.println(Collections.binarySearch(nums, 99));  // out: 5
             }
         }
