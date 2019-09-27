@@ -2140,3 +2140,55 @@
                 System.out.println(Collections.binarySearch(nums, 99));  // out: 5
             }
         }
+
+
+7.3 同步控制
+    说明:
+        1. Collections工具类提供了多个synchronizedXxx()方法, 该方法可以将指定集合包装成线程同步的集合, 从
+            而可以解决多线程并发访问集合时的线程不安全问题
+        2. Java中常用的集合框架中的实现类HashSet, TreeSet, ArrayList, ArrauDeque, LinkedList, HashMap, 
+            和 TreeMap都是线程不安全的; 如果有多个线程访问他们, 而且有超过一个的线程试图修改它们, 则存在线程
+            安全的问题
+        
+    例子:
+        // 创建四个线程安全(或线程同步)的集合对象
+        public class SynchronizedTest{
+            public static void main(String[] args){
+                Collection c = Collections.SynchronizedCollection(new ArrayList());
+                List list = Collections.SynchronizedList(new ArrayList());
+                Set s = Collections.synchronizedSet(new HashSet());
+                Map a = Collections.synchronizedMap(new HashMap());
+            }
+        }
+
+
+7.4 设置不可变集合
+Collections提供了三类方法来返回一个不可变的集合(只读版本)
+    1. emptyXxx()
+        说明: 返回一个空的, 不可变的集合对象, 此处的集合既可以是List, 也可以是SortedSet或Set, 还可以是Map
+            或者SortedMap
+    2. singletonXxx()
+        说明: 返回一个指包含指定对象(只有一个或一项元素)的, 不可变的集合对象, 集合可以是List或者Map
+    3. unmodifiableXxx()
+        说明: 返回指定集合对象的不可变视图, 此处的集合既可以是List, 也可以是SortedSet或Set, 还可以是Map
+            或者SortedMap
+    
+    例子:
+        public class UnmodifiableTest{
+            public static void main(String[] args){
+                // 创建一个空的, 不可变的List对象
+                List unmodifiableList = Collections.emptyList();
+                // 创建一个只有一个元素, 且不可改变的Set集合
+                Set unmodifiableSet = Collections.singleton("Python");
+                // 创建一个普通的Map对象
+                Map scores = new HashMap();
+                scores.put("语文", 80);
+                scores.put("Java", 82);
+                // 返回普通的Map对象对应的不可变版本
+                Map unmodifiableMap = Collections.unmodifiableMap(scores);
+                // 下面任意一行代码都将引发UnsupportedOperationException异常
+                // unmodifiableList.add("测试元素");
+                // unmodifiableSet.add("测试元素");
+                // unmodifiableMap.put("英语", 59);
+            }
+        }

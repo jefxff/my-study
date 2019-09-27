@@ -1,0 +1,293 @@
+1. 泛型入门
+    说明:
+        1. 在没有泛型之前, 一旦把一个对象放进Java集合中, 集合就会忘记对象的类型, 把所有的对象当成Object类型
+            处理; 该对象的编译类型就变成了Object类型(其运行时类型没变) 当程序从集合中取出对象后, 就需要进行
+            强制类型转换, 
+        2. 增加泛型支持后的集合, 完全可以记住集合中元素的类型, 并可以在编译时检查集合中元素的类型, 如果试图
+            向集合中添加不满足类型要求的对象, 编译器就会提示错误
+        3. 泛型的实质: 允许在定义接口, 类时声明类型形参, 类型形参在整个接口, 类体内可当成类型使用, 几乎所有
+            可使用普通类型的地方都可以使用这种类型形参
+
+    1.1 编译时不检查类型的异常
+        例子:
+            // 下面程序在编译时不检查类型导致异常
+            public class ListErr{
+                public static void main(String[] args){
+                    // 创建一个只想保存字符串的List集合
+                    List strList = new ArrayList();
+                    strList.add("Python");
+                    strList.add("Java");
+                    // 将一个Integer对象添加到集合
+                    strList.add(5);   // ①
+                    strList.forEach(str -> System.out.println(((Stirng)str).length()));  // ②
+                }
+            }
+            程序说明:
+                1. strList只希望保存字符串类型的对象, 但是程序不能进行任何限制, 如果程序在①处把一个Integer
+                    对象添加到strList集合中, 这将导致在②处引发ClassCastException异常, 因为程序试图将一个
+                    Integer对象转换为String类型
+
+    1.2 使用泛型
+        说明:
+            1. Java5之后, Java引入了"参数化类型(parameterized type)"的概念, 允许程序再创建集合时指定集合
+                元素的类型, 
+            2. 语法: 在集合接口, 类后面增加尖括号(<Xxx>), 尖括号中放一个数据类型, 即表明这个集合接口, 集合类
+                只能保存特定类型的对象
+                如: List<String> 表示List集合只能添加String类型的对象
+        
+        例子:
+            public class GenericList{
+                public static void main(String[] args){
+                    // 创建一个只想保存字符串的List集合
+                    List<String> strList = new ArrayList<String>();  // ①
+                    strList.add("Python");
+                    strList.add("Java");
+                    // 将一个Integer对象添加到集合, 编译时将报错
+                    // strList.add(5);  // ② 
+                    strList.forEach(str -> System.out.println(strList.length()));  // ③
+                }
+            }
+            程序说明:
+                1. 在① 进行了类型声明 List<String>, 类型参数是String, 在创建这个 ArrayList对象时也指定了
+                    一个类型参数; strList 只能添加 String 类型的元素, 
+                2. 在②出试图添加一个 Integer类型的元素, 编译时会报错
+                3. 由于 strList 集合"记住了"所有集合元素都是String类型, 所以无须对集合进行强制类型转换
+
+    1.3 Java7 泛型的 "菱形" 语法
+        说明:
+            1. Java7开始, Java允许在构造器后不需要带完成的泛型信息, 只要给出一对尖括号(<>)即可, Java 可以
+                推断尖括号里应该是什么泛型信息(例子2)
+            2. (Java7之前吗如果使用带泛型的接口, 类定义变量, 那么调用构造器创建对象时构造器的后面也必须使用
+                泛型(例子1))
+
+        例子1:
+            // java7 之前构造器后面也必须使用泛型
+            List<String> strList = new ArrayList<String>();
+            Map<String, Integer> scores = new HashMap<String Integer>();
+
+        例子2:
+            // java7 之后构造器后面使用<>即可, Java自己推断类型
+            List<String> strList = new ArrayList<>();
+            Map<String, Integer> scores = new HashMap<>();
+        
+        例子3:
+            import java.util.ArrayList;
+            import java.util.HashMap;
+            import java.util.List;
+            import java.util.Map;
+
+            // Java 的 "菱形" 语法 
+            public class DiamondTest{
+                public static void main(String[] args) {
+                    // java 自动推断出 ArrayList的<>里应该是String
+                    List<String> books = new ArrayList<>();  
+                    books.add("Python");
+                    books.add("Java");
+                    // 遍历books集合, 集合元素就是String类型
+                    books.forEach(ele -> System.out.println(ele.length()));
+                    // java 自动推断出HashMap的<>里应该是String, List<String>
+                    Map<String, List<String>> schoolsInfo = new HashMap<>();
+                    // java自动推断出ArrayList的<>里应该是String
+                    List<String> schools = new ArrayList<>();
+                    schools.add("Hello !");
+                    schools.add("Thank you!");
+                    schoolsInfo.put("雷军", schools);
+                    // 遍历 Map 时, Map 的 key 是 String 类型, value 是 List<String>类型
+                    schoolsInfo.forEach((key, value) -> System.out.println(key + "-->" + value));
+                }         
+            }   
+
+
+2. 深入泛型
+    说明:
+        1. 泛型: 就是允许在定义类, 接口, 方法时使用类型形参, 这个类型形参将在声明变量, 创建对象, 调用方法时
+            动态地指定(即传入实际的类型参数, 也可以称为类型实参)
+        
+2.1 定义泛型接口, 类 
+    说明:
+        1. 可以为任何类, 接口增加泛型声明(并不是只有集合类才可以使用泛型声明, 虽然集合类是泛型的重要使用场所)
+        2. 包含泛型声明的类型可以在定义变量, 创建对象时传入一个类型实参, 从而可以动态地生成无数多个逻辑上的子
+            类, 但这种子类在物理上并不存在 
+        3. 当创建带泛型声明的自定义类, 为该类定义构造器时, 构造器名还是原来的类名, 不能增加泛型声明;
+
+    例子:
+        // 定义泛型的Apple类
+        public class Apple<T>{
+            // 使用T类型形参定义实例变量
+            private T info;
+            public Apple(){}
+            // 使用T类型形参来定义构造器
+            public Apple(T info){
+                this.info = info;
+            }
+            public void setInfo(T info){
+                this.info = info;
+            }
+            public T getInfo(){
+                return this.info;
+            }
+            public static void main(String[] args){
+                // 由于传给T形参的是String, 所以构造器参数只能是String
+                Apple<String> a1 = new Apple<>("苹果");
+                System.out.println(a1.getInfo());
+                // 由于传给T形参的是Double, 所以构造器参数只能是Double或double
+                Apple<Double> a2 = new Apple<>(5.67);
+                System.out.println(a2.getInfo());
+            }
+        }
+        程序说明:
+            1. 上面程序定义了一个带泛型声明的Apple<T>类, 使用Apple<T>类时就可为T类型形参传入实际类型, 这样
+                就可以生成如 Apple<String>, Apple<Double>...形式的多个逻辑子类(物理上并不存在)
+            2. 为 Apple<T类定义构造器, 其构造器名依然是Apple, 而不是Apple<T>; 调用该构造器时却可以使用
+                Apple<T>的形式, 当然应该为T形参传入实际的类型参数, Java7之后, 也可以使用省略<>中的类型参数
+    
+    例子: 
+        // Java5 之后, List接口, Iterator接口, Map接口的代码片段
+        // 定义接口时指定了一个类型参数, 该形参名为E
+        public interface List<E>{
+            // 在该接口里, E可以作为类型使用
+            // 下面方法可以使用E作为参数类型
+            void add(E x);
+            Iterator<E> iterator();   // ① 
+            // ...
+        }
+        // 定义接口时指定了一个类型形参, 该形参名为E
+        public interface Iterator<E>{
+            // 在该接口里E完全可以作为类型使用
+            E next();
+            boolean hasNext();
+            // ...
+        }
+        // 定义该接口时指定了两个类型形参, 其形参名为K, V 
+        public intetface Map<K, V>{
+            Set<K> keySet()    // ②
+            V put(K key, V value)
+            // ...
+        }
+        程序说明:
+            1. ①②处方法声明返回值类型是Iterator<E>, Set<K>, 这表明Set<K> 形式是一种特殊的数据类型, 是一种
+                与Set不同的数据类型, 可以认为是Set类型的子类
+            2. 例如使用 List 类型时, 如果E形参传入String类型实参, 则产生了一个新的类型: List<String>类型,
+                可以把List<String>想象成E被完全替换成儿了String的特殊List子接口
+            3. 虽然程序只定义了一个List<E>接口, 但实际使用时可以产生无数多个List接口, 只要E传入不同的类型实
+                参, 系统就是多出一个新的List子接口
+
+2.2 从泛型类派生子类
+    说明:
+        1. 当创建带泛型声明的接口, 父类之后, 可以为该接口创建实现类, 或从该父类派生子类, 注意: 当使用这些接
+            口, 父类时不能在包含类型形参
+            如: // 定义类A继承Apple类, Apple类不能跟类型形参
+                // public class A extends Apple<T>{}  // 错误代码示范
+
+        2. 定义方法时可以声明数据形参, 调用方法(使用方法)时必须为这些数据形参传入实际的数据; 于此类似的是, 定
+            义类, 接口, 方法时可以声明类型形参, 使用类, 接口, 方法时应该为类型形参传入实际类型
+            如: // 想从Apple类派生一个子类
+                // 使用Apple类时为T形参传入String类型
+                public class A extends Apple<String>{}
+
+        3. 调用方法时必须为所有的数据形参传入参数值, 与调用方法不同的是,使用类, 接口时也可以不为类型形参传入
+            实际的类型参数
+            如: // 使用Apple类时, 没有为T形参传入实际的类型参数
+                public class A extends Apple{}
+    
+    例子:
+        /**
+         * 如果从 Apple<String>类派生子类, 则在Apple类中所有使用T类型形参的地方都将被替换成String类型, 即 
+         *   它的子类将会继承到 String getInfo() 和 void setInfo(String info) 两个方法,  
+         */
+        public class A1 extends Apple<String>{
+            // 正确重写了父类的方法, 返回值
+            // 与父类Apple<String>的返回值完全相同
+            public String getInfo(){
+                return "SubClass" + super.getInfo();
+            }
+            /*
+            // 下面的方法是错误的, 重写父类的方法的返回值类型不一致
+            public Object getInfo(){
+                return "SubClass";
+            }
+            */
+        }
+    例子:
+        // 使用Apple类时没有传入实际的类型参数, Java编译器会报警告
+        public class A2 extends Apple{
+            // 重写父类的方法
+            public String getInfo(){
+                // super.getInfo()方法返回的值是Object类型
+                // 所以加上toString()才返回String类型
+                return super.getInfo().toString();
+            }
+        }
+
+2.3 并不存在泛型类
+    说明:
+        1. ArrayList<String>类确实象一种特殊的ArrayList类: 该 ArrayList<Stirng> 对象只能添加String对象
+            作为集合元素, 但实际上, 系统并没有为 ArrayList<String> 生成新的 class文件, 而且也不会把
+            ArrayList<String>当成新类来处理(例子1)
+        2. 不管为泛型的类型参数传入了哪一种类型参数, 对于Java来说, 他们依然被当成同一类处理, 在内存中也只占
+            用一块内存空间, 因此在静态方法, 静态初始化块或静态变量的声明和初始化中不允许使用类型形参(例子2)
+
+    例子1:
+        // 分别创建List<String>对象和List<Integer>对象
+        List<Stirng> l1 = new ArrayList<>();
+        List<Integer> l2 = new ArrayList<>();
+        // 调用getClass()方法来比较l1和l2的类是否相等
+        System.out.println(l1.getClass() == l2.getClass());  // out: true
+
+    例子2:
+        // 静态方法, 静态初始化块或静态变量的声明和初始化中不允许使用类型形参
+        public class R<T>{
+            // 下面的代码错误, 不能在静态变量声明中使用类型形参
+            static T info;
+            T age;
+            public void foo(T msg){}
+            // 下面的代码错误, 不能在静态方法声明中使用类型形参
+            public static void nar(T msg){}
+            
+        }
+
+
+3. 类型通配符
+    说明:
+        1. 当使用泛型类时(包括声明变量和创建对象两种情况), 都应该为这个泛型类传入一个类型实参
+        2. Java泛型的设计原则: 只要代码在编译是没有出现警告,就不会遇到运行时 ClasscastException异常 
+        3. Java泛型中不允许将如 List<Integer> 对象赋值给 List<Number>变量 
+            如: List<Integer> iList = new ArrayList<>();
+                // 下面的代码导致编译错误
+                // List<Number> nList = iList;
+
+3.1 使用类型通配符
+    说明:
+        1. 为了表示各种泛型List的父类, 可以使用通配符, 类型通配符是一个问号(?), 将一个问号作为类型实参传给
+            List集合(例子1)
+        2. 写作: List<?> 意思是:元素类型位置的List, 这个问号(?)被称之为通配符, 它的元素类型可以匹配任何类型
+        3. 但是这种带通配符的List仅表示它是各种泛型List的父类, 并不能将元素加入其中(null除外)
+    
+    例子1:
+        public void test(List<?> c){
+            for (int i = 0; i < c.size(); i++){
+                System.out.println(c.get(i));
+            }
+        }
+        程序说明:
+            1. 现在使用任何类型的List来调用test()方法, 程序依然可以访问集合c中的元素, 其类型是Object, 这永
+                远都是安全的, 因为不管List的真实类型是什么, 他包含的都是Object
+
+    例子:
+        List<?> c = new ArrayList<String>();
+        // 下面的代码引起编译错误
+        c.add(new Object());
+        程序说明:
+            1. 程序无法确定c集合中元素的类型, 所以不能向其添加对象,(null除外, null是所有引用类型的实例)
+            2. 程序可以调用get()方法来返回 List<?>集合指定索引处的元素, 由于不知道返回值是什么类型, 可以将
+                返回值赋值给Object类型的变量, 或者放在任何希望是Object类型的地方
+
+
+3.2 设定类型通配符的上限
+    说明:
+        1. 因为List<?> 这种形式表示这个List集合可以是任何泛型List的父类, 如果程序不希望这个List<?>是任何
+            泛型List的父类, 只希望它代表某一类泛型List的父类
+        2. 通过 List<? extends Shape> 这种形式表示被限制的泛型通配符: 他表示所有Shape泛型List的父类; 此处
+            的问号(?)表示一个未知的类型, 但是此处的这个未知的类型一定是Shape的子类型(也可以是Shape本身), 因
+            此,这个例子中将Shape称之为这个通配符的上限(upper bound)
+        3. 由于程序无法确定这个受限制的通配符的具体类型, 所以不能把Shape对象或其子类的对象加入到这个泛型集合;    
