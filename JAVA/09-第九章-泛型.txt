@@ -262,6 +262,7 @@
             List集合(例子1)
         2. 写作: List<?> 意思是:元素类型位置的List, 这个问号(?)被称之为通配符, 它的元素类型可以匹配任何类型
         3. 但是这种带通配符的List仅表示它是各种泛型List的父类, 并不能将元素加入其中(null除外)
+        4. 这样记: 在使用通配符的情况下, Java不允许把对象放进一个未知类型的集合中
     
     例子1:
         public void test(List<?> c){
@@ -291,3 +292,308 @@
             的问号(?)表示一个未知的类型, 但是此处的这个未知的类型一定是Shape的子类型(也可以是Shape本身), 因
             此,这个例子中将Shape称之为这个通配符的上限(upper bound)
         3. 由于程序无法确定这个受限制的通配符的具体类型, 所以不能把Shape对象或其子类的对象加入到这个泛型集合;    
+
+    例子:
+        // 先定义一个抽象类 Shape 
+        public abstract class Shape{
+            public sbatract void draw(Canvas c);
+        }
+
+        // 定义一个Shape的子类Circle
+        public calss Circle extends Shape{
+            // 实现画布的方法, 以打印字符串来模拟画布的方法
+            public void draw(Canvas c){
+                System.out.println("在画布" + c + "上画一条龙");
+            }
+        }
+
+        // 在定义一个Shape的子类Rectangle
+        public class Rectangle extends Shape{
+            // 实现画布的方法, 以打印字符串来模拟画布的方法
+            public void draw(Canvas c){
+                System.out.println("在画布" + c + "上画一道彩虹");
+            }
+        }
+
+        // 实现Canvas
+        public class Canvans{
+            // 同时在画布上绘制多个形状, 使用被限制的泛型通配符
+            public void drawAll(List<? extends Shape> shapes){
+                for (Shape s : shapes){
+                    s.draw(this);
+                }
+            }
+        }
+
+
+3.3 设定类型形参的上限
+    说明:
+        1. Java泛型不仅允许在使用通配符形参时设定上限, 而且可以在定义类型形参时设定上限, 用于表示传给该类型
+            形参的实际类型要么是该上限爱你类型, 要么是该上限类型的子类 (例子1)
+        2. 如果程序需要为类型形参设定多个上限(最多一个父类上限, 可以有多个接口上限), 表明该类型形参必须是其
+            父类的子类(或父类本身), 并且实现多个上限接口 (例子2)
+        3. 与类同时继承父类, 实现接口类似的是, 为类型形参指定多个上限时, 所有的接口上限必须位于类上限之后, 
+            即: 如果需要为类型形参指定类上限, 类上限必须位于第一位
+
+    例子1:
+        // 定义一个Apple类, 该类的类型形参上限是Number类
+        // 表明使用Apple类时为T传入的实际类型只能是Number类或Number类的子类
+        public class Apple <T extends Number>{
+            T col;
+            public static void main(String[] args){
+                Apple<Integer> ai = new Apple<>();
+                Apple<Double> ad = new Apple<>();
+                // 下面代码将引发编译异常, 下面代码试图把String类型传给T类型
+                // 但是 String 不是 Number 的子类, 所以会引起编译错误
+                // Apple<string> as = new Apple<>();
+            }
+        }
+    
+    例子2:
+        // 下面程序表明Apple类的T类型必须是Number类或其子类, 并且必须实现 java.io.Serializable 接口
+        public calss Apple<T extends Number & java.io.Serializable>{
+            // ...
+        }
+
+
+4. 泛型方法
+4.1 定义泛型方法
+    说明:
+        1. 用于在定义类,接口时没有使用类型形参, 但定义方法时想自己定义类型形参
+        2. 泛型方法: 就是在声明方法时定义一个或多个类型形参
+        3. 方法声明中定义的形参只能在该方法里使用; 而接口, 类声明中定义的类型形参则可以在整个类, 接口中使用
+        4. 方法中的泛型形参无须显式传入实际类型参数
+
+    泛型方法的格式:(例子1)
+        [修饰符] <T , S> 返回值类型 方法名(形参列表){
+            // 方法体...
+        }
+    
+    例子1:
+        import java.util.ArrayList;
+        import java.util.Collection;
+
+        public class GenericMethodTest {
+            // 什么一个泛型方法, 该泛型方法中带一个T类型形参
+            static <T> void fromArrayToCollection(T[] a, Collection<T> c){
+                for (T o : a){
+                c.add(o);
+                }
+            }
+            public static void main(String[] args){
+                Object[] oa = new Object[100];
+                Collection<Object> co = new ArrayList<>();
+                // 下面代码中的T代表Object类型
+                fromArrayToCollection(oa, co);
+                String[] sa = new String[100];
+                Collection<String> cs = new ArrayList<>();
+                // 下面代码中的T代表String类型
+                fromArrayToCollection(sa, cs);
+                Integer[] ia = new Integer[100];
+                Float[] fa = new Float[100];
+                Number[] na = new Number[100];
+                Collection<Number> cn = new ArrayList<>();
+                // 下面代码中的T代表Number类型
+                fromArrayToCollection(ia, cn);
+                // 下面代码中的T代表Number类型
+                fromArrayToCollection(fa, cn);
+                // 下面的代码中T代表Number类型
+                fromArrayToCollection(na, cn);
+                // 下面的代码中T代表Object类型
+                fromArrayToCollection(na, co);
+                // 下面的代码中T代表String类型,但na是一个Number数组
+                // 因为Number既不是String类型, 也不是它的子类, 所以出现编译错误
+                // fromArrayToCollection(na, cs);
+            }
+        }
+        
+
+4.2 泛型方法和类型通配符的区别
+    说明:
+        1. 大多数时候都可以使用泛型方法来代替类型通配符(例子1)
+        2. 在不同的调用点传入不同的实际类型时, 就应该使用通配符
+        3. 泛型方法允许类型形参被用来表示方法的一个或多个参数之间的类型依赖关系, 或者方法返回值与参数之间的类
+            型依赖关系; 这种情况下就应该使用泛型方法
+        4. 也可以同时使用泛型方法可通配符 (例子2) 
+        5. 类型通配符既可以在方法签名中定义形参的类型, 也可以用于定义变量的类型; 但泛型方法中的类型形参必须在
+            对应方法中显式声明
+
+    例子1:
+        // Java的Collection接口中两个使用泛型的方法
+        public interface Collection<E>{
+            boolean containsAll(Collection<?> c);
+            boolean addAll(Collection<? extends E> c);
+        }
+
+        // 上面的方法也可以修改为类型通配符方法
+        public interface Collection<E>{
+            <T> boolean containsAll(Collection<T> c);
+            <T extends E> boolean addAll(Collection<T> c);
+        }
+        说明:
+            1. <T extends E>这句代码使用了泛型形式, 这时定义类型形参时设定上限(其中E是Collection接口里
+                定义的类型形参, 在该接口里E可当成普通类型使用)
+
+    例子2:
+        // 同时使用泛型方法和通配符的情况
+        public class Collections{
+            public static <T> void copy(List<T> dest, List<? extends T> src){//...}
+        }
+        说明:
+            1. 上面的copy方法中的dest和src存在明显的依赖关系, 从源src中复制出来的元素, 必须可以"添加"到目标
+                List中, 所以源List集合元素的类型只能是目标集合元素的类型的子类型或者它本身
+
+
+4.3 Java7的"菱形"语法和泛型构造器
+    说明:
+        1. 泛型构造器: 就是在定义构造器时, 在构造器签名中声明类型形参
+        2. 作用: 定义了泛型构造器, 在接下来的调用构造器时, 就不仅可以让Java根据数据参数的类型来"推断"类型形
+            参的类型, 而且也可以显示地为构造器中类型形参指定实际的类型(例子1)
+        3. Java7新增的"菱形"语法允许调用构造器时在构造器后使用一对尖括号来代表泛型信息; 但是程序显式指定了泛
+            型构造器中什么的类型形参的实际类型, 则不可以使用 "菱形" 语法; (例子2)
+
+    例子1:
+        class Foo{
+            public <T> Foo(T t){
+                System.out.println(t);
+            }
+        }
+        public class GenericConsttutor{
+            public static void main(String[] args){
+                // 泛型构造器中T参数为String
+                new Foo("Need Study Python Now!");
+                // 泛型构造器中T参数为Integer
+                new Foo(200);
+                // 显式指定泛型构造器中T参数为String
+                // 传给Foo构造器的实参也是String对象, 不会出错
+                new <String> Foo("Java is Hard, But I Need Study Continue!");
+                // 显式指定泛型构造器的T参数为String
+                // 但传给Foo构造器的实参是Double对象, 下面代码出错
+                // new <String> Foo(12.3);
+            }
+        }
+    例子2:
+        class MyClass<E>{
+            public <T> MyClass(T t){
+                System.out.println("t参数的值为: " + t);
+            }
+        }
+        public class GenericDiamondTest{
+            public static void main(String[] args){
+                // 下面代码中MyClass类声明中的E行参数是String类型
+                // 泛型构造器中声明的T形参是Integer类型
+                MyClass<String> mc1 = new MyClass<>(5);
+                // 显式指定泛型构造器中声明的T形参是Integet类型
+                MyClass<String> mc2 = new <Integer> MyClass<String>(5);
+                // MyClass类声明中的E形参是String类型
+                // 如果显式指定泛型构造器中声明的T形参是Integer类型
+                // 此时就不能使用"菱形"语法, 下面的代码报错
+                // MyClass<String> mc3 = new <Integer> MyClass<>(5);
+            }
+        }
+
+
+4.5 设定通配符的下限
+    语法:
+        <? super Type> 表示: 这个通配符表示它必须是Type本身, 或是Type的父类
+
+    例子1:
+        import java.util.ArrayList;
+        import java.util.Collection;
+        import java.util.List;
+
+        public class MyUtils {
+            // 下面 dest 集合元素的类型必须与 src 集合元素的类型相同, 或是其父类
+            public static <T> T copy(Collection<? super T> dest, Collection<T> src){
+                T last = null;
+                for (T ele : src){
+                    last = ele;
+                    dest.add(ele);
+                }
+                return last;
+            }
+            public static void main(String[] args){
+                List<Number> ln = new ArrayList<>();
+                List<Integer> li = new ArrayList<>();
+                li.add(5);
+                li.add(3);
+                li.add(12);
+                // 此处可准确地知道最后一个被赋值的元素是Integer类型
+                // 与src集合元素的类型相同
+                Integer last = copy(ln, li);
+                System.out.println(last);
+                System.out.println(ln);
+                System.out.println(li);
+            }
+        }
+    
+    例子2:
+        /**
+         * 下面的E是定义TreeSet类时的类型形参
+         * TreeSet(Comparator<? super E> c)
+         * 在TreeSet中,如果需要定制排序, 则TreeSet对象有一个与之关联的Comparator对象, 上面构造器中的参数c
+         * 就是进行定制排序的Comparator对象
+         * 通过这种带下限的通配符的语法, 可以在创建TreeSet对象时, 灵活的选择合适的Comparator
+         * 
+         */
+        import java.util.Comparator;
+        import java.util.TreeSet;
+
+        public class TreeSetTest {
+            public static void main(String[] args){
+                // Comparator的实际类类型是TreeSet的元素类型的父类, 满足要求
+                TreeSet<String> ts1 = new TreeSet<>(
+                    new Comparator<Object>(){
+                        public int compare(Object fst, Object snd){
+                            return fst.hashCode() > snd.hashCode() ? 1 
+                            : fst.hashCode() < snd.hashCode() ? -1 : 0;
+                        }
+                    });
+                ts1.add("hello");
+                ts1.add("wa");
+                // Comparator 的实际类型是TreeSet元素的类型, 满足要求
+                TreeSet<String> ts2 = new TreeSet<>(
+                    new Comparator<String>(){
+                        public int compare(String first, String second){
+                            return first.length() > second.length() ? 1 
+                            : first.length() < second.length() ? -1 : 0;
+                        }
+                    });
+                ts2.add("Hello");
+                ts2.add("wa");
+                System.out.println(ts1);
+                System.out.println(ts2);
+            }
+        }
+        说明:
+            1. 通过使用这种通配符下限的方式定义TreeSet构造器参数, 就可以将所有可用的Comparator作为参数传入,
+                从而增加程序的灵活性
+            2. 主要理解TreeSet<Stirng> 和 Comparator<String>中, Comparator的泛型类型必须是TreeSet泛型类
+                型的父类型(或其本身)
+            
+
+4.5 泛型方法与方法重载
+    说明:
+        1. 书中的例子阐述了, 在一个类中方法的重载时, 两个方法分别用了通配符上限和通配符下限, 在调用方法时
+            两个方法都匹配, 结果就是把虚拟机搞懵逼了; 结果想说的就是: 不要再一个类中不要在方法的重载中分别
+            调用通配符上限和通配符下限 
+
+    例子:
+        // 通过例子再理解一下上面说明1
+        public class MyUtils{
+            // 这个方法中, dest的类型是T, src的类型是T类型或者T类型的子类
+            // 通配符上限
+            public static <T> void copy(Collection<T> dest, Collection<? extends T> src){...}  // ①
+            // 这个方法中, dest的类型是T类型或者T的父类, src的类型是T
+            // 通配符下限
+            public static <T> T copy(Collection<? super T> dest, Collection<T> src){...}   // ② 
+        }
+        // 下面的调用copy()方法时会搞懵逼Java虚拟机
+        List<Number> ln = new ArrayList<>();
+        List<Integer> li = new ArrayList<>();
+        copy(ln, li);
+        说明:
+            1. 调用copy()方法时, 这个方法既可以匹配①处的copy()方法, 此时T类型参数的类型是Number; 也可以匹
+                配②处的copy()方法, 此时T参数的类型是Integer; 编译器无法确定调用那个方法, 所以会出错
+            2. 记住: 如果把虚拟机搞懵逼了, 那就是代码写错了 
+
