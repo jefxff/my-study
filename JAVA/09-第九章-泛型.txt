@@ -597,3 +597,118 @@
                 配②处的copy()方法, 此时T参数的类型是Integer; 编译器无法确定调用那个方法, 所以会出错
             2. 记住: 如果把虚拟机搞懵逼了, 那就是代码写错了 
 
+4.6 Java 8 改进的类型推断
+    说明:
+        1. 可通过调用方法的上下文来推断类型参数的目标类型
+        2. 可在方法调用链中, 将推断得到的类型参数传递到最后一个方法
+
+    例子:
+        class MyUtil<E>{
+            public static <Z> MyUtil<Z> nil(){
+                return null;
+            } 
+            public static <Z> MyUtil<Z> cons(Z head, MyUtil<Z> tail){
+                return null;
+            }
+            E head(){
+                return null;
+            }
+        }
+        public class InterfaceTest(){
+            public static void main(String[] args){
+                // 可通过方法赋值的目标参数来推断类型参数为String
+                MyUtil<String> ls = MyUtil.nil();    // ①
+                // 无须使用下面语句在调用nil()方法时指定类型参数的类型
+                MyUtil<String> mu = MyUtil.<String>mil();
+                // 可调用cons()方法所需的参数类型来推断类型参数为Integer
+                MyUtil.cons(42, MyUtil.nil());   // ②
+                // 无须使用下面的语句在调用nil()方法时指定类型参数的类型
+                MyUtil.cons(42, MyUtil.<Integer>nil());   // ③
+            }
+        }
+        程序说明:
+            1. 在①处的代码和下面一条代码语句作用完全相同, 区别在于在①处, 代码无须在调用MyUtil类的nil()方法
+                时显式的指定类型参数为String, 这是因为程序需要将该方法的返回值赋值给MyUtil<String>类型, 因
+                此系统可以自动推断此处的类型参数为String类型
+            2. 在②③处的代码作用完全相同, 在③处的代码也无须在调用MyUtil类的nil()方法时显示的指定类型参数为
+                Integer, 这是因为程序将nil()方法的返回值作为了MyUtil类的cons()方法的第二个参数, 而程序可以
+                根据cons()方法的第一个参数(42)推断出此处的类型参数为Integer类型
+
+
+5. 擦除和转换
+    说明:
+        1. 如果没有为这个泛型类指定实际的类型参数, 则该类型参数被称作 raw type(原始类型), 默认是声明该类型
+            参数时指定的第一个上限类型
+        2. 当把一个具有泛型信息的对象赋给另一个没有泛型信息的变量时, 所有在尖括号之间的类型信息都将被扔掉;
+            比如: List<String>类型被转换为List, 则该List对集合元素的类型检车变成了类型参数的上限(即Object)
+        3. 从逻辑上来看, List<String>是List的子类, 如果直接把一个List对象赋给一个List<String>对象不会引起
+            编译器错误, 但是对泛型来说, 可以直接把一个List对象赋给一个List<String>对象, 编译器仅仅提示"未经
+            检查的转换" (例子2)
+        
+    例子1:
+        class Apple<T extends Number>{
+            T size;
+            public Apple(){}
+            public Apple(T size){
+                this.size = size;
+            }
+            public void setSize(T size){
+                this.size = size;
+            }
+            public T getSize(){
+                retuen this.size;
+            }
+        }
+        public class ErasureTest{
+            public staitc void main(String[] args){
+                Apple<Integer> a = new Apple<>(6);    // ①
+                // a 的 getSize() 方法返回Integer对象
+                Integer as = a.getSize();
+                // 把a对象赋值给Apple变量, 丢失尖括号里的类型信息
+                Apple b = a;    // ②
+                // b 只知道size 的类型是 Number 
+                Number size1 = b.getSize();
+                // 下面的代码引起编译错误
+                // Integer size2 = b.getSize();   ③
+            }
+        }
+        程序说明:
+            1. 上面的程序定义了带泛型声明的Apple类, 其类型形参的上限是Number, 这个类型形参用来定义Apple类的
+                size变量; 
+            2. 程序在①处的代码创建了一个Apple对象, 该Apple对象传入了Integer作为类型形参的值, 所以调用 a 的
+                getSize() 方法时返回Integer类型的值; 
+            3. 当把 a 赋给一个不带泛型信息的b变量时, 编译器会丢失a对象的泛型信息, 即所有尖括号里的信息都会
+                丢失--因为Apple的类型形参的上限是Number类, 所以编译器依然知道 b 的 getSize() 方法返回
+                Number 类型, 但具体是Number的那个子类就不知道了
+    例子2:
+        public class ErasureTest2{
+            public staitc void main(String[] args){
+                List<Integer> li = new ArrayList<>();
+                li.add(6);
+                li.add(9);
+                List list = li;
+                // 下面的代码引起 "未经检查的转换" 警告, 编译, 运行时完全正常
+                List<String> ls = list;   // ① 
+                // 但是只要访问ls里的元素, 下面代码将引起运行时异常
+                System.out.println(ls.get(0));
+            }
+        }
+        程序说明:
+            1. 上面程序中定义了一个List<Integer>对象, 这个List对象保留了集合元素的类型信息, 当把这个List对
+                象赋给另外一个List类型的list后, 编译器就会丢失前者的泛型信息, 即丢失list集合里元素的类型信
+                息, 这就是典型的擦除
+            2. Java又允许直接把List对象赋给一个List<Type> (Type可以是任何类型)类型的变量, 所以程序再①处编
+                译通过, 只发出"未经检查的转换" 警告
+            3. 但对list变量实际上引用的是List<Integer>集合, 所以试图把该集合里的元素当成String类型的对象取
+                出时, 将引发运行时异常
+
+
+
+6. 泛型与数组
+    说明:
+        1. 如果一段代码在编译时没有提出 "[unchecked]"未经检查的转换警告, 则程序在运行时不会引发 ClassCastException 
+            异常;
+        2. 所以数组元素的类型不能包含类型变量或类型形参, 除非是无上限的类型通配符; 但是可以声明元素类型包含
+            类型变量或类型形参的数组
+            即: 只能声明 List<String>[]形式的数组, 不能创建 ArrayList<String>[10]这样的数组
+            
