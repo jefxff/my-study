@@ -129,7 +129,9 @@
         3. 异常处理结构语法中只有 try块 是必需的, catch块 和 finally块 是可选的, 但 catch块和finally块至少
             出现其中之一, 也可以同时出现, 捕获父类异常的catch块必须位于捕获子类异常块的后面, 但不能只单独只有
             try块, 多个catch块必须位于try块的后面, finally块必须位于所有catch块的后面
-        3. 语法格式:
+        4. 不要再finally块中使用return或throw等导致方法终止的语句, 因为一旦在 finally块中使用了 return或throw
+            语句, 将会导致try块, catch块中的return, throw语句失效
+        5. 语法格式:
             try{
                 // 业务实现代码
             }
@@ -175,3 +177,279 @@
                     }
                 }
             }
+
+    2.6 异常处理嵌套
+        在try块, catch块或finally块中包含完整的异常处理流程的情形被称之为异常处理嵌套; 异常处理流程代码可以放在
+        任何能方可执行代码的地方, 因此完整的异常处理流程即可放在 try块中, 也可放在catch块或finally块中
+
+    2.7 Java7的自动关闭资源的try语句
+        1. Java7增强了try语句的功能, 它允许在try关键字后紧跟一对圆括号, 圆括号可以声明, 初始化一个或多个资源,此处的
+            资源指的是那些必须在程序结束时显式关闭的资源(比如数据库连接, 网络连接等), try语句在该语句结束时自动关闭
+            这些资源
+        2. 为了保证 try 语句可以正常关闭资源, 这些资源实现类必须实现 ＡutoClosrable 或 Closeable 接口, 实现这两个
+            接口就必须实现close()方法
+        3. Closeable 是 AutoCloseable 的子接口, Closeable 接口里的 close() 方法声明只能抛出IOException, 因此
+            Closeable 的实现类在实现 close() 方法时只能声明抛出 IOException 或其子类; 但是 AutoCloseable 接口
+            里的 close() 方法声明抛出的是 Exception, 因此 AutoCloseable 的实现类在实现close()方法时可以声明抛出
+            任何异常
+        4. 自动关闭资源的 try 语句相当于包含了隐含式的 finally块 (这个finally块用于关闭资源), 因此这个 try 语句
+            可以既没有catch块, 也没有finally块
+
+        例子:
+            package how2j;
+
+            import java.io.BufferedReader;
+            import java.io.FileOutputStream;
+            import java.io.IOException;
+            import java.io.PrintStream;
+
+            public class AutoCloseTest {
+                public static void main(String[] args) throws IOException {
+                    try (
+                        // 声明, 初始化两个可关闭的资源
+                        // try 语句会自动关闭这两个资源
+                        BufferedReader br = new BufferedReader(
+                            new FileReader("AutoCloseTest.java"));
+                        PrintStream ps = new PrintStream(
+                            new FileOutputStream("a.txt"))) {
+                        // 使用两个资源
+                        System.out.println(br.readLine());
+                        ps.println("庄生晓梦迷蝴蝶");
+                    }
+                }
+            }
+
+
+3. Checked 异常 和 Runtime 异常体系
+    概述:
+        1. Java的异常被分为两大类: Checked 异常和 Runtime 异常(运行时异常), 所有的 RuntimeException 类及其子类
+            的实例被称为 Runtime 异常; 而不是RuntimeException 类及其子类的已成实例则被称之为 Checked 异常
+        2. 只有 Java 语言提供 Checked 异常, 因为Java认为Checked异常都是可以被处理(修复)的异常, 所以Java程序必须
+            显式处理 Checked 异常, 如果不处理 Checked 异常, 则报编译错误
+        3. Checked 异常的两种处理方式:
+            1. 当前方法明确知道如何处理该异常, 程序应该使用 try-catch 块来捕获该异常, 然后在对应的catch块中修复该
+                异常
+            2. 当前方法不知道如何处理该异常, 应该在定义该方法时声明抛出该异常
+        
+
+    3.1 使用 throws 声明抛出异常(抛出异常类)
+        1. throws 抛出异常思路: 当前方法不知道如何处理这种类型的异常, 该异常应该由上一级调用者处理; 如果 main 方法
+            也不知道如何处理这种类型的异常, 也可以使用 throws 声明抛出异常, 将该异常交给JVM虚拟机处理
+        2. throws 声明抛出只能在**方法签名**中使用, throws 可以声明抛出多个异常类, 多个异常类之间使用逗号(,)隔开,
+            一旦使用 throws 语句声明抛出了该异常, 程序就无须使用 try...catch 块来捕获该异常了
+        3. 如果一段代码调用了一个带 throws声明的方法, 该方法声明抛出了 Checked 异常, 则表明该方法希望它的调用者来处
+            理该异常, 也就是说, 调用该方法时要么放在 try块中显式的捕获异常, 要么放在另一个带throws声明抛出的方法中(例子1)
+        4. 记住: 方法重写时 "两小" 中规定: 子类方法声明抛出的异常类型应该是父类方法声明抛出的异常类型的子类或相同,
+        5. 语法格式: throws ExceptionClass1, ExceptionClass2...
+        6. Checked 异常的不便之处:
+            1. 对于程序中的 Checked 异常,Java要求必须显式捕获并处理该异常, 或者显式声明抛出该异常, 增加编程难度
+            2. 如果在方法中显式声明抛出Checked异常, 将会导致方法签名与异常耦合, 如果该方法是重写父类的方法, 则该方法
+                抛出的异常, 还会受到被重写方法抛出的异常的限制
+
+        例子1:
+            // ThrowsTest2.java
+            public class ThrowsTest2 {
+                public static void test() throws IOException {
+                    // 因为 FileInputStream 的构造器声明抛出 IOException 异常
+                    // 所以调用 FileInputStream 的代码要么放在 try...catch 块中, 要么放在另外一个带 throws 声明
+                    // 抛出的方法中
+                    FileInputStream fis = new FileInputStream("a.txt");
+                }
+
+                public static void main(String[] args) throws Exception {
+                    // 因为 FileInputStream 的构造器声明抛出 IOException 异常
+                    // 所以调用 FileInputStream 的代码要么放在 try...catch 块中, 要么放在另外一个带 throws 声明
+                    // 抛出的方法中
+                    test();
+                }
+            }
+
+4. 使用 throw 抛出异常(抛出异常实例)
+    4.1 抛出异常
+        1. 如果需要在程序中自行抛出异常, 则应该使用 throw 语句, throw 可单独使用, throw 语句抛出的不是异常类, 而是异常
+            实例, 而且每次只能抛出一个异常实例
+        2. 语法格式: throw ExceptionInstance;
+        3. 如果 throw 语句抛出的异常是 Checked 异常, 则该throw 语句要么放在 try 块里, 显式捕获该异常, 要么放在一个带
+            throws 声明抛出的方法中, 即将该异常交给该方法的调用者来处理;  如果 throw 语句抛出的异常是 Runtime 异常, 则
+            该语句无须放在 try 块里, 也无须放在带 throws 声明抛出的方法中; 程序既可以显式使用 try...catch 来捕获并处理
+            该异常, 也可以完全不理会该异常, 把该异常交给该方法调用者处理
+        4. 自行抛出 Runtime 异常比自行抛出 Checked 异常的灵活性更好
+
+        例子:
+            // ThrowTest.java
+            public class ThrowTest {
+                public static void main(String[] args) {
+                    try {
+                        // 调用声明抛出 Checked 异常的方法, 要么放在 try...catch 中, 要么放在另一个有 throws 抛出的方法中
+                        // 即: 在main方法中再次声明抛出
+                        throwChecked(-3);
+                    }catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    // 调用声明抛出 Runtime 异常的方法既可以显式捕获异常, 也可以不理会该异常
+                    throwRuntime(3);
+                }
+
+                public static void throwChecked(int a) throws Exception {
+                    if (a > 0){
+                        // 自行抛出 Exception 异常
+                        // 该代码必须处于 try块里, 或者处于带 throws 声明的方法中
+                        throw new Exception("a 的值大于0, 不符合要求");
+                    }
+                }
+
+                public static void throwRuntime(int a) {
+                    if (a > 0) {
+                        // 自行抛出 RuntimeException 异常, 既可以显式捕获异常
+                        // 也可以完全不理会该异常, 把该异常交给该方法的调用者来处理
+                        throw new RuntimeException("a 的值大于0, 不符合要求");
+                    }
+                }
+            }
+
+    4.2 自定义异常类(记住例子的格式)
+        1. 自定义异常类都应继承 Exception 基类, 如果希望自定义 Runtime 异常, 则应该继承 RuntimeException 基类
+        2. 定义异常类是通常需要提供两个构造器, 一个是无参数的构造器, 另一个是带一个字符串参数的构造器, 这个字符串
+            将作为该异常对象的描述信息(也就是 getMessage() 方法的返回值)
+        3. 注意: 创建自定义异常类都可以采用与如下例子相似的代码完成, 只需更改 AuctionException 异常的类名即可,
+            让该异常类的类名可以准确描述该异常
+        
+        例子: 
+            // AuctionException.java
+            // 如果自定义 Runtime 异常, 只需将 Exception 替换成 RuntimeException 基类即可
+            public class AuctionException extends Exception {
+                public AuctionException() {}
+                public AuctionException(String msg) {
+                    super(msg);
+                }
+            }
+    
+    4.3 catch 和 throw 同时使用
+        1. 异常处理的方式:
+            1. 在出现异常的方法内捕获并处理异常, 该方法的调用者将不能再次不过该异常
+            2. 在方法的签名中声明抛出该异常, 将该异常完全交给方法调用者处理
+        2. 实现多个方法协同处理同一个异常的情形: 可以在catch块中结合throw语句来完成
+        3. 企业级应用对异常的处理通常分两部分:
+            1. 应用后台需要通过日志来记录异常发生的详细情况
+            2. 应用还需要根据异常向与应用使用者传达某种提示 
+        
+        例子:
+            // AuctionTest.java
+            public class AuctionTest {
+            private double initPrice = 30.0;
+            // 因为该方法中显式的抛出了 AuctionException 异常
+            // 所以此处需要声明抛出 AuctionException 异常
+            public void bid(String bidPrice) throws AuctionException {
+                double d = 0.0;
+                try {
+                    d = Double.parseDouble(bidPrice);
+                } catch (Exception e) {
+                    // 此处完成本方法中可以对异常执行的修复程序
+                    // 此处仅仅是在控制台打印异常的跟踪栈信息
+                    e.printStackTrace();
+                    // 再次抛出自定义异常
+                    throw new AuctionException("竞拍价必须是数值, 不能包含其他字符!");
+                }
+                if (initPrice > d) {
+                    throw new AuctionException("竞拍加比起拍价低, 不允许竞拍!");
+                }
+                initPrice = d;
+            }
+            public static void main(String[] args) {
+                AuctionTest at = new AuctionTest();
+                try {
+                    at.bid("df");
+                } catch (AuctionException ae) {
+                    // 再次捕获到 bid() 方法中的异常, 并对异常进行处理
+                    System.out.println(ae.getMessage());
+                }
+            }
+        }
+    
+    4.4 Java7 增强的 throw 语句
+        1. Java7开始, Java编译器会执行更细致的检查, Java编译器会检查 throw 语句抛出异常的实际类型, 因此在方法签名中
+            只要声明对应的异常类即可
+
+    4.5 异常链
+        1. 应用结构: 表现层(用户界面) -- API --> 中间层(实现业务逻辑) -- API --> 持久层(保存数据)
+        2. 如果 中间层访问持久层出现 SQLException 异常时, 程序不应该将 SQLException 异常传给表现层(原因:1.没必要;2.传
+            给表现层可能暴露不安全的信息); 通常的做法是: 程序先捕获原始异常, 然后抛出一个新的业务异常, 新的业务异常中包
+            含了对用户的提示信息, 这种处理方式叫做异常转译
+        3. 这种把捕获一个异常接着抛出另外一个异常, 并把原始异常信息保存下来是一种典型的链式处理(23种设计模式之一: 职责
+            链模式), 也被称之为 "异常链"
+        
+        例子:
+            // 需求: 实现工资计算的方法
+            /**
+             * 1. 自定义了 SalException 的异常类
+             * 2. 做法就是在catch块中接受到SQlException异常类之后, 在catch块中抛出重写后的 SalException 异常
+             */
+            
+            // 创建自定义SalException 异常类
+            public class SalException extends Exception {
+                public SalException() {}
+                public SalException(sqle) {
+                    super(sqle);
+                }
+                // 创建一个可以接收Throwable 参数的构造器
+                public SalException(Throwable t) {
+                    super(t);
+                }
+            }
+
+            // 异常链模式方法
+            public calSal() throws SalException {
+                try {
+                    // 实现结算工资的业务逻辑
+                } catch (SQLException sqle) {
+                    // 把原始异常记录下来, 留给管理员
+                    // ...
+                    // 下面异常中的message就是对用户的提示  -------------> 用户无法查看底层异常
+                    throw new SalException("访问底层数据库出现异常"); 
+
+                    // 下面异常中的sqle就是原始异常 ---------------> 可以追溯到底层的异常
+                    throw new SalException(sqle);
+
+                } catch (Exception e) {
+                    // 把原始异常记录下来, 留给管理员
+                    // ...
+
+                    // 下面异常中的message就是对用户的提示  -------------> 用户无法查看底层异常
+                    throw new SalException("访问底层数据库出现异常");
+
+                    // 下面异常中的e就是原始异常 ---------------> 可以追溯到底层的异常
+                    throw new SalException(e);
+                }
+            }
+
+
+5. Java 的异常跟踪栈
+    1. 异常对象的 printStackTrace() 方法用于打印异常的跟踪栈信息, 根据 printStackTrace() 方法输出结果可以找到
+        异常的源头
+    2. Java的异常跟踪栈被分解成一系列的方法调用, 这是因为: 实现更好的重用性, 将每个可重用的代码单元定义成方法, 将
+        复杂任务逐渐分解为更易管理的小型子任务
+    
+6. 异常处理规则
+    1. 异常处理的目标:
+        1. 使程序代码混乱最小化
+        2. 捕获并保留诊断信息
+        3. 通知合适的人员
+        4. 采用合适的方式结束异常活动
+    2. 异常处理的初衷
+        异常处理的初衷是将不可预期异常的处理的代码和正常的业务逻辑代码分离, 因此绝不要使用异常处理来代替正常的业务
+        逻辑判断
+
+    6.1 不要过度使用异常
+        1. 把异常和普通错误混淆在一起, 不再编写任何错误处理代码, 而是以简单地抛出异常来代替所有的错误处理
+        2. 使用异常处理来代替流程控制
+    
+    6.2 不要使用过于庞大的try块
+        把大段的 try 块分割成多个可能出现异常的程序段落, 并把他们放在单独的 try 块中, 从而分别捕获并处理异常
+
+    6.3 避免使用 Catch All 语句
+        1. 所有的异常都采用相同的处理方式, 这将导致无法对不同的异常分情况处理, 如果分情况处理, 则需要在 catch 块
+            中使用分支语句进行孔子, 这种做法得不偿失
+        2. 这种捕获方式可能将程序的错误, Runtime 异常等可能导致程序终止的情况全部捕获到, 从而 "压制" 了异常
+
+    6.4 不要忽略捕获到的异常
+        catch 块中可以做的事情: 1. 处理异常; 2. 重新抛出异常; 3. 在合适的层处理异常
