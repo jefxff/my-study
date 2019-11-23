@@ -328,11 +328,13 @@ MySQL 数据库与 JDBC 编程
 
     PRIMARY KEY 约束:
         1. 主键约束相当于非空约束和唯一约束, 即主键约束的列既不允许出现重复值, 也不允许出现null 
-        2. 每个表最多允许有一个主键, 但是这个主键约束可以由多列组合而成
+        2. 每个表最多允许有一个主键, 但是这个主键约束可以由一列或者多列组合而成
         3. 也有列级约束语法和表级约束语法(多字段建立组合主键)
+        4. 删除主键约束: drop primary key 
+        5. 对主键添加自增的特性, MySQL使用: auto_increment 来设置自增长
 
         例子:
-            # 列级约束语法
+            # 列级约束语法(单独指定某一列为主键)
             create table primary_test (
                 # 建立主键约束
                 test_id int PRIMARY KEY,
@@ -340,3 +342,620 @@ MySQL 数据库与 JDBC 编程
             );
 
             # 表级约束语法
+            create table primary_test (
+                test_id int not null,
+                test_name varchar(255),
+                test_pass varchar(255),
+                #指定主键约束名为 test2_pk, 对大部分数据库有效, 但是对MySQL无效
+                # MySQL数据库中该主键约束名依然是 PRIMARY 
+                constraint test2_pk primary key(test_id)
+            );
+
+            # 以多列建立组合主键, 只能使用表级约束语法:
+            create table primary_test3 (
+                test_name varchar(255),
+                test_pass varchar(255),
+                # 建立多列组合的主键约束
+                primary key(test_name, test_pass)
+            );
+
+            # 删除主键
+            alter table primary_test3 (
+                drop primary key;
+            )
+
+            # 已建立的表通过(add)增加主键约束
+            alter table primary_test3 
+            add primary key(test_name, test_pass);
+
+            # 已建立的表通过 (modify) 增加主键约束
+            alter table primary_test3 
+            modify test_name varchar(255) primary key;
+            
+    FOREIGN KEY 约束
+        1. 外键约束主要用于保证一个或两个数据表之间的参照完整性, 外键是构建于一个表的两个字段或两个表的两个
+            字段之间的参照关系
+        2. 参照关系: 子(从)表外键列的值必须在主表被参照列的值范围之内, 或者为空(通过 not null 设置外键不为空)
+        3. 当主表的记录被从表记录参照时, 主表记录不允许被删除, 必须先把从表里参照该记录的所有记录全部删除后, 才
+            可以删除主表的记录; 或者删除主表记录时级联删除从表中所有参照该记录的从表记录
+        4. 从表外键参照的只能是主表主键列或者唯一列, 同一表内可以有多个外键
+        5. 外键约束用于定义两个时间之间一对多, 一对一的关联关系, 
+        6. 外键约束也有表级和列级约束之分;列级约束直接使用关键字 references 关键字, references 指定该列参照那个
+            主表, 以及参照主表的那一列
+        7. 如果创建外键约束时没有指定约束名, 则MySQL会为该外键约束命名为 table_name_ibfk_n, 其中 table_name 是 
+            从表的表名, 而n是从1开始的整数
+        8. 删除外键: drop foreign key 外键约束名
+        9. 外键约束参照自身的情况叫做自关联, (一个部门经理和员工之间是自关联的一对多)
+
+        例子1: 实例建立blog数据库
+            # 建立 User 表
+            # 如果想当删除主表(user)记录时, 从表(blog)记录也会随之删除, 则需要在建立外键约束后添加 on delete cascade
+            # 或者添加 on delete set null (第一种:主表删除后,从表记录也全部级联删除; 第二种: 主表删除后, 参照该主表
+            # 记录的外键设为null)
+            create table user (
+                user_id int not null primary key auto_increment,
+                user_name varchar(255) not null unique,
+                create_date datetime not null,
+                is_admin boolean defaule false
+            );
+
+            # 建立 category 表
+            create table category (
+                category_id int not null auto_increment primary key,
+                category_name varchar(255) not null unique
+            );
+
+            # 建立 blog 主表 使用表级约束语法
+            create table blog (
+                title varchar(255) not null,
+                blog_user varchar(255),
+                blog_category varchar(255),
+                blog_body text,
+                foreign key (blog_user) references user(user_name) on delete cascade,
+                foreign key (blog_category) references category(category_name) on delete set null
+            );
+
+        例子2:  表级约束语法
+            # 建立多列组合的外键约束, 则必须使用表级约束语法
+            # 为了保证从表参照的主表存在, 通常应该先建主表
+            create table teacher_table3 (
+                teacher_name varchar(255),
+                teacher_pass varchar(255),
+                # 以两列建立组合主键
+                primary key(teacher_name, teacher_pass)
+            );
+
+            create table students_table3 (
+                # 为本表建立主键约束
+                students_id int auto_increment primary key,
+                students_name varchar(255),
+                java_teacher_name varchar(255),
+                java_teacher_pass varchar(255),
+                # 使用表级约束语法建立外键约束, 指定两列的联合外键
+                foreign key(java_teacher_name, java_teacher_pass)
+                    references teacher_table3(teacher_name, teacher_pass)
+            );
+
+        例子3: 使用列级约束语法
+            create table teacher_table (
+                teacher_id int auto_increment,
+                teacher_name varchar(255),
+                primary key (teacher_id)
+            );
+
+            # 为本表建立外键约束
+            create table students_table (
+                students_id int auto_increment primary key,
+                students_name varchar(255),
+                # 指定 java_teacher 参照到 teacher_table 的 teacher_id 
+                java_teacher int references teacher-table(teacher_id)
+            );
+
+        例子4: 删除外键
+            alter table students_table3
+            drop foreign key student_table_ibfk_1;
+
+        例子5: 以创建的表增加外键
+            alter table students_table3
+            add foreign key (java_teacher_name, java_teacher_pass)
+                references teacher_table3(teacher_name, teacher_pass);
+
+        例子6: 自关联
+            create table foreign_test (
+                foreign_id int auto_increment primary key,
+                foreign_name varchar(255),
+                # 使用该表的refer_id参照到本表的foreign_id列
+                refer_id int,
+                foreign key(refer_id) references foerign_test(foreign_id)
+            );
+        
+    2.6 索引
+
+        索引的作用就是加速对表的查询, 索引存放在模式(schema)中的一个数据库对象, 索引总是从属于某个表, 
+        不可以单独存在, 可以在一列或者多列上创建索引;
+        索引的坏处是当表中记录增删改时, 数据库系统需要维护索引, 增加系统开销, 而且索引也占用系统磁盘空间
+
+        创建索引的两种方式:
+            自动: 当在表上定义主键约束, 唯一约束和外键约束时, 系统会为该数据列自动创建对应的索引
+            手动: 用户可以通过 create index... 语句来创建索引
+
+        删除索引的两种方式:
+            自动: 数据表被删除时, 该表上的索引自动被删除
+            手动: 用户可以通过 drop index... 语句来删除指定数据表上的指定索引
+
+        创建索引语法格式:
+            create index index_name 
+            on table_name (column[, column]...);
+
+        删除指定索引语法:
+            drop index 索引名 on 表名;
+
+        例子:
+            # 创建单独列的索引
+            create index emp_last_name_idx 
+            on employees(last_name);
+
+            # 同时对多列创建索引
+            create index emp_last_name_idx2 
+            on employees(first_name, last_name);
+        
+            # 删除索引
+            drop index emp_last_name_idx2
+            on employees;
+
+
+    2.7 视图
+
+        视图不存储数据, 也不是数据表,视图只是一个或多个数据表中数据的逻辑显式
+
+        视图的好处:
+            1. 可以限制对数据的访问
+            2. 可以使复杂的查询变得简单
+            3. 提供了数据的独立性
+            4. 提供了对相同数据的不同显示
+
+        创建/修改视图的语法:
+            # 因为视图只是数据表中数据的逻辑显示--也就是一个查询结果, 所以创建视图就是建立视图名和查询语句的关联
+            # 其实就是将一条复杂的查询语句创建一个快捷查询方式
+            create or replace view 视图名
+            as 
+            subquery;
+        
+        删除视图:
+            drop view 视图名;
+
+        例子:
+            # 创建一个视图
+            create view blog_all
+            as 
+            select * from blog;
+
+            # 删除上面创建的视图名
+            drop view blog_all;
+
+
+    2.8 DML 语句语法
+
+        DML 用于操作数据表里的数据, 通常完成下面三项工作:
+            1. 插入新数据  (insert into)
+            2. 修改已有数据  (update)
+            3. 删除不需要的数据  (delete from)
+
+        1. insert into 插入数据
+
+            语法:
+                insert into table_name [(column [, column...])]
+                values (value [, value...]);
+
+            例子:
+                # 可以全字段插入, 即 每一个字段都插入
+                insert into blog values (
+                   'java-02-java基础', 'jeff', 'java', '正在学习Java基础, 学习完基础之后学习IO,JDBC...' 
+                );
+
+                # 如果不想在表后用括号列出所欲列, 则需要为所有列指定值; 如果某列的值不能确定, 则为该列分配一个null值
+                insert into teacher_table2
+                # 使用null代替主键列的值
+                values(null, 'abc');
+
+            例子:
+                # 使用带子查询的插入语句, 带子查询的插入语句可以一次插入多条记录
+                insert into student_table2(student_name)
+                select teacher_name from teacher_table2;
+
+            例子:
+                # 同时插入多条语句
+                insert into category values
+                (0, 'python'),
+                (0, 'Html'),
+                (0, 'CSS');
+
+        2. update 语句
+            update 语句用于修改表数据, 可一次修改一条或多条或多列记录, 通过 WHERE 子句来限定修改那些记录
+
+            语法:
+                update table_name 
+                set column1 = value1[, column2 = value2]...
+                [WHERE condition];
+
+            例子:
+                update teacher_table2 
+                set teacher_name = '苍老师'
+                where teacher_id > 1;
+
+        3. delete from 语句
+            delete from 语句用于删除指定数据表的记录, delete from 总是整行删除记录, 也可以通过 WHERE 来限定删除条件
+
+            语法:
+                delete from table_name
+                [WHERE condition];
+
+            例子:
+                # 删除student_table2表中的全部记录
+                delete from student_table2;
+
+                # 通过 where 来限定删除条件
+                delete from student_table2 
+                where teacher_id > 2;
+
+
+    2.9 单表查询
+        1. select 语句不仅可以执行单表查询, 而且可以执行多表连接查询, 还可以进行子查询, 或者通过where进行条件查询
+        2. MySQL 使用 concat 函数来进行字符串连接运算(不可以连接 null)
+        3. 可以通过 as 对列起一个别名
+        4. select 会选出全部符合条件的记录, 包括重复项, 要去除重复项, 使用 distinct, (select distinct ...)
+        5. like 用于模糊查询, 可以使用两个通配符: 下划线(_)代表一个字符, 百分号(%)代表任意多个字符
+        6. where 后面可以跟多个子句, 子句可使用逻辑判断 and  or not 来组合
+        7. order by 默认按照升序来排序, 如果强制按照降序, 使用 order by desc
+
+
+        select 语句查询时算术表达式规则:
+            1. 对数值型数据列, 变量, 常量可以使用算术运算符(+, -, *, /) 创建表达式
+            2. 对日期型数据列, 变量, 常量可以使用部分算术运算符(+, -) 创建表达式, 两个日期之间可以进行减法运算, 
+                日期和数值之间可以进行加, 减运算
+            3. 运算符不仅可以在列和常量, 变量之间进行运算, 也可以在两列之间进行运算
+
+        select 单表查询语法:
+            select column1, column2 ...
+            from 数据源
+            [where condition];    
+
+        特殊的比较运算符:
+            运算符                                  含义
+            expr1 between expr2 and expr3           要求 expr1 >= expr2 并且 expr2 <= expr3 
+            expr1 in(expr2, expr3, expr4,...)       要求 expr1 等于后面括号里任意一个表达式的值
+            like                                    字符串匹配, like后的字符串支持通配符
+            is null                                 要求指定值等于null
+
+        order by 语法:
+            order by column_name1 [desc], column_name2 ...
+
+        例子:
+            # 数据列实际可当成一个变量进行算术运算
+            select teacher_id + 5
+            from teacher_table;
+
+            # 查询出 teacher_table 表中 teacher_id*3 大于4的记录
+            select * from teacher_table
+            where teacher_id * 3 > 4;
+
+            # select 之后可以是表达式, 变量, 常量
+            select 3*5, 20
+            from teacher_table;
+
+            # 选择出 teacher_name 和 'xx' 字符串连接后的结果
+            select concat('teacher_name', 'xx')
+            from teacher_table;
+
+            # 通过 as 为列起别名
+            select tracher_id  + 5 as MY_ID 
+            from teahcer_table;
+
+            # 选出所有记录包括重复项 
+            select student_name, java_teacher 
+            from student_table;
+            # 选出所有记录, 去除重复项
+            select distinct student_name, java_teacher
+            from student_table;
+
+            # 选出student_id 大于等于2, 且小于等于4的所有记录
+            select * from student_table 
+            where student_id between 2 and 4;
+
+            # between 前后的两个值不仅可以是常量, 也可是变量, 或者是列
+            select * from student_table 
+            where 2 between java_teacher and student_id;
+
+            # 使用in比较运算符时, 必须在in后的括号里面列出一个或多个值
+            select * from student_table 
+            where student_id in(2, 4);
+
+            # in后也可以是常量, 变量或列名
+            select * from student_table 
+            where 2 in(student_id, java_teacher);
+
+            # 查找user中以j开头的用户
+            select * from student_table 
+            where student_name like 'j%';
+
+            # 查找user中两个字符的用户
+            select * from user 
+            where user_name like '__';
+
+            # is null 用于判断某些值是否为空
+            select * from student_table 
+            where student_name is null;
+
+            # order by 默认按照升序
+            select * from category 
+            order by category_id;
+
+            # order by 按照降序排列
+            select * from category
+            order by category_id desc;
+
+    2.10 数据库函数
+        1. 数据库函数是用于进行数据处理或复杂计算, 他们通过一组数据进行计算, 得到最终需要的输出结果
+        2. 按对数据的处理方式分为:单行函数或多行函数(聚集函数, 分组函数)
+
+        MySQL中单行函数特征:
+            1. 单行函数的参数可以是变量, 常量或数据列; 单行函数可以接受多个参数, 但只返回一个值
+            2. 单行函数对每行单独起作用, 每行(可能包含多个参数)返回一个结果
+            3. 使用单行函数可以改变参数的数据类型
+        
+        MySQL单行函数分类:
+            日期时间函数, 数值函数, 字符函数, 转换函数, 其他函数(位函数, 流程控制, 加密解密, 信息函数)
+
+        MySQL单行函数:
+            1. char_length(column_name) 查找列的字符长度
+                select char_length(blog_body) from blog;
+
+            2. sin(char_length(column_name)) 计算字符长度的sin值
+                select sin(char_length(blog_body)) from blog;
+
+            3. adddate('date', 数值) 这种简单一点, 为指定日期添加一定时间(按天加)
+                select adddate('2019-11-01', 2);
+
+            4. select curtime() 获取当前时间
+
+            5. select curdate(); 获取当前日期
+
+            6. select MD5('字符串'); 使用 MD5 加密
+                select MD5('lijianfeng');           
+
+        MySQL处理null的函数:
+            1. ifnull(expr1, expr2): 如果 expr1 为 null, 则返回 expr2, 否则返回 expr1 
+            2. nullif(expr1, expr2): 如果 expr1 和 expr2 相等, 则返回null, 否则返回 expr1 
+            3. if(expr1, expr2,expr3): 类似与三元运算, 如果 expr1 为true 不等于0, 且不等于 null, 则返回
+                expr2, 否则返回 expr3 
+            4. isnull(expr1): 判断expr1是否为null, 如果为null则返回true, 否则返回false 
+
+        case 函数第一种语法:
+            case value 
+            when compare_value1 then result1
+            when compare_value2 then result2
+            ...
+            else result 
+            end 
+
+            例子:
+                select student_name, case java_teacher
+                when 1 then 'java 老师',
+                when 2 then 'Ruby 老师',
+                else '其他老师',
+                end 
+                from student_table;
+
+        case 函数第二种语法:
+            case 
+            when compare_value1 then result1
+            when compare_value2 then result2
+            ...
+            else result 
+            end 
+
+            例子:
+                select student_name, case 
+                when student_id <= 3 then '初级班',
+                when student_id <= 6 then '中级班',
+                else '高级班'
+                end
+                from student_table;
+
+    2.11 分组和组函数
+
+        grop by 语句:
+            1. grop by 子句后通常跟一个或多个列名, 表示查询结果根据一列或多列进行分组
+            2. 可以使用 having子句 对分组进行过滤, having子句是一个表达式, 只有满足条件的分组才会被选出来
+
+        常用的组函数:
+            1. avg([distinct | all]expr) 
+                计算多行expr的平均值, distinct 表示不计算重复值, all表示计算重复值
+            2. count({* | [distinct | all]expr})
+                计算多行expr的总条数, *表示统计该表内的记录行数, distinct 表示不计算重复项, all表示计算重复项
+            3. max(expr)
+                计算多行expr的最大值, expr可以是变量, 常量或数据列数据类型任意
+            4. min(expr)
+                计算多行expr的最小值, expr可以是变量, 常量或数据列数据类型任意
+            5. sum([distinct | all]expr)
+                计算多行expr的总和, expr可以是变量, 常量或数据列, 数据类型必须是整数
+
+        例子:
+            select count(*) 
+            from student_table
+            # 当 java_teacher, student_name 两列的值完全相同时才会被当成一组
+            grop by java_teacher, student_name;
+
+        where 和 having 的区别:
+            1. 不能在 where 子句种过滤组, where 子句仅用于过滤行, 过滤组必须使用having子句
+            2. 不能在 where 子句种使用组函数, having 子句才可以使用组函数
+
+
+    2.12 多表连接查询
+
+        SQL92 的连接查询:(了解)
+            等值连接, 非等值连接, 外连接, 广义笛卡尔积
+
+            查询语法:
+                select column1, column2 ...
+                from table1, table2 ...
+                [where join_condition]
+                
+                例子:
+                    select s.* teacher_name 
+                    from student_table s, teacher_table t 
+                    where s.java_teacher = t.teacher_id;
+
+
+
+            自连接查询语法:
+                自连接插叙就是把一张表当作两张表来查询
+
+        SQL99 的连接查询 
+            交叉连接, 自然连接, 使用using子句的连接, 全外连接或者左,右外连接
+
+            交叉连接: (cross join)
+                效果就是SQL92种的广义笛卡尔积
+
+                例子:
+                    select s.*, teacher_name 
+                    # SQL 99 多表连接查询的from后只有一个表名
+                    from student_table s 
+                    # cross join 交叉连接, 相当于广义的笛卡尔积
+                    cross join teacher_table t;
+
+            自然连接: (natural join)
+                自然连接会以两个表种的同名列作为连接条件, 如果两个表种没有同名列, 则自然连接与交叉连接效果
+                    完全一样, 因为没有连接条件
+
+                例子:
+                    select s.*, teacher_name 
+                    # SQL 99 多表连接查询的from后只有一个表名
+                    from student_table s 
+                    # natural join 自然连接使用两个表中的同名列作为连接条件
+                    natural join teacher_table t;
+
+                    select distinct b.*, blog_user 
+                    from blog b 
+                    natural join user s;
+
+            using 子句连接: using('column')
+                using 子句可以指定一列或多列, 用于显式指定两个表中的同名列作为连接条件; 如果两个表中有超过
+                    一列的同名列, 如果使用 natural join, 则会把所有的同名列当成连接条件; 如果使用using子句
+                    就可显式指定使用哪些同名列作为连接条件
+
+                例子:
+                    select s.*, teacher_name 
+                    from student_table s 
+                    join teacher_table t 
+                    using(teacher_id);
+                    # 这条SQL语句会报错, 因为使用 using 时两个表中必须有同名列
+
+            on 子句连接: (on)
+                SQL99语法的连接条件放在on子句中指定, 而且每个on子句值指定一个连接条件, 即:如果需要进行N表的连接
+                    则需要有N-1个join...on对
+
+                例子:
+                    select s.*, teacher_name 
+                    from student_table s 
+                    join teacher_table t 
+                    on s.java_teacher = t.teacher_id;
+
+                    select s.*, teacher_name 
+                    from student_table s 
+                    join teacher_table t 
+                    on s.java_teacher > t.teacher_id;
+
+            左, 右, 全外连接:
+                这三种连接分别使用 left[outer]join, right[outer]join和full[outer]join, 这三种外连接的连接条件
+                    一样通过 on 子句来指定, 既可以是等值连接条件, 也可以是非等值连接条件
+
+                右外连接, 非等值连接:
+                    select s.*, teacher_name 
+                    from student_table s 
+                    right join teacher_table t 
+                    on s.java_teacher < t.teacher_id;
+
+                左外连接, 非等值连接:
+                    select s.*, teacher_name 
+                    from student_table s 
+                    left join teacher_table t 
+                    on s.java_teacher > t.teacher_id;
+
+                全外连接, 等值连接: # 会报错
+                    select s.*, teacher_name 
+                    from student_table s 
+                    full join teacher_table t 
+                    on s.java_teacher = t.teacher_id;
+
+    2.13 子查询
+        子查询就是指在查询语句中嵌套另一个查询, 子查询可以支持多层嵌套, 
+
+        子查询出现的位置:
+            1. 出现在 from 语句后当成数据表, 这种用法也被称为行内视图, 因为该子查询的实质就是一个临时视图
+            2. 出现在 where 条件之后作为过滤条件的值
+
+        子查询要注意的点:
+            1. 子查询要用括号括起来
+            2. 把子查询当成数据表(出现在 from 之后), 可以为该子查询起别名, 尤其是作为前缀来限定数据列时, 
+                必须给子查询起别名
+            3. 把子查询当成过滤条件时, 将子查询放在比较运算符的右边, 这样可以增强查询的可读性
+            4. 把子查询当成过滤条件时, 单行子查询使用单行运算符, 多行子查询使用多行运算符
+
+            例子:
+                # 把子查询当成数据表的用法
+                select * 
+                from (select * from student_table) t 
+                where t.java_teacher > 1;
+
+                # 把子查询当成 where 条件中的值
+                select * 
+                from student_table where java_teacher > 
+                (select teacher_id from teacher_table where teacher_name = 'YeeKu');
+                
+                # 如果子查询返回多个值, 则需要使用 in, any, all等关键字; in 可以单独使用, any, all可以与
+                # >, <, >=, <=, <>, = 等运算符结合使用
+                sleect * 
+                from student_table
+                where student_id in 
+                (select teacher_id from teacher_table);
+
+                sleect * 
+                from student_table
+                where student_id = 
+                any(select teacher_id from teacher_table);
+
+                sleect * 
+                from student_table
+                where student_id >
+                all(select teacher_id from teacher_table);
+
+                # 子查询返回多行多列
+                select * 
+                from student_table 
+                where (student_id, student_name)
+                =any(select teacher_id, teacher_name from teacher_table);
+
+    2.14 集合运算
+
+        对两个结果集进行集合运算, 这两个结果集必须满足的条件:
+            1. 两个结果集所包含的数据列的数量必须相等
+            2. 两个结果集锁包含的数据列的数据类型必须一一对应
+
+        union 运算(并) 
+            语法格式:
+                select 语句 union select 语句
+
+        minus 运算(差) MySQL不支持
+            语法格式:
+                select 语句 minus select 语句
+        
+        intersect 运算(交) MySQL不支持
+            语法格式:
+                select 语句 intersect select 语句
+
+
+3. JDBC 的典型用法
+
+3.1 JDBC 4.2 常用接口和类简介
+    
