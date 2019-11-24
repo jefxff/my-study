@@ -959,3 +959,188 @@ MySQL 数据库与 JDBC 编程
 
 3.1 JDBC 4.2 常用接口和类简介
     
+    DriverManager 类:
+        主要用于管理JDBC驱动服务类, 主要功能就是获取 Connection 对象
+
+        该类的方法:
+            public static synchronized Connection getConnection(String url, String user, String pass) throws SQLException()
+            该方法用于获取url对应数据库的连接
+
+    Connection 接口:
+        该类代表的是数据库连接对象, 每个Connection 代表一个物理连接会话, 想要访问数据库, 必须先获得数据库连接   
+
+        该接口的主要方法(执行SQL语句):
+            Statement createStatement() throws SQLException:
+                该方法返回一个 Statement 对象, 只有获得了 Statement 对象之后才能执行 SQL 语句
+            
+            PreparedStatement preparedStatement(String sql) throws SQLException:
+                该方法返回预编译的 Statement 对象, 即将SQL语句提交到数据库进行预编译, 其中 PreparedStatement 是 Statement 的子类 
+
+            CallableStatement prepareCall(String sql) throws SQLExxception:
+                该方法返回 CallableStatement 对象, 该对象用于调用存储过程, 其中 CallableStatement 是 Statement 的子类 
+
+        该接口用于控制事务的主要方法:
+            Savepoint setSavepoint():  
+                创建一个保存点
+
+            Savepoint setSavepoint(String name):
+                以指定名字来创建一个保存点
+
+            void setTransactionIsolation(int level):
+                设置事务的隔离级别
+
+            void rollback():
+                回滚事务
+            
+            void rollback(Savepoint savepoint)
+                将事务回滚到指定的保存点
+
+            void setAutoCommit(boolean autoCommit)
+                关闭自动提交, 打开事务
+
+            void commit()
+                提交事务
+
+            setSchema(String schema)
+                控制 Connection 访问数据库的 schema
+
+            getSchema()
+                控制 Connection 访问数据库的 schema
+
+            setNetworkTimeout(Executor executor, int milliseconds)
+                控制数据库连接超时的行为
+
+            getNetworkTimeout()
+                控制数据库连接超时的行为
+
+    Statement 接口:
+        用于执行SQL语句的工具接口, 该对象可执行 DDL, DCL, DML 以及 SQL查询语句, 执行SQL查询语句的时候, 返回查询到的结果集
+
+        常用方法:
+            ResultSet executeQuery(String sql) throws SQLException:
+                该方法用于执行查询语句, 并返回查询结果对应的 ResultSet 对象, 该方法只能用于执行查询语句
+
+            int executeUpdate(String sql) throws SQLException:
+                该方法用于执行DML语句, 并返回受影响的行数; 该方法也可用于执行DDL语句, 执行DDL语句将返回0
+
+            boolean execute(String sql) throws SQLException:
+                该方法用于执行任何SQL语句, 如果执行后第一个结果为 ResultSet 对象, 这返回 true; 如果执行后第一个结果为受影响的行数
+                    或没有任何结果, 则返回false
+
+            closeOnCompletion()
+                如果 Statement 执行了该方法, 则当所有依赖于该 Statement 的 ResultSet 关闭时, 该Statement会自动关闭
+
+            isCloseOnCompletion() 
+                用于判断 Statement 时是否打开了 closeOnCompletion
+
+            executeLargeUpdate()
+                相当于  executeUpdate() 方法的增强版, 返回值类型为 long 
+
+    PreparedStatement 接口: 
+        预编译的 Statement 对象, 它允许数据库预编译SQL语句(这些SQL语句通常都带有参数), 以后每次只改变SQL命令参数, 避免数据库每次都要
+            编译SQL语句
+
+        比 Statement 多的方法:
+            void setXxx(int parameterIndex, Xxx value)
+                该方法根据传入参数值的类型不同, 需要使用不同的方法,  
+
+    ResultSet 结果集对象:
+        1. 该对象包含访问查询结果的方法, ResultSet 可以通过列索引或列名获得列数据;
+        2. 当通过指针移动到指定行之后, ResultSet 可通过 getXxx(int columnIndex) 或 getXxx(String columnLabel) 方法来获取当前行, 指定列的值,
+            前者根据列索引获取值, 否则根据列名获取值
+        3. <T> T getObject(int columnIndex, class<T> type) 和 <T> T getObject(String columnLabel, class<T> type) 方法可以获取任意值
+
+        常用方法:
+            void close()
+                释放 ResultSet 对象
+
+            boolean absolute(int row)
+                将结果集的记录指针移动到第 row 行, 如果 row 为负数, 这移动到倒数第 row 行; 如果移动后的记录指针指向一条有效记录, 这返回true
+
+            void beforeFirst()
+                将 ResultSet 的记录指针定位到行首之前, 这是 ResultSet 结果集记录指针的初始状态---记录指针的起始位置位于第一行之前
+
+            boolean first()
+                将 ResultSet 的记录指针定位到行首; 如果移动后的记录指针执行一条有效记录, 则返回true
+
+            boolean previous()
+                将 ResultSet 的记录指针定位到上一行;  如果移动后的记录指针执行一条有效记录, 则返回true
+
+            boolean next()
+                将 ResultSet 的记录指针定位到下一行;  如果移动后的记录指针执行一条有效记录, 则返回true
+                
+            boolean last()
+                将 ResultSet 的记录指针定位到最后一行; 如果移动后的记录指针执行一条有效记录, 则返回true
+
+            void afterLast()
+                将 ResultSet 的记录指针定位到最后一行之后
+
+
+3.2 JDBC 编程步骤
+    1. 第一步 加载数据库驱动
+        通常使用 Class 类的 forName()静态方法来加载驱动 
+
+        // 加载驱动
+        Class.forName(driverClass)
+
+        // 加载 MySQL 数据库的驱动
+        Class.forName("com.mysql.jdbc.Driver");   
+
+        // 加载 Oracle 的驱动
+        Class.forName("oracle.jdbc.dirver.OracleDriver");
+
+    2. 第二步 通过 DriverManager 获取数据库连接
+        但是用 DriverManager 获取数据库连接时, 需要传入三个参数: 数据库url, 登录数据库的用户名, 密码
+
+        // 获取数据库连接
+        DriverManager.getConnection(Stirng url, String user, String pass)
+
+        数据库URL写法:
+            jdbc:subprotocol:other stuff
+
+        // MySQL 数据库URL的写法:
+        jdbc:mysql://hostname:port/databasename
+
+        // Oracle 数据库URL的写法:
+        jdbc:oracle:thin:@hostname:port:databasename
+
+    3. 第三步 通过 Connection 对象创建 Statement 对象    
+
+        创建方法:
+            createStatement()
+                创建基本的 Statement 对象
+
+            PreparedStatement(String sql)
+                根据传入的SQL语句创建预编译的 Statement 对象
+
+            prepareCall(String sql)
+                根据传入的 SQL 语句创建 CallableStatement 对象
+
+    4. 第四步 使用 Statement 执行 SQL 语句
+        所有的 Statement 都有如下的三个方法来执行SQL语句
+
+        执行方法:
+            execute()
+                可以执行任何SQL语句, 但比较麻烦
+
+            executeUpdate()
+                主要用于执行 DML 和 DDL 语句, 执行 DML 语句受SQL语句影响的行数，执行DDL语句时返回０
+
+            executeQuery()
+                只能执行查询语句, 执行后返回代表查询结果的 ResultSet 对象
+
+    5. 第五步 操作结果集
+         如果执行的SQL语句是查询语句, 则执行结果将返回一个 ResultSet 对象, 该对象你保存了SQL语句的查询结果; 程序可以通过操作该 ResultSet 
+            对象来取出查询结果
+
+        ResultSet 对象提供的方法:
+            next(), previous(), first(), last(), beforeFirst(), afterLast()
+                这些事移动记录指针的方法
+            
+            getXxx() 
+                该方法获取记录指针指向行, 特定列的值; 该方法既可使用列索引作为参数, 也可使用列名作为参数, 使用 列索引性能较好, 列名可读性好
+
+    6. 第六步 回收数据库资源
+            包括关闭 ResultSet, Statement 和 Connection 等资源
+
+        
