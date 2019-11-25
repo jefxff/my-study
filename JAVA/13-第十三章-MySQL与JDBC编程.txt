@@ -1143,4 +1143,125 @@ MySQL 数据库与 JDBC 编程
     6. 第六步 回收数据库资源
             包括关闭 ResultSet, Statement 和 Connection 等资源
 
+    例子:
+        import java.sql.*;
+        public class JavaConnecteMysql {
+            public static void main(String[] args) throws Exception {
+                // 1. 加载驱动
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                try {
+                    // 2. 通过 DriverManager 获取数据库连接
+                    Connection conn = DriverManager.getConnection(
+                        // "jdbc:mysql://127.0.0.1:3306/blog", 
+                        "jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=UTC",
+                        "root", "123456"); 
+                    // 3. 通过 Connection 来创建一个 Statement 对象
+                Statement stmt = conn.createStatement();
+                // 4. 执行SQL语句
+                ResultSet rs = stmt.executeQuery("select * from blog");
+                // 5. 操作数据
+                while (rs.next()) {
+                    System.out.println(rs.getString(1) + "\t"
+                            + rs.getString(2) + "\t"
+                            + rs.getString(3) + "\t"
+                            + rs.getString(4));
+                }
+                } catch (SQLException e) {
+                    e.getSQLState();
+                } finally {
+                    System.out.println("What ?");
+                }
+            }
+        }
+
+
+4. 执行SQL语句方式
+
+4.1 使用 Java8新增的 executeLargeUpdate 方法执行 DDL 和 DML 语句
+
+    正常流程: 不要直接把数据库连接信息写在程序当中, 而是使用一个 mysql.ini 文件(就是一个 properties文件)来保存
+    数据库连接信息, 好处是当需要把应用程序从开发环境移植到生产环境的时, 无须修改源码, 只需要修改mysql.ini配置文件即可
+
+
+    例子:
+        // 创建一张数据表
+        import java.sql.*;
+
+
+        public class ExecuteDDL {
+
+            private final String driver = "com.mysql.cj.jdbc.Driver";
+            private final String url = "jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=UTC";
+            private final String user = "root";
+            private final String pass = "123456";
+
+            public void createTable(String sql) throws Exception {
+                // 加载驱动
+                Class.forName(driver);
+                try (
+                    // 获取数据库连接
+                    Connection conn = DriverManager.getConnection(url, user, pass);
+                    // 使用 Connection 来创建一个 Statement 对象
+                    Statement stmt = conn.createStatement()) {
+                        // 执行DDL语句, 创建数据表
+                        stmt.executeUpdate(sql);
+                    }
+                }
+
+            public static void main(String[] args) throws Exception {
+                ExecuteDDL ed = new ExecuteDDL();
+                ed.createTable("create table jdbc_test"
+                    + "(jdbc_id int auto_increment primary key, "
+                    + "jdbc_name varchar(255), "
+                    + "jdbc_desc text);");
+
+                System.out.println("----建表成功-----");
+            }
+        }
+
+    例子:
+        // 在刚创建的数据表中插入数据
+        import java.sql.*;
+
+        public class ExecuteDML {
+            private final String driver = "com.mysql.cj.jdbc.Driver";
+            private final String url = "jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=UTC";
+            private final String user = "root";
+            private final String pass = "123456";
+
+            public int insertData(String sql) throws Exception {
+                // 加载驱动
+                Class.forName(driver);
+                try (
+                    // 获取数据库连接
+                    Connection conn = DriverManager.getConnection(url, user, pass);
+                    // 使用 Connection 来创建一个 Statement 对象
+                    Statement stmt = conn.createStatement()) {
+                        // 执行DDL语句, 创建数据表
+                        return stmt.executeUpdate(sql);
+                    }
+                }
+
+            public static void main(String[] args) throws Exception {
+                ExecuteDML ed = new ExecuteDML();
+                int result = ed.insertData("insert into jdbc_test values"
+                    + " (0, 'first', 'this is frist data'),"
+                    + " (0, 'third', 'this is third data');");
+
+                System.out.println("一共 " + result + " 条记录受影响");
+            }
+        }
+
+4.2 使用 execute 方法执行 SQL　语句
+
+    Statement 的 execute() 方法几乎可以执行任何SQL语句, 但它执行SQL语句时比较麻烦, 通常最好不要使用, 而是使用
+    比较简单的 executeQuery() 方法和 executeUpdate() 方法; 
+    使用 exexcute() 方法执行SQL语句的返回值是 boolean 值, 表示执行该条 SQL 语句是否返回了 ResultSet 对象
+
+    Statement 获取执行结果的方法:
+        getResultSet(): 获取该Statement执行查询语句所返回的 RestltSet 对象
+
+        getUpdateCount(): 获取 Statement 执行 DML 语句所受影响的记录行数 
+
+    例子:
         
