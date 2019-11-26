@@ -1264,4 +1264,192 @@ MySQL 数据库与 JDBC 编程
         getUpdateCount(): 获取 Statement 执行 DML 语句所受影响的记录行数 
 
     例子:
-        
+        import java.sql.*;
+
+        public class ExecuteSQL {
+            MyINI myini = new MyINI();
+
+            public void executeSql(String sql) throws Exception {
+                // 加载驱动
+                Class.forName(myini.driver);
+                try (
+                    // 获取数据库连接
+                    Connection conn = DriverManager.getConnection(myini.url, myini.user, myini.pass);
+                    // 使用 Connection 来创建一个 Satement 对象 
+                    Statement stmt = conn.createStatement()){
+                    
+                    // 执行SQL语句, 返回boolean值表示是否包含ResultSet
+                    boolean hasResultSet = stmt.execute(sql);
+                    // 如果为true则获取结果集, 并且输出结果集
+                    if (hasResultSet) {
+                        try (
+                            // 获取结果集
+                            ResultSet rs = stmt.getResultSet()){
+                            // ResultSetMetaData是用于分析结果集的元数据接口
+                            ResultSetMetaData rsmd = rs.getMetaData();
+                            int columnCount = rsmd.getColumnCount();
+                            while (rs.next()) {
+                                // 依次输出每列的值
+                                for (int i = 0; i < columnCount; i++){
+                                    // ResultSet 的 getString() 方法可以获取除Blob之外的任意类型的值
+                                    // 因为所有的数据类型都可以自动转换成字符串类型
+                                    System.out.print(rs.getString(i + 1) + "\t");
+                                }
+                                System.out.print("\n");
+                            }
+                        }
+                    } else {
+                        System.out.println("该SQL语句影响的记录有" 
+                            + stmt.getUpdateCount() + "条");
+                    }
+                }
+            }
+
+            public static void main(String[] args) throws Exception {
+                ExecuteSQL es = new ExecuteSQL();
+            
+                // System.out.println("执行建表的DDL语句");
+                // es.executeSql("create table wahaha"
+                //     + " as select * from user;");
+                // 执行DDL语句时显式受影响的行数为0
+
+                // System.out.println("执行查询语句");
+                // es.executeSql("show tables;");
+                // 执行查询语句时输出查询结果
+
+                // System.out.println("执行删除语句");
+                // es.executeSql("drop table if exists wahaha");
+
+                System.out.println("执行查询语句");
+                es.executeSql("select * from wahaha;");
+
+                // System.out.println("执行插入DML语句");
+                // es.executeSql("insert into wahaha values( "
+                //     + "0, 'first', '2019-10-10', '1');");
+            }
+        }   
+
+4.3 使用 PreparedStatement 执行SQL语句
+    1. PreparedStatement 接口是 Statement 接口的子接口, 它可以预编译SQL语句, 与编译后的SQL语句被存储在 PreparedStatement
+        对象中, 然后可以使用该对象多次搞笑的执行该语句
+    2. PreparedStatement 也提供 execute(), executeUpdate(), executeQuery() 三个方法来执行SQL语句, 不过这三个
+        方法无须参数, 因为 PreparedStatement 已存储了预编译的SQL语句
+    3. 使用 PreparedStatement 预编译SQL语句时, 该SQL语句可以带占位符参数, 因此在执行SQL语句之前必须使用
+        setXxx(int index, Xxx value)方法传入参数值; 如果程序不清楚预编译的SQL语句中个参数的类型, 则可以使用
+        setObject()方法来传入参数, 由 PreparedStatement 来负责类型转换
+
+    PreparedStatement 比 Satement 的好处:
+        1. PreparedStatement 预编译SQL语句, 性能更好
+        2. PreparedStatement 无须 "拼接" SQL语句, 编程更简单
+        3. PreparedStatement 可以防止SQL注入, 安全性更好
+
+
+    例子:
+        import java.sql.*;
+        public class PreparedStatementTest {
+            MyINI myini = new MyINI();
+            /**
+            * use Statement insert into table vlaues
+            */
+            public void insertUseStatement() throws Exception {
+                long start = System.currentTimeMillis();
+                // 加载驱动
+                Class.forName(myini.driver);
+                try (
+                    // 获取数据库连接
+                    Connection conn = DriverManager.getConnection(myini.url, myini.user, myini.pass);
+                    Statement stmt = conn.createStatement()) {
+                    // 插入100条记录
+                    for (int i = 0; i < 50; i++) {
+                        stmt.executeUpdate("insert into new_user_1 values("
+                            + " 0, '姓名" + i + "','2019-10-10', 0)");
+                    }
+                    System.out.println("使用Statement费时:" 
+                        + (System.currentTimeMillis() - start));
+                }
+            }
+
+            /**
+            * use PreparedStatement insert into table values
+            */
+            public void insertUsePrepare() throws Exception {
+                long start = System.currentTimeMillis();
+                // 加载驱动
+                Class.forName(myini.driver);
+                try (
+                    // 获取数据库连接
+                    Connection conn = DriverManager.getConnection(myini.url, myini.user, myini.pass);
+                    // 使用Connection 来创建一个 PreparedStatement 对象
+                    PreparedStatement pstmt = conn.prepareStatement(
+                        "insert into new_user_2 values(0, ?, '2019-10-10', 0)")){
+                    // 100次为PreparedStatement的参数设值, 就可以插入100条记录
+                    for (int i = 0; i < 50; i++) {
+                        pstmt.setString(1, "姓名" + i);
+                        pstmt.executeUpdate();
+                    }
+                    System.out.println("使用PreparedStatement费时:" 
+                    + (System.currentTimeMillis() - start));
+                }
+            }
+
+            public static void main(String[] args) throws Exception {
+                PreparedStatementTest pst = new PreparedStatementTest();
+                pst.insertUseStatement();
+                pst.insertUsePrepare();
+            }
+        }
+
+4.4 使用 CallableStatement 调用存储过程
+
+
+5. 管理结果集
+    1. JDBC 使用 ResultSet 来封装执行查询到的查询结果, 然后通过一共 ResultSet 的记录指针来取出结果集的内容;
+    2. JDBC 还允许通过 ResultSet 来更新记录, 并提供了 ResultSetMetaData 来获得 ResultSet 对象的相关信息
+
+5.1 可滚动, 可更新的结果集
+    1. 就是通过 Connection 对象开创建 Statement 对象的时候, 可以传入控制结果集可滚动, 可更新的参数
+    2. 以默认方式打开的 ResultSet 是不可更新的, 如果希望创建可更新的 ResultSet, 则必须在创建 Statement 或 
+        PreparedStatement 时传入额外的参数, Connection 在创建 Statement 和 PreparedStatement 时还可以额外
+        传入两个参数: resultSetType(控制 ResultSet 的类型), resultSetConcurrency(控制 ResultSet 的并发)
+    3. 可更新的结果集还必须满足两个条件:
+        1. 所有数据都应该来自一个表
+        2. 选出的数据集必须包含主键列
+
+    resultSetType 参数取值:
+        1. ResultSet.TYPE_FORWARD_ONLY; 该常量控制记录指针只能向前移动
+        2. ResultSet.TYPE_SCROLL_INSENSITIVE; 该常量控制记录指针可以自由移动(可滚动结果集), 但底层数据的改变
+            不会影响 ResultSet 的内容 
+        3. ResultSet.TYPE_SCROLL_SENSITIVE; 该常量控制记录指针可以自由移动(可滚动结果集), 而且底层数据的改变
+            会影响 RestltSet 的内容
+
+    resultSetConcurrency 参数可接收如下两个参数:
+        1. RestltSet.CONCUR_READ_ONLY; 该常量指示 ResultSet 是只读的并发模式(默认)
+        2. ResultSet.CONCUR_UPDATABLE; 该常量指示 ResultSet 是可更新的并发模式
+
+    Java8 为 RestltSet 添加的默认方法:
+        1. updateObject(String columnLabel, Object x, SQLType targetSqlType)
+        2. updateObject(int columnIndex, Object x, SQLType targetSqlType)
+            以上两个方法可以直接用 Object 来修改记录指针所指记录, 特定列的值, 其中SQLType用于指定该数据列的类型
+
+    例子:
+        // 使用 Connection 创建一个 PreparedStatement 对象
+        // 传入控制结果集可滚动, 可更新的参数
+        PreparedStatement pstmt = conn.PreparedStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE
+            , ResultSet.CONCUR_UPDATABLE);
+
+
+5.2 处理 Blob 类型的数据
+
+    Blob 类型数据:
+        Blob (Binary Long Object) : 二进制长对象的意思, Blob 列通常用于存储大文件; 典型的 Blob 内容是一张图片
+            或一个声音文件, 由于他们的特殊性, 必须使用特殊的方式来存储; 使用 Blob 列可以把图片, 声音等文件的二进制
+            数据保存在数据库里, 并可以从数据库里恢复指定文件
+
+    将Blob类型数据插入数据库:
+        将Blob类型的数据插入数据库需要使用 PreparedStatement, 该对象有一个方法: setBinaryStream(int parameterIndex,
+            InputStream x), 该方法可以为指定参数传入二进制输入流, 从而可以实现将Blob数据保存到数据库的功能
+
+    从数据库取出Blob类型的数据:
+        从 RestltSet 里取出 Blob 数据时, 可以调用 ResultSet 的 getBlob(int columnIndex)方法, 该方法返回一个
+            Blob对象, Blob对象提供了 getBinaryStream() 方法来获取该 Blob 数据的输入流, 也可以使用 Blob 对象
+            提供的 getBytes() 方法直接取出该 Blob 对象封装的二进制数据
