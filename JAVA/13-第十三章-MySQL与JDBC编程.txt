@@ -1453,3 +1453,187 @@ MySQL 数据库与 JDBC 编程
         从 RestltSet 里取出 Blob 数据时, 可以调用 ResultSet 的 getBlob(int columnIndex)方法, 该方法返回一个
             Blob对象, Blob对象提供了 getBinaryStream() 方法来获取该 Blob 数据的输入流, 也可以使用 Blob 对象
             提供的 getBytes() 方法直接取出该 Blob 对象封装的二进制数据
+
+    例子: 
+        [MySQL mediumblob 类型的图片存取](https://www.cnblogs.com/warrior4236/p/5682830.html)
+
+
+5.3 使用 ResultSetMetaData 分析结果集
+    1. MateData 是元数据的意思, 即描述其他数据的数据, 因此 ResultSetMetaData 封装了描述 RestltSet 对象的数据, 
+    2. RestltSet 里包含了一个 getMetaData() 方法, 该方法返回该ResultSet对应的 ResultSetMetaData 对象; 一旦
+        获得了 ResultSetMetaData 对象, 就可通过 ResultSetMetaData 提供的大量方法来返回 RestltSet 的描述信息
+
+    ResultSetMetaData 提供的方法:
+        1. int getColumnCount() 
+            返回该 RestltSet 的列数量
+        2. String getColumnName(int column) 
+            返回指定列索引的列名
+        3. int getColumnType(int column)
+            返回指定索引的列类型
+
+    例子: 
+        import java.awt.BorderLayout;
+        import java.sql.*;
+        import java.util.Vector;
+
+        import javax.swing.*;
+
+        import java.awt.event.ActionEvent;
+        import java.awt.event.ActionListener;
+
+        public class QueryExecutor {
+            JFrame jf = new JFrame("查询执行器");
+            private JScrollPane scrollPane;
+            private JButton execBn = new JButton("查询");
+            // 用于输入查询语句的文本框
+            private JTextField sqlField = new JTextField(45);
+            private static Connection conn;
+            private static Statement stmt;
+            static MyINI myini = new MyINI();
+
+            // 采用静态初始化块来初始化Connection Statement对象
+            static {
+                try {
+                    // 加载驱动
+                    Class.forName(myini.driver);
+                    // 获取数据库连接
+                    conn = DriverManager.getConnection(myini.url, myini.user, myini.pass);
+                    stmt = conn.createStatement();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // ----------------初始化界面方法----------------
+            public void init() {
+                JPanel top = new JPanel();
+                top.add(new JLabel("输入查询语句: "));
+                top.add(sqlField);
+                top.add(execBn);
+                // 为执行按钮, 单行文本框添加事件监听器
+                execBn.addActionListener(new ExceListener());
+                sqlField.addActionListener(new ExceListener());
+                jf.add(top, BorderLayout.NORTH);
+                jf.setSize(680, 480);
+                jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                jf.setVisible(true);
+            }
+
+            // 定义监听器
+            class ExceListener implements ActionListener {
+                public void actionPerformed(ActionEvent evt) {
+                    // 删除原来的 JTable(JTable 使用 scrollPane 来包装)
+                    if (scrollPane != null) {
+                        jf.remove(scrollPane);
+                    }
+                    try (
+                        // 根据用户输入的SQL执行查询
+                        ResultSet rs = stmt.executeQuery(sqlField.getText())) {
+                        //取出ResultSet的MetaData
+                        ResultSetMetaData rsmd = rs.getMetaData();
+                        Vector<String> columnNames = new Vector<>();
+                        Vector<Vector<String>> data = new Vector<>();
+                        // 把ResultSet的所有列名添加到Vector里
+                        for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                            columnNames.add(rsmd.getColumnName(i + 1));
+                        }
+                        // 把ResultSet的所有记录添加到Vector里
+                        while (rs.next()) {
+                            Vector<String> v = new Vector<>();
+                            for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                                v.add(rs.getString(i + 1));
+                            }
+                            data.add(v);
+                        }
+                        JTable table = new JTable(data, columnNames);
+                        scrollPane = new JScrollPane(table);
+                        // 添加新的 Table
+                        jf.add(scrollPane);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // @Override
+                // public void actionPerformed(ActionEvent e) {
+                // }
+            }
+
+            public static void main(String[] args) {
+                new QueryExecutor().init();
+            }
+        }
+
+
+6. Java7 的 RowSet 1.1 
+    1. RowSet 接口继承了 ResultSet 接口, RowSet 接口包含了 JdbcRowSet, CachedRowSet, FilteredRowSet, 
+        JoinRowSet 和 WebRowSet 常用子接口; 其中 JdbcRowSet需要保持与数据库的连接之外, 其余4个子接口都
+        是离线的RowSet, 无须保持与数据库的连接
+    2. RowSet 默认是可滚动, 可更新, 可序列化的结果集, 而且作为 JavaBean 使用, 因此能方便的在网络上传输, 用于
+        同步两端的数据
+    3. 对离线的 RowSet, 程序在创建 RowSet 时已把数据从底层数据库加载到内存,从而降低数据库服务器的负载, 提高性能
+
+
+6.1 Java7 新增的 RowSetFactory 与 RowSet 
+    1. java 6.0 之前没有为 RowSet 5个接口提供实现类, 所以用的不广泛
+    2. Java 7 新增了 RowSetProvider类 和 RowSetFactory 接口, 其中 RowSetProvider 负责创建 RowSetFactory, 
+        而 RowSetFactory 通过方法创建 RowSet 实例, 这样就把应用程序与RowSet实现类分离开
+
+    RowSetFactory 提供的创建 RowSet 实例的方法:
+        1. CachedRowSet createCachedRowSet()
+            创建一个默认的 CachedRowSet 
+        2. FilteredRowSet createFilteredRowSet()
+            创建一个默认的 FilteredRowSet
+        3. JdbcRowSet createJdbcRowSet()
+            创建一个默认的 JdbcRowSet
+        4. JoinRowSet createJoinRowSet()
+            创建一个默认的 JoinRowSet 
+        5. WebRowSet createWebRowSet()
+            创建一个默认的 WebRowSet
+
+
+    例子:
+        // 执行结果查询正常, 但是更新数据异常
+        import javax.sql.rowset.JdbcRowSet;
+        import javax.sql.rowset.RowSetFactory;
+        import javax.sql.rowset.RowSetProvider;
+
+        public class RowSetFactoryTest {
+            MyINI myini = new MyINI();
+
+            public void update(String sql) throws Exception {
+                Class.forName(myini.driver);
+
+                // 使用 RowSetProvider 创建 RowSetFactory
+                RowSetFactory factory = RowSetProvider.newFactory();
+                try (
+                    // 使用 RowSetFactory 创建默认的 JdbcRowSet 实例
+                    JdbcRowSet jdbcRs = factory.createJdbcRowSet()) {
+                    jdbcRs.setUrl(myini.url);
+                    jdbcRs.setUsername(myini.user);
+                    jdbcRs.setPassword(myini.pass);
+                    // 设置SQL查询语句
+                    jdbcRs.setCommand(sql);
+                    // 执行查询语句
+                    jdbcRs.execute();
+                    jdbcRs.afterLast();
+                    // 向前滚动结果集
+                    while (jdbcRs.previous()) {
+                        System.out.println(jdbcRs.getString(1)
+                            + "\t" + jdbcRs.getString(2));
+                            // + "\t" + jdbcRs.getString(3)
+                            // + "\t" + jdbcRs.getString(4)
+                        // if (jdbcRs.getInt("category_id") == 4) {
+                        //     // 修改指定记录
+                        //     jdbcRs.updateString("category_name", "PYTHON");
+                        //     jdbcRs.updateRow();
+                        // }
+                    }
+                }
+            }
+
+            public static void main(String[] args) throws Exception {
+                RowSetFactoryTest rsft = new RowSetFactoryTest();
+                rsft.update("select * from category");
+            }
+        }
