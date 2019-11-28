@@ -1637,3 +1637,255 @@ MySQL 数据库与 JDBC 编程
                 rsft.update("select * from category");
             }
         }
+
+
+6.2 离线 RowSet  
+    1. 离线 RowSet 会直接将底层数据读入内存中, 封装成 RowSet 对象, 而 RowSet 对象则完全可以当成 java Bean 来使用, 
+    2. CachedRowSet 是所有离线 RowSet 的父接口
+
+    例子:
+        import java.sql.Connection;
+        import java.sql.DriverManager;
+        import java.sql.ResultSet;
+        import java.sql.Statement;
+
+        import javax.sql.rowset.CachedRowSet;
+        import javax.sql.rowset.RowSetFactory;
+        import javax.sql.rowset.RowSetProvider;
+
+        public class CachedRowSetTest {
+            static MyINI myini = new MyINI();
+
+            public CachedRowSet query(String sql) throws Exception {
+                // 加载驱动
+                Class.forName(myini.driver);
+                // 获取数据库连接
+                Connection conn = DriverManager.getConnection(myini.url, myini.user, myini.pass);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                // 使用 RowSetProvider 来创建 RowSetFactory
+                RowSetFactory factory = RowSetProvider.newFactory();
+                // 创建默认的 CachedRowSet 实例
+                CachedRowSet cachedRs = factory.createCachedRowSet();
+                // 使用 ResultSet 装填 RowSet
+                cachedRs.populate(rs);
+                // 关闭资源
+                rs.close();
+                stmt.close();
+                conn.close();
+                return cachedRs;
+            }
+
+            public static void main(String[] args) throws Exception {
+                CachedRowSetTest ct = new CachedRowSetTest();
+                CachedRowSet rs = ct.query("select * from user");
+                rs.afterLast();
+                while (rs.previous()) {
+                    System.err.println(rs.getString(1) 
+                        + "\t" + rs.getString(2)
+                        + "\t" + rs.getString(3)
+                        + "\t" + rs.getString(4));
+                    if (rs.getInt("user_id") == 2) {
+                        rs.updateString("create_date", "2019-11-29");
+                        rs.updateRow();
+                    }
+                }
+                Connection conn = DriverManager.getConnection(myini.url, myini.user, myini.pass);
+                conn.setAutoCommit(false);
+                // 把对RowSet 所做的修改同步到底层数据库
+                rs.acceptChanges(conn);
+            }
+        }
+
+6.3 离线RowSet的查询分页
+    1. 由于 CachedRowSet 会将数据记录直接全部加载到内存, 因此如果SQL查询返回的结果太大, 可能会占用大量内存, 导致
+        内存溢出
+    2. 分页查询功能就是一次只装载 ResultSet 里的某几条记录, 避免 CachedRowSet 占用大量内存
+
+    CachedRowSet 控制分页的方法:
+        1. populate(RestltSet rs, int startRow)
+            使用给定的 ResultSet 装填 RowSet, 从 ResultSet 的 第 startRow 条记录开始装填
+        2. setPageSize(int pageSize) 
+            设置 CachedRowSet 每次返回多少条记录
+        3. previousPage()
+            在底层 RestltSet 可用的情况下, 让 CachedRowSet 读取上一页记录
+        4. nextPage()
+            在底层 RestltSet 可用的情况下, 让 CachedRowSet 读取下一页记录
+        
+    例子:
+        import java.sql.Connection;
+        import java.sql.DriverManager;
+        import java.sql.ResultSet;
+        import java.sql.Statement;
+
+        import javax.sql.rowset.CachedRowSet;
+        import javax.sql.rowset.RowSetFactory;
+        import javax.sql.rowset.RowSetProvider;
+
+        public class CachedRowSetPage {
+
+            static MyINI my = new MyINI();
+            
+            /**
+            * 
+            * @param sql  需要查询的SQL语句
+            * @param pageSize  每页显示的记录条数
+            * @param page  需要查询的页数
+            * @return  返回 CachedRowSet 类型的实例
+            * @throws Exception
+            */
+            public CachedRowSet query(String sql, int pageSize
+                , int page) throws Exception {
+                //加载驱动
+                Class.forName(my.driver);
+                try (
+                    // 获取数据库连接
+                    Connection conn = DriverManager.getConnection(my.url, my.user, my.pass);
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(sql)){
+                    // 使用 RowSetProvider 来创建 RowSetFacory
+                    RowSetFactory factory = RowSetProvider.newFactory();
+                    // 创建默认的 CachedRowSet 实例
+                    CachedRowSet cachedRs = factory.createCachedRowSet();
+                    // 设置每页显式 pageSize 条记录
+                    cachedRs.setPageSize(pageSize);
+                    // 使用 ResultSet 装填 RowSet, 设置从第几条记录开始
+                    cachedRs.populate(rs, (page - 1) * pageSize + 1);
+                    return cachedRs;
+                }
+            }
+
+            public static void main(String[] args) throws Exception {
+                CachedRowSetPage cp = new CachedRowSetPage();
+                // 下面代码显式要查询第2页的记录, 每页显式3条记录
+                CachedRowSet rs = cp.query("select * from test_user", 3, 1);
+                // 向后滚动结果
+                while (rs.next()) {
+                    System.err.println(rs.getString(1) 
+                    + "\t" + rs.getString(2)
+                    + "\t" + rs.getString(3)
+                    + "\t" + rs.getString(4)); 
+                }
+            }
+        }
+
+
+7. 事务处理
+
+7.1 事务的概念和MySQL事务支持
+
+    事务:
+        1. 事务是由一步或几步数据库操作序列组成的逻辑执行单元, 这系列操作要么全部执行, 要么全部放弃执行
+        2. MySQL默认关闭事务(即打开自动提交)用户在MySQL控制台输入一条DML语句, 这条DML语句会立即保存在数据库里面; 
+        3. 通过 SET AUTOCOMMIT = {0 | 1}; 0 为关闭自动提交, 即开启事务; 自动提交和开启时事务恰好相反, 如果开启
+            自动提交就关闭事务, 关闭自动提交就是开启事务
+        4. 当通过 SET AUTOCOMMIT=0; 来显式开启事务时, 命令行所有输入的DML语句都不会立即生效, 上一个事务结束后
+            第一条DML语句将开始一个新的事务, 而后续执行的所有SQL语句都处于该事务中, 除非显式的使用commit提交事务,
+            或者正常退出, 或者运行 DDL, DCL语句导致事务隐式的提交. 也可以使用 rollback 回滚来结束事务, 使用 rollback
+            结束事务将导致本次事务中 DML 语句所做的修改全部失效
+
+    
+    事务的4个特性:
+        1. 原子性(Atomicity): 事务是应用中最小的执行但无阿, 是不可再分的最小逻辑单元
+        2. 一致性(Consistency): 事务执行的结果, 必须使数据库从一个一致性状态, 变到另一个一致性状态; 同时成功, 或同时失败
+        3.  隔离性(Isolation): 各个事务的执行互不干扰, 任意一个事务的内部操作对其他并发的事务都是隔离的; 即并发执行的
+            事务之前不能看到对方的中间状态, 并发执行的事务之间不能互相干扰
+        4. 持续性(Durability): 持续性也被称为持久性(Persistence), 指事务一旦提交, 都数据所做的任何改变都要
+            记录到永久存储器总
+
+    数据库的事务语句组成:
+        1. 一组DML语句, 经过这组DML语句修改后的数据将保持较好的一致性
+        2. 一条DDL语句
+        3. 一条DCL语句
+            DDL和DCL语句最多只能有一条, 因为DDL和DCL语句都会导致事务立即提交
+
+    事务提交的两种方式:(都会结束当前事务)
+        1. 显式提交: 使用 commit
+        2. 自动提交: 执行DDL和DCl语句, 或者程序正常退出
+
+    回滚事务(全部回滚)的两种方式:(都会结束当前事务)
+        1. 显式回滚: 使用 rollback
+        2. 自动回滚: 系统错误或强制退出
+
+    事务的中间点(可以回滚到中间点):
+        1. 通过 savepoint 来设置事务的中间点可以让事务回滚到指定的中间点, 而不是回滚全部事务
+        2. 设置中间点语法: savepoint a;
+        3. 回滚到中间点: rollback to a; 
+
+    开启或关闭事务:
+        SET AUTOCOMMIT = {0 | 1};
+
+    临时性的开启事务:(例子1)
+        1. 临时性的开启事务表示只是开始一次事务
+        2. 通过 transaction 或者 begin 两个命令来开启临时性事务
+        3. 处于 transaction 或者 begin 两个命令后的 DML 语句不会立即生效, 除非使用commit显式提交, 或者执行DDL
+            DCL语句隐式提交事务
+
+        例子:
+            # 临时性开启事务
+            begin;
+            # 插入三条数据, 并设置中间点
+            insert into user 
+            values(3, 'aa', '2019/11/28', 0);
+            # 设置中间点
+            savepoint a;
+            insert into user 
+            values(4, 'bb', '2019/11/28', 0);
+            insert into user 
+            values(5, 'cc', '2019/11/28', 0);
+            # 查询user表
+            select * from user;
+            # 回滚到中间点
+            rollback to a;
+            # 回滚事务
+            rollback;
+            
+
+7.2 JDBC 的事务支持
+
+    1. JDBC默认打开的是自动提交,即关闭事务
+    2. 通过调用Connection 的 setAutoCommit() 方法来关闭自动提交, 开启事务
+        语法: conn.setAutoCommit(false);
+    3. 开启事务之后, 程序可以创建多个Statement对象, 执行任意条DML语句, 然后通过调用 Connection 的 commit() 方法
+        来提交事务; 或者通过调用其 rollback() 方法来进行事务回滚
+    4. 当 Connection 遇到一个未处理的 SQLException 异常时, 系统将会非正常退出, 事务也会自动回滚, 但是如果程序捕获
+        了该异常, 则需要在异常处理块中显式地回滚事务
+    5. Connection 也可以通过 Savepoint setSavepoint() 或者 Savepoint setSavepoint(String name) 来设置未命名或
+        已命名的中间点; 事务回滚时, 可以调用 rollback(Savepoint savepoint) 来回滚到指定的中间点
+
+    例子:
+
+
+
+7.3 Java8 增强的批量更新(了解)
+    1. 使用批量更新之前需要先创建一个 Statement 对象, 然后利用该对象的 addBatch() 方法将多条SQL语句同时收集起来, 
+        最后调用 java8 为 Statement对象新增的 executeLargeBatch()(MySQL不支持) 或(executeBatch())方法同时执行这些SQL语句
+    2. 执行  executeLargeBatch() 将返回要给 lang[] 类型的数组, 如果在批量更新的addBatch()方法中添加了 select 查询
+        语句, 程序将直接报错
+    3. 批量更新必须作为事务来处理, 如果在批量更新时失败, 则让事务回滚到批量操作之前的状态, 所有在批量操作之前必须关闭
+        自动提交
+
+    例子: 
+        // 保存当前的自动提交模式
+        boolean autoCommit = conn.getAutoCommit();
+        // 关闭自动提交
+        conn.setAutoCommit(false);
+        Statement stmt = conn.createStatement();
+        // 使用 Satement 同时收集多条SQL语句
+        stmt.addBatch(sql1);
+        stmt.addBatch(sql2);
+        stmt.addBatch(sql3);
+        stmt.addBatch(sql4);
+        // 设置中间点
+        conn.setSavepoint("a");
+        // 同时提交所有的SQL语句
+        stmt.executeBatch();
+        // 提交修改
+        conn.commit();
+        // 恢复原有的自动提交模式
+        conn.setAutocommit(autoCommit);
+        
+
+8. 分析数据库信息
+    
+
