@@ -1,0 +1,825 @@
+1. File 类
+    1. File类是java.io包下代表与平台无关的文件和目录, 在程序中操作文件和目录,都可以通过File类来完成
+    2. 文件和目录都可以使用File来操作, File能新建, 删除, 重命名文件和目录
+    3. File不能访问文件内容本身, 如果需要访问文件内容本身, 则需要使用输入/输出流
+
+1.1 访问文件和目录
+    1. File 类可以使用文件路径字符串来创建File实例, 该路径可以是绝对路径, 也可以是相对路径
+    2. 一旦创建了 File 对象后, 就可以调用 File 对象的方法来访问
+
+    访问文件名相关的方法:
+        1. String getName(): 返回此 File 对象所表示的文件名或路径名(如果是路径,则返回最后一级子路径名)
+        2. String getPath(): 返回此 File 对象所对应的路径名
+        3. File getAbsolutePath(): 返回此 File 对象所对应的绝对路径名
+        4. String getParent(): 返回此 File 对象所对应目录(最后一级子目录)的父目录名
+        5. boolean renameTo(File newName): 重命名此 File 对象所对应的文件或目录, 如果重命名成功, 返回true, 否则返回 false
+
+    文件检测相关的方法:
+        1. boolean exists(): 判断 File 对象所对应的文件或目录是否存在
+        2. boolean canWrite():判断 File 对象所对应的文件和目录是否可写
+        3. boolean canRead(): 判断 File 对象所对应的文件和目录是否可读
+        4. boolean isFile(): 判断 File 对象所对应的是否是文件, 而不是目录
+        5. boolean isDirectory(): 判断 File 对象所对应的是否是目录, 而不是文件
+        6. boolean isAbsolute(): 判断 File 对象所对应的文件或目录是否是绝对路径
+
+    获取常规文件信息:
+        1. long lastModified(): 返回文件最后修改时间
+        2. long length(): 返回文件内容的长度
+
+    文件操作相关的方法:
+        1. boolean createNewFile(): 当此 File 对象所对应的文件不存在时, 该方法将新建一个该 File 对象所指定的新文件,
+            如果创建成功则返回 true, 否则返回 false
+        2. boolean delete(): 删除 File 对象所对应的文件或路径
+        3. static File createTempFile(String prefix, String suffix): 在默认的临时文件目录中创建一个临时的空文件,
+            使用给定的前缀, 系统生成的随机数和给定的后缀作为文件名. 该静态方法可以直接通过 File 类来调用, prefix 参数
+            必须至少是3字节长, suffix 参数可以为 null, 在这种情况下, 将使用默认的后缀 ".tmp"
+        4. static File createTempFile(String prefix, String suffix, File directory): 在 directory 所指定的目录中创建
+            一个临时的空文件, 使用给定的前缀, 系统生成的随机数和给定的后缀作为文件名, 该静态方法可以直接通过 File 类来调用
+        5. void deleteOnExit(): 注册一个删除的钩子, 指定当Java虚拟机退出时, 删除File对象所对应的文件和目录
+
+    目录操作相关的方法:
+        1. boolean mkdir(): 视图创建一个 File 对象所对应的目录, 如果创建成功, 则返回 true, 否则返回false; 调用
+            该方法时 File 对象必须对应一个路径, 而不是一个文件
+        2. String[] list(): 列出File对象所有子文件和路径名, 返回 String[] 数据
+        3. File[] listFiles(): 列出File对象的所有子文件和路径, 返回File数组
+        4. static File[] listRoots(): 列出系统所有的根路径;
+
+    示例代码
+        import java.io.File;
+        import java.io.IOException;
+        import java.util.Arrays;
+
+        public class FileTest {
+            public static void main(String[] args) throws IOException {
+        //        以当前路径来创建一个 FIle 对象
+                File file = new File(".");
+        //        获取文件名,输出一点
+                System.out.println(file.getName());
+        //        获取相对路径的父路径可能出错, 下面代码输出null
+                System.out.println(file.getParent());
+        //        获取绝对路径
+                System.out.println(file.getAbsoluteFile());
+        //        获取上一级路径
+                System.out.println(file.getAbsoluteFile().getParent());
+        //        在当前路径下创建一个临时的文件
+                File temFile = File.createTempFile("java",".txt", file);
+        //        指定JVM退出时删除该文件
+                temFile.deleteOnExit();
+        //        以系统当前时间作为新文件名来创建新文件
+                File newFile = new File(System.currentTimeMillis() + "");
+                System.out.println("newFile对象是否存在: " + newFile.exists());
+        //        以指定 newFile 对象来创建一个文件
+                final boolean newFile1 = newFile.createNewFile();
+        //        以 newFile 对象来创建一个目录, 因为 newFile 已经存在
+                newFile.mkdir();
+        //        使用 list() 方法列出当前路径下的所有文件和路径
+                String[] fileList = file.list();
+                System.out.println(Arrays.toString(fileList));
+        //        listRoots()静态方法列出所有磁盘根路径
+                File[] roots = File.listRoots();
+                System.out.println(Arrays.toString(roots));
+            }
+        }
+
+1.2 文件过滤器
+    1. 在 File 类的 list() 方法中可以接收一个 FilenameFilter 参数, 通过该参数可以列出支付和条件的文件
+    2. FilenameFilter 接口里包含了一个 accept(File dir, String name) 方法, 该方法将依次对指定 File 的
+        所有子目录或者文件进行迭代, 如果该方法返回true, 则 list() 方法会列出该子目录或者文件
+
+    示例代码
+        import java.io.File;
+
+        public class FilenameFilterTest {
+            public static void main(String[] args) {
+                File file = new File("D:\\File\\Java\\ShoppingMall\\mall\\src\\jeffmall");
+        //        使用Lambda表达式(目标类型为 FilenameFilter) 实现文件过滤器
+        //        如果文件名以 .java 结尾, 或者文件对应一个路径, 则返回 true
+                String[] nameList = file.list((dir, name) -> name.endsWith(".java")
+                    || new File(name).isDirectory());
+                for (String name : nameList) {
+                    System.out.print(name + ", ");
+                }
+            }
+        }
+
+
+2. 理解Java的 IO 流
+    1. 在Java中把不同的输入/输出源(键盘, 文件, 网络连接等) 抽象表述为 "流"(stream), 通过流的方式允许Java
+        程序使用相同的方式来访问不同的输入/输出源
+    2. stream 是从起源(source)到接收(sink)的有序数据
+    3. 输入和输出的对象指的是程序, 输入指的是从程序外部读取数据, 输出指的是向程序外部输出数据
+
+2.1 流的分类
+
+    输入流和输出流(按照流的流向来分):
+        1. 输入流: 只能从中读取数据, 而不能向其写入数据; 输入流主要由 InputStream 和 Reader 作为基类
+        2. 输出流: 只能向其写入数据, 而不能从中读取数据; 输出流主要由 OutputStream 和 Writer 作为基类
+
+    字节流和字符流:
+        1. 字节流和字符流的用法几乎一样, 区别在于字节流和字符流所操作的数据单元不同--字节流操作的数据单元
+            是8位的字节, 而字符流操作的数据单元是16为的字符
+        2. 字节流主要由 InputStream 和 OutputStream 作为基类, 而字符流主要由 Reader 和 Writer 作为基类
+
+    节点流和处理流(按流的角色):
+        1. 节点流: 可以从/向一个特定的 IO 设备(如网络, 磁盘等) 读/写数据的流; 节点流也被称之为低级流(Low Level Stream)
+            当使用节点流进行输入/输出时, 程序直接连接到实际的数据源, 和实际的输入/输出节点连接
+        2. 处理流: 则用于对一个已存在的流进行连接或封装, 通过封装后的流来实现数据读/写功能, 处理流也被称为高级流
+            当使用处理流进行输入/输出时, 程序并不是直接连接到实际的数据源, 没有和实际的输入/输出节点连接; 实际上
+            Java使用处理流来包装节点流是一种典型的装饰器设计模式, 通过使用处理流来包装不同的节点流, 既可以消除不
+            同的节点流的实现差异, 也可以提供更方便你的方法来完成输入/输出功能
+
+2.2 流的概念模型
+    1. 流: Java把所有设备里的有序数据抽象成流模型
+
+    Java IO 流 4个抽象的基类:
+        1. InputStream/Reader : 所有输入流的基类, 前者是字节输入流, 后者在字符输入流
+        2. OutputStream.Writer : 所有输出流的基类, 前者是字节输入流, 后者在字符输入流
+
+
+3. 字节流和字符流
+
+3.1 InputStream 和 Reader
+    1. InputStream/Reader 是所有输入流的抽象基类, 本身不能创建实例来执行输入; 但分别有一个用于读取文件的输入流:
+        FileInputStream 和 FileReader, 都是节点流--会直接和指定的文件关联
+
+    2. 输入流的结束标识是: read(char[] cbuf) read(byte[] b) 方法返回 -1
+
+    3. InputStream 三个常用方法:
+        - int read(): 从输入流中读取单个字节, 返回所读取的字节数据(字节数据可直接转换为 int 类型)
+        - int read(byte[] b): 从输入流中最多读取b.length个字节的数据,并将其存储在字节数组b中, 返回实际读取的字节数
+        - int read(byte[] b, int off, int len): 从输入流中最多读取len个字节的数据, 并将其存储在数组b中, 放入数组b
+            中时, 并不是从数组起点开始, 而是从off的位置开始, 返回实际读取的字节数
+
+    4. Reader 中的三个常用方法:
+        - int read(): 从输入流中读取单个字符, 返回所读取的字符数据(字符数据可直接转换为int类型)
+        - int read(char[] cbuf): 从输入流中最多读取 cbuf.length 个字符的数据, 并将其存储在字符数组 cbuf 中, 返回
+            实际读取的字符数
+        - int read(char[] cbuf, int off, int len): 从输入流中最多读取len个字符的数据, 并将其存储在字符数组cbufzhong,
+            放入数组cbuf中时, 并不是从数组的起点开始, 而是从 off 的位置开始, 返回实际读取的字符数
+
+    5. InputStream 和 Reader 移动指针的方法:
+        - void mark(int readAheadLimit): 在记录指针当前位置记录一个标记(mark)
+        - boolean markSupported(): 判断此输入流是否支持mark()操作, 即是否支持记录标记
+        - void reset(): 将此流的记录指针重新定位到上一次记录标记(mark)的位置
+        - long skip(long n): 记录指针向前移动n个字节/字符
+
+    代码示例
+        import java.io.FileInputStream;
+        import java.io.IOException;
+
+        public class FileInputStreamTest {
+            public static void main(String[] args) throws IOException {
+        //        创建字节输入流
+                FileInputStream fis = new FileInputStream(
+                        "D:\\File\\Java\\ShoppingMall\\mall\\src\\jeffmall\\Mall.java");
+        //        创建一个长度为1024的数组("竹筒")
+                byte[] bbuf = new byte[1024];
+        //        用于保存实际读取的字节数
+                int hasRead = 0;
+        //        使用循环来重复"取水"过程
+                while ((hasRead = fis.read(bbuf)) > 0) {
+                    System.out.println(new String(bbuf, 0, hasRead));
+                }
+                fis.close();
+            }
+        }
+
+
+3.2 OutputStream 和 Writer
+    1. OutputStream 和 Writer都提供的三个常用方法:
+        - void write(int c): 将指定的字节/字符输出到输出流中, 其中c既可以代表字节, 也可以代表字符
+        - void write(byte[]/char[] buf): 将字节数组/字符数组中的数据输出到指定输出流中
+        - void write(byte[]/char[] buf, int off, int len): 将字节数组/字符数组中从off位置开始, 长度为len的
+            字符输出到指定输出流中
+
+    2. Writer 特有的方法:
+        - void write(String str): 将 str 字符串里包含的字符输出到指定输出流中
+        - void write(String str, int off, int len): 将 str 字符串里从 off 位置开始, 长度为 len 的字符输出到
+            指定输出流中
+
+    代码示例
+        import java.io.FileInputStream;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+
+        public class FileOutputStreamTest {
+            public static void main(String[] args) {
+                try (
+                    // 创建字节输入流
+                    FileInputStream fis = new FileInputStream(
+                    "D:\\File\\Java\\ShoppingMall\\mall\\src\\jeffmall\\Mall.java");
+                    FileOutputStream fos = new FileOutputStream(
+                    "D:\\File\\Java\\ShoppingMall\\mall\\src\\jeffmall\\newMall.txt")){
+                    byte[] bbuf  = new byte[32];
+                    int hasRead = 0;
+                    // 循环从输入流取出数据
+                    while ((hasRead = fis.read(bbuf)) > 0) {
+                        // 每读取一次, 即写入文件输出流, 读了多少, 就写入多少
+                        fos.write(bbuf, 0, hasRead);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    代码示例
+        import java.io.FileWriter;
+        import java.io.IOException;
+
+        public class FileWriteTest {
+            public static void main(String[] args) {
+                try(
+                    FileWriter fw = new FileWriter("pome.txt")){
+                    // "\r\n" 是Windows平台的换行符
+                    fw.write("\t\t锦瑟 - 李商隐\r\n");
+                    fw.write("锦瑟无端五十弦, 一弦一柱思华年. \r\n");
+                    fw.write("庄生晓梦迷蝴蝶, 望帝春心托杜鹃. \r\n");
+                    fw.write("沧海月明珠有泪, 蓝田日暖玉生烟. \r\n");
+                    fw.write("此情可待成追忆, 只是当时已惘然. \r\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+4. 输入/输出流体系
+
+4.1 处理流的用法
+    1. 处理流的优势: 它可以隐藏底层设备节点流的差异, 并对外提供更加方便的输入/输出方法
+    2. 处理流的思路: 使用处理流来包装节点流, 程序通过处理流来执行输入/输出功能, 设节点流与底层的I/O设备,文件交互
+    3. 处理流的构造器参数不是一个物理节点, 而是已经存在的流, 也就是装饰流, 它需要直接以物理IO节点作为构造器的参数
+    4. 在使用处理流包装了底层节点流之后, 关闭输入/输出流资源时, 只要关闭最外层的处理流即可
+
+    代码示例
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+        import java.io.PrintStream;
+
+        public class PrintStreamTest {
+            public static void main(String[] args) {
+                try (
+                // PrintStream 是一个处理流, 它接收一个节点流作为构造器参数
+                    PrintStream ps = new PrintStream(new FileOutputStream("poem.txt"))) {
+                    // 直接使用PrintStream执行输出
+                    ps.println("普通字符串");
+                    ps.println(new PrintStreamTest());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+4.2 输入/输出流体系
+    1. 如果输入/输出的内容是文本内容, 则应该考虑使用字符流; 如果输出/输出的内容是二进制内容, 则应该考虑字节流
+    2. 以数组为物理节点的节点流, 字节流以字节数组为节点, 字符流以字符数组为节点, 这种以数组为物理节点的节点流处理
+        在创建节点流对象时需要传入一个字节数组或字符数组之外, 用法上与文件节点流完全相似
+    3. 访问管道的流: PipedInputStream, PipedOutputStream, PipedReader, PipedWriter这些流都是用于实现进程
+        之间通信功能的, 分别代表字节输入流, 字节输出流, 字符输入流, 字符输出流
+    4. 缓冲流: 缓冲流增加了缓冲的功能, 增加缓冲的功能可以投稿输入, 输出的效率, 增加缓冲功能后需要使用flush()才可
+        以将缓冲区的内容写入实际的物理节点
+    5. 对象流主要用于实现对的序列化
+
+    代码示例
+        import java.io.IOException;
+        import java.io.StringReader;
+        import java.io.StringWriter;
+
+        public class StringNodeTest {
+            public static void main(String[] args) {
+                String src = "从明天起, 做一个幸福的人\n"
+                    + "喂马, 劈柴, 周游世界\n"
+                    + "从明天起, 关心粮食和蔬菜\n"
+                    + "我有一所房子, 面朝大海, 春暖花开\n"
+                    + "从明天起, 和每一位亲人通信\n"
+                    + "告诉他们我是幸福的人\n";
+                char[] buffer = new char[32];
+                int hasRead = 0;
+                try(StringReader sr = new StringReader(src)) {
+                    // 循环读取的方式读取字符串
+                    while ((hasRead = sr.read(buffer)) != -1) {
+                        System.out.println(new String(buffer, 0, hasRead));
+                    }
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try (
+                    // 创建StringWrite 时, 实际上以一个 StringBuffer 作为输出节点
+                    // 下面指定的20就是StringBuffer的初始长度
+                    StringWriter sw = new StringWriter()) {
+                    // 调用StringWriter的方法执行输出
+                    sw.write("有一个美丽的新世界, \n");
+                    sw.write("她在远方等我, \n");
+                    sw.write("哪里有天真的孩子, \n");
+                    sw.write("还有姑娘的酒窝 \n");
+                    System.out.println("----下面是sw字符串节点里的内容----");
+                    // 使用 toString() 方法返回 StringWriter 字符串节点的内容
+                    System.out.println(sw.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+4.3 转换流
+    1. 转换流用于实现将字节流转换为字符流
+        - InputStreamReader: 将字节输入流转换成字符输入流
+        - OutputStreamWriter: 将字节输出流专户安城字符输出流
+
+    2. 转换流的应用
+        1. Java使用System.in代表标准输入, 即键盘输入, 但这个标准输入流是 InputStream 类的实例, 使用不方便, 而且
+            键盘输入的都是文本内容, 所以可以使用 InputStreamReader 将其转换成字符输入流
+        2. 普通的Reader读取内容时, 可以将普通的Reader再次包装成 BufferedReader, 再利用BufferedReadr的 readLine()
+            方法可以一次读取一行内容
+
+    示例代码
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStreamReader;
+
+        public class KeyinTest {
+            public static void main(String[] args) {
+                try (
+                    // 将 System.in对象转换为 InputStreamReader 对象
+                    InputStreamReader reader = new InputStreamReader(System.in);
+                    // 将普通的 Reader 包装成 BufferedReader
+                    BufferedReader br = new BufferedReader(reader)) {
+                    String line = null;
+                    // 采用循环方式逐行读取
+                    while ((line = br.readLine()) != null) {
+                        // 如果读取的字符串是 "exit", 则退出程序
+                        if (line.equals("exit")) {
+                            System.exit(1);
+                        }
+                        // 打印读取的内容
+                        System.out.println("检测到输入的内容是: " + line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+4.4 推回输入流
+    1. PushbackInputStream 和 PushbackReader; 这两个推回输入流都带有一个推回缓冲区, 当程序调用这两个推回
+        输入流的 unread() 方法时, 系统会把指定数组的内容推回到该缓冲区里, 而推回输入流每次调用read()方法时
+        总是先从推回缓冲区读取, 只有完全读取了推回缓冲区的内容后, 但还没有装满read()所需的数组时才会从原输
+        入流中读取
+
+    2. 当程序创建一个 PushbackInputStream 或 PushbackReader 时需要指定推回缓冲区的大小, 默认的推回缓冲区的
+        长度为1, 如果程序中推回到推回缓冲区的内容长度超出了推回缓冲区的大小, 将引发 Pushback buffer Overflow
+        的 IOException 异常
+
+    3. 都提供如下三个方法:
+        - void unread(byte[]/char[] buf): 将一个字节/字符数组内容推回到推回缓冲区里, 从而允许重复读取刚刚
+            读取的内容
+        - void unread(byte[]/char[] b, int off, int len): 将一个字节/字符数组里从off开始, 长度为len字节/
+            字符的内容推回到推回缓冲区里, 从而允许重复读取刚刚读取的内容
+        - void unread(int b): 将一个字节/字符推回到推回缓冲区里, 从而允许允许重复读取刚刚读取的内容
+
+    示例代码
+        import java.io.FileReader;
+        import java.io.IOException;
+        import java.io.PushbackReader;
+
+        public class PushbackTest {
+            public static void main(String[] args) {
+                // 再 try 括号中打开 PushbackReader 可以自动关闭
+                try (
+                    // 创建一个 PushbackReader 对象, 指定推回缓冲区的长度为 06
+                    PushbackReader pr = new PushbackReader(new FileReader(
+                            "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\PushbackTest.java")
+                            , 64)) {
+                    char[] buf = new char[32];
+                    // 用于保存上次读取的字符串内容
+                    String lastContnt = "";
+                    int hasRead = 0;
+                    // 循环读取文件内容
+                    while ((hasRead = pr.read(buf)) > 0) {
+                        // 将读取的内容转换为字符串
+                        String content = new String(buf, 0, hasRead);
+                        int targetIndex = 0;
+                        // 将上次读取的字符串和本次读取的字符串拼接起来
+                        // 查看是否包含目标字符串, 如果包含目标字符串
+                        if ((targetIndex =(lastContnt + content).indexOf("new PushbackReader")) > 0) {
+                            // 将本次内容和上次内容一起推回缓冲区
+                            pr.unread((lastContnt + content).toCharArray());
+                            // 重新定义一个长度为targetIndex 的 char数组
+                            if (targetIndex > 32) {
+                                buf = new char[targetIndex];
+                            }
+                            // 再次读取指定长度的内容(就是目标字符串之前的内容)
+                            pr.read(buf, 0, targetIndex);
+                            // 打印读取的内容
+                            System.out.println(new String(buf, 0, targetIndex));
+                            System.exit(0);
+                        } else {
+                            // 打印上次读取的内容
+                            System.out.println(lastContnt);
+                            lastContnt = content;
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+5 重定向标准输入/输出
+        1. Java的标准输入/输出分别通过System.in和System.out来代表, 默认情况下他们分别代表键盘和显示器, 当程序
+            通过 System.in 来获取输入时, 实际上是从键盘读取输入, 当程序视图通过System.out 执行输出时, 程序总是
+            输出到屏幕
+
+        2. System 类里面提供下面三个重定向的标准输入/输出的方法:
+            - static void setErr(PrintStream err): 重定向 "标准" 错误输出流
+            - static void setIn(InputStream in): 重定向 "标准" 输入流
+            - static void setOut(PrintStrean out): 重定向 "标准" 输出流
+
+        代码示例
+            // 将System.out的输出重定向到文件输出, 而不是在屏幕上输出
+            import java.io.FileOutputStream;
+            import java.io.IOException;
+            import java.io.PrintStream;
+            //
+            public class RedirectOut {
+                public static void main(String[] args) {
+                    try (
+                        // 一次性创建 PrintStream 输出流
+                        PrintStream ps = new PrintStream(new FileOutputStream("out.txt"))
+                    ) {
+                        // 将标准输出重定向到ps输出流
+                        System.setOut(ps);
+                        // 向标准输出输出一个字符串
+                        System.out.println("普通字符串");
+                        // 向标准输出输出一个对象
+                        System.out.println(new RedirectOut());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        代码示例
+            // 将System.in重定向到指定文件, 而不是键盘输入
+            import java.io.FileInputStream;
+            import java.io.IOException;
+            import java.util.Scanner;
+            //
+            public class RedirectIn {
+                public static void main(String[] args) {
+                    try(
+                        // 获取输入流对象 fis
+                        FileInputStream fis = new FileInputStream(
+                            "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\RedirectIn.java")) {
+                        // 将标准输入重定向到 fis 输入流, 即获取的输入项是 fis 文件的内容
+                        System.setIn(fis);
+                        // 使用 System.in 创建 Scanner 对象, 用于获标准输入
+                        Scanner sc = new Scanner(System.in);
+                        // 增加下面一行只把回车作为分隔符, 即每一行以分隔符为一句输入
+                        sc.useDelimiter("\n");
+                        // 判断是否还有下一个输入项
+                        while(sc.hasNext()){
+                            // 输出输入项
+                            System.out.println("键盘输入的内容是: " + sc.next());
+                        }
+                    } catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+6. Java虚拟机读写其他进行的数据
+    1. 使用 Runtime 对象的 exec() 方法可以运行平台上的其他程序, 该方法产生一个 Process 对象, Process 对象
+        代表由该Java程序启动的子进程
+
+    2. Process 用于让程序和其子进程进行通信的方法:
+        - InputStream getErrStream(): 获取子进程的错误流
+        - InputStream getInputStream(): 获取子进程的输入流
+        - OutputStream getOutputStream(): 获取子进程的输出流
+
+    3. 要注意这里的输入输出流, 如果要让子进程读取程序中的数据, 对于Java程序来说这是输出流
+
+    代码示例
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStreamReader;
+        public class ReadFromProcess {
+        //
+            public static void main(String[] args) throws IOException {
+                // 运行 javac 命令, 返回运行该命令的子进程
+                Process p = Runtime.getRuntime().exec("javac");
+                try (
+                   // 以p进程的错误流创建 BufferedReader 对象
+                   // 这个错误流对本程序是输入流, 对p则是输出流
+                   BufferedReader br = new BufferedReader(new
+                           InputStreamReader(p.getErrorStream()))) {
+                    String buff = null;
+                    // 采取循环方式来读取p进程的错误输出
+                    while ((buff = br.readLine()) != null) {
+                        System.out.println(buff);
+                    }
+                }
+            }
+        }
+
+
+7. RandomAccessFile (任意访问文件)
+    1. RandomAccessFile 它既可以读取文件内容, 也可以向文件输出数据; 它支持 "随机访问" 的方式, 程序可以直接跳
+        转到文件的任意地方来读写数据
+
+    2. RandomAccessFile 允许自由定位文件记录指针, RandomAccessFile 可以不从开始的地方输出, 因此RandomAccessFile
+        可以向已存在的文件后追加内容; 如果程序需要向已存在的文件后追加内容, 则应该使用 RandomAccessFile
+
+    3. RandomAccessFile 对象包含了一个记录指针, 用于标识当前读写处的位置, 当程序新创建一个 RandomAccessFile
+        对象时, 该对象的文件记录指针位于文件头(也就是0处), 当读/写了n个字节后, 文件记录指针将会向后移动n个
+        字节
+
+    4. RandomAccessFile 操作文件记录指针的方法:
+        - long getFilePointer(): 返回文件记录指针的当前位置
+        - void seek(long pos): 将文件记录指针定位到pos位置
+
+    5. RandomAccessFile 既可以读取文件, 也可以写, 所以它既包含了完全类似于 InputStream 的三个 read() 方法,
+        其用法和 InputStream 的三个 read() 方法完全一样; 也包含了完全类似于 OutputStream 的三个 write() 方法
+        其用法和 OutputStream 的三个 write() 方法完全一样; 另外 RandomAccessFile 还包含了一些列 readXxx()
+        和 writeXxx() 方法来完成输入, 输出
+
+    6. RandomAccessFile 类由两个构造器, 一个使用 String 参数来指定文件名, 另一个使用 File 参数来指定文件本身
+        除此之外, 创建 RandomAccessFile 对象时还需要指定一个 mode 参数, 该参数指定 RandomAccessFile 的访问模式
+        - "r": 只读方式打开指定文件, 如果试图对该 RandomAccessFile 执行写入方法, 将抛出 IOException 异常
+        - "rw": 以读, 写方式打开指定文件, 如果文件尚不存在, 则尝试创建文件
+        - "rws": 以读, 写方式打开指定文件, 相对于 "rw" 模式, 还要求对文件的内容或元数据的每个更新都同步写入到
+            底层存储设备
+        - "rwd": 以读, 写方式打开指定文件, 相对于 "rw" 模式, 还要求对文件内容的每个更新都同步写入到底层存储设备
+
+    示例代码
+        // 使用 RandomAccessFile 来访问文件的指定的中间部分数据
+        import java.io.RandomAccessFile;
+        //
+        public class RandomAccessFileTest {
+            public static void main(String[] args) {
+                try (
+                    RandomAccessFile raf = new RandomAccessFile(
+                        "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\RandomAccessFileTest.java", "r")){
+                    // 获取 RandomAccessFile 对象文件指针的位置, 初始位置为0
+                    System.out.println("RandomAccessFileTest的文件指针的初始位置: "
+                        + raf.getFilePointer());
+                    // 移动 raf 的文件记录指针的位置
+                    raf.seek(300);
+                    byte[] bbuf = new byte[1024];
+                    // 用于保存实际读取的字节数
+                    int hasRead = 0;
+                    // 使用循环来重复 "取水" 过程
+                    while ((hasRead = raf.read(bbuf)) > 0) {
+                        // 取出 "竹筒" 中的水滴(字节), 将字节数组转换成字符串输入
+                        System.out.println(new String(bbuf, 0, hasRead));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    示例代码
+        // 在文件的末尾追加内容
+        import java.io.IOException;
+        import java.io.RandomAccessFile;
+        //
+        public class AppendContent {
+            public static void main(String[] args) {
+                try (
+                    // 以读写的方式打开RandomAccessFile对象
+                    RandomAccessFile raf = new RandomAccessFile(
+                    "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\Main.java", "rw")) {
+                    // 将记录指针移动到 out.txt 文件的最后
+                    raf.seek(raf.length());
+                    raf.write("// 这是使用RandomFileAccess来追加的内容! \r\n".getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    示例代码
+        // 在文件的指定位置插入文本
+        // 实现方法是: 找到要插入的文件位置pos, 创建临时文件, 读取pos到文件尾的数据, 输出到临时文件中
+        //            接着移动文件指针到pos位置, 插入指定的数据, 在读取临时文件的内容, 写入到文件中
+        import java.io.*;
+        //
+        public class InsertContent {
+            /**
+             * @param fileName  需要追加的文件的名字, 绝对路径
+             * @param pos   需要追加的位置
+             * @param insertContent  需要追加的内容
+             * @throws IOException  可能存在文件打开异常
+             */
+            public static void insert(String fileName, long pos,
+                  String insertContent) throws IOException {
+                File tmp = File.createTempFile("tmp", null);
+                tmp.deleteOnExit();
+                try (
+                    RandomAccessFile raf = new RandomAccessFile(fileName, "rw");
+                    // 使用临时文件来保存插入点之后的数据
+                    FileOutputStream tmpOut = new FileOutputStream(tmp);
+                    FileInputStream tmpIn = new FileInputStream(tmp)) {
+                    raf.seek(pos);
+                    // -------------下面代码将插入点后的内容读入临时文件保存--------------
+                    byte[] bbuf = new byte[64];
+                    // 用于保存实际读取的字节数
+                    int hasRead = 0;
+                    // 使用循环方式读取插入点后的数据
+                    while ((hasRead = raf.read(bbuf)) != -1) {
+                        // 将读取的数据写入临时文件
+                        tmpOut.write(bbuf, 0, hasRead);
+                    }
+                    // -------------下面代码用于插入内容--------------
+                    // 把文件记录指针重新定位到pos位置
+                    raf.seek(pos);
+                    // 追加需要插入的内容
+                    raf.write(insertContent.getBytes());
+                    // 追加临时文件中的内容
+                    while ((hasRead = tmpIn.read(bbuf)) > 0) {
+                        raf.write(bbuf, 0, hasRead);
+                    }
+                }
+            }
+            public static void main(String[] args) throws IOException {
+                insert("D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\Main.java",
+                    19, "// --- 这是插入的内容 --- // \r\n");
+            }
+        }
+
+
+8. 对象序列化
+
+8.1 序列化的含义和意义
+
+    1. 对象序列化的目标就是将对象保存到磁盘中, 或允许在网络中直接传输对象; 对象序列化机制允许把内存中的 java 对象
+        转换成平台无关的二进制流, 从而允许把这种二进制流持久地保存在磁盘上, 通过网络将这种二进制流传输到另一个网络
+        节点; 其他程序一点获得了这种二进制流(无论网络还是磁盘), 都可以将这种二进制流恢复成原来的Java对象
+    2. 对象的序列化(Serialize)指将一个 Java 对象写入 IO 流中; 对象的反序列化(Deserialize) 则指的是从 IO 流
+        中恢复该 Java 对象
+    3. 如果要让某个对象支持序列化机制, 则必须让它的类是可序列化的(serializable); 这个类必须实现 Serializable
+        和 Externalizable 两个接口
+        - Java的很多类都实现了 Serializable 接口, 该接口是一个标记接口, 无须是实现给接口的任何方法, 只是表明该类
+            的实例是可序列化的
+        - 所有的 网络传输对象以及需要保存到磁盘的对象都应该是可序列化的, 所以:程序创建的每个 JavaBean 类都实现Serializable
+
+
+8.2 使用对象流实现序列化
+
+    序列化的主要步骤:
+        1. 创建一个 ObjectOutputStream 输出流, 必须建立在其他节点流的基础上
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("object.txt"))
+        2.  调用 ObjectOutputStream 对象的 writeObject() 方法输出可序列化对象
+            oos.writeObject(per);
+
+        代码示例
+            // 先创建一个普通的person类
+            package xyz.xmcs.CrazyJava.IO;
+           //
+            public class Person implements java.io.Serializable {
+                private String name;
+                private int age;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public int getAge() {
+                    return age;
+                }
+
+                public void setAge(int age) {
+                    this.age = age;
+                }
+
+                public Person (String name, int age) {
+                    System.out.println("有参数的构造器!");
+                    this.name = name;
+                    this.age = age;
+                }
+            }
+            // 在创建一个 WriteObject 程序, 调用 ObjectOutputStream 将一个 Person 对象写入磁盘文件
+            import java.io.FileOutputStream;
+            import java.io.IOException;
+            import java.io.ObjectOutputStream;
+            //
+            public class WriteObject {
+                public static void main(String[] args) {
+                    try (
+                        // 创建一个 ObjectOutputStream 输出流
+                        ObjectOutputStream oos = new ObjectOutputStream(
+                                new FileOutputStream("object.txt"))) {
+                        Person per = new Person("孙悟空", 500);
+                        // 将 per 对象写入输出流
+                        oos.writeObject(per);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+    反序列化的主要步骤:
+        1. 先创建一个 ObjectInputStream 输入流, 这个输入流是一个处理流, 需要建立在其他节点流的基础上
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("object.txt"))
+        2. 调用 ObjectInputStream 对象的 readObject() 方法读取流中的对象, 该方法返回一个 Object 类型
+            的Java对象, 如果程序知道该Java对象的类型, 则可以将该对象强制类型转换成其真实的类型
+        3. 注意点:
+            - 反序列化读取的仅仅是Java对象的数据, 而不是Java类, 因此反序列化恢复Java对象时, 必须提供该
+                Java对象所属类的 class 文件, 否则引发 ClassNotFoundException 异常
+            - 反序列化机制无须通过构造器来初始化Java对象
+
+        代码示例
+            import java.io.FileInputStream;
+            import java.io.ObjectInputStream;
+            //
+            public class ReadObject {
+                public static void main(String[] args) {
+                    try (
+                        // 创建一个 ObjectInputStream 输入流
+                        ObjectInputStream ois = new ObjectInputStream(
+                            new FileInputStream("object.txt"))) {
+                        // 从输入流中读取一个 Java 对象, 并将其强制类型转换为 Person 类
+                        Person p = (Person)ois.readObject();
+                        System.out.println("名字为: " + p.getName()
+                            + "\n年龄为: " + p.getAge());
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+8.3 对象引用的序列化
+    1. 如果某个类的成员变量是引用类型, 那么这个引用类型必须是可序列化的, 否则拥有该类型成员变量的类也是不可序列化的
+    2. 如果 Teacher 类持有一个 Person 类的引用, 只有 Person 类是可序列化的, Teacher 类才是可序列化的; 如果
+        Person 类不可序列化, 无论 Teacher 类是否实现 Serializable, Externalizable 接口, 则 Teacher 类都是不
+        可序列化的
+    3. Java序列化机制采用的序列化算法:ila
+        - 所有保存到磁盘中的对象都有一个序列化编号
+        - 当程序试图序列化一个对象时, 程序先检查该对象是否已经被序列化过, 只有该对象从未(在本次虚拟机中)被
+            序列化过, 系统才会将该对象转换成字节序列并输出
+        - 如果某个对象已经被序列化过, 程序将只是直接输出一个序列化编号, 而不是再次重新序列化该对象
+    4. 所以Java序列化的底层机制是, 当多次调用 writeObject()方法输出同一个对象时, 只有第一次调用 writeObject()
+        方法时才会将该对象转换成字节序列并写入到 ObjectOutputStream; 当程序再次调用 writeObject()方法时, 程序
+        只是输出前面的序列化编号, 即使后面该对象的实例变量值已被改变, 改变的实例变量指也不会被输出
+
+    引用类型序列化:
+        代码示例
+            import java.io.FileOutputStream;
+            import java.io.IOException;
+            import java.io.ObjectOutputStream;
+            //
+            public class WriteTeacher {
+                public static void main(String[] args) {
+                    try(
+                        // 创建一个 ObjectOutputStream输出流
+                        ObjectOutputStream oos = new ObjectOutputStream(
+                            new FileOutputStream("teacher.txt"))) {
+                            Person per = new Person("孙悟空", 500);
+                            Teacher t1 = new Teacher("唐僧", per);
+                            Teacher t2 = new Teacher("菩提祖师", per);
+                            // 依次将4个对象写入输出流
+                            oos.writeObject(t1);
+                            oos.writeObject(t2);
+                            oos.writeObject(per);
+                            oos.writeObject(t2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+    引用类型反序列化:
+        代码示例
+            import java.io.FileInputStream;
+            import java.io.ObjectInputStream;
+            //
+            public class ReadTeacher {
+                public static void main(String[] args) {
+                    try (
+                        // 创建一个 ObjectInputStream 输入流
+                        ObjectInputStream ois = new ObjectInputStream(
+                            new FileInputStream("teacher.txt"))) {
+                        // 依次读取 ObjectInputStream 输入流的4个对象
+                        Teacher t1 = (Teacher)ois.readObject();
+                        Teacher t2 = (Teacher)ois.readObject();
+                        Person p = (Person)ois.readObject();
+                        Teacher t3 = (Teacher)ois.readObject();
+                        System.out.println("t1 的student引用和p是否相同: " + (t1.getStudent() == p));
+                        System.out.println("t2 的student引用和p是否相同: " + (t2.getStudent() == p));
+                        System.out.println("t3 的student引用和t2是否相同: " + (t2 == t3));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
