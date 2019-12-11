@@ -823,3 +823,117 @@
                     }
                 }
             }
+8.4 自定义序列化
+    1. 递归序列化: 当某个对象进行序列化时, 系统会自动把该对象的所有实例变量依次进行序列化, 如果某个实例变量
+        引用到另一个对象, 则被引用的对象也会被序列化, 如果被引用的对象的实例变量也引用了其他对象, 则被引用
+        的其他对象也会被序列化
+    2. 可以通过在实例变量前面使用 transient 关键字修饰, 指定Java序列化时无须理会该实例变量; transient 只能
+        用于修饰实例变量, 不可修饰Java程序中的其他成分
+    3. 使用 transient 关键字修饰实例变量虽然简单, 方便, 但被 transient 修饰的实例变量将被完全隔离在序列化
+        机制之外, 这样导致在反序列化恢复Java对象时无法取得该实例变量值
+    4. Java还提供了一种自定义序列化机制, 通过这种自定义序列化机制可以让程序控制如何序列化各实例变量, 甚至完全
+        不序列化某些实例变量
+
+
+9. NIO
+
+9.1 Java 新 IO 概述
+    1. 新IO和传统的IO具有相同的目的, 都是用于进行输入/输出, 但新IO使用了不同的方式来处理输入/输出, 新IO采用了
+        内存映射文件的方式来处理输入/输出, 新IO将文件或文件的一段区域映射到内存中, 这样就可以像访问内存一样来
+        访问文件了, 通过这种方式来进行输入/输出比传统的输入/输出要快
+
+    2. Channel(通道)和Buffer(缓冲)是新IO中的两个核心对象, Channel 是对传统的输入/输出系统的模拟, 在新IO系统
+        中所有的数据都需要通过通道传输; Channel 与传统的 InputStream, OutputStream最大的区别在于它提供了一个
+        map() 方法, 通过该 map() 方法可以直接将 "一块数据" 映射到内存中; 传统的输入/输出是面向流的处理, 新IO
+        则是面向块的处理
+
+    3. Buffer 可以被理解成一个容器, 他的本质是一个数组, 发送到 Channel 中的所有对象都必须首先放到Buffer中, 而
+        从Channel 中读取的数据也必须先放到Buffer中; 此处的Buffer类似于前面介绍的 "竹筒", 但该Buffer既可以像
+        "竹筒" 那样一次次去Channel中取水, 也允许使用Channel直接将文件的某块数据映射成Buffer
+
+    3. Java中新的IO相关包:
+        - java.nio 包: 主要包含各种与Buffer(缓冲)相关的类
+        - java.nio.channels 包: 主要包含与Channel(通道)和Selector相关的类
+        - java.nio.charset 包: 主要包含与字符集相关的类
+        - java.nio.channels.spi 包: 主要包含与 Channel 相关的服务提供者编程jiekou
+        - java.nio.charset.spi 包: 包含与字符集相关的服务提供者编程接口
+
+9.2 使用 Buffer
+    1. Buffer的内部结构就是一个数组, 它可以保存多个类型相同的数据; Buffer是一个抽象类, 最常用的子类是 ByteBuffer,
+        它可以在底层字节数组上进行 get/set 操作; 除此之外还有其他基本数据类型(boolean除外): CharBuffer, ShortBuffer,
+        IntBuffer, LongBuffer, FloatBuffer, DoubleBuffer
+
+    2. 上述这些Buffer类都没有构造器, 只能通过如下的方法来获取Buffer对象:
+        - static XxxBuffer allocate(int capacity): 创建一个容量为 capacity 的 XxxBuffer 对象
+
+    3. 在Buffer中三个重要概念: 容量(capacity), 界限(limit), 位置(position)
+        - 容量(capacity): 缓冲区的容量(capacity)表示该Buffer的最大数据容量, 即最多可以存储多少数据, 缓冲区的容量
+            不可为负值, 创建后不能改变
+        - 界限(limit): 第一个不应该被读出或者写入的缓冲区位置索引, 也就是说, 位于limit后的数据既不可读, 也不可写
+        - 位置(position): 用于指明下一个可以被读出的或者写入的缓冲区位置索引(类似于IO流中的记录指针), 当使用Buffer
+            从 Channel 中读取数据时, position的值恰好等于已经读到了多少数据, 当刚刚新建了一个Buffer对象时, 其
+            position为0; 如果从 Channel 中读取了2个数据到Buffer时, 则 position为2, 指向Buffer中的第2个(第一个位置
+            索引为0)位置
+
+    4. Buffer的主要功能就是装入数据, 然后输出数据, 开始时Buffer的position为0, limit为capacity, 程序可通过put()方法
+        向Buffer中放入一些数据(或者从Channel中获取一些数据), 每放入一些数据, Buffer的position相应的向后移动一些位置
+        当Buffer装入数据结束后, 调用Buffer的flip()方法, 该方法将limit这是为position所在位置, 并将position设为0, 这
+        就使得Buffer的读写指针又移到了开始位置, 也就是说, Buffer调用flip()方法之后, Buffer为输出数据做好了准备; 当
+        Buffer输出数据结束后, Buffer调用clear()方法, clear()方法不是清空Buffer的数据, 它仅仅将position置为0, 将
+        limit置为capacity, 这样为再次向Buffer中装入数据做好准备
+
+    5. mark: 可选的标记, Buffer允许直接将position定位到该mark处; 且: 0 <= mark <= position <= limit <= capacity
+
+    Buffer中的一些常用的方法:
+        - int capacity(): 返回Buffer的capacity大小
+        - boolean hasRemaining(): 判断当前位置(position)和界限(limit)之间是否还有元素可供处理
+        - int limit(): 返回Buffer的界限(limit)的位置
+        - Buffer limit(int newLt): 重新设置界限(limit)的值, 并返回一个具有新的limit的缓冲区对象
+        - Buffer mark(): 设置Buffer的mark位置, 它只能在0和位置(position)之间做mark
+        - int position(): 返回Buffer中的position值
+        - Buffer position(int newPos): 设置Buffer的position, 并返回position被修改后的Buffer对象
+        - int remaining(): 返回当前位置和界限之间的元素个数
+        - Buffer reset(): 将位置(position)转到mark所在的位置
+        - Buffer rewind(): 将位置(position)设置为0, 取消设置的mark
+        - flip(): 为从Buffer中取出数据做好准备
+        - clear(): 为再次向Buffer中装入数据做好准备
+        - put(): 向Buffer中放入数据
+        - get(): 从Buffer中取出数据
+
+    相对和绝对的通过put和get来访问Buffer中的数据:
+        - 相对(Relative): 从Buffer的当前position处开始读取或写入数据, 然后将位置(position)的值按处理元素的个数增加
+        - 绝对(Absolute): 直接根据索引向Buffer中读取或写入数据, 使用绝对方式访问Buffer里的数据时, 并不会影响位置的值
+
+    代码示例
+        import java.nio.CharBuffer;
+        // 
+        public class BufferTest {
+            public static void main(String[] args) {
+                // 通过Buffer的allocate方法创建容量(capacity)为8的Buffer
+                CharBuffer buff = CharBuffer.allocate(8);
+                System.out.println("capacity = " + buff.capacity());
+                System.out.println("limit = " + buff.limit());
+                System.out.println("position = " + buff.position());
+                // 放入元素
+                buff.put('a');
+                buff.put('b');
+                buff.put('c');
+                System.out.println("加入三个元素后, position = " + buff.position());
+                // 调用flip()方法
+                buff.flip();
+                System.out.println("执行flip()方法后, limit = " + buff.limit());
+                System.out.println("执行flip()方法后, position = " + buff.position());
+                // 取出第一个元素
+                System.out.println("取出第一个元素(position = 0): " + buff.get());
+                System.out.println("取出第一个元素后, position = " + buff.position());
+                // 调用clear()方法
+                buff.clear();
+                System.out.println("执行clear()后, limit = " + buff.limit());
+                System.out.println("执行clear()方法后, position = " + buff.position());
+                System.out.println("执行clear()后, 缓冲区内容并没有被清除: "
+                        + "第三个元素为: " + buff.get(2));
+                System.out.println("执行绝对读取后, position = " + buff.position());
+            }
+
+        }
+
