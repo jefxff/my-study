@@ -1325,3 +1325,17 @@
 
             }
         }
+		
+10.3 使用 WatchService 监控文件变化
+	1. 以前版本Java监控文件的方法: 单启一条后台线程, 这条后台线程每隔一段时间就去 "遍历" 一次指定目录的文件,
+		如果发现此次遍历结果与上次遍历结果不同, 则认为文件发生了变化. (繁琐, 性能不好)
+	2. NIO.2 的 Path 类提供了如下一个方法来监控文件系统的变化:
+		- register(WatchService watcher, WatchEvent.Kind<?>...events): 用Watch监听该Path代表的目录下的文件变化
+			events参数指定要监听的那些类型的事件
+	3. 在 NIO.2 的Path 类提供的这个方法中WatchService 代表一个文件系统监听服务, 它负责监听 Path 代表的目录下的
+		文件变化, 一旦使用register()方法完成注册之后, 加下来就可调用 WatchService的下面三个方法来获取被监听目
+		录的文件变化事件:
+		- WatchKey poll(): 获取下一个 WatchKey, 如果没有 WatchKey 发生就立即返回null
+		- WatchKey Poll(long timeout, timeUnit unit): 尝试等待 timeout 事件去获取下一个 WatchKey 
+		- WatchKey take(): 获取下一个WatchKey, 如果没有 WatchKey 发生就一直等待
+		
