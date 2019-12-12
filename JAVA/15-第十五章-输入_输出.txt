@@ -937,3 +937,391 @@
 
         }
 
+
+9.3 使用 Channel
+
+    Channel 和传统的流对象的两个区别:
+        1. Channel可以直接将指定文件的部分或全部直接映射成Buffer
+        2. 程序不能直接访问 Channel中的数据, 包括读取, 写入都不行, Channel 只能和 Buffer 交互; 如果要从 Channel 中
+            取得数据, 必须先用 Buffer 从 Channel 中取出一些数据, 然后让程序从Buffer中取出这些数据; 如果要将程序中的
+            数据写入 Channel, 也要先让程序将数据放入 Buffer 中, 程序再将 Buffer 里的数据写入 Channel 中
+
+    Channel 接口的实现类:
+        - Pipe.SinkChannel, Pipe.SourceChannel: 这两个实现类用于支持线程之间通信的管道 Channel
+        - ServerSocketChannel, SocketChannel: 是用于支持TCP网络通信的Channel
+        - DatagramChannel: 是用于支持UDP网络通信的 Channel
+        - FileChannel: 是用于文件访问的 Channel
+
+    创建 Channel:
+        1. 所有的 Channel 通过传统的节点 InputStream, OutputStream 的 getChannel() 方法来返回对应的 channel; 不同的
+            节点流获得的 Channel 不一样
+            - FileInputStream, FileOutputStream 的 getChannel() 方法返回 FileChannel
+            - PipedInputStream, PipedOutputStream 的 getChannel() 方法返回 Piped.SinkChannel, Pipe.SoureChannel
+        2. Channel 中最常用的三类方法是 map(), read(), write()
+            - map() 用于将 Channel 对应的部分或全部数据映射成ByteBuffer
+            - read() 用于从Buffer中读取数据
+            - write() 向Buffer中写入数据
+        3. map() 方法的方法签名为: MappedByteBuffer map(FileChannel.MapMode mode, long position, long size): 第一个
+            参数执行映射时的模式, 分别有只读, 读写模式; 第二个参数, 第三个参数用于控制将 Channel 的那些数据映射成ByteBuffer
+        4. RandomAccessFile 中也包含可一个getChannel()方法, 该方法是只读还是读写模式, 则取决于RandomAccessFile 打开文件的模式
+
+    代码示例
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+        import java.nio.CharBuffer;
+        import java.nio.MappedByteBuffer;
+        import java.nio.channels.FileChannel;
+        import java.nio.charset.Charset;
+        import java.nio.charset.CharsetDecoder;
+        //
+        public class FileChannelTest {
+            /**
+             *
+             * @param oldFilePath 源文件的绝对路径
+             * @param newFilePath 目标文件的绝对路径
+             */
+            public static void CopyFile(String oldFilePath, String newFilePath) {
+                File f = new File(oldFilePath);
+                try (
+                    // 创建 FileInputStream, 以该文件输入流创建 FileChannel
+                    FileChannel inChannel = new FileInputStream(f).getChannel();
+                    // 以文件输出流创建 FileChannel, 用以控制输出
+                    FileChannel outChannel = new FileOutputStream(newFilePath).getChannel()) {
+                    // FileChannel 里的全部数据映射成 ByteBuffer
+                    MappedByteBuffer buffer = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, f.length());
+                    // 使用 "UTF-8" 的字符集来创建解码器
+                    Charset charset = Charset.forName("UTF-8");
+                    // 直接将 buffer 里的数据全部输出
+                    outChannel.write(buffer);
+                    // 再次调用Buffer的clear()方法, 复原limit, position 的位置
+                    buffer.clear();
+                    // 创建解码器(CharsetDecoder)对象
+                    CharsetDecoder decoder = charset.newDecoder();
+                    // 使用解码器将 ByteBuffer 转换成 CharBuffer
+                    CharBuffer charBuffer = decoder.decode(buffer);
+                    System.out.println(charBuffer);
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            public static void main(String[] args) {
+                String oldFilePath = "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\第十五章 输入_输出.txt";
+                String newFilePath = "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\a.txt";
+                CopyFile(oldFilePath, newFilePath);
+            }
+        }
+
+    代码示例
+        // 使用RandomAccessFile 创建FileChannel 对象
+        import java.io.File;
+        import java.io.IOException;
+        import java.io.RandomAccessFile;
+        import java.nio.ByteBuffer;
+        import java.nio.channels.FileChannel;
+        //
+        public class FandomFileChannelTest {
+            public static void main(String[] args) throws IOException {
+                File f = new File("D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\a.txt");
+                try (
+                    // 创建一个RandomAccessFile对象, 模式是 rw
+                    RandomAccessFile raf = new RandomAccessFile(f, "rw");
+                    // 获取 RandomAccessFile 对应的 Channel
+                    FileChannel randomChannel = raf.getChannel()) {
+                    // 将 Channel 中的所有数据映射成 ByteBuffer
+                    ByteBuffer buffer = randomChannel.map(FileChannel.MapMode.READ_ONLY, 0, f.length());
+                    // 把Channel的记录指针移动到最后
+                    randomChannel.position(f.length());
+                    // 将buffer中的所有数据输出
+                    randomChannel.write(buffer);
+                }
+
+            }
+        }
+
+    代码示例
+        // Channel 通过 "少拿勤跑" 的方式映射数据
+        import java.io.FileInputStream;
+        import java.io.IOException;
+        import java.nio.ByteBuffer;
+        import java.nio.CharBuffer;
+        import java.nio.channels.FileChannel;
+        import java.nio.charset.Charset;
+        import java.nio.charset.CharsetDecoder;
+        //
+        public class ReadFile {
+            public static void main(String[] args) throws IOException {
+                try (
+                    // 创建文件输入流
+                    FileInputStream fis = new FileInputStream(
+                        "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\ReadFile.java");
+                    // 通过文件输入流创建一个FileChannel对象
+                    FileChannel fc = fis.getChannel()) {
+                    // 定义一个ByteBuffer对象, 用于重复取水
+                    ByteBuffer bbuff = ByteBuffer.allocate(256);
+                    // 将 FileChannel 中的数据放入 ByteBuffer 中
+                    while (fc.read(bbuff) != -1) {
+                        // 锁定Buffer的空白区
+                        bbuff.flip();
+                        // 创建 Charset 对象
+                        Charset charset = Charset.forName("UTF-8");
+                        // 创建解码器 (CharsetDecoder) 对象
+                        CharsetDecoder decoder = charset.newDecoder();
+                        // 将 ByteBuffer 的内容转码
+                        CharBuffer cbuff = decoder.decode(bbuff);
+                        System.out.print(cbuff);
+                        // 将 Buffer 初始化, 为下一次读取数据做好准备
+                        bbuff.clear();
+                    }
+                }
+            }
+        }
+
+
+9.4 字符集和 Channel
+    1. 计算机所有的文件在底层存储的都是二进制的字节码, 之所以我们能在显示器上看到文件视频等, 正式因为存在
+        Encode(编码), 和 Decode(解码); 编码 Encode 就是将明文的字符序列转换为计算机能够理解的二进制序列;
+        解码 Decode 就是将计算机的二进制序列转换为人能看懂的明文字符串序列
+    2. Java默认使用的是 Unicode 字符集, JDK 1.4 提供了 Charset 来处理字节序列和字符序列(字符串)之间的转换关系
+        该类包含了可用于创建编码器和解码器的方法, 还提供了Charset所支持ide字符集的方法, Charset是不可变类
+    3. Charset类提供了 availableCharsets() 静态方法来获取当前JDK所支持的所有字符集
+    4. 获取了 Charset 对象后, 如果仅仅需要进行简单的编码, 解码操作, 可以无须创建 CharsetEncoder 和 CharsetDecoder
+        对象, 直接调用 Charset 的 encode() 和 decode() 方法进行编解码即可
+        - CharBuffer decode(ByteBuffer bb): 将 ByteBuffer 中的字节序列转换成字符序列的便捷方法
+        - ByteBuffer encode(CharBuffer cb): 将 CharBuffer 中的字符序列转换成字节序列的便捷方法
+        - ByteBuffer encode(String str): 将String中的字符序列转换成字节序列的便捷方法
+
+
+    代码示例
+        // 获取Java支持的所有字符集
+        import java.nio.charset.Charset;
+        import java.util.SortedMap;
+        //
+        public class CharsetTest {
+            public static void main(String[] args) {
+                // 获取Ja有字符集
+                SortedMap<String, Charset> map = Charset.availableCharsets();
+                for (String alias : map.keySet()) {
+                    // 输出字符集的别名和对应的Charset对象
+                    System.out.println(alias + " ----> " + map.get(alias));
+                }
+            }
+        }
+
+    常用的字符集:
+        - GBK: 简体中文字符集
+        - BIG5: 繁体中文字符集
+        - ISO-8859-1: ISO 拉丁字母表 No.1, 也叫做ISO-LATIN-1
+        - UTF-8: 8位UCS转换格式
+        - UTF-16BE: 16位UCS转转格式, Big-endian(最低地址存放高位字节)字节顺序
+        - UTF-16LE: 16位UCS转转格式, Little-endian(最高地址存放低位字节)字节顺序
+        - UTF-16: 16位UCS转换格式, 字节顺序由可选的字节顺序标记来标识
+
+    设置字符集的方法:
+        1. 调用 Charset 的 forName("字符集别名") 方法来创建对应的 Charset 对象
+        2. 通过获得 Charset 对象, 调用该对象的 newDecoder(), newEncoder() 这两个方法分别返回 CharsetDecoder 和
+            CharsetEncoder 对象, 代表该 Charset 的解码器和编码器;
+        3. 在通过调用 CharsetDecoder 的 decode() 方法就可以将 ByteBuffer(字节序列)转换成 CharBuffer(字符序列) 或
+            通过调用 CharsetEncoder 的 encode() 方法就可以将 CharBuffer 或 String (字符序列) 转换成 ByteBuffer
+
+    代码示例
+        // CharBuffer 和 ByteBuffer 互转
+        import java.nio.ByteBuffer;
+        import java.nio.CharBuffer;
+        import java.nio.charset.Charset;
+        import java.nio.charset.CharsetDecoder;
+        import java.nio.charset.CharsetEncoder;
+        //
+        public class CharsetTransform {
+            public static void main(String[] args) throws Exception {
+                // 创建简体中文对应的Charset
+                Charset cn = Charset.forName("GBK");
+                // 获取 cn 对象对应的编码器和解码器
+                CharsetEncoder cnEncoder = cn.newEncoder();
+                CharsetDecoder cnDecoder = cn.newDecoder();
+                // 创建一个 CharBuffer 对象
+                CharBuffer cbuff = CharBuffer.allocate(8);
+                cbuff.put('李');
+                cbuff.put('建');
+                cbuff.put('锋');
+                cbuff.flip();
+                // 将 CharBuffer 中的字符序列转换成字节序列
+                ByteBuffer bbuff = cnEncoder.encode(cbuff);
+                // 循环访问 ByteBuffer 中的每个字节
+                for (int i = 0; i < bbuff.capacity(); i++) {
+                    System.out.print(bbuff.get(i) + " ");
+                }
+                // 将 ByteBuffer 的数据解码成字符序列
+                System.out.println("\n" + cnDecoder.decode(bbuff));
+            }
+        }
+
+9.6 文件锁
+    1. 如果对各运行的程序需要并发修改同一文件时, 程序之间需要某种机制来进行通信, 使用文件锁可以有效的阻止多个进程并发
+        修改同一文件
+
+    2. 文件锁控制文件的全部或部分字节的访问; NIO中, Java提供了 FileLockl哎支持文件锁定功能, 在 FileChannel中提供的
+        lock()/tryLock()方法可以获取文件锁 FileLock 对象, 从而锁定文件; 直接使用 lock() 或 tryLock() 方法获取的文件
+        锁是排他锁; 处理完文件之后通过 FileLock 的 release()方法释放文件锁
+
+    3. lock() 和 tryLock() 方法存在区别: 当 lock() 试图锁定某个文件时, 如果无法得到文件锁, 程序将一直阻塞; 而 tryLock()
+        是尝试锁定文件, 它将直接返回而不是阻塞, 如果得到了文件锁, 该方法则返回该文件锁, 否则将返回null
+
+    4. FileChannel 锁定部分文件的方法:
+        - lock(long position, long size, boolean shared): 对文件从 position 开始, 长度位 size 的内容加锁, 该方法
+            是阻塞式的, 当参数 shared 为 true 时, 表明该锁是一个共享锁, 它将允许多个进行来读取该文件, 但阻止其他进程
+            获得对该文件的排他锁; 当 shared 为 false 时, 表明该锁是一个排他锁, 他将锁住对该文件的读写; 程序可以通过
+            FileLock 的 isShared 来判断它获得的锁是否为共享锁
+        - tryLock(long position, long size, boolean shared): 非阻塞式的加锁方式, 参数含义同上
+
+    代码示例
+        import java.io.FileOutputStream;
+        import java.nio.channels.FileChannel;
+        import java.nio.channels.FileLock;
+        //
+        public class FileLockTest {
+            public static void main(String[] args) throws Exception {
+                try (
+                    // 使用 FileOutPutStream 获取 FileChannel
+                    FileChannel channel = new FileOutputStream(
+                        "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\a.txt").getChannel()) {
+                    // 使用非阻塞方式对指定文件加锁
+                    FileLock lock = channel.tryLock();
+                    // 程序暂停10S
+                    Thread.sleep(10000);
+                    // 释放锁
+                    lock.release();
+                }
+            }
+        }
+
+
+10. Java 7 的 NIO.2
+
+10.1 Path, Paths 和 Files 核心 API
+    1. Path 接口代表一个平台无关的平台操作; Files 包含大量静态的工具方法来操作文件; Paths 包含两个返回 Path 的 静态工厂方法
+
+    代码示例
+        // Path 接口的功能和方法
+        import java.nio.file.Path;
+        import java.nio.file.Paths;
+        //
+        public class PathTest {
+            public static void main(String[] args) throws Exception {
+                // 以当前路径来创建Path对象
+                Path path = Paths.get(".");
+                System.out.println("path 里包含的路径数量: " + path.getNameCount());
+                // 获取path对应的绝对路径
+                Path absolutePath = path.toAbsolutePath();
+                System.out.println(absolutePath);
+                // 获取绝对路径的根路径
+                System.out.println("absolutePath 的根路径: " + absolutePath.getRoot());
+                // 获取绝对路径所包含的路径数量
+                System.out.println("absolutePath 里包含的路径数量: " + absolutePath.getNameCount());
+                System.out.println(absolutePath.getName(0));
+                // 以多个String来构建Path对象
+                Path path2 = Paths.get("D:", "Books", "Java");
+                System.out.println(path2);
+            }
+        }
+
+    代码示例
+        // Files 操作文件工具类
+        import java.io.FileOutputStream;
+        import java.nio.charset.Charset;
+        import java.nio.file.FileStore;
+        import java.nio.file.Files;
+        import java.nio.file.Paths;
+        import java.util.ArrayList;
+        import java.util.List;
+        //
+        public class FilesTest {
+            public static void main(String[] args) throws Exception {
+                String FileTestPath = "D:\\File\\Java\\JavaBase\\src\\xyz\\xmcs\\CrazyJava\\IO\\FilesTest.java";
+                // 复制文件
+                Files.copy(Paths.get(FileTestPath), new FileOutputStream("a.txt"));
+                // 判断 FilesTest.java 文件是否为隐藏文件
+                System.out.println("FilesTest.java 是否为隐藏文件: "
+                    + Files.isHidden(Paths.get(FileTestPath)));
+                // 一次性读取 FilesTest.j所有行
+                List<String> lines = Files.readAllLines(Paths.get(FileTestPath), Charset.forName("UTf-8"));
+                System.out.println(lines);
+                // 判断指定文件的大小
+                System.out.println("FilesTest.Java 的大小为: "
+                    + Files.size(Paths.get(FileTestPath)));
+                List<String> poem = new ArrayList<>();
+                poem.add("水晶潭底银鱼跃");
+                poem.add("清风徐来碧竿横");
+                // 直接将多个字符串内容写入指定文件中
+                Files.write(Paths.get("poem.txt"), poem, Charset.forName("UTF-8"));
+                // 使用Java8新增的 Stream API 列出当前目录下所有文件和子目录
+                Files.list(Paths.get(".")).forEach(path -> System.out.println(path));
+                // 使用Java8 新增的API读取文件内容
+                Files.lines(Paths.get(FileTestPath), Charset.forName("UTF-8")).forEach(line -> System.out.println(line));
+                FileStore cStore = Files.getFileStore(Paths.get("C:"));
+                // 判断 C盘的总空间, 可用空间
+                System.out.println("C盘的共有空间: " + cStore.getTotalSpace());
+                System.out.println("C盘的可用空间: " + cStore.getUsableSpace());
+            }
+        }
+
+
+10.2 使用 FileVisitor 便利文件和目录
+    1. FileVisitor 代表一个文件访问器, walkFileTree() 方法会自动遍历 start 路径下的所有文件和子目录, 遍历文件和子目录
+        都会 "触发" FileVisitor 中想相应的方法
+
+    2. Files 类来遍历文件和子目录的方法:
+        - walkFileTree(Path start, FileVisitor<? super Path> visitor): 遍历 start 路径下的所有文件和子目录
+        - walkFileTree(Path start, set<FileVisitOption> options, int maxDepth, FileVisitor<? super Path> visitor)
+            该方法最多遍历maxDepth深度的文件
+
+    3. FileVisitor 中定义的4个方法:
+        - FileVisitorResult postVisitDirectory(T dir, IOException exc): 访问子目录之后触发该方法
+        - FileVisitorResult preVisitDirectory(T dir, BasicFileAttributes attrs): 访问子目录之前触发该方法
+        - FileVisitorResult visitFile(T file, BasicFileAttributes attrs): 访问file文件时触发该方法
+        - FileVisitorResult visitFileFailed(T file, IOException exc): 访问 file 文件失败是触发该方法
+        - **注意**: 以上四个方法都返回一个 FileVisitorResult 对象, 它是一个枚举类, 代表了访问之后的后续行为
+
+    4. FileVisitorResult 定义的几种后续行为:
+        - CONTINUE: 代表了 "继续访问" 的后续行为
+        - SKIP_SIBLINGS: 代表 "继续访问" 的后续行为, 但不访问该文件或目录的兄弟文件或目录
+        - SKIP_SUBTREE: 代表 "继续访问" 的后续行为, 但不访问该文件或目录的子目录树
+        - TERMINATE: 代表 "中止访问" 的后续行为
+
+    5. 实际编程时没必要为FileVisitor的4个方法都提供实现, 可以通过继承 SimpleFileVisitor(FileVisitor实现类) 来实现
+        自己的 "文件访问器", 这样就根据需要, 选择性地重写指定方法了
+
+    代码示例
+        // 使用 FileVisitor 来遍历文件和子目录
+        import java.io.IOException;
+        import java.nio.file.*;
+        import java.nio.file.attribute.BasicFileAttributes;
+        //
+        public class FileVisitorTest {
+            public static void main(String[] args) throws Exception {
+                // 遍历 D:\Books\Java目录下的所有文件和子目录
+                Files.walkFileTree(Paths.get("D:", "Books", "Java")
+                    , new SimpleFileVisitor<Path>(){
+                    // 访问文件时触发该方法
+                    @Override
+                    public FileVisitResult visitFile(Path file , BasicFileAttributes attrs) throws IOException {
+                        System.out.println("正在访问: " + file + " 文件");
+                        // 找到了 FileVisitorTest.java 文件
+                        if (file.endsWith("On Java 8.pdf")) {
+                            System.out.println("---已经找到目标文件---");
+                            return FileVisitResult.TERMINATE;
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+                    // 开始访问目录时触发该方法
+                    @Override
+                    public FileVisitResult preVisitDirectory(Path dir
+                        , BasicFileAttributes attrs) throws IOException {
+                        System.out.println("正在访问: " + dir + " 路径");
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+
+            }
+        }
