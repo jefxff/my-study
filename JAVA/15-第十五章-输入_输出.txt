@@ -1339,3 +1339,112 @@
 		- WatchKey Poll(long timeout, timeUnit unit): 尝试等待 timeout 事件去获取下一个 WatchKey 
 		- WatchKey take(): 获取下一个WatchKey, 如果没有 WatchKey 发生就一直等待
 		
+	代码示例
+        // 通过 WatchService 来监控 D:\\财务部 下面的文件
+        import java.nio.file.*;
+        //
+        public class WatchServiceTest {
+            public static void main(String[] args) throws Exception {
+                // 获取文件系统的 WatchService 对象
+                WatchService watchService = FileSystems.getDefault().newWatchService();
+                // 为 C: 盘根路径注册监听
+                Paths.get("D:\\财务部").register(watchService
+                    , StandardWatchEventKinds.ENTRY_CREATE
+                    , StandardWatchEventKinds.ENTRY_MODIFY
+                    , StandardWatchEventKinds.ENTRY_DELETE);
+                while (true) {
+                    // 获取下一个文件变化事件
+                    WatchKey key = watchService.take();
+                    for (WatchEvent<?> event : key.pollEvents()) {
+                        System.out.println(event.context() + " 文件发生了 "
+                            + event.kind() + " 事件!");
+                    }
+                    // 重设 WatchKey
+                    Boolean valid = key.reset();
+                    // 如果重设失败, 退出监听
+                    if(!valid) {
+                        break;
+                    }
+                }
+            }
+        }
+
+
+10.4 访问文件属性
+    1. Java7的 NIO.2 在 java.nio.file.attribute 报下提供了大量的工具类, 可以非常简单, 方便的读取, 修改文件的属性
+
+    2. 这些工具类分类:
+        - XxxAttributeView: 代表某种文件属性的 "视图"
+        - XxxAttributes: 代表某种文件属性的 "集合", 程序一般通过 XxxAttributeView 对象来获取 XxxAttributes
+
+    3. XxxAttributeView
+        - AclFileAttributeView: 可以让开发者为特定文件设置 ACL(Access Control List)及文件所有者属性; 它的 getAcl()
+            方法返回 List<AclEntry>对象, 该返回值代表了该文件的权限集; 可以通过 setAcl(List)方法修改该文件的ACL
+        - BasicFileAttributeView: 可以获取或修改文件的基本属性, 包括文件的最后修改时间, 最后访问时间, 创建时间, 大小
+            是否为目录, 是否为符号链接等; readAttributes() 方法返回一个 BasicFileAttributes 对象, 对文件夹基本属性
+            的修改是通过 BasicFileAttributes 对象完成的
+        - DosFileAttributeView: 用于获取或修改文件的DOS相关属性, 比如文件是否为只读, 是否为隐藏, 是否为系统文件, 是
+            否为存档文件等, 它的 readAttributes() 方法返回一个 DosFileAttributes 对象, 这些属性的修改是由 DosAttributes
+            对象来完成的
+        - FileOwnerAttributeView: 用于获取或修改文件的所有者, 通过 getOwner() 方法返回一个 UserPrincipal 对象来代表
+            文件所有者; 通过调用 setOwner(UserPrincipal owner) 方法来改变文件的所有者
+        - PosixFileAttributeView: 用于获取或修改POSIX(Portable Operating System Interface of INIX)属性, readAttributes()
+            方法返回一个 PosixFileAttributes 对象, 该对象可用于获取或修改文件的所有者, 组所有者, 访问权限信息, 只用于Linux系统
+        - UserDefinedFileAttributeView: 为文件设置自定义属性
+
+    代码示例
+        import java.nio.ByteBuffer;
+        import java.nio.charset.Charset;
+        import java.nio.file.FileSystems;
+        import java.nio.file.Files;
+        import java.nio.file.Path;
+        import java.nio.file.Paths;
+        import java.nio.file.attribute.*;
+        import java.util.Date;
+        import java.util.List;
+        //
+        public class AttributeViewTest {
+            public static void main(String[] args) throws Exception {
+                // 获取将要操作的文件
+                Path testPath = Paths.get("D:\\File\\aaa.txt");
+                // 获取访问基本属性的 BasicFileAttributeView
+                BasicFileAttributeView basicView = Files.getFileAttributeView(
+                        testPath, BasicFileAttributeView.class);
+                // 获取访问基本属性的 BasicFileAttributes
+                BasicFileAttributes basicAttribs = basicView.readAttributes();
+                // 访问文件的基本属性
+                System.out.println("创建时间: " + new Date(basicAttribs.creationTime().toMillis()));
+                System.out.println("最后访问时间: " + new Date(basicAttribs.lastAccessTime().toMillis()));
+                System.out.println("最后修改时间: " + new Date(basicAttribs.lastModifiedTime().toMillis()));
+                System.out.println("文件的大小: " + basicAttribs.size());
+                // 获取访问文件属性主信息的 FileOwnerAttributeView
+                FileOwnerAttributeView ownerView = Files.getFileAttributeView(
+                        testPath, FileOwnerAttributeView.class);
+                // 获取文件所属的用户
+                System.out.println(ownerView.getOwner());
+                // 获取系统中 guest 对应的用户
+                UserPrincipal user = FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName("guest");
+                // 修改用户
+                ownerView.setOwner(user);
+                // 获取访问自定义属性的 FileOwnerAttributeView
+                UserDefinedFileAttributeView userView = Files.getFileAttributeView(
+                        testPath, UserDefinedFileAttributeView.class);
+                List<String> attrNames = userView.list();
+                // 遍历所有的自定义属性
+                for(String name : attrNames) {
+                    ByteBuffer buf = ByteBuffer.allocate(userView.size(name));
+                    userView.read(name, buf);
+                    buf.flip();
+                    String value = Charset.defaultCharset().decode(buf).toString();
+                    System.out.println(name + " ----> " + value);
+                }
+                // 添加一个自定义属性
+                userView.write("发行者", Charset.defaultCharset().encode("JavaBase"));
+                // 获取访问DOS属性的DosFileAttributeView
+                DosFileAttributeView dosView = Files.getFileAttributeView(
+                        testPath, DosFileAttributeView.class);
+                // 将文件设置隐藏, 只读
+                dosView.setHidden(true);
+                dosView.setReadOnly(true);
+            }
+        }
